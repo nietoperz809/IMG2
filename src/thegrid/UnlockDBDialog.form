@@ -25,7 +25,7 @@
               </grid>
             </constraints>
             <properties>
-              <font name="DialogInput" size="16" style="1"/>
+              <font name="Fira Code" size="11" style="1"/>
             </properties>
           </component>
         </children>

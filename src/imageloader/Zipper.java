@@ -88,6 +88,18 @@ public class Zipper extends ImageStore {
         zipFile.close();
     }
 
+    @Override
+    public boolean delete(String name) {
+        System.out.println("unsupported");
+        return false;
+    }
+
+    @Override
+    public boolean insert(String name, BufferedImage img) {
+        System.out.println("unsupported");
+        return false;
+    }
+
     /**
      * get list of Zipfile contens
      *

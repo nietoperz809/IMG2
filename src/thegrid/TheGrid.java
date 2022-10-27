@@ -1,18 +1,12 @@
 package thegrid;
 
-import imageloader.ImageStore;
-import imageloader.SQLReader;
-import imageloader.Zipper;
+import imageloader.DBHandler;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 import java.time.Duration;
 import java.time.Instant;
-import java.util.Objects;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 
@@ -23,7 +17,7 @@ public class TheGrid extends JFrame {
     private final JScrollPane scrollPane;
     private final java.util.List<String> allFiles;
     private final ProgressBox progress;
-    private final SQLReader imageStore;
+    private final DBHandler imageStore;
     private final java.util.List<MemoryFile> newThumbs = new CopyOnWriteArrayList<>();
     private Instant startTime;
     private int imageCount;
@@ -32,7 +26,7 @@ public class TheGrid extends JFrame {
         Object[] dirs = Tools.getDirs();
         srcDir = (String) dirs[0];
 
-        imageStore = new SQLReader("jdbc:h2:./mydb");
+        imageStore = new DBHandler("jdbc:h2:./mydb");
 
         allFiles = imageStore.getFileNames(); //Tools.listImages(srcDir);
 
@@ -112,7 +106,7 @@ public class TheGrid extends JFrame {
 //                }
 //            }
 //        }
-        GridImage lab = new GridImage(thumbnailImage, allFiles, s, imageStore);
+        GridImage lab = new GridImage(thumbnailImage, allFiles, s, imageStore, rootPane);
 
         rootPane.add(lab);
         Instant end = Instant.now();

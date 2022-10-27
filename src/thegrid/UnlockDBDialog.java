@@ -30,11 +30,6 @@ public class UnlockDBDialog extends JDialog {
     }
 
 
-    private void onOK() {
-        // add your code here
-        dispose();
-    }
-
     private void onCancel() {
         // add your code here if necessary
         dispose();
@@ -43,6 +38,7 @@ public class UnlockDBDialog extends JDialog {
     public static String xmain() {
         UnlockDBDialog dialog = new UnlockDBDialog();
         dialog.pack();
+        dialog.setLocationRelativeTo(null);
         dialog.setVisible(true);
         return dialog.passwordField1.getText();
     }
