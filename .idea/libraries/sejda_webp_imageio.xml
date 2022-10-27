@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="sejda.webp.imageio" type="repository">
+    <properties maven-id="org.sejda.webp-imageio:webp-imageio-sejda:0.1.0" />
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/org/sejda/webp-imageio/webp-imageio-sejda/0.1.0/webp-imageio-sejda-0.1.0.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
