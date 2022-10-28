@@ -3,30 +3,30 @@ package thegrid;
 import imageloader.DBHandler;
 
 import javax.swing.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.time.Duration;
 import java.time.Instant;
-import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.prefs.Preferences;
 
 
 public class TheGrid extends JFrame {
-    private static final NPExecutor pool = new NPExecutor(20, 10000);
-    public final String srcDir;
+    //public final String srcDir;
     private final JPanel rootPane;
     private final JScrollPane scrollPane;
     private final java.util.List<String> allFiles;
     private final ProgressBox progress;
     private final DBHandler imageStore;
-    private final java.util.List<MemoryFile> newThumbs = new CopyOnWriteArrayList<>();
     private Instant startTime;
     private int imageCount;
 
-    public TheGrid() throws Exception {
-        Object[] dirs = Tools.getDirs();
-        srcDir = (String) dirs[0];
+    public TheGrid() {
 
-        imageStore = new DBHandler("jdbc:h2:./mydb");
+        imageStore = new DBHandler();
 
         allFiles = imageStore.getFileNames(); //Tools.listImages(srcDir);
 
@@ -37,32 +37,47 @@ public class TheGrid extends JFrame {
         rootPane.setLayout(new GridLayout(0, 10, 2, 2));
         add(scrollPane);
 
-        JMenuBar menuBar = new JMenuBar();
-        JMenuItem menu = new JMenuItem("Directory");
-        menu.addActionListener(e -> {
-            JFileChooser jfc = new JFileChooser();
-            jfc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-            if (JFileChooser.APPROVE_OPTION == jfc.showOpenDialog(this)) {
-                ((PersistString) dirs[2]).set(jfc.getSelectedFile().getAbsolutePath());
-                JOptionPane.showMessageDialog(null, "Please restart the app ...");
-                System.exit(0);
-            }
-        });
-        menuBar.add(menu);
-        setJMenuBar(menuBar);
-
         setSize(1050, 800);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
+
+        rootPane.setToolTipText(allFiles.size() + " Images, press 'a' to add more");
+        addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_A) {
+                    String lastDirectory = Preferences.userNodeForPackage(rootPane.getClass()).get("Images.lastDirectory", System.getProperty("user.home"));
+                    JFileChooser fc = new JFileChooser();
+                    File lastPath = new File(lastDirectory);
+                    if (lastPath.exists() && lastPath.isDirectory()) {
+                        fc.setCurrentDirectory(new File(lastDirectory));
+                    }
+                    FileNameExtensionFilter filt = new FileNameExtensionFilter("Image Files", Tools.getImageExtensions());
+                    fc.setFileFilter(filt);
+                    fc.setMultiSelectionEnabled(true);
+                    if (fc.showOpenDialog(rootPane) == JFileChooser.APPROVE_OPTION) {
+                        lastDirectory = fc.getCurrentDirectory().getPath();
+                        Preferences.userNodeForPackage(rootPane.getClass()).put("Images.lastDirectory", lastDirectory);
+                        File[] files = fc.getSelectedFiles();
+                        try {
+                            imageStore.addImages(files);
+                        } catch (Exception ex) {
+                            throw new RuntimeException(ex);
+                        }
+                    }
+                }
+            }
+        });
+
         setVisible(true);
     }
 
-    public static void run() {
+
+    public static void main(String... ignored) {
         try {
             UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
             TheGrid tg = new TheGrid();
             tg.imageCount = 0;
-            tg.newThumbs.clear();
             tg.startTime = Instant.now();
 
             //for (int s = 0; s < 10; s++) {
@@ -72,10 +87,6 @@ public class TheGrid extends JFrame {
         } catch (Exception e) {
             System.err.println("run fail\n" + e);
         }
-    }
-
-    public static void main(String... ignored) {
-        run();
     }
 
     /**
@@ -90,22 +101,6 @@ public class TheGrid extends JFrame {
         } catch (Exception e) {
             System.err.println("thumb read fail: " + fileName);
         }
-//        if (thumbnailImage == null) {
-//            try {
-//                synchronized (this) {
-//                    thumbnailImage = ImageScaler.scaleExact(imageStore.loadImage(fileName),
-//                            new Dimension(100, 100));
-//                    newThumbs.add(new MemoryFile(thumbnailName, thumbnailImage));
-//                }
-//            } catch (Exception ex) {
-//                System.err.println("Thumb creation fail for: " + fileName);
-//                try {
-//                    thumbnailImage = ImageIO.read(Objects.requireNonNull(Tools.getResource("fail.png")));
-//                } catch (IOException e) {
-//                    throw new RuntimeException(e);
-//                }
-//            }
-//        }
         GridImage lab = new GridImage(thumbnailImage, allFiles, s, imageStore, rootPane);
 
         rootPane.add(lab);
@@ -114,17 +109,6 @@ public class TheGrid extends JFrame {
         setTitle(txt);
         progress.setTextVal(txt, imageCount);
         if (imageCount >= allFiles.size()) {
-            if (newThumbs.size() > 0) synchronized (this) {
-
-                // TODO: needs update                try {
-//                    thumbStore.close();
-//                } catch (IOException e) {
-//                    throw new RuntimeException(e);
-//                }
-//                Zipper.addFilesToZip(new File(thumbStore.getSource()), newThumbs);
-//                newThumbs.clear();
-//                System.out.println("addzip");
-            }
             progress.dispose();
             rootPane.doLayout();
             scrollPane.getViewport().setView(rootPane);

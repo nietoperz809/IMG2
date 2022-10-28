@@ -6,6 +6,7 @@ import gifdecoder.AnimatedGIFReader;
 import javax.imageio.ImageIO;
 import javax.imageio.ImageReader;
 import javax.imageio.stream.FileImageInputStream;
+import javax.swing.*;
 import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.awt.image.AffineTransformOp;
@@ -29,8 +30,13 @@ public class Tools {
         return false;
     }
 
+    public static String[] getImageExtensions() {
+        return new String[] {"jpg", "jpeg", "png", "bmp", "gif", "jfif", "webp"};
+    }
+
+
     public static boolean isImage(String in) {
-        return hasExtension(in, ".jpg", ".jpeg", ".png", ".bmp", ".gif", ".jfif", ".webp");
+        return hasExtension(in, getImageExtensions());
     }
 
 
@@ -57,14 +63,6 @@ public class Tools {
     }
 
 
-    public static Object[] getDirs() {
-        Object[] ret = new Object[3];
-        PersistString pers = new PersistString("srcDir");
-        ret[0] = pers.getAndInit("C:\\Users\\Administrator\\Pictures");
-        ret[1] = "unused";
-        ret[2] = pers;
-        return ret;
-    }
 
     /**
      * Makes BufferedImage vom java.awt.Image

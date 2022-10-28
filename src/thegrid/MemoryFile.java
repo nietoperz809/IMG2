@@ -4,7 +4,7 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 
 public class MemoryFile {
-    public String fileName;
+    public final String fileName;
     public byte[] contents;
 
     public MemoryFile(String name, BufferedImage img) {
