@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 public class DBHandler extends ImageStore {
 
@@ -89,8 +90,9 @@ public class DBHandler extends ImageStore {
 
     public void addImages(File[] files) throws Exception {
         for (File f : files) {
+            String name = UUID.randomUUID().toString();
             BufferedImage img = ImageIO.read(f);
-            insert(f.getName(), img);
+            insert(name, img);
         }
         connection.commit();
     }

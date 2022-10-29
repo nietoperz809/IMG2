@@ -8,7 +8,7 @@ public class ProgressBox extends JDialog {
     private final JProgressBar progressBar;
 
     public ProgressBox(Frame owner, int maxlen) {
-        this (owner, maxlen, Math.max(maxlen, 500));
+        this (owner, maxlen,Math.min(maxlen, 500));
     }
 
     public ProgressBox(Frame owner, int maxlen, int boxlen) {
@@ -28,7 +28,7 @@ public class ProgressBox extends JDialog {
         setVisible(true);
     }
 
-    public void setTextVal (String txt, int v) {
+    public void setTextAndValue(String txt, int v) {
         progressBar.setValue(v);
         progressBar.setString(txt);
         repaint();

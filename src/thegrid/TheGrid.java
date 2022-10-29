@@ -59,11 +59,13 @@ public class TheGrid extends JFrame {
                         lastDirectory = fc.getCurrentDirectory().getPath();
                         Preferences.userNodeForPackage(rootPane.getClass()).put("Images.lastDirectory", lastDirectory);
                         File[] files = fc.getSelectedFiles();
+                        ProgressBox pb = new ProgressBox(TheGrid.this, files.length, 500);
                         try {
                             imageStore.addImages(files);
                         } catch (Exception ex) {
                             throw new RuntimeException(ex);
                         }
+                        pb.dispose();
                     }
                 }
             }
@@ -107,7 +109,7 @@ public class TheGrid extends JFrame {
         Instant end = Instant.now();
         String txt = "Loaded " + (++imageCount) + " Thumbs in " + Duration.between(startTime, end).toMillis() / 1000 + " Seconds";
         setTitle(txt);
-        progress.setTextVal(txt, imageCount);
+        progress.setTextAndValue(txt, imageCount);
         if (imageCount >= allFiles.size()) {
             progress.dispose();
             rootPane.doLayout();
