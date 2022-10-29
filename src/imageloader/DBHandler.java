@@ -1,6 +1,7 @@
 package imageloader;
 
 import thegrid.ImageScaler;
+import thegrid.ProgressBox;
 import thegrid.Tools;
 import thegrid.UnlockDBDialog;
 
@@ -88,11 +89,12 @@ public class DBHandler extends ImageStore {
         }
     }
 
-    public void addImages(File[] files) throws Exception {
-        for (File f : files) {
+    public void addImages(File[] files, InsertCallback ic) throws Exception {
+        for (int s=0; s < files.length; s++) {
             String name = UUID.randomUUID().toString();
-            BufferedImage img = ImageIO.read(f);
+            BufferedImage img = Tools.loadImage(files[s].getPath());
             insert(name, img);
+            ic.newImage(img, name);
         }
         connection.commit();
     }
@@ -162,6 +164,10 @@ public class DBHandler extends ImageStore {
 
     @Override
     public void close() {
-
+        try {
+            connection.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

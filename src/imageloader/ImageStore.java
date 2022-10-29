@@ -1,6 +1,8 @@
 package imageloader;
 
 
+import thegrid.ProgressBox;
+
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -12,5 +14,5 @@ public abstract class ImageStore {
     public abstract void close() throws IOException;
     public abstract boolean delete (String name);
     public abstract void insert (String name, BufferedImage img) throws IOException;
-    public abstract void addImages (File[] files) throws Exception;
+    public abstract void addImages (File[] files, InsertCallback ic) throws Exception;
 }

@@ -7,6 +7,8 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.time.Duration;
@@ -28,7 +30,7 @@ public class TheGrid extends JFrame {
 
         imageStore = new DBHandler();
 
-        allFiles = imageStore.getFileNames(); //Tools.listImages(srcDir);
+        allFiles = imageStore.getFileNames();
 
         progress = new ProgressBox(this, allFiles.size());
 
@@ -38,7 +40,7 @@ public class TheGrid extends JFrame {
         add(scrollPane);
 
         setSize(1050, 800);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         setLocationRelativeTo(null);
 
         rootPane.setToolTipText(allFiles.size() + " Images, press 'a' to add more");
@@ -59,15 +61,29 @@ public class TheGrid extends JFrame {
                         lastDirectory = fc.getCurrentDirectory().getPath();
                         Preferences.userNodeForPackage(rootPane.getClass()).put("Images.lastDirectory", lastDirectory);
                         File[] files = fc.getSelectedFiles();
-                        ProgressBox pb = new ProgressBox(TheGrid.this, files.length, 500);
                         try {
-                            imageStore.addImages(files);
+                            imageStore.addImages(files, (img, name) -> {
+                                BufferedImage thumbnailImage = ImageScaler.scaleExact(img,
+                                        new Dimension(100, 100));
+                                GridImage lab = new GridImage(thumbnailImage, allFiles, -1, imageStore, rootPane);
+                                lab.setName (name);
+                                rootPane.add(lab);
+                            });
+                            rootPane.doLayout();
                         } catch (Exception ex) {
                             throw new RuntimeException(ex);
                         }
-                        pb.dispose();
                     }
                 }
+            }
+        });
+
+        addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                super.windowClosing(e);
+                imageStore.close();
+                System.exit(1);
             }
         });
 

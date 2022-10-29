@@ -9,9 +9,20 @@ import java.awt.event.MouseEvent;
 import java.util.List;
 
 class GridImage extends JLabel {
+
+    volatile String thisName;
+
+    public void setName(String n) {
+        thisName = n;
+    }
+
     GridImage(Image image, List<String> files, int index, ImageStore ims, JPanel rootPane) {
         super(new ImageIcon(image));
-        String thisName = files.get(index);
+        if (-1 == index) {
+            thisName = "NEW-IMAGE";
+        } else {
+            thisName = files.get(index);
+        }
         setToolTipText (thisName+" -- right mouse button to delete");
         addMouseListener(new MouseAdapter() {
             @Override
@@ -20,6 +31,7 @@ class GridImage extends JLabel {
                     if (ims.delete(thisName)) {
                         rootPane.remove(GridImage.this);
                         rootPane.doLayout();
+                        rootPane.repaint();
                     }
                     return;
                 }
