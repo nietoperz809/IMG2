@@ -65,8 +65,8 @@ public class TheGrid extends JFrame {
                             imageStore.addImages(files, (img, name) -> {
                                 BufferedImage thumbnailImage = ImageScaler.scaleExact(img,
                                         new Dimension(100, 100));
-                                GridImage lab = new GridImage(thumbnailImage, allFiles, -1, imageStore, rootPane);
-                                lab.setName (name);
+                                GridImage lab = new GridImage(thumbnailImage, allFiles,
+                                        -1, imageStore, rootPane, name);
                                 rootPane.add(lab);
                             });
                             rootPane.doLayout();
