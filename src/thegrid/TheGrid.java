@@ -22,15 +22,12 @@ public class TheGrid extends JFrame {
     private final JScrollPane scrollPane;
     private final java.util.List<String> allFiles;
     private final ProgressBox progress;
-    private final DBHandler imageStore;
     private Instant startTime;
     private int imageCount;
 
     public TheGrid() {
 
-        imageStore = new DBHandler();
-
-        allFiles = imageStore.getFileNames();
+        allFiles = DBHandler.getInst().getFileNames();
 
         progress = new ProgressBox(this, allFiles.size());
 
@@ -54,19 +51,19 @@ public class TheGrid extends JFrame {
                     if (lastPath.exists() && lastPath.isDirectory()) {
                         fc.setCurrentDirectory(new File(lastDirectory));
                     }
-                    FileNameExtensionFilter filt = new FileNameExtensionFilter("Image Files", Tools.getImageExtensions());
-                    fc.setFileFilter(filt);
+                    FileNameExtensionFilter filter = new FileNameExtensionFilter("Image Files", Tools.getImageExtensions());
+                    fc.setFileFilter(filter);
                     fc.setMultiSelectionEnabled(true);
                     if (fc.showOpenDialog(rootPane) == JFileChooser.APPROVE_OPTION) {
                         lastDirectory = fc.getCurrentDirectory().getPath();
                         Preferences.userNodeForPackage(rootPane.getClass()).put("Images.lastDirectory", lastDirectory);
                         File[] files = fc.getSelectedFiles();
                         try {
-                            imageStore.addImages(files, (img, name) -> {
+                            DBHandler.getInst().addImages(files, (img, name) -> {
                                 BufferedImage thumbnailImage = ImageScaler.scaleExact(img,
                                         new Dimension(100, 100));
                                 GridImage lab = new GridImage(thumbnailImage, allFiles,
-                                        imageStore, rootPane, name);
+                                        rootPane, name);
                                 rootPane.add(lab);
                             });
                             rootPane.doLayout();
@@ -82,7 +79,7 @@ public class TheGrid extends JFrame {
             @Override
             public void windowClosing(WindowEvent e) {
                 super.windowClosing(e);
-                imageStore.close();
+                DBHandler.getInst().close();
                 System.exit(1);
             }
         });
@@ -115,11 +112,11 @@ public class TheGrid extends JFrame {
         //String thumbnailName = fileName + ".jpg";
         BufferedImage thumbnailImage = null;
         try {
-            thumbnailImage = imageStore.loadThumbnail(fileName);
+            thumbnailImage = DBHandler.getInst().loadThumbnail(fileName);
         } catch (Exception e) {
             System.err.println("thumb read fail: " + fileName);
         }
-        GridImage lab = new GridImage(thumbnailImage, allFiles, s, imageStore, rootPane);
+        GridImage lab = new GridImage(thumbnailImage, allFiles, s, rootPane);
 
         rootPane.add(lab);
         Instant end = Instant.now();

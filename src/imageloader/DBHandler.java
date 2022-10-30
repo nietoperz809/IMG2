@@ -1,11 +1,9 @@
 package imageloader;
 
 import thegrid.ImageScaler;
-import thegrid.ProgressBox;
 import thegrid.Tools;
 import thegrid.UnlockDBDialog;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -16,13 +14,22 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-public class DBHandler extends ImageStore {
+public class DBHandler {
 
     private static String aes_pwd = null;
     private Connection connection;
     private Statement statement;
 
-    public DBHandler() {
+    private static DBHandler _inst = null;
+
+    public static DBHandler getInst() {
+        if (_inst == null) {
+            _inst = new DBHandler();
+        }
+        return _inst;
+    }
+
+    private DBHandler() {
         try {
             if (aes_pwd == null) {
                 aes_pwd = UnlockDBDialog.xmain();
@@ -44,10 +51,10 @@ public class DBHandler extends ImageStore {
      * @param f Reference to parent component
      * @return true if user clicked OK
      */
-    static boolean askForDel(Component f, String imgname) {
+    static boolean askForDel(Component f, String imgName) {
         Object[] options = {"OK", "NO! NEVER!!"};
         return JOptionPane.showOptionDialog(f,
-                "Delete " + imgname + " from DB?",
+                "Delete " + imgName + " from DB?",
                 "Warning",
                 JOptionPane.DEFAULT_OPTION,
                 JOptionPane.WARNING_MESSAGE, null, options, options[1]
@@ -62,7 +69,6 @@ public class DBHandler extends ImageStore {
         }
     }
 
-    @Override
     public List<String> getFileNames() {
         ArrayList<String> al = new ArrayList<>();
         try (ResultSet res = query("select name from IMAGES")) {
@@ -90,16 +96,15 @@ public class DBHandler extends ImageStore {
     }
 
     public void addImages(File[] files, InsertCallback ic) throws Exception {
-        for (int s=0; s < files.length; s++) {
+        for (File file : files) {
             String name = UUID.randomUUID().toString();
-            BufferedImage img = Tools.loadImage(files[s].getPath());
+            BufferedImage img = Tools.loadImage(file.getPath());
             insert(name, img);
             ic.newImage(img, name);
         }
         connection.commit();
     }
 
-    @Override
     public void insert(String name, BufferedImage img) throws IOException {
         byte[] buff = Tools.imgToByteArray(img);
         addImage(buff, name);
@@ -136,7 +141,6 @@ public class DBHandler extends ImageStore {
     }
 
 
-    @Override
     public BufferedImage loadImage(String filename) throws IOException {
         try (ResultSet res = query("select image from IMAGES where name = '" + filename + "'")) {
             if (res.next()) {
@@ -162,10 +166,10 @@ public class DBHandler extends ImageStore {
         return null;
     }
 
-    @Override
     public void close() {
         try {
             connection.close();
+            _inst = null;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

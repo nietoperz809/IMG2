@@ -1,6 +1,6 @@
 package thegrid;
 
-import imageloader.ImageStore;
+import imageloader.DBHandler;
 
 import javax.swing.*;
 import java.awt.*;
@@ -12,8 +12,7 @@ import java.awt.image.BufferedImage;
 
 public class ImageView extends JFrame implements KeyListener {
     private final JScrollPane scrollPane;
-    private final java.util.List<String> allfiles;
-    private final ImageStore imgStore;
+    private final java.util.List<String> allFiles;
     private final JLabel imgLabel;
     private float scale = 1.0f;
     private String imgPath;
@@ -21,10 +20,9 @@ public class ImageView extends JFrame implements KeyListener {
 
     private Timer timer = null;
 
-    public ImageView(java.util.List<String> files, int idx, ImageStore ims) {
-        allfiles = files;
+    public ImageView(java.util.List<String> files, int idx) {
+        allFiles = files;
         currentIdx = idx;
-        imgStore = ims;
         imgPath = files.get(idx);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setTitle(imgPath);
@@ -90,8 +88,8 @@ public class ImageView extends JFrame implements KeyListener {
     }
 
     private BufferedImage getIconImg() {
-        ImageIcon imgicon = (ImageIcon) (imgLabel.getIcon());
-        return Tools.toBufferedImage(imgicon.getImage());
+        ImageIcon imgIcon = (ImageIcon) (imgLabel.getIcon());
+        return Tools.toBufferedImage(imgIcon.getImage());
     }
 
     @Override
@@ -100,19 +98,19 @@ public class ImageView extends JFrame implements KeyListener {
         handleScroll(ev);
         switch (ev) {
             case KeyEvent.VK_PAGE_DOWN -> {
-                if (currentIdx < (allfiles.size() - 1))
+                if (currentIdx < (allFiles.size() - 1))
                     currentIdx++;
                 else
                     currentIdx = 0;
-                imgPath = allfiles.get(currentIdx);
+                imgPath = allFiles.get(currentIdx);
                 setImg();
             }
             case KeyEvent.VK_PAGE_UP -> {
                 if (currentIdx > 0)
                     currentIdx--;
                 else
-                    currentIdx = allfiles.size() - 1;
-                imgPath = allfiles.get(currentIdx);
+                    currentIdx = allFiles.size() - 1;
+                imgPath = allFiles.get(currentIdx);
                 setImg();
             }
             case KeyEvent.VK_PLUS -> {
@@ -138,27 +136,27 @@ public class ImageView extends JFrame implements KeyListener {
             case KeyEvent.VK_W -> {
                 BufferedImage img = loadImgFromStore();
                 JScrollBar vert = scrollPane.getVerticalScrollBar();
-                int newwidth = scrollPane.getWidth();
+                int newWidth = scrollPane.getWidth();
                 if (vert.isVisible())
-                    newwidth -= vert.getWidth();
-                float fact = (float) img.getWidth() / (float) newwidth;
-                int newheight = (int) ((float) img.getHeight() / fact);
-                Dimension d = new Dimension(newwidth, newheight);
+                    newWidth -= vert.getWidth();
+                float fact = (float) img.getWidth() / (float) newWidth;
+                int newHeight = (int) ((float) img.getHeight() / fact);
+                Dimension d = new Dimension(newWidth, newHeight);
                 img = ImageScaler.scaleDirect(img, d);
                 imgLabel.setIcon(new ImageIcon(img));
                 repaint();
             }
             case KeyEvent.VK_H -> adjustOnHeight();
             case KeyEvent.VK_T -> {
-                currentIdx = (int) (Math.random() * allfiles.size());
-                imgPath = allfiles.get(currentIdx);
+                currentIdx = (int) (Math.random() * allFiles.size());
+                imgPath = allFiles.get(currentIdx);
                 adjustOnHeight();
             }
             case KeyEvent.VK_S -> {
                 if (timer == null) {
                     timer = new Timer(30000, e1 -> {
-                        currentIdx = (int) (Math.random() * allfiles.size());
-                        imgPath = allfiles.get(currentIdx);
+                        currentIdx = (int) (Math.random() * allFiles.size());
+                        imgPath = allFiles.get(currentIdx);
                         setTitle("Slideshow: " + imgPath);
                         adjustOnHeight();
                     });
@@ -179,10 +177,10 @@ public class ImageView extends JFrame implements KeyListener {
     private void adjustOnHeight() {
         BufferedImage img = loadImgFromStore();
         Insets in = getInsets();
-        int newheight = getHeight() - in.top - in.bottom;
-        float fact = (float) img.getHeight() / (float) newheight;
-        int newwidth = (int) ((float) img.getWidth() / fact);
-        Dimension d = new Dimension(newwidth, newheight);
+        int newHeight = getHeight() - in.top - in.bottom;
+        float fact = (float) img.getHeight() / (float) newHeight;
+        int newWidth = (int) ((float) img.getWidth() / fact);
+        Dimension d = new Dimension(newWidth, newHeight);
         img = ImageScaler.scaleDirect(img, d);
         imgLabel.setIcon(new ImageIcon(img));
         repaint();
@@ -196,7 +194,7 @@ public class ImageView extends JFrame implements KeyListener {
 
     private BufferedImage loadImgFromStore() {
         try {
-            return imgStore.loadImage(imgPath);
+            return DBHandler.getInst().loadImage(imgPath);
         } catch (Exception ex) {
             throw new RuntimeException(ex);
         }
