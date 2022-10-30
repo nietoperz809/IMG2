@@ -157,4 +157,9 @@ public class Tools {
         return ImageIO.read(is);
     }
 
+    public static void Error (String msg)
+    {
+        JOptionPane.showMessageDialog(null, msg, "Error",
+                JOptionPane.ERROR_MESSAGE);
+    }
 }

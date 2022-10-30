@@ -14,8 +14,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ddb69741-e020-4d21-a32f-f00e79c6818a" name="Changes" comment="immediately show freshly inserted pix">
-      <change beforePath="$PROJECT_DIR$/src/thegrid/GridImage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/thegrid/GridImage.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/thegrid/TheGrid.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/thegrid/TheGrid.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IMG2_jar/IMG2.jar" beforeDir="false" afterPath="$PROJECT_DIR$/IMG2_jar/IMG2.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/imageloader/DBHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/imageloader/DBHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/thegrid/Tools.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/thegrid/Tools.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -61,7 +63,7 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
-    "Downloaded.Files.Path.Enabled": "false",
+    "Downloaded.Files.Path.Enabled": "true",
     "Repository.Attach.Annotations": "false",
     "Repository.Attach.JavaDocs": "false",
     "Repository.Attach.Sources": "false",
@@ -69,19 +71,19 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "UI_DESIGNER_EDITOR_MODE.UIDesignerToolWindowManager.WIDTH": "426",
     "last_opened_file_path": "C:/peter.home/java/WaveCreator",
-    "project.structure.last.edited": "Artifacts",
+    "project.structure.last.edited": "Libraries",
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.2",
     "run.code.analysis.last.selected.profile": "pProject Default"
   }
 }]]></component>
-  <component name="RunManager" selected="Application.TheGrid">
-    <configuration name="ImagePreviewJFilechooser" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="thegrid.ImagePreviewJFilechooser" />
+  <component name="RunManager" selected="Application.Unnamed">
+    <configuration name="DBHandler" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="imageloader.DBHandler" />
       <module name="IMG2" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="thegrid.*" />
+          <option name="PATTERN" value="imageloader.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -89,12 +91,25 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="Test" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="thegrid.Test" />
+    <configuration name="GUIConsole" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="org.h2.tools.GUIConsole" />
       <module name="IMG2" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="thegrid.*" />
+          <option name="PATTERN" value="org.h2.tools.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Shell" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="org.h2.tools.Shell" />
+      <module name="IMG2" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="org.h2.tools.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -128,17 +143,19 @@
     </configuration>
     <list>
       <item itemvalue="Application.Unnamed" />
+      <item itemvalue="Application.DBHandler" />
+      <item itemvalue="Application.GUIConsole" />
+      <item itemvalue="Application.Shell" />
       <item itemvalue="Application.TheGrid" />
-      <item itemvalue="Application.ImagePreviewJFilechooser" />
-      <item itemvalue="Application.Test" />
       <item itemvalue="JAR Application.IMG2.jar" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.DBHandler" />
+        <item itemvalue="Application.GUIConsole" />
+        <item itemvalue="Application.Shell" />
         <item itemvalue="Application.TheGrid" />
         <item itemvalue="JAR Application.IMG2.jar" />
-        <item itemvalue="Application.Test" />
-        <item itemvalue="Application.ImagePreviewJFilechooser" />
       </list>
     </recent_temporary>
   </component>
@@ -193,7 +210,14 @@
       <option name="project" value="LOCAL" />
       <updated>1667062955952</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="immediately show freshly inserted pix">
+      <created>1667065602588</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1667065602588</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">

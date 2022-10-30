@@ -32,8 +32,8 @@ public class DBHandler extends ImageStore {
             String pwd = aes_pwd + " dumm";
             connection = DriverManager.getConnection(url, user, pwd);
             statement = connection.createStatement();
-            //statement.execute("CREATE USER LALA PASSWORD 'dumm' ADMIN\n");
         } catch (SQLException e) {
+            Tools.Error("Wrong Password!");
             System.exit(-1);
         }
     }
@@ -170,4 +170,27 @@ public class DBHandler extends ImageStore {
             throw new RuntimeException(e);
         }
     }
+
+//    public static void main(String[] args) throws SQLException, IOException {
+//
+//        DBHandler db = new DBHandler();
+//        List<String> names = db.getFileNames();
+//
+//        for (String name : names) {
+//            BufferedImage img = db.loadImage(name);
+//            BufferedImage thumb = db.loadThumbnail(name);
+//            System.out.println(name);
+//        }
+//
+//
+//
+//        //db.statement.execute("drop table imggrid");
+////        db.statement.execute("create table imggrid (name varchar(200) not null primary key," +
+////                " thumb blob, image blob)");
+//
+////        ResultSet rs = db.query("select CONCAT_WS('.', '"+names.get(0)+"', 'jpg')");
+////        rs.next();
+////        System.out.println(rs.getString(1));
+//
+//    }
 }
