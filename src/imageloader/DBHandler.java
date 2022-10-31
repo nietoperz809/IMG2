@@ -22,6 +22,10 @@ public class DBHandler {
 
     private static DBHandler _inst = null;
 
+    /**
+     * get access to the DB
+     * @return the one and only DB handler
+     */
     public static DBHandler getInst() {
         if (_inst == null) {
             _inst = new DBHandler();
@@ -29,6 +33,9 @@ public class DBHandler {
         return _inst;
     }
 
+    /**
+     * Private constructor like Singletons should have
+     */
     private DBHandler() {
         try {
             if (aes_pwd == null) {
@@ -46,7 +53,7 @@ public class DBHandler {
     }
 
     /**
-     * Warning box if a single frame is about to be disposed
+     * Warning box if an image is about to be deleted
      *
      * @param f Reference to parent component
      * @return true if user clicked OK

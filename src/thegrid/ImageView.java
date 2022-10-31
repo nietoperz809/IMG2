@@ -2,6 +2,7 @@ package thegrid;
 
 import imageloader.DBHandler;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -9,6 +10,8 @@ import java.awt.event.KeyListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 
 public class ImageView extends JFrame implements KeyListener {
     private final JScrollPane scrollPane;
@@ -56,6 +59,7 @@ public class ImageView extends JFrame implements KeyListener {
                         "l - reload<br>" +
                         "esc - close window<br>" +
                         "s - slideshow<br>" +
+                        "f - save to file<br>"+
                         "t - random image<br>" +
                         "m - mirror</html>");
     }
@@ -167,6 +171,19 @@ public class ImageView extends JFrame implements KeyListener {
                     timer.stop();
                     timer = null;
                     setTitle("Slideshow STOPPED");
+                }
+            }
+            case KeyEvent.VK_F -> {
+                JFileChooser fileChooser = new JFileChooser();
+                fileChooser.setSelectedFile(new File(allFiles.get(currentIdx)+".jpg"));
+                int option = fileChooser.showSaveDialog(this);
+                if(option == JFileChooser.APPROVE_OPTION){
+                    BufferedImage img = loadImgFromStore();
+                    try {
+                        ImageIO.write(img, "jpg", fileChooser.getSelectedFile());
+                    } catch (IOException ex) {
+                        throw new RuntimeException(ex);
+                    }
                 }
             }
             case KeyEvent.VK_L -> setImg();
