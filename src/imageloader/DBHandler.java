@@ -17,21 +17,9 @@ import java.util.UUID;
 public class DBHandler {
 
     private static String aes_pwd = null;
+    private static DBHandler _inst = null;
     private Connection connection;
     private Statement statement;
-
-    private static DBHandler _inst = null;
-
-    /**
-     * get access to the DB
-     * @return the one and only DB handler
-     */
-    public static DBHandler getInst() {
-        if (_inst == null) {
-            _inst = new DBHandler();
-        }
-        return _inst;
-    }
 
     /**
      * Private constructor like Singletons should have
@@ -50,6 +38,18 @@ public class DBHandler {
             Tools.Error("Wrong Password!");
             System.exit(-1);
         }
+    }
+
+    /**
+     * get access to the DB
+     *
+     * @return the one and only DB handler
+     */
+    public static DBHandler getInst() {
+        if (_inst == null) {
+            _inst = new DBHandler();
+        }
+        return _inst;
     }
 
     /**
@@ -94,7 +94,6 @@ public class DBHandler {
         }
         try {
             statement.execute("delete from IMAGES where name = '" + name + "'");
-            statement.execute("delete from THUMBS where name = '" + name + ".jpg'");
             return true;
         } catch (SQLException e) {
             //throw new RuntimeException(e);
@@ -114,39 +113,25 @@ public class DBHandler {
 
     public void insert(String name, BufferedImage img) throws IOException {
         byte[] buff = Tools.imgToByteArray(img);
-        addImage(buff, name);
         BufferedImage thumbnailImage = ImageScaler.scaleExact(img,
                 new Dimension(100, 100));
-        buff = Tools.imgToByteArray(thumbnailImage);
-        addThumb(buff, name + ".jpg");
+        byte[] buff2 = Tools.imgToByteArray(thumbnailImage);
+        addImage(buff, buff2, name);
     }
 
-    private void addImage(byte[] img, String name) {
+    private void addImage(byte[] img, byte[] thumb, String name) {
         PreparedStatement prep;
         try {
             prep = connection.prepareStatement(
-                    "insert into IMAGES (image,name) values (?,?)");
+                    "insert into IMAGES (image,thumb,name) values (?,?,?)");
             prep.setBytes(1, img);
-            prep.setString(2, name);
+            prep.setBytes(2, thumb);
+            prep.setString(3, name);
             prep.execute();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
-
-    private void addThumb(byte[] img, String name) {
-        PreparedStatement prep;
-        try {
-            prep = connection.prepareStatement(
-                    "insert into THUMBS (thumb,name) values (?,?)");
-            prep.setBytes(1, img);
-            prep.setString(2, name);
-            prep.execute();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
 
     public BufferedImage loadImage(String filename) throws IOException {
         try (ResultSet res = query("select image from IMAGES where name = '" + filename + "'")) {
@@ -161,7 +146,7 @@ public class DBHandler {
     }
 
     public BufferedImage loadThumbnail(String filename) throws IOException {
-        String q = "select thumb from THUMBS where name = '" + filename + ".jpg'";
+        String q = "select thumb from IMAGES where name = '" + filename + "'";
         try (ResultSet res = query(q)) {
             if (res.next()) {
                 byte[] b = res.getBytes(1);
@@ -181,27 +166,4 @@ public class DBHandler {
             throw new RuntimeException(e);
         }
     }
-
-//    public static void main(String[] args) throws SQLException, IOException {
-//
-//        DBHandler db = new DBHandler();
-//        List<String> names = db.getFileNames();
-//
-//        for (String name : names) {
-//            BufferedImage img = db.loadImage(name);
-//            BufferedImage thumb = db.loadThumbnail(name);
-//            System.out.println(name);
-//        }
-//
-//
-//
-//        //db.statement.execute("drop table imggrid");
-////        db.statement.execute("create table imggrid (name varchar(200) not null primary key," +
-////                " thumb blob, image blob)");
-//
-////        ResultSet rs = db.query("select CONCAT_WS('.', '"+names.get(0)+"', 'jpg')");
-////        rs.next();
-////        System.out.println(rs.getString(1));
-//
-//    }
 }
