@@ -37,12 +37,14 @@ public class RegionSelectorListener extends MouseAdapter {
             return;
         //System.out.println("released "+ e.getPoint());
         calcBox(box,e);
-        g2d = (Graphics2D)label.getGraphics();
-        g2d.setStroke(new BasicStroke(4));
-        g2d.setPaintMode();
-        g2d.setColor (Color.RED);
-        g2d.drawRect(box.x, box.y, box.width, box.height);
-        parent.zoomIn(box);
+        if (box.width > 10 && box.height > 10) {
+            g2d = (Graphics2D) label.getGraphics();
+            g2d.setStroke(new BasicStroke(4));
+            g2d.setPaintMode();
+            g2d.setColor(Color.RED);
+            g2d.drawRect(box.x, box.y, box.width, box.height);
+            parent.zoomIn(box);
+        }
         pressed = null;
         before= null;
     }

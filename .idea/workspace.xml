@@ -13,10 +13,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ddb69741-e020-4d21-a32f-f00e79c6818a" name="Changes" comment="added img save feature">
+    <list default="true" id="ddb69741-e020-4d21-a32f-f00e79c6818a" name="Changes" comment="backup">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/IMG2_jar/IMG2.jar" beforeDir="false" afterPath="$PROJECT_DIR$/IMG2_jar/IMG2.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/imageloader/DBHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/imageloader/DBHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/thegrid/RegionSelectorListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/thegrid/RegionSelectorListener.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -77,7 +76,7 @@
     "settings.editor.selected.configurable": "preferences.pluginManager"
   }
 }]]></component>
-  <component name="RunManager" selected="Application.GUIConsole (1)">
+  <component name="RunManager" selected="Application.Main">
     <configuration name="Console" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="org.h2.tools.Console" />
       <module name="IMG2" />
@@ -130,6 +129,13 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="Main" type="Application" factoryName="Application">
+      <option name="MAIN_CLASS_NAME" value="thegrid.TheGrid" />
+      <module name="IMG2" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="Shell" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="org.h2.tools.Shell" />
       <module name="IMG2" />
@@ -143,15 +149,8 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="Unnamed" type="Application" factoryName="Application" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="thegrid.TheGrid" />
-      <module name="IMG2" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <list>
-      <item itemvalue="Application.Unnamed" />
+      <item itemvalue="Application.Main" />
       <item itemvalue="Application.Console" />
       <item itemvalue="Application.GUIConsole (1)" />
       <item itemvalue="Application.DBHandler" />
@@ -247,7 +246,14 @@
       <option name="project" value="LOCAL" />
       <updated>1667225420959</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="backup">
+      <created>1667280591333</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1667280591333</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -264,11 +270,11 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="new repo of imagegrid" />
     <MESSAGE value="backup + jar" />
-    <MESSAGE value="backup" />
     <MESSAGE value="immediately show freshly inserted pix" />
     <MESSAGE value="made DBHandler a singleton" />
     <MESSAGE value="added img save feature" />
-    <option name="LAST_COMMIT_MESSAGE" value="added img save feature" />
+    <MESSAGE value="backup" />
+    <option name="LAST_COMMIT_MESSAGE" value="backup" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
