@@ -5,12 +5,20 @@ import imageloader.DBHandler;
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
+import java.awt.datatransfer.DataFlavor;
+import java.awt.datatransfer.Transferable;
+import java.awt.datatransfer.UnsupportedFlavorException;
+import java.awt.dnd.DnDConstants;
+import java.awt.dnd.DropTarget;
+import java.awt.dnd.DropTargetAdapter;
+import java.awt.dnd.DropTargetDropEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.IOException;
 import java.time.Duration;
 import java.time.Instant;
 import java.util.prefs.Preferences;
@@ -57,16 +65,8 @@ public class TheGrid extends JFrame {
                     if (fc.showOpenDialog(rootPane) == JFileChooser.APPROVE_OPTION) {
                         lastDirectory = fc.getCurrentDirectory().getPath();
                         Preferences.userNodeForPackage(rootPane.getClass()).put("Images.lastDirectory", lastDirectory);
-                        File[] files = fc.getSelectedFiles();
                         try {
-                            DBHandler.getInst().addImages(files, (img, name) -> {
-                                BufferedImage thumbnailImage = ImageScaler.scaleExact(img,
-                                        new Dimension(100, 100));
-                                GridImage lab = new GridImage(thumbnailImage, allFiles,
-                                        rootPane, name);
-                                rootPane.add(lab);
-                            });
-                            rootPane.doLayout();
+                            addNewImages(fc.getSelectedFiles());
                         } catch (Exception ex) {
                             throw new RuntimeException(ex);
                         }
@@ -84,9 +84,44 @@ public class TheGrid extends JFrame {
             }
         });
 
+        /*
+         *  Enable DND
+         */
+        new DropTarget(this, new DropTargetAdapter() {
+            @Override
+            public void drop(DropTargetDropEvent event) {
+                event.acceptDrop(DnDConstants.ACTION_COPY);
+                Transferable transferable = event.getTransferable();
+                DataFlavor[] flavors = transferable.getTransferDataFlavors();
+                for (DataFlavor flavor : flavors) {
+                    if (flavor.isFlavorJavaFileListType()) {
+                        java.util.List<File> files = null;
+                        try {
+                            files = (java.util.List<File>) transferable.getTransferData(flavor);
+                            File[] array = files.toArray(new File[0]);
+                            addNewImages (array);
+                        } catch (Exception e) {
+                            throw new RuntimeException(e);
+                        }
+                        return; // only one file
+                    }
+                }
+            }
+        });
+
         setVisible(true);
     }
 
+    void addNewImages (File[] files) throws Exception {
+        DBHandler.getInst().addImages(files, (img, name) -> {
+            BufferedImage thumbnailImage = ImageScaler.scaleExact(img,
+                    new Dimension(100, 100));
+            GridImage lab = new GridImage(thumbnailImage, allFiles,
+                    rootPane, name);
+            rootPane.add(lab);
+        });
+        rootPane.doLayout();
+    }
 
     public static void main(String... ignored) {
         try {

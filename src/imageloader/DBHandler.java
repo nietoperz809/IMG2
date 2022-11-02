@@ -105,6 +105,10 @@ public class DBHandler {
         for (File file : files) {
             String name = UUID.randomUUID().toString();
             BufferedImage img = Tools.loadImage(file.getPath());
+            if (img == null) {
+                System.err.println("no image");
+                continue;
+            }
             insert(name, img);
             ic.newImage(img, name);
         }
