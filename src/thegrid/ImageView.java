@@ -154,6 +154,7 @@ public class ImageView extends JFrame implements KeyListener {
             case KeyEvent.VK_T -> {
                 currentIdx = (int) (Math.random() * allFiles.size());
                 imgPath = allFiles.get(currentIdx);
+                setTitle(imgPath);
                 adjustOnHeight();
             }
             case KeyEvent.VK_S -> {

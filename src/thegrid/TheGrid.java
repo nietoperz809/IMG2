@@ -7,7 +7,6 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.Transferable;
-import java.awt.datatransfer.UnsupportedFlavorException;
 import java.awt.dnd.DnDConstants;
 import java.awt.dnd.DropTarget;
 import java.awt.dnd.DropTargetAdapter;
@@ -18,7 +17,6 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.IOException;
 import java.time.Duration;
 import java.time.Instant;
 import java.util.prefs.Preferences;
@@ -49,6 +47,37 @@ public class TheGrid extends JFrame {
         setLocationRelativeTo(null);
 
         rootPane.setToolTipText(allFiles.size() + " Images, press 'a' to add more");
+
+        listenForKeyA();
+
+        addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                super.windowClosing(e);
+                DBHandler.getInst().close();
+                System.exit(1);
+            }
+        });
+
+        enableDrop();
+    }
+
+    public static void main(String... ignored) {
+        try {
+            UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
+            TheGrid tg = new TheGrid();
+            tg.imageCount = 0;
+            tg.startTime = Instant.now();
+
+            for (int s = 0; s < tg.allFiles.size(); s++) {
+                tg.addImageLabel(s);
+            }
+        } catch (Exception e) {
+            System.err.println("run fail\n" + e);
+        }
+    }
+
+    private void listenForKeyA() {
         addKeyListener(new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent e) {
@@ -66,7 +95,7 @@ public class TheGrid extends JFrame {
                         lastDirectory = fc.getCurrentDirectory().getPath();
                         Preferences.userNodeForPackage(rootPane.getClass()).put("Images.lastDirectory", lastDirectory);
                         try {
-                            addNewImages(fc.getSelectedFiles());
+                            addNewImagesToDatabase(fc.getSelectedFiles());
                         } catch (Exception ex) {
                             throw new RuntimeException(ex);
                         }
@@ -74,19 +103,9 @@ public class TheGrid extends JFrame {
                 }
             }
         });
+    }
 
-        addWindowListener(new WindowAdapter() {
-            @Override
-            public void windowClosing(WindowEvent e) {
-                super.windowClosing(e);
-                DBHandler.getInst().close();
-                System.exit(1);
-            }
-        });
-
-        /*
-         *  Enable DND
-         */
+    private void enableDrop() {
         new DropTarget(this, new DropTargetAdapter() {
             @Override
             public void drop(DropTargetDropEvent event) {
@@ -95,11 +114,11 @@ public class TheGrid extends JFrame {
                 DataFlavor[] flavors = transferable.getTransferDataFlavors();
                 for (DataFlavor flavor : flavors) {
                     if (flavor.isFlavorJavaFileListType()) {
-                        java.util.List<File> files = null;
+                        java.util.List<File> files;
                         try {
                             files = (java.util.List<File>) transferable.getTransferData(flavor);
                             File[] array = files.toArray(new File[0]);
-                            addNewImages (array);
+                            addNewImagesToDatabase(array);
                         } catch (Exception e) {
                             throw new RuntimeException(e);
                         }
@@ -108,11 +127,9 @@ public class TheGrid extends JFrame {
                 }
             }
         });
-
-        setVisible(true);
     }
 
-    void addNewImages (File[] files) throws Exception {
+    void addNewImagesToDatabase(File[] files) throws Exception {
         DBHandler.getInst().addImages(files, (img, name) -> {
             BufferedImage thumbnailImage = ImageScaler.scaleExact(img,
                     new Dimension(100, 100));
@@ -123,28 +140,11 @@ public class TheGrid extends JFrame {
         rootPane.doLayout();
     }
 
-    public static void main(String... ignored) {
-        try {
-            UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
-            TheGrid tg = new TheGrid();
-            tg.imageCount = 0;
-            tg.startTime = Instant.now();
-
-            //for (int s = 0; s < 10; s++) {
-            for (int s = 0; s < tg.allFiles.size(); s++) {
-                tg.addImg(s);
-            }
-        } catch (Exception e) {
-            System.err.println("run fail\n" + e);
-        }
-    }
-
     /**
      * Add one single image to the frame
      */
-    public void addImg(int s) {
+    public void addImageLabel(int s) {
         String fileName = allFiles.get(s);
-        //String thumbnailName = fileName + ".jpg";
         BufferedImage thumbnailImage = null;
         try {
             thumbnailImage = DBHandler.getInst().loadThumbnail(fileName);
@@ -162,6 +162,7 @@ public class TheGrid extends JFrame {
             progress.dispose();
             rootPane.doLayout();
             scrollPane.getViewport().setView(rootPane);
+            setVisible(true);
         }
     }
 }

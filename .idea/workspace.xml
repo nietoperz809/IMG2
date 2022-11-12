@@ -13,10 +13,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ddb69741-e020-4d21-a32f-f00e79c6818a" name="Changes" comment="regionselector box must not be too small">
+    <list default="true" id="ddb69741-e020-4d21-a32f-f00e79c6818a" name="Changes" comment="added dnd functionality">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/IMG2_jar/IMG2.jar" beforeDir="false" afterPath="$PROJECT_DIR$/IMG2_jar/IMG2.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IMG2_jar/run.bat" beforeDir="false" afterPath="$PROJECT_DIR$/IMG2_jar/run.bat" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/imageloader/DBHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/imageloader/DBHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/thegrid/ImageView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/thegrid/ImageView.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/thegrid/TheGrid.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/thegrid/TheGrid.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -70,7 +72,7 @@
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;UI_DESIGNER_EDITOR_MODE.UIDesignerToolWindowManager.WIDTH&quot;: &quot;426&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/peter.home/java/WaveCreator&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/peter.home/java/FixPad&quot;,
     &quot;project.structure.last.edited&quot;: &quot;Libraries&quot;,
     &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
     &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
@@ -262,7 +264,14 @@
       <option name="project" value="LOCAL" />
       <updated>1667282717570</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="added dnd functionality">
+      <created>1667370116034</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1667370116034</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -284,7 +293,8 @@
     <MESSAGE value="added img save feature" />
     <MESSAGE value="backup" />
     <MESSAGE value="regionselector box must not be too small" />
-    <option name="LAST_COMMIT_MESSAGE" value="regionselector box must not be too small" />
+    <MESSAGE value="added dnd functionality" />
+    <option name="LAST_COMMIT_MESSAGE" value="added dnd functionality" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
