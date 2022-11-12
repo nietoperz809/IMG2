@@ -13,12 +13,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ddb69741-e020-4d21-a32f-f00e79c6818a" name="Changes" comment="added dnd functionality">
+    <list default="true" id="ddb69741-e020-4d21-a32f-f00e79c6818a" name="Changes" comment="minor changes">
+      <change afterPath="$PROJECT_DIR$/src/thegrid/GridListeners.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/IMG2_jar/IMG2.jar" beforeDir="false" afterPath="$PROJECT_DIR$/IMG2_jar/IMG2.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/IMG2_jar/run.bat" beforeDir="false" afterPath="$PROJECT_DIR$/IMG2_jar/run.bat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/imageloader/DBHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/imageloader/DBHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/thegrid/ImageView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/thegrid/ImageView.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/thegrid/TheGrid.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/thegrid/TheGrid.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -29,8 +26,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Class" />
         <option value="Interface" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -271,7 +268,14 @@
       <option name="project" value="LOCAL" />
       <updated>1667370116034</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="minor changes">
+      <created>1668224980073</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1668224980073</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -294,7 +298,8 @@
     <MESSAGE value="backup" />
     <MESSAGE value="regionselector box must not be too small" />
     <MESSAGE value="added dnd functionality" />
-    <option name="LAST_COMMIT_MESSAGE" value="added dnd functionality" />
+    <MESSAGE value="minor changes" />
+    <option name="LAST_COMMIT_MESSAGE" value="minor changes" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

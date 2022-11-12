@@ -3,28 +3,16 @@ package thegrid;
 import imageloader.DBHandler;
 
 import javax.swing.*;
-import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
-import java.awt.datatransfer.DataFlavor;
-import java.awt.datatransfer.Transferable;
-import java.awt.dnd.DnDConstants;
-import java.awt.dnd.DropTarget;
-import java.awt.dnd.DropTargetAdapter;
-import java.awt.dnd.DropTargetDropEvent;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.time.Duration;
 import java.time.Instant;
-import java.util.prefs.Preferences;
 
 
 public class TheGrid extends JFrame {
     //public final String srcDir;
-    private final JPanel rootPane;
+    public final JPanel rootPane;
     private final JScrollPane scrollPane;
     private final java.util.List<String> allFiles;
     private final ProgressBox progress;
@@ -48,18 +36,7 @@ public class TheGrid extends JFrame {
 
         rootPane.setToolTipText(allFiles.size() + " Images, press 'a' to add more");
 
-        listenForKeyA();
-
-        addWindowListener(new WindowAdapter() {
-            @Override
-            public void windowClosing(WindowEvent e) {
-                super.windowClosing(e);
-                DBHandler.getInst().close();
-                System.exit(1);
-            }
-        });
-
-        enableDrop();
+        new GridListeners(this);
     }
 
     public static void main(String... ignored) {
@@ -77,59 +54,7 @@ public class TheGrid extends JFrame {
         }
     }
 
-    private void listenForKeyA() {
-        addKeyListener(new KeyAdapter() {
-            @Override
-            public void keyPressed(KeyEvent e) {
-                if (e.getKeyCode() == KeyEvent.VK_A) {
-                    String lastDirectory = Preferences.userNodeForPackage(rootPane.getClass()).get("Images.lastDirectory", System.getProperty("user.home"));
-                    JFileChooser fc = new JFileChooser();
-                    File lastPath = new File(lastDirectory);
-                    if (lastPath.exists() && lastPath.isDirectory()) {
-                        fc.setCurrentDirectory(new File(lastDirectory));
-                    }
-                    FileNameExtensionFilter filter = new FileNameExtensionFilter("Image Files", Tools.getImageExtensions());
-                    fc.setFileFilter(filter);
-                    fc.setMultiSelectionEnabled(true);
-                    if (fc.showOpenDialog(rootPane) == JFileChooser.APPROVE_OPTION) {
-                        lastDirectory = fc.getCurrentDirectory().getPath();
-                        Preferences.userNodeForPackage(rootPane.getClass()).put("Images.lastDirectory", lastDirectory);
-                        try {
-                            addNewImagesToDatabase(fc.getSelectedFiles());
-                        } catch (Exception ex) {
-                            throw new RuntimeException(ex);
-                        }
-                    }
-                }
-            }
-        });
-    }
-
-    private void enableDrop() {
-        new DropTarget(this, new DropTargetAdapter() {
-            @Override
-            public void drop(DropTargetDropEvent event) {
-                event.acceptDrop(DnDConstants.ACTION_COPY);
-                Transferable transferable = event.getTransferable();
-                DataFlavor[] flavors = transferable.getTransferDataFlavors();
-                for (DataFlavor flavor : flavors) {
-                    if (flavor.isFlavorJavaFileListType()) {
-                        java.util.List<File> files;
-                        try {
-                            files = (java.util.List<File>) transferable.getTransferData(flavor);
-                            File[] array = files.toArray(new File[0]);
-                            addNewImagesToDatabase(array);
-                        } catch (Exception e) {
-                            throw new RuntimeException(e);
-                        }
-                        return; // only one file
-                    }
-                }
-            }
-        });
-    }
-
-    void addNewImagesToDatabase(File[] files) throws Exception {
+    public void addImageFilesToDatabase(File[] files) throws Exception {
         DBHandler.getInst().addImages(files, (img, name) -> {
             BufferedImage thumbnailImage = ImageScaler.scaleExact(img,
                     new Dimension(100, 100));
