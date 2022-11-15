@@ -9,6 +9,7 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.*;
 import java.sql.*;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -20,6 +21,8 @@ public class DBHandler {
     private Connection connection;
     private Statement statement;
 
+    private static final String rootDir = "C:\\peter.home\\java\\IMG2\\datastore\\";
+
     /**
      * Private constructor like Singletons should have
      */
@@ -28,7 +31,7 @@ public class DBHandler {
             if (aes_pwd == null) {
                 aes_pwd = UnlockDBDialog.xmain();
             }
-            String url = "jdbc:h2:C:\\peter.home\\java\\IMG2\\datastore\\mydb;CIPHER=AES";
+            String url = "jdbc:h2:" + rootDir + "mydb;CIPHER=AES";
             String user = "LALA";
             String pwd = aes_pwd + " dumm";
             connection = DriverManager.getConnection(url, user, pwd);
@@ -85,6 +88,7 @@ public class DBHandler {
             throw new RuntimeException(e);
         }
         return al;
+        //return al.subList(0,10);
     }
 
     public boolean delete(String name) {
@@ -97,6 +101,15 @@ public class DBHandler {
         } catch (SQLException e) {
             //throw new RuntimeException(e);
             return false;
+        }
+    }
+
+    public void backup () {
+        String timeStamp = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss").format(new java.util.Date());
+        try {
+            statement.execute("backup to '"+rootDir+timeStamp+"zip'");
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
     }
 

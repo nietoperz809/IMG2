@@ -16,7 +16,9 @@ class GridImage extends JLabel {
         addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                if (e.getButton() == 3) {
+                if (e.getButton() == 3) { // right click
+                    if (!Tools.Question("Really delete "+thisName+"?"))
+                        return;
                     if (DBHandler.getInst().delete(thisName)) {
                         rootPane.remove(GridImage.this);
                         rootPane.doLayout();
@@ -24,7 +26,7 @@ class GridImage extends JLabel {
                     }
                     return;
                 }
-                new ImageView(files, index);
+                new ImageView(files, index); // left click
             }
         });
     }

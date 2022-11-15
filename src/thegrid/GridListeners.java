@@ -24,7 +24,6 @@ public class GridListeners {
 
     public GridListeners (TheGrid g) {
         theGrid = g;
-        listenForKeyA();
         enableDrop();
         g.addWindowListener(new WindowAdapter() {
             @Override
@@ -60,34 +59,4 @@ public class GridListeners {
             }
         });
     }
-
-
-    private void listenForKeyA() {
-        addKeyListener(new KeyAdapter() {
-            @Override
-            public void keyPressed(KeyEvent e) {
-                if (e.getKeyCode() == KeyEvent.VK_A) {
-                    String lastDirectory = Preferences.userNodeForPackage(theGrid.rootPane.getClass()).get("Images.lastDirectory", System.getProperty("user.home"));
-                    JFileChooser fc = new JFileChooser();
-                    File lastPath = new File(lastDirectory);
-                    if (lastPath.exists() && lastPath.isDirectory()) {
-                        fc.setCurrentDirectory(new File(lastDirectory));
-                    }
-                    FileNameExtensionFilter filter = new FileNameExtensionFilter("Image Files", Tools.getImageExtensions());
-                    fc.setFileFilter(filter);
-                    fc.setMultiSelectionEnabled(true);
-                    if (fc.showOpenDialog(theGrid.rootPane) == JFileChooser.APPROVE_OPTION) {
-                        lastDirectory = fc.getCurrentDirectory().getPath();
-                        Preferences.userNodeForPackage(theGrid.rootPane.getClass()).put("Images.lastDirectory", lastDirectory);
-                        try {
-                            theGrid.addImageFilesToDatabase(fc.getSelectedFiles());
-                        } catch (Exception ex) {
-                            throw new RuntimeException(ex);
-                        }
-                    }
-                }
-            }
-        });
-    }
-
 }

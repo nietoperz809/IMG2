@@ -13,6 +13,9 @@ import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
 import java.io.*;
 
+import static javax.swing.JOptionPane.QUESTION_MESSAGE;
+import static javax.swing.JOptionPane.YES_NO_OPTION;
+
 public class Tools {
     /**
      * Checks if a filename has one of n extensions
@@ -157,9 +160,15 @@ public class Tools {
         return ImageIO.read(is);
     }
 
-    public static void Error (String msg)
-    {
+    public static void Error (String msg) {
         JOptionPane.showMessageDialog(null, msg, "Error",
                 JOptionPane.ERROR_MESSAGE);
     }
+
+    public static boolean Question (String msg) {
+        int i = JOptionPane.showConfirmDialog (null, msg,
+                "Do it?", YES_NO_OPTION);
+        return i == 0; /* true if yes */
+    }
+
 }

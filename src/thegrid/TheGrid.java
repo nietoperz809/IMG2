@@ -20,23 +20,18 @@ public class TheGrid extends JFrame {
     private int imageCount;
 
     public TheGrid() {
-
         allFiles = DBHandler.getInst().getFileNames();
-
         progress = new ProgressBox(this, allFiles.size());
-
         rootPane = new JPanel();
         scrollPane = new JScrollPane(rootPane);
         rootPane.setLayout(new GridLayout(0, 10, 2, 2));
         add(scrollPane);
-
         setSize(1050, 800);
         setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         setLocationRelativeTo(null);
-
         rootPane.setToolTipText(allFiles.size() + " Images, press 'a' to add more");
-
         new GridListeners(this);
+        new GridMenu(this);
     }
 
     public static void main(String... ignored) {
