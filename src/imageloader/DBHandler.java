@@ -80,7 +80,7 @@ public class DBHandler {
 
     public List<String> getFileNames() {
         ArrayList<String> al = new ArrayList<>();
-        try (ResultSet res = query("select name from IMAGES")) {
+        try (ResultSet res = query("select name,thumb from IMAGES group by thumb,name")) {
             while (res.next()) {
                 al.add(res.getString(1));
             }
@@ -107,7 +107,7 @@ public class DBHandler {
     public void backup () {
         String timeStamp = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss").format(new java.util.Date());
         try {
-            statement.execute("backup to '"+rootDir+timeStamp+"zip'");
+            statement.execute("backup to '"+rootDir+timeStamp+".zip'");
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

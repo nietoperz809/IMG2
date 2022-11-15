@@ -13,7 +13,7 @@ import java.time.Instant;
 public class TheGrid extends JFrame {
     //public final String srcDir;
     public final JPanel rootPane;
-    private final JScrollPane scrollPane;
+    public final JScrollPane scrollPane;
     private final java.util.List<String> allFiles;
     private final ProgressBox progress;
     private Instant startTime;

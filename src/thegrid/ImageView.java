@@ -68,29 +68,6 @@ public class ImageView extends JFrame implements KeyListener {
     public void keyTyped(KeyEvent e) {
     }
 
-    private void handleScroll(int keyCode) {
-        JViewport vp = scrollPane.getViewport();
-        Point p = vp.getViewPosition();
-        switch (keyCode) {
-            case KeyEvent.VK_DOWN -> p.y += 10;
-            case KeyEvent.VK_RIGHT -> p.x += 10;
-            case KeyEvent.VK_UP -> {
-                p.y -= 10;
-                if (p.y < 0)
-                    return;
-            }
-            case KeyEvent.VK_LEFT -> {
-                p.x -= 10;
-                if (p.x < 0)
-                    return;
-            }
-            default -> {
-                return;
-            }
-        }
-        vp.setViewPosition(p);
-    }
-
     private BufferedImage getIconImg() {
         ImageIcon imgIcon = (ImageIcon) (imgLabel.getIcon());
         return Tools.toBufferedImage(imgIcon.getImage());
@@ -99,7 +76,7 @@ public class ImageView extends JFrame implements KeyListener {
     @Override
     public void keyPressed(KeyEvent e) {
         int ev = e.getKeyCode();
-        handleScroll(ev);
+        Tools.fastScroll(ev,scrollPane.getViewport());
         switch (ev) {
             case KeyEvent.VK_PAGE_DOWN -> {
                 if (currentIdx < (allFiles.size() - 1))

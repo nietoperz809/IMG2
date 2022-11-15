@@ -2,24 +2,16 @@ package thegrid;
 
 import imageloader.DBHandler;
 
-import javax.swing.*;
-import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.Transferable;
 import java.awt.dnd.DnDConstants;
 import java.awt.dnd.DropTarget;
 import java.awt.dnd.DropTargetAdapter;
 import java.awt.dnd.DropTargetDropEvent;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
+import java.awt.event.*;
 import java.io.File;
-import java.util.prefs.Preferences;
 
-import static com.sun.java.accessibility.util.AWTEventMonitor.addKeyListener;
-
-public class GridListeners {
+public class GridListeners implements KeyListener {
     private final TheGrid theGrid;
 
     public GridListeners (TheGrid g) {
@@ -33,6 +25,7 @@ public class GridListeners {
                 System.exit(1);
             }
         });
+        g.addKeyListener(this);
 
     }
 
@@ -58,5 +51,20 @@ public class GridListeners {
                 }
             }
         });
+    }
+
+    @Override
+    public void keyTyped(KeyEvent e) {
+
+    }
+
+    @Override
+    public void keyPressed(KeyEvent e) {
+        Tools.fastScroll(e.getKeyCode(),theGrid.scrollPane.getViewport());
+    }
+
+    @Override
+    public void keyReleased(KeyEvent e) {
+
     }
 }

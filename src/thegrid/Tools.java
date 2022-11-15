@@ -8,12 +8,12 @@ import javax.imageio.ImageReader;
 import javax.imageio.stream.FileImageInputStream;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.KeyEvent;
 import java.awt.geom.AffineTransform;
 import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
 import java.io.*;
 
-import static javax.swing.JOptionPane.QUESTION_MESSAGE;
 import static javax.swing.JOptionPane.YES_NO_OPTION;
 
 public class Tools {
@@ -171,4 +171,30 @@ public class Tools {
         return i == 0; /* true if yes */
     }
 
+    /**
+     * Fast scroll of scrollbar content by up/down keys
+     * @param keyCode vvk_up or vk_down
+     * @param vp Viewport of scrollbar
+     */
+    static void fastScroll(int keyCode, JViewport vp) {
+        Point p = vp.getViewPosition();
+        switch (keyCode) {
+            case KeyEvent.VK_DOWN -> p.y += 10;
+            case KeyEvent.VK_RIGHT -> p.x += 10;
+            case KeyEvent.VK_UP -> {
+                p.y -= 10;
+                if (p.y < 0)
+                    return;
+            }
+            case KeyEvent.VK_LEFT -> {
+                p.x -= 10;
+                if (p.x < 0)
+                    return;
+            }
+            default -> {
+                return;
+            }
+        }
+        vp.setViewPosition(p);
+    }
 }

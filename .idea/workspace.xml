@@ -13,13 +13,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ddb69741-e020-4d21-a32f-f00e79c6818a" name="Changes" comment="moved things around">
-      <change afterPath="$PROJECT_DIR$/src/thegrid/GridMenu.java" afterDir="false" />
+    <list default="true" id="ddb69741-e020-4d21-a32f-f00e79c6818a" name="Changes" comment="+ backup menu">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/IMG2_jar/IMG2.jar" beforeDir="false" afterPath="$PROJECT_DIR$/IMG2_jar/IMG2.jar" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/imageloader/DBHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/imageloader/DBHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/thegrid/GridImage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/thegrid/GridImage.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/thegrid/GridListeners.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/thegrid/GridListeners.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/thegrid/ImageView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/thegrid/ImageView.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/thegrid/TheGrid.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/thegrid/TheGrid.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/thegrid/Tools.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/thegrid/Tools.java" afterDir="false" />
     </list>
@@ -82,6 +80,11 @@
     &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;
   }
 }</component>
+  <component name="RecentsManager">
+    <key name="MoveMembersDialog.RECENTS_KEY">
+      <recent name="thegrid.Tools" />
+    </key>
+  </component>
   <component name="RunManager" selected="Application.Main">
     <configuration name="Console" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="org.h2.tools.Console" />
@@ -287,7 +290,14 @@
       <option name="project" value="LOCAL" />
       <updated>1668243031219</updated>
     </task>
-    <option name="localTasksCounter" value="16" />
+    <task id="LOCAL-00016" summary="+ backup menu">
+      <created>1668476093954</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1668476093954</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -312,7 +322,8 @@
     <MESSAGE value="added dnd functionality" />
     <MESSAGE value="minor changes" />
     <MESSAGE value="moved things around" />
-    <option name="LAST_COMMIT_MESSAGE" value="moved things around" />
+    <MESSAGE value="+ backup menu" />
+    <option name="LAST_COMMIT_MESSAGE" value="+ backup menu" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
