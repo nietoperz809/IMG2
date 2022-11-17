@@ -95,11 +95,12 @@ public class ImageView extends JFrame implements KeyListener {
                 setImg();
             }
             case KeyEvent.VK_PLUS -> {
-                scale = 1.2f;
+                scale += 0.1f;
                 scaleIconImg();
             }
             case KeyEvent.VK_MINUS -> {
-                scale = 0.8f;
+                if (scale > 0.2f)
+                    scale -= 0.1f;
                 scaleIconImg();
             }
             case KeyEvent.VK_R -> {
@@ -136,7 +137,7 @@ public class ImageView extends JFrame implements KeyListener {
             }
             case KeyEvent.VK_S -> {
                 if (timer == null) {
-                    timer = new Timer(30000, e1 -> {
+                    timer = new Timer(10000, e1 -> {
                         currentIdx = (int) (Math.random() * allFiles.size());
                         imgPath = allFiles.get(currentIdx);
                         setTitle("Slideshow: " + imgPath);
@@ -201,7 +202,7 @@ public class ImageView extends JFrame implements KeyListener {
     }
 
     private void scaleIconImg() {
-        BufferedImage img = getIconImg();
+        BufferedImage img = loadImgFromStore();
         Dimension dim = new Dimension(
                 (int) (img.getWidth(null) * scale),
                 (int) (img.getHeight(null) * scale)

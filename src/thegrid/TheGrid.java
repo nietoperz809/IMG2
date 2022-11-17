@@ -1,5 +1,6 @@
 package thegrid;
 
+import buildinfo.BuildInfo;
 import imageloader.DBHandler;
 
 import javax.swing.*;
@@ -75,13 +76,13 @@ public class TheGrid extends JFrame {
 
         rootPane.add(lab);
         Instant end = Instant.now();
-        String txt = "Loaded " + (++imageCount) + " Thumbs in " + Duration.between(startTime, end).toMillis() / 1000 + " Seconds";
-        setTitle(txt);
-        progress.setTextAndValue(txt, imageCount);
+        String info = "Loaded " + (++imageCount) + " Thumbs in " + Duration.between(startTime, end).toMillis() / 1000 + " Seconds";
+        progress.setTextAndValue(info, imageCount);
         if (imageCount >= allFiles.size()) {
             progress.dispose();
             rootPane.doLayout();
             scrollPane.getViewport().setView(rootPane);
+            setTitle (BuildInfo.buildInfo + " -- " + info);
             setVisible(true);
         }
     }
