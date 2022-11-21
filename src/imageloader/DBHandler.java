@@ -23,6 +23,10 @@ public class DBHandler {
 
     private static final String rootDir = "C:\\peter.home\\java\\IMG2\\datastore\\";
 
+    /*
+        jdbc:h2:C:\peter.home\java\IMG2\datastore\mydb;CIPHER=AES
+     */
+
     /**
      * Private constructor like Singletons should have
      */
@@ -78,11 +82,24 @@ public class DBHandler {
         }
     }
 
-    public List<String> getFileNames() {
-        ArrayList<String> al = new ArrayList<>();
-        try (ResultSet res = query("select name,thumb from IMAGES group by thumb,name")) {
+    public static class NameID {
+        public String name;
+        public int rowid;
+
+        public NameID(String name, int rowid) {
+            this.name = name;
+            this.rowid = rowid;
+        }
+    }
+
+
+    public List<NameID> getFileNames() {
+        ArrayList<NameID> al = new ArrayList<>();
+        try (ResultSet res = query("select name,_ROWID_ from IMAGES order by _ROWID_ asc")) {
             while (res.next()) {
-                al.add(res.getString(1));
+                NameID nid = new NameID (res.getString(1),
+                        res.getInt(2));
+                al.add(nid);
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -91,12 +108,12 @@ public class DBHandler {
         //return al.subList(0,10);
     }
 
-    public boolean delete(String name) {
-        if (!askForDel(null, name)) {
+    public boolean delete(int rowid) {
+        if (!askForDel(null, ""+rowid)) {
             return false;
         }
         try {
-            statement.execute("delete from IMAGES where name = '" + name + "'");
+            statement.execute("delete from IMAGES where _ROWID_ = "+rowid);
             return true;
         } catch (SQLException e) {
             //throw new RuntimeException(e);

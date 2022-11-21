@@ -121,21 +121,23 @@ public class Tools {
         return img;
     }
 
-    /**
-     * Access resource as Inputstream
-     * @param name file name of the resource
-     * @return Inputsream to read the resource
-     */
-    public static InputStream getResource (String name)
-    {
-        InputStream is = ClassLoader.getSystemResourceAsStream (name);
-        if (is == null)
-        {
-            System.out.println ("could not load: "+name);
-            return null;
-        }
-        return new BufferedInputStream(is);
-    }
+// --Commented out by Inspection START (11/17/2022 9:14 PM):
+//    /**
+//     * Access resource as Inputstream
+//     * @param name file name of the resource
+//     * @return Inputsream to read the resource
+//     */
+//    public static InputStream getResource (String name)
+//    {
+//        InputStream is = ClassLoader.getSystemResourceAsStream (name);
+//        if (is == null)
+//        {
+//            System.out.println ("could not load: "+name);
+//            return null;
+//        }
+//        return new BufferedInputStream(is);
+//    }
+// --Commented out by Inspection STOP (11/17/2022 9:14 PM)
 
     /**
      * Converts Image to byte array

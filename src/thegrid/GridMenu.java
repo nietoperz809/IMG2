@@ -11,8 +11,8 @@ import java.util.prefs.Preferences;
 public class GridMenu extends JMenuBar {
     public GridMenu(TheGrid theGrid) {
         JMenu jm = new JMenu("Menu");
+
         JMenuItem m1 = new JMenuItem("Add more pictures ...");
-        JMenuItem m2 = new JMenuItem("Backup DB ...");
         m1.addActionListener(new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -36,6 +36,8 @@ public class GridMenu extends JMenuBar {
                 }
             }
         });
+
+        JMenuItem m2 = new JMenuItem("Backup DB ...");
         m2.addActionListener(new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {

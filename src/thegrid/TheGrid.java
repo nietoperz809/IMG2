@@ -15,7 +15,7 @@ public class TheGrid extends JFrame {
     //public final String srcDir;
     public final JPanel rootPane;
     public final JScrollPane scrollPane;
-    private final java.util.List<String> allFiles;
+    private final java.util.List<DBHandler.NameID> allFiles;
     private final ProgressBox progress;
     private Instant startTime;
     private int imageCount;
@@ -65,7 +65,7 @@ public class TheGrid extends JFrame {
      * Add one single image to the frame
      */
     public void addImageLabel(int s) {
-        String fileName = allFiles.get(s);
+        String fileName = allFiles.get(s).name;
         BufferedImage thumbnailImage = null;
         try {
             thumbnailImage = DBHandler.getInst().loadThumbnail(fileName);

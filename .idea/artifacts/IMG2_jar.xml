@@ -1,0 +1,10 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="IMG2:jar">
+    <output-path>$PROJECT_DIR$/IMG2_jar</output-path>
+    <root id="archive" name="IMG2.jar">
+      <element id="module-output" name="IMG2" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/sejda/webp-imageio/webp-imageio-sejda/0.1.0/webp-imageio-sejda-0.1.0.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/lib/h2-2.1.214.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>

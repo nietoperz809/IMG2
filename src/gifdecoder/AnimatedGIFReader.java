@@ -29,7 +29,7 @@ import java.util.List;
  * Decodes and shows images in GIF format, supports both Gif87a and Gif89a.
  * The current class doesn't support interlaced or animated GIFs,but can 
  * anyway shows these kinds of images! Supports transparent GIFs!
- *
+ * <p>
  * Change log: the LZW decoding part becomes a general purpose class which
  * could be used to decode TIFF image as well.
  */

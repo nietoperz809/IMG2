@@ -10,16 +10,19 @@ import java.util.List;
 
 class GridImage extends JLabel {
 
-    private void init (List<String> files, int index, JPanel rootPane) {
-        String thisName = files.get(index);
-        setToolTipText (thisName+" -- right mouse button to delete");
+    private void init (List<DBHandler.NameID> files, int index, JPanel rootPane) {
+        DBHandler.NameID thisID = files.get(index);
+        setToolTipText (thisID.name+" -- right mouse button to delete");
+        setVerticalTextPosition(JLabel.BOTTOM);
+        setHorizontalTextPosition(JLabel.CENTER);
+        setText(""+thisID.rowid);
         addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 if (e.getButton() == 3) { // right click
-                    if (!Tools.Question("Really delete "+thisName+"?"))
+                    if (!Tools.Question("Really delete "+thisID.rowid+"?"))
                         return;
-                    if (DBHandler.getInst().delete(thisName)) {
+                    if (DBHandler.getInst().delete(thisID.rowid)) {
                         rootPane.remove(GridImage.this);
                         rootPane.doLayout();
                         rootPane.repaint();
@@ -38,10 +41,10 @@ class GridImage extends JLabel {
      * @param rootPane the Imagegrid itself
      * @param ImageName name of the new Image
      */
-    GridImage(Image iconImage, List<String> files,
+    GridImage(Image iconImage, List<DBHandler.NameID> files,
               JPanel rootPane, String ImageName) {
         super(new ImageIcon(iconImage));
-        files.add(ImageName);
+        files.add (new DBHandler.NameID(ImageName, -1)); //(ImageName);
         int index = files.size()-1;
         init (files, index, rootPane);
     }
@@ -53,7 +56,7 @@ class GridImage extends JLabel {
      * @param currentIndex index of current image file
      * @param rootPane the Imagegrid itself
      */
-    GridImage(Image IconImage, List<String> files, int currentIndex, JPanel rootPane) {
+    GridImage(Image IconImage, List<DBHandler.NameID> files, int currentIndex, JPanel rootPane) {
         super(new ImageIcon(IconImage));
         init (files, currentIndex, rootPane);
     }

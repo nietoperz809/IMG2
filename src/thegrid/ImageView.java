@@ -15,7 +15,7 @@ import java.io.IOException;
 
 public class ImageView extends JFrame implements KeyListener {
     private final JScrollPane scrollPane;
-    private final java.util.List<String> allFiles;
+    private final java.util.List<DBHandler.NameID> allFiles;
     private final JLabel imgLabel;
     private float scale = 1.0f;
     private String imgPath;
@@ -23,10 +23,10 @@ public class ImageView extends JFrame implements KeyListener {
 
     private Timer timer = null;
 
-    public ImageView(java.util.List<String> files, int idx) {
+    public ImageView(java.util.List<DBHandler.NameID> files, int idx) {
         allFiles = files;
         currentIdx = idx;
-        imgPath = files.get(idx);
+        imgPath = files.get(idx).name;
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setTitle(imgPath);
         addKeyListener(this);
@@ -83,7 +83,7 @@ public class ImageView extends JFrame implements KeyListener {
                     currentIdx++;
                 else
                     currentIdx = 0;
-                imgPath = allFiles.get(currentIdx);
+                imgPath = allFiles.get(currentIdx).name;
                 setImg();
             }
             case KeyEvent.VK_PAGE_UP -> {
@@ -91,7 +91,7 @@ public class ImageView extends JFrame implements KeyListener {
                     currentIdx--;
                 else
                     currentIdx = allFiles.size() - 1;
-                imgPath = allFiles.get(currentIdx);
+                imgPath = allFiles.get(currentIdx).name;
                 setImg();
             }
             case KeyEvent.VK_PLUS -> {
@@ -131,7 +131,7 @@ public class ImageView extends JFrame implements KeyListener {
             case KeyEvent.VK_H -> adjustOnHeight();
             case KeyEvent.VK_T -> {
                 currentIdx = (int) (Math.random() * allFiles.size());
-                imgPath = allFiles.get(currentIdx);
+                imgPath = allFiles.get(currentIdx).name;
                 setTitle(imgPath);
                 adjustOnHeight();
             }
@@ -139,7 +139,7 @@ public class ImageView extends JFrame implements KeyListener {
                 if (timer == null) {
                     timer = new Timer(10000, e1 -> {
                         currentIdx = (int) (Math.random() * allFiles.size());
-                        imgPath = allFiles.get(currentIdx);
+                        imgPath = allFiles.get(currentIdx).name;
                         setTitle("Slideshow: " + imgPath);
                         adjustOnHeight();
                     });
