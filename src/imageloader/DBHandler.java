@@ -8,6 +8,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.*;
+import java.security.MessageDigest;
 import java.sql.*;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -83,8 +84,8 @@ public class DBHandler {
     }
 
     public static class NameID {
-        public String name;
-        public int rowid;
+        public final String name;
+        public final int rowid;
 
         public NameID(String name, int rowid) {
             this.name = name;
@@ -97,9 +98,8 @@ public class DBHandler {
         ArrayList<NameID> al = new ArrayList<>();
         try (ResultSet res = query("select name,_ROWID_ from IMAGES order by _ROWID_ asc")) {
             while (res.next()) {
-                NameID nid = new NameID (res.getString(1),
-                        res.getInt(2));
-                al.add(nid);
+                al.add(new NameID (res.getString(1),
+                        res.getInt(2)));
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -178,12 +178,27 @@ public class DBHandler {
         return null;
     }
 
-    public BufferedImage loadThumbnail(String filename) throws IOException {
+    public static class ThumbHash {
+        public final BufferedImage img;
+        public final byte[] hash;
+
+        public ThumbHash(byte[] bytes) {
+            try {
+                img = Tools.byteArrayToImg(bytes);
+                MessageDigest md = MessageDigest.getInstance("MD5");
+                md.update(bytes);
+                hash = md.digest();
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }
+
+    public ThumbHash loadThumbnail(String filename) throws IOException {
         String q = "select thumb from IMAGES where name = '" + filename + "'";
         try (ResultSet res = query(q)) {
             if (res.next()) {
-                byte[] b = res.getBytes(1);
-                return Tools.byteArrayToImg(b);
+                return new ThumbHash(res.getBytes(1));
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);

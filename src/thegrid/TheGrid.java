@@ -66,13 +66,13 @@ public class TheGrid extends JFrame {
      */
     public void addImageLabel(int s) {
         String fileName = allFiles.get(s).name;
-        BufferedImage thumbnailImage = null;
+        DBHandler.ThumbHash tbh = null;
         try {
-            thumbnailImage = DBHandler.getInst().loadThumbnail(fileName);
+            tbh = DBHandler.getInst().loadThumbnail(fileName);
         } catch (Exception e) {
             System.err.println("thumb read fail: " + fileName);
         }
-        GridImage lab = new GridImage(thumbnailImage, allFiles, s, rootPane);
+        GridImage lab = new GridImage(tbh, allFiles, s, rootPane);
 
         rootPane.add(lab);
         Instant end = Instant.now();

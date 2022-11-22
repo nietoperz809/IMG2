@@ -2,20 +2,36 @@ package thegrid;
 
 import imageloader.DBHandler;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.security.MessageDigest;
 import java.util.List;
 
 class GridImage extends JLabel {
 
+    private byte[] imgHash;
+    private int rowID;
+
+    public byte[] getHash() {
+        return imgHash;
+    }
+    public int getRowID() {
+        return rowID;
+    }
+
     private void init (List<DBHandler.NameID> files, int index, JPanel rootPane) {
         DBHandler.NameID thisID = files.get(index);
+        rowID = thisID.rowid;
         setToolTipText (thisID.name+" -- right mouse button to delete");
         setVerticalTextPosition(JLabel.BOTTOM);
         setHorizontalTextPosition(JLabel.CENTER);
-        setText(""+thisID.rowid);
+        setText("-> "+thisID.rowid);
         addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -42,10 +58,11 @@ class GridImage extends JLabel {
      * @param ImageName name of the new Image
      */
     GridImage(Image iconImage, List<DBHandler.NameID> files,
-              JPanel rootPane, String ImageName) {
+              JPanel rootPane, String ImageName) throws Exception {
         super(new ImageIcon(iconImage));
         files.add (new DBHandler.NameID(ImageName, -1)); //(ImageName);
         int index = files.size()-1;
+        imgHash = Tools.imgHash((BufferedImage)iconImage);
         init (files, index, rootPane);
     }
 
@@ -56,8 +73,9 @@ class GridImage extends JLabel {
      * @param currentIndex index of current image file
      * @param rootPane the Imagegrid itself
      */
-    GridImage(Image IconImage, List<DBHandler.NameID> files, int currentIndex, JPanel rootPane) {
-        super(new ImageIcon(IconImage));
+    GridImage(DBHandler.ThumbHash tbh, List<DBHandler.NameID> files, int currentIndex, JPanel rootPane) {
+        super(new ImageIcon(tbh.img));
+        imgHash = tbh.hash;
         init (files, currentIndex, rootPane);
     }
 }

@@ -13,6 +13,7 @@ import java.awt.geom.AffineTransform;
 import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
 import java.io.*;
+import java.security.MessageDigest;
 
 import static javax.swing.JOptionPane.YES_NO_OPTION;
 
@@ -121,23 +122,17 @@ public class Tools {
         return img;
     }
 
-// --Commented out by Inspection START (11/17/2022 9:14 PM):
-//    /**
-//     * Access resource as Inputstream
-//     * @param name file name of the resource
-//     * @return Inputsream to read the resource
-//     */
-//    public static InputStream getResource (String name)
-//    {
-//        InputStream is = ClassLoader.getSystemResourceAsStream (name);
-//        if (is == null)
-//        {
-//            System.out.println ("could not load: "+name);
-//            return null;
-//        }
-//        return new BufferedInputStream(is);
-//    }
-// --Commented out by Inspection STOP (11/17/2022 9:14 PM)
+    public static byte[] imgHash (BufferedImage in) throws Exception {
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        ImageIO.write(in, "jpg", outputStream);
+        byte[] data = outputStream.toByteArray();
+
+        System.out.println("Start MD5 Digest");
+        MessageDigest md = MessageDigest.getInstance("MD5");
+        md.update(data);
+        return md.digest();
+    }
+
 
     /**
      * Converts Image to byte array

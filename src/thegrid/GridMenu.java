@@ -4,8 +4,10 @@ import imageloader.DBHandler;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.io.File;
+import java.util.Arrays;
 import java.util.prefs.Preferences;
 
 public class GridMenu extends JMenuBar {
@@ -45,8 +47,34 @@ public class GridMenu extends JMenuBar {
             }
         });
 
+        JMenuItem m3 = new JMenuItem("Search for double Items");
+        m3.addActionListener(new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                StringBuffer sb = new StringBuffer();
+                Component[] components = theGrid.rootPane.getComponents();
+                for (int i = 0; i < components.length; i++) {
+                    for (int j = i + 1; j < components.length; j++) {
+                        GridImage g1 = (GridImage) components[i];
+                        GridImage g2 = (GridImage) components[j];
+                        if (Arrays.equals(g1.getHash(), g2.getHash())) {
+                            sb.append(g1.getRowID()).append(" and ")
+                                    .append(g2.getRowID()).append(" are identical\n");
+                        }
+                    }
+                }
+                String msg;
+                if (sb.isEmpty())
+                    msg = "No duplicates!";
+                else
+                    msg = sb.toString();
+                JOptionPane.showMessageDialog(theGrid, msg, "Search result", JOptionPane.INFORMATION_MESSAGE);
+            }
+        });
+
         jm.add(m1);
         jm.add(m2);
+        jm.add(m3);
         this.add(jm);
         theGrid.setJMenuBar(this);
     }

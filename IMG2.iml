@@ -8,7 +8,7 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" name="h2-2.1.214" level="project" />
     <orderEntry type="library" name="sejda.webp.imageio" level="project" />
+    <orderEntry type="library" name="h2database.h2" level="project" />
   </component>
 </module>
