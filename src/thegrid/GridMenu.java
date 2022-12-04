@@ -1,6 +1,7 @@
 package thegrid;
 
 import database.DBHandler;
+import video.VideoApp;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -72,9 +73,18 @@ public class GridMenu extends JMenuBar {
             }
         });
 
+        JMenuItem m4 = new JMenuItem("video App");
+        m4.addActionListener(new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                VideoApp.main(null);
+            }
+        });
+
         jm.add(m1);
         jm.add(m2);
         jm.add(m3);
+        jm.add(m4);
         this.add(jm);
         theGrid.setJMenuBar(this);
     }

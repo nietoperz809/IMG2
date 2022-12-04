@@ -13,20 +13,16 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ddb69741-e020-4d21-a32f-f00e79c6818a" name="Changes" comment="new backup, a lot faster without zipping">
-      <change afterPath="$PROJECT_DIR$/.idea/dbnavigator.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/h2database_h2.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/vlcj.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/video/VideoApp.form" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/video/VideoApp.java" afterDir="false" />
+    <list default="true" id="ddb69741-e020-4d21-a32f-f00e79c6818a" name="Changes" comment="+ video playback 1st version">
+      <change beforePath="$PROJECT_DIR$/.idea/artifacts/IMG2_jar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/artifacts/IMG2_jar.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/IMG2.iml" beforeDir="false" afterPath="$PROJECT_DIR$/IMG2.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IMG2_jar/IMG2.jar" beforeDir="false" afterPath="$PROJECT_DIR$/IMG2_jar/IMG2.jar" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/buildinfo/BuildInfo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/buildinfo/BuildInfo.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/buildinfo/build.number" beforeDir="false" afterPath="$PROJECT_DIR$/src/buildinfo/build.number" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/database/DBHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/database/DBHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/database/VideoFiller.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/database/VideoFiller.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/thegrid/GridImage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/thegrid/GridImage.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/thegrid/TheGrid.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/thegrid/TheGrid.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/thegrid/GridMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/thegrid/GridMenu.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/video/VideoApp.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/video/VideoApp.form" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/video/VideoApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/video/VideoApp.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -85,7 +81,7 @@
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "UI_DESIGNER_EDITOR_MODE.UIDesignerToolWindowManager.WIDTH": "253",
     "last_opened_file_path": "C:/Libraries/Java/vlcj-4.7.1/vlcj-natives-4.1.0.jar",
-    "project.structure.last.edited": "Libraries",
+    "project.structure.last.edited": "Artifacts",
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.2",
     "run.code.analysis.last.selected.profile": "pProject Default",
@@ -100,7 +96,7 @@
       <recent name="thegrid.Tools" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.VideoApp">
+  <component name="RunManager" selected="Application.Main">
     <configuration name="Console" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="org.h2.tools.Console" />
       <module name="IMG2" />
@@ -347,7 +343,14 @@
       <option name="project" value="LOCAL" />
       <updated>1670132247476</updated>
     </task>
-    <option name="localTasksCounter" value="22" />
+    <task id="LOCAL-00022" summary="+ video playback 1st version">
+      <created>1670157051462</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1670157051462</updated>
+    </task>
+    <option name="localTasksCounter" value="23" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -378,7 +381,8 @@
     <MESSAGE value="put rowid on display" />
     <MESSAGE value="backup" />
     <MESSAGE value="new backup, a lot faster without zipping" />
-    <option name="LAST_COMMIT_MESSAGE" value="new backup, a lot faster without zipping" />
+    <MESSAGE value="+ video playback 1st version" />
+    <option name="LAST_COMMIT_MESSAGE" value="+ video playback 1st version" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

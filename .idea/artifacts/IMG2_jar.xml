@@ -5,6 +5,10 @@
       <element id="module-output" name="IMG2" />
       <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/sejda/webp-imageio/webp-imageio-sejda/0.1.0/webp-imageio-sejda-0.1.0.jar" path-in-jar="/" />
       <element id="extracted-dir" path="$PROJECT_DIR$/lib/h2-2.1.214.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../../../Libraries/Java/vlcj-4.7.1/jna-5.2.0.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../../../Libraries/Java/vlcj-4.7.1/jna-platform-5.2.0.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../../../Libraries/Java/vlcj-4.7.1/vlcj-4.7.1.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../../../Libraries/Java/vlcj-4.7.1/vlcj-natives-4.1.0.jar" path-in-jar="/" />
     </root>
   </artifact>
 </component>

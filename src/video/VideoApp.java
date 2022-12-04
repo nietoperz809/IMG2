@@ -12,11 +12,11 @@ public class VideoApp extends JDialog {
     private JPanel contentPane;
     private JButton buttonPlay;
     private JButton buttonCancel;
-    private JList listControl;
+    private JList<String> listControl;
 
     public VideoApp() {
         setContentPane(contentPane);
-        setModal(true);
+        //setModal(true);
         getRootPane().setDefaultButton(buttonPlay);
 
         buttonPlay.addActionListener(new ActionListener() {
@@ -39,12 +39,12 @@ public class VideoApp extends JDialog {
             }
         });
 
-        // call onCancel() on ESCAPE
-        contentPane.registerKeyboardAction(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                onCancel();
-            }
-        }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
+//        // call onCancel() on ESCAPE
+//        contentPane.registerKeyboardAction(new ActionListener() {
+//            public void actionPerformed(ActionEvent e) {
+//                onCancel();
+//            }
+//        }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
 
         List<DBHandler.NameID> list = DBHandler.getInst().getVideoFileNames();
         DefaultListModel<String> model = new DefaultListModel<>();
@@ -54,18 +54,28 @@ public class VideoApp extends JDialog {
         listControl.setModel(model);
     }
 
+    private JFrame playerFrame;
+
     private void onOK() {
+        if (playerFrame != null)
+            return;
         String name = (String) listControl.getSelectedValue();
         try {
             Path temp = DBHandler.getInst().loadVideo(name);
             System.out.println(temp);
-            JFrame frame = new JFrame("My First Media Player");
-            frame.setBounds(100, 100, 600, 400);
-            frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+            playerFrame = new JFrame("My First Media Player");
+            playerFrame.setBounds(100, 100, 600, 400);
+            playerFrame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+            playerFrame.addWindowListener(new WindowAdapter() {
+                @Override
+                public void windowClosing(WindowEvent e) {
+                    onCancel();
+                }
+            });
             EmbeddedMediaPlayerComponent mpc
                     = new EmbeddedMediaPlayerComponent();
-            frame.setContentPane(mpc);
-            frame.setVisible(true);
+            playerFrame.setContentPane(mpc);
+            playerFrame.setVisible(true);
             mpc.mediaPlayer().videoSurface().attachVideoSurface();
             mpc.mediaPlayer().media().play(temp.toString());
         } catch (Exception e) {
@@ -74,8 +84,13 @@ public class VideoApp extends JDialog {
     }
 
     private void onCancel() {
-        // add your code here if necessary
-        dispose();
+        if (playerFrame == null)
+            return;
+        EmbeddedMediaPlayerComponent mpc = (EmbeddedMediaPlayerComponent) playerFrame.getContentPane();
+        mpc.release();
+        //mpc.mediaPlayer().media().
+        playerFrame.dispose();
+        playerFrame = null;
     }
 
     public static void main(String[] args) {
@@ -83,6 +98,5 @@ public class VideoApp extends JDialog {
         dialog.setSize(400,400);
         dialog.setLocationRelativeTo(null);
         dialog.setVisible(true);
-        System.exit(0);
     }
 }

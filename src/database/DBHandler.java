@@ -205,6 +205,7 @@ public class DBHandler {
     }
 
     public Path loadVideo(String filename) throws Exception {
+        filename = filename.replace("'", "''");
         ResultSet res = DBHandler.getInst()
                 .query("select VID from VIDEOS where name='"+filename+"'");
         if (res == null)
