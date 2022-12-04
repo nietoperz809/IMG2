@@ -10,5 +10,6 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="sejda.webp.imageio" level="project" />
     <orderEntry type="library" name="h2database.h2" level="project" />
+    <orderEntry type="library" name="vlcj" level="project" />
   </component>
 </module>

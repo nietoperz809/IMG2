@@ -64,7 +64,6 @@ class GridImage extends JLabel {
 
     /**
      * Constructor for initial fill of the ImageGrid
-     * @param IconImage smaller Icon image
      * @param files list of all names of images in the Image store
      * @param currentIndex index of current image file
      * @param rootPane the Imagegrid itself

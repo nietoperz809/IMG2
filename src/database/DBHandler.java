@@ -8,8 +8,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.*;
-import java.nio.channels.FileChannel;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.security.MessageDigest;
 import java.sql.*;
 import java.text.SimpleDateFormat;
@@ -85,7 +85,7 @@ public class DBHandler {
         return connection;
     }
 
-    private ResultSet query(String txt) {
+    public ResultSet query(String txt) {
         try {
             return statement.executeQuery(txt);
         } catch (SQLException e) {
@@ -93,9 +93,19 @@ public class DBHandler {
         }
     }
 
-    public List<NameID> getFileNames() {
+    public List<NameID> getImageFileNames() {
+        String sql = "select name,_ROWID_ from IMAGES order by _ROWID_ asc";
+        return getNames(sql);
+    }
+
+    public List<NameID> getVideoFileNames() {
+        String sql = "select name,_ROWID_ from VIDEOS order by _ROWID_ asc";
+        return getNames(sql);
+    }
+
+    private List<NameID> getNames(String sql) {
         ArrayList<NameID> al = new ArrayList<>();
-        try (ResultSet res = query("select name,_ROWID_ from IMAGES order by _ROWID_ asc")) {
+        try (ResultSet res = query(sql)) {
             while (res.next()) {
                 al.add(new NameID(res.getString(1),
                         res.getInt(2)));
@@ -104,7 +114,6 @@ public class DBHandler {
             throw new RuntimeException(e);
         }
         return al;
-        //return al.subList(0,10);
     }
 
     public boolean delete(int rowid) {
@@ -193,6 +202,20 @@ public class DBHandler {
             throw new RuntimeException(e);
         }
         return null;
+    }
+
+    public Path loadVideo(String filename) throws Exception {
+        ResultSet res = DBHandler.getInst()
+                .query("select VID from VIDEOS where name='"+filename+"'");
+        if (res == null)
+            return null;
+        Path temp = Files.createTempFile("vid_", ".tmp");
+        if (res.next()) {
+            byte[] b = res.getBytes(1);
+            Files.write(temp, b);
+        }
+        res.close();
+        return temp;
     }
 
     public ThumbHash loadThumbnail(String filename) throws IOException {

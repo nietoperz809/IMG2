@@ -21,7 +21,7 @@ public class TheGrid extends JFrame {
     private int imageCount;
 
     public TheGrid() {
-        allFiles = DBHandler.getInst().getFileNames();
+        allFiles = DBHandler.getInst().getImageFileNames();
         progress = new ProgressBox(this, allFiles.size());
         rootPane = new JPanel();
         scrollPane = new JScrollPane(rootPane);
