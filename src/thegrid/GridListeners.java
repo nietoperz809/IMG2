@@ -1,6 +1,6 @@
 package thegrid;
 
-import imageloader.DBHandler;
+import database.DBHandler;
 
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.Transferable;

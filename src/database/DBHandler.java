@@ -1,4 +1,4 @@
-package imageloader;
+package database;
 
 import thegrid.ImageScaler;
 import thegrid.Tools;
@@ -8,6 +8,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.*;
+import java.nio.channels.FileChannel;
+import java.nio.file.Files;
 import java.security.MessageDigest;
 import java.sql.*;
 import java.text.SimpleDateFormat;
@@ -17,13 +19,13 @@ import java.util.UUID;
 
 public class DBHandler {
 
+    private static final String rootDir = "C:\\peter.home\\java\\IMG2\\datastore\\";
+    private static final String dbFile = "mydb";
+    private static final String dbFileFull = "mydb" + ".mv.db";
     private static String aes_pwd = null;
     private static DBHandler _inst = null;
     private Connection connection;
     private Statement statement;
-
-    private static final String rootDir = "C:\\peter.home\\java\\IMG2\\datastore\\";
-
     /*
         jdbc:h2:C:\peter.home\java\IMG2\datastore\mydb;CIPHER=AES
      */
@@ -36,13 +38,17 @@ public class DBHandler {
             if (aes_pwd == null) {
                 aes_pwd = UnlockDBDialog.xmain();
             }
-            String url = "jdbc:h2:" + rootDir + "mydb;CIPHER=AES";
+            String url = "jdbc:h2:" + rootDir + dbFile + ";CIPHER=AES";
             String user = "LALA";
             String pwd = aes_pwd + " dumm";
             connection = DriverManager.getConnection(url, user, pwd);
             statement = connection.createStatement();
+            // create video table
+            String sql = "create table if not exists VIDEOS " +
+                    "(VID blob, NAME varchar(200), HASHVAL blob(16))";
+            statement.execute(sql);
         } catch (SQLException e) {
-            Tools.Error("Wrong Password!");
+            Tools.Error(e.toString());
             System.exit(-1);
         }
     }
@@ -75,6 +81,10 @@ public class DBHandler {
         ) == 0;
     }
 
+    public Connection getConn() {
+        return connection;
+    }
+
     private ResultSet query(String txt) {
         try {
             return statement.executeQuery(txt);
@@ -83,22 +93,11 @@ public class DBHandler {
         }
     }
 
-    public static class NameID {
-        public final String name;
-        public final int rowid;
-
-        public NameID(String name, int rowid) {
-            this.name = name;
-            this.rowid = rowid;
-        }
-    }
-
-
     public List<NameID> getFileNames() {
         ArrayList<NameID> al = new ArrayList<>();
         try (ResultSet res = query("select name,_ROWID_ from IMAGES order by _ROWID_ asc")) {
             while (res.next()) {
-                al.add(new NameID (res.getString(1),
+                al.add(new NameID(res.getString(1),
                         res.getInt(2)));
             }
         } catch (SQLException e) {
@@ -109,11 +108,11 @@ public class DBHandler {
     }
 
     public boolean delete(int rowid) {
-        if (!askForDel(null, ""+rowid)) {
+        if (!askForDel(null, "" + rowid)) {
             return false;
         }
         try {
-            statement.execute("delete from IMAGES where _ROWID_ = "+rowid);
+            statement.execute("delete from IMAGES where _ROWID_ = " + rowid);
             return true;
         } catch (SQLException e) {
             //throw new RuntimeException(e);
@@ -121,13 +120,31 @@ public class DBHandler {
         }
     }
 
-    public void backup () {
-        String timeStamp = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss").format(new java.util.Date());
+    public void backup() {
+        String timeStamp = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss")
+                .format(new java.util.Date());
+        String newFile = rootDir + timeStamp + ".backup";
+        String origFile = rootDir + dbFileFull;
+
+        close();
         try {
-            statement.execute("backup to '"+rootDir+timeStamp+".zip'");
-        } catch (SQLException e) {
+            InputStream in = new BufferedInputStream(
+                    new FileInputStream(origFile));
+
+            OutputStream out = new BufferedOutputStream(
+                    new FileOutputStream(newFile));
+
+            byte[] buffer = new byte[1024*1024*4];
+            int lengthRead;
+            while ((lengthRead = in.read(buffer)) > 0) {
+                out.write(buffer, 0, lengthRead);
+                System.out.print(".");
+                out.flush();
+            }
+        } catch (Exception e) {
             throw new RuntimeException(e);
         }
+        getInst(); // reopen
     }
 
     public void addImages(File[] files, InsertCallback ic) throws Exception {
@@ -178,22 +195,6 @@ public class DBHandler {
         return null;
     }
 
-    public static class ThumbHash {
-        public final BufferedImage img;
-        public final byte[] hash;
-
-        public ThumbHash(byte[] bytes) {
-            try {
-                img = Tools.byteArrayToImg(bytes);
-                MessageDigest md = MessageDigest.getInstance("MD5");
-                md.update(bytes);
-                hash = md.digest();
-            } catch (Exception e) {
-                throw new RuntimeException(e);
-            }
-        }
-    }
-
     public ThumbHash loadThumbnail(String filename) throws IOException {
         String q = "select thumb from IMAGES where name = '" + filename + "'";
         try (ResultSet res = query(q)) {
@@ -212,6 +213,32 @@ public class DBHandler {
             _inst = null;
         } catch (SQLException e) {
             throw new RuntimeException(e);
+        }
+    }
+
+    public static class NameID {
+        public final String name;
+        public final int rowid;
+
+        public NameID(String name, int rowid) {
+            this.name = name;
+            this.rowid = rowid;
+        }
+    }
+
+    public static class ThumbHash {
+        public final BufferedImage img;
+        public final byte[] hash;
+
+        public ThumbHash(byte[] bytes) {
+            try {
+                img = Tools.byteArrayToImg(bytes);
+                MessageDigest md = MessageDigest.getInstance("MD5");
+                md.update(bytes);
+                hash = md.digest();
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
         }
     }
 }

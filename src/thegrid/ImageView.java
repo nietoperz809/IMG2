@@ -1,6 +1,6 @@
 package thegrid;
 
-import imageloader.DBHandler;
+import database.DBHandler;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;

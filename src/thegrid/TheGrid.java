@@ -1,7 +1,7 @@
 package thegrid;
 
 import buildinfo.BuildInfo;
-import imageloader.DBHandler;
+import database.DBHandler;
 
 import javax.swing.*;
 import java.awt.*;

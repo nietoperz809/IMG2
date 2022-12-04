@@ -1,16 +1,12 @@
 package thegrid;
 
-import imageloader.DBHandler;
+import database.DBHandler;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.security.MessageDigest;
 import java.util.List;
 
 class GridImage extends JLabel {
