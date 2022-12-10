@@ -1,15 +1,16 @@
 package database;
 
+import common.Tools;
 import thegrid.ImageScaler;
-import thegrid.Tools;
-import thegrid.UnlockDBDialog;
+import common.UnlockDBDialog;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.*;
+import java.nio.MappedByteBuffer;
+import java.nio.channels.FileChannel;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.security.MessageDigest;
 import java.sql.*;
 import java.text.SimpleDateFormat;
@@ -116,12 +117,25 @@ public class DBHandler {
         return al;
     }
 
-    public boolean delete(int rowid) {
+    public boolean deleteImage (int rowid) {
         if (!askForDel(null, "" + rowid)) {
             return false;
         }
         try {
             statement.execute("delete from IMAGES where _ROWID_ = " + rowid);
+            return true;
+        } catch (SQLException e) {
+            //throw new RuntimeException(e);
+            return false;
+        }
+    }
+
+    public boolean deleteVideo (int rowid) {
+        if (!askForDel(null, "" + rowid)) {
+            return false;
+        }
+        try {
+            statement.execute("delete from VIDEOS where _ROWID_ = " + rowid);
             return true;
         } catch (SQLException e) {
             //throw new RuntimeException(e);
@@ -156,7 +170,7 @@ public class DBHandler {
         getInst(); // reopen
     }
 
-    public void addImages(File[] files, InsertCallback ic) throws Exception {
+    public void addImageFiles (File[] files, InsertCallback ic) throws Exception {
         for (File file : files) {
             String name = UUID.randomUUID().toString();
             BufferedImage img = Tools.loadImage(file.getPath());
@@ -164,21 +178,44 @@ public class DBHandler {
                 System.err.println("no image");
                 continue;
             }
-            insert(name, img);
-            ic.newImage(img, name);
+            insertImageRecord(name, img);
+            ic.justInserted(img, name);
         }
         connection.commit();
     }
 
-    public void insert(String name, BufferedImage img) throws IOException {
-        byte[] buff = Tools.imgToByteArray(img);
+    /**
+     * Convert img into INT_RGB, generate thumbnail and put all int the tabke
+     * @param name image name, can be any string
+     * @param img th image
+     * @throws IOException if smth. gone wrong
+     */
+    public void insertImageRecord (String name, BufferedImage img) throws IOException {
+        BufferedImage big = ImageScaler.scaleExact(img,
+                new Dimension (img.getWidth(), img.getWidth()));
+        byte[] buff = Tools.imgToByteArray(big);
         BufferedImage thumbnailImage = ImageScaler.scaleExact(img,
                 new Dimension(100, 100));
         byte[] buff2 = Tools.imgToByteArray(thumbnailImage);
-        addImage(buff, buff2, name);
+        insertImageRecord(buff, buff2, name);
     }
 
-    private void addImage(byte[] img, byte[] thumb, String name) {
+    public void addVideoFile (File file) {
+        try {
+            byte[] fileContent = Files.readAllBytes(file.toPath());
+            insertVideoRecord(fileContent, file.getName());
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    /**
+     * Put raw data into IMAGES table
+     * @param img image as byte array
+     * @param thumb thumbnail as byte array
+     * @param name record name
+     */
+    private void insertImageRecord (byte[] img, byte[] thumb, String name) {
         PreparedStatement prep;
         try {
             prep = connection.prepareStatement(
@@ -186,6 +223,19 @@ public class DBHandler {
             prep.setBytes(1, img);
             prep.setBytes(2, thumb);
             prep.setString(3, name);
+            prep.execute();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private void insertVideoRecord (byte[] vid, String name) {
+        PreparedStatement prep;
+        try {
+            prep = connection.prepareStatement(
+                    "insert into VIDEOS (vid,name) values (?,?)");
+            prep.setBytes(1, vid);
+            prep.setString(2, name);
             prep.execute();
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -204,22 +254,49 @@ public class DBHandler {
         return null;
     }
 
-    public Path loadVideo(String filename) throws Exception {
+    public byte[] loadVideoBytes (String filename) throws Exception {
         filename = filename.replace("'", "''");
         ResultSet res = DBHandler.getInst()
                 .query("select VID from VIDEOS where name='"+filename+"'");
         if (res == null)
-            return null;
-        Path temp = Files.createTempFile("vid_", ".tmp");
+            throw new RuntimeException("no query results");
         if (res.next()) {
-            byte[] b = res.getBytes(1);
-            Files.write(temp, b);
+            byte[] bt = res.getBytes(1);
+            res.close();
+            return bt;
         }
-        res.close();
-        return temp;
+        throw new RuntimeException("no query results");
     }
 
-    public ThumbHash loadThumbnail(String filename) throws IOException {
+    /**
+     * Load video into mapped file
+     * @param videoName name of video record in database
+     * @return file name of file on disk
+     * @throws Exception if smth gone wrong
+     */
+    public String transferVideoIntoFile (String videoName) throws Exception {
+        byte[] bt = loadVideoBytes(videoName);
+        File fi = new File(System.getProperty("java.io.tmpdir")+File.separator+"myra.dat");
+        try (RandomAccessFile rafile = new RandomAccessFile(fi, "rw")) {
+            MappedByteBuffer out = rafile.getChannel()
+                    .map(FileChannel.MapMode.READ_WRITE, 0, bt.length);
+            out.put (bt);
+            out.load();
+        }
+        return fi.getAbsolutePath();
+    }
+
+    public void changeVideoName (String name, int rowid) {
+        String sql = "update VIDEOS set name ='"+name+"' where _rowid_ ="+rowid;
+        try {
+            statement.execute(sql);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+
+    public ThumbHash loadThumbnail(String filename) {
         String q = "select thumb from IMAGES where name = '" + filename + "'";
         try (ResultSet res = query(q)) {
             if (res.next()) {
@@ -247,6 +324,11 @@ public class DBHandler {
         public NameID(String name, int rowid) {
             this.name = name;
             this.rowid = rowid;
+        }
+
+        @Override
+        public String toString() {
+            return name + " : (" + rowid + ")";
         }
     }
 

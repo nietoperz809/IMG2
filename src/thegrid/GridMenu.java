@@ -1,5 +1,6 @@
 package thegrid;
 
+import common.Tools;
 import database.DBHandler;
 import video.VideoApp;
 
@@ -77,7 +78,7 @@ public class GridMenu extends JMenuBar {
         m4.addActionListener(new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                VideoApp.main(null);
+                VideoApp.main(theGrid);
             }
         });
 

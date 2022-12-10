@@ -1,20 +1,32 @@
 package video;
 
+import common.LineInput;
 import database.DBHandler;
-import uk.co.caprica.vlcj.player.component.EmbeddedMediaPlayerComponent;
 
 import javax.swing.*;
+import java.awt.*;
+import java.awt.datatransfer.DataFlavor;
+import java.awt.datatransfer.Transferable;
+import java.awt.dnd.DnDConstants;
+import java.awt.dnd.DropTarget;
+import java.awt.dnd.DropTargetAdapter;
+import java.awt.dnd.DropTargetDropEvent;
 import java.awt.event.*;
-import java.nio.file.Path;
+import java.io.File;
+import java.nio.file.Files;
 import java.util.List;
 
 public class VideoApp extends JDialog {
+    private Frame owner;
     private JPanel contentPane;
     private JButton buttonPlay;
     private JButton buttonCancel;
-    private JList<String> listControl;
+    private JList<DBHandler.NameID> listControl;
+    private JButton deleteButton;
+    private JButton exportButton;
+    private JButton renameButton;
 
-    public VideoApp() {
+    public VideoApp () {
         setContentPane(contentPane);
         //setModal(true);
         getRootPane().setDefaultButton(buttonPlay);
@@ -32,69 +44,104 @@ public class VideoApp extends JDialog {
         });
 
         // call onCancel() when cross is clicked
-        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(DISPOSE_ON_CLOSE);                                    
         addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e) {
+                if (owner != null)
+                    owner.setEnabled(true);
                 onCancel();
             }
         });
 
-//        // call onCancel() on ESCAPE
-//        contentPane.registerKeyboardAction(new ActionListener() {
-//            public void actionPerformed(ActionEvent e) {
-//                onCancel();
-//            }
-//        }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
+        setListContent();
 
-        List<DBHandler.NameID> list = DBHandler.getInst().getVideoFileNames();
-        DefaultListModel<String> model = new DefaultListModel<>();
-        for (DBHandler.NameID nid : list) {
-            model.addElement(nid.name);
-        }
-        listControl.setModel(model);
+        enableDrop();
+        deleteButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int id = listControl.getSelectedValue().rowid;
+                DBHandler.getInst().deleteVideo(id);
+                setListContent();
+                repaint();
+            }
+        });
+        exportButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                DBHandler.NameID nameid = listControl.getSelectedValue();
+                try {
+                    JFileChooser fileChooser = new JFileChooser();
+                    fileChooser.setSelectedFile(new File(nameid.name));
+                    int option = fileChooser.showSaveDialog(VideoApp.this);
+                    if(option == JFileChooser.APPROVE_OPTION){
+                        byte[] bt = DBHandler.getInst().loadVideoBytes(nameid.name);
+                        File f = fileChooser.getSelectedFile();
+                        Files.write(f.toPath(),bt);
+                    }
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        });
+        renameButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                DBHandler.NameID nameid = listControl.getSelectedValue();
+                String res = LineInput.xmain();
+                DBHandler.getInst().changeVideoName(res, nameid.rowid);
+                setListContent();
+            }
+        });
     }
 
-    private JFrame playerFrame;
+    MediaPlayerBox playerBox = new MediaPlayerBox();
 
     private void onOK() {
-        if (playerFrame != null)
-            return;
-        String name = (String) listControl.getSelectedValue();
-        try {
-            Path temp = DBHandler.getInst().loadVideo(name);
-            System.out.println(temp);
-            playerFrame = new JFrame("My First Media Player");
-            playerFrame.setBounds(100, 100, 600, 400);
-            playerFrame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-            playerFrame.addWindowListener(new WindowAdapter() {
-                @Override
-                public void windowClosing(WindowEvent e) {
-                    onCancel();
-                }
-            });
-            EmbeddedMediaPlayerComponent mpc
-                    = new EmbeddedMediaPlayerComponent();
-            playerFrame.setContentPane(mpc);
-            playerFrame.setVisible(true);
-            mpc.mediaPlayer().videoSurface().attachVideoSurface();
-            mpc.mediaPlayer().media().play(temp.toString());
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+        playerBox.start (listControl);
     }
 
     private void onCancel() {
-        if (playerFrame == null)
-            return;
-        EmbeddedMediaPlayerComponent mpc = (EmbeddedMediaPlayerComponent) playerFrame.getContentPane();
-        mpc.release();
-        //mpc.mediaPlayer().media().
-        playerFrame.dispose();
-        playerFrame = null;
+        playerBox.stop();
     }
 
-    public static void main(String[] args) {
+    private void setListContent() {
+        List<DBHandler.NameID> list = DBHandler.getInst().getVideoFileNames();
+        DefaultListModel<DBHandler.NameID> model = new DefaultListModel<>();
+        model.addAll (list);
+        listControl.setModel(model);
+    }
+
+    private void enableDrop() {
+        new DropTarget(this, new DropTargetAdapter() {
+            @Override
+            public void drop(DropTargetDropEvent event) {
+                event.acceptDrop(DnDConstants.ACTION_COPY);
+                Transferable transferable = event.getTransferable();
+                DataFlavor[] flavors = transferable.getTransferDataFlavors();
+                for (DataFlavor flavor : flavors) {
+                    if (flavor.isFlavorJavaFileListType()) {
+                        java.util.List<File> files;
+                        try {
+                            files = (java.util.List<File>) transferable.getTransferData(flavor);
+                            File[] array = files.toArray(new File[0]);
+                            DBHandler.getInst().addVideoFile(array[0]);
+                            setListContent();
+                            repaint();
+                        } catch (Exception e) {
+                            throw new RuntimeException(e);
+                        }
+                        return; // only one file
+                    }
+                }
+            }
+        });
+    }
+
+    public static void main(Frame owner) {
         VideoApp dialog = new VideoApp();
+        dialog.owner = owner;
+        if (owner != null)
+            owner.setEnabled(false);
         dialog.setSize(400,400);
         dialog.setLocationRelativeTo(null);
         dialog.setVisible(true);

@@ -1,6 +1,7 @@
 package thegrid;
 
 import buildinfo.BuildInfo;
+import common.ProgressBox;
 import database.DBHandler;
 
 import javax.swing.*;
@@ -37,8 +38,9 @@ public class TheGrid extends JFrame {
 
     public static void main(String... ignored) {
         try {
-            UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
+            //UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
             TheGrid tg = new TheGrid();
+            //VideoApp.main(null);
             tg.imageCount = 0;
             tg.startTime = Instant.now();
 
@@ -51,7 +53,7 @@ public class TheGrid extends JFrame {
     }
 
     public void addImageFilesToDatabase(File[] files) throws Exception {
-        DBHandler.getInst().addImages(files, (img, name) -> {
+        DBHandler.getInst().addImageFiles(files, (img, name) -> {
             BufferedImage thumbnailImage = ImageScaler.scaleExact(img,
                     new Dimension(100, 100));
             GridImage lab = new GridImage(thumbnailImage, allFiles,

@@ -1,5 +1,6 @@
 package thegrid;
 
+import common.Tools;
 import database.DBHandler;
 
 import javax.swing.*;
@@ -34,7 +35,7 @@ class GridImage extends JLabel {
                 if (e.getButton() == 3) { // right click
                     if (!Tools.Question("Really delete "+thisID.rowid+"?"))
                         return;
-                    if (DBHandler.getInst().delete(thisID.rowid)) {
+                    if (DBHandler.getInst().deleteImage(thisID.rowid)) {
                         rootPane.remove(GridImage.this);
                         rootPane.doLayout();
                         rootPane.repaint();
