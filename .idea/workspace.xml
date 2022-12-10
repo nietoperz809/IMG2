@@ -13,11 +13,20 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ddb69741-e020-4d21-a32f-f00e79c6818a" name="Changes" comment="repo restored">
+    <list default="true" id="ddb69741-e020-4d21-a32f-f00e79c6818a" name="Changes" comment="scrollbar now can change video pos">
       <change afterPath="$PROJECT_DIR$/datastore/2022-12-06-21-00-28.backup" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/datastore/2022-12-08-16-00-28.backup" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/datastore/mydb.mv.db" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/datastore/mydb.trace.db" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/common/LineInput.form" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/common/LineInput.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/common/ProgressBox.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/common/Tools.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/common/UnlockDBDialog.form" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/common/UnlockDBDialog.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IMG2.iml" beforeDir="false" afterPath="$PROJECT_DIR$/IMG2.iml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -425,7 +434,21 @@
       <option name="project" value="LOCAL" />
       <updated>1670639746600</updated>
     </task>
-    <option name="localTasksCounter" value="34" />
+    <task id="LOCAL-00034" summary="backup">
+      <created>1670641302158</created>
+      <option name="number" value="00034" />
+      <option name="presentableId" value="LOCAL-00034" />
+      <option name="project" value="LOCAL" />
+      <updated>1670641302158</updated>
+    </task>
+    <task id="LOCAL-00035" summary="scrollbar now can change video pos">
+      <created>1670659673789</created>
+      <option name="number" value="00035" />
+      <option name="presentableId" value="LOCAL-00035" />
+      <option name="project" value="LOCAL" />
+      <updated>1670659673789</updated>
+    </task>
+    <option name="localTasksCounter" value="36" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -460,10 +483,11 @@
     <MESSAGE value="delete tempfile after playing" />
     <MESSAGE value="+ renaming videos" />
     <MESSAGE value="fixed InserImageRecord, wrong img type on WEBP conversion" />
-    <MESSAGE value="backup" />
     <MESSAGE value="added scrollbar to video player" />
     <MESSAGE value="repo restored" />
-    <option name="LAST_COMMIT_MESSAGE" value="repo restored" />
+    <MESSAGE value="backup" />
+    <MESSAGE value="scrollbar now can change video pos" />
+    <option name="LAST_COMMIT_MESSAGE" value="scrollbar now can change video pos" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
