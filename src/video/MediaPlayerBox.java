@@ -19,6 +19,9 @@ public class MediaPlayerBox {
         sbar.setBackground(Color.YELLOW);
         UIManager.getLookAndFeelDefaults().put( "ScrollBar.thumb", Color.blue );
         sbar.setMaximum(1000);
+        /**
+         * forward/backward by scrollbar move
+         */
         sbar.addAdjustmentListener(adjustmentEvent -> {
             if (mpc == null)
                 return;
@@ -29,6 +32,9 @@ public class MediaPlayerBox {
                 mp.play();
             }
         });
+        /**
+         * start/stop by right click on scrollbar
+         */
         sbar.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent mouseEvent) {
@@ -53,12 +59,18 @@ public class MediaPlayerBox {
             playerFrame.setTitle("Video Player Box, hit s-key to start and stop the vid");
             playerFrame.setBounds(100, 100, 600, 400);
             playerFrame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+            /**
+             * cleanup on window close
+             */
             playerFrame.addWindowListener(new WindowAdapter() {
                 @Override
                 public void windowClosing(WindowEvent e) {
                     stop();
                 }
             });
+            /**
+             * Keep focus on playerframe
+             */
             playerFrame.addFocusListener(new FocusAdapter() {
                 @Override
                 public void focusLost(FocusEvent e) {
@@ -67,6 +79,9 @@ public class MediaPlayerBox {
                     }
                 }
             });
+            /**
+             * Start/Stop using 's'
+             */
             playerFrame.addKeyListener(new KeyAdapter() {
                 static boolean stopped = false;
                 @Override
@@ -87,6 +102,9 @@ public class MediaPlayerBox {
             playerFrame.add (mpc, BorderLayout.CENTER); //setContentPane(mpc);
             playerFrame.add (sbar, BorderLayout.SOUTH);
             playerFrame.setVisible(true);
+            /**
+             * update scrollbar
+             */
             mpc.mediaPlayer().events().addMediaPlayerEventListener(new MediaPlayerEventAdapter() {
                 @Override
                 public void positionChanged(MediaPlayer mediaPlayer, float v) {
