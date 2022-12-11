@@ -1,19 +1,13 @@
 package video;
 
 import database.DBHandler;
-import uk.co.caprica.vlcj.media.MediaRef;
-import uk.co.caprica.vlcj.media.TrackType;
 import uk.co.caprica.vlcj.player.base.MediaPlayer;
 import uk.co.caprica.vlcj.player.base.MediaPlayerEventAdapter;
-import uk.co.caprica.vlcj.player.base.MediaPlayerEventListener;
 import uk.co.caprica.vlcj.player.component.EmbeddedMediaPlayerComponent;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.AdjustmentEvent;
-import java.awt.event.AdjustmentListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
+import java.awt.event.*;
 
 public class MediaPlayerBox {
     private volatile JFrame playerFrame;
@@ -21,25 +15,30 @@ public class MediaPlayerBox {
     private final JScrollBar sbar;
 
     public MediaPlayerBox() {
-        sbar = new JScrollBar(Scrollbar.HORIZONTAL);
+        sbar = new JScrollBar(Adjustable.HORIZONTAL);
         sbar.setBackground(Color.YELLOW);
         UIManager.getLookAndFeelDefaults().put( "ScrollBar.thumb", Color.blue );
         sbar.setMaximum(1000);
-        sbar.addAdjustmentListener(new AdjustmentListener() {
+        sbar.addAdjustmentListener(adjustmentEvent -> {
+            if (mpc == null)
+                return;
+            if (adjustmentEvent.getValueIsAdjusting()) {
+                var mp = mpc.mediaPlayer().controls();
+                mp.pause();
+                mp.setPosition(adjustmentEvent.getValue()/1000f);
+                mp.play();
+            }
+        });
+        sbar.addMouseListener(new MouseAdapter() {
             @Override
-            public void adjustmentValueChanged(AdjustmentEvent adjustmentEvent) {
-                if (mpc == null)
-                    return;
-                if (adjustmentEvent.getValueIsAdjusting()) {
+            public void mouseClicked(MouseEvent mouseEvent) {
+                if (mpc != null && SwingUtilities.isRightMouseButton(mouseEvent)) {
                     var mp = mpc.mediaPlayer().controls();
                     mp.pause();
-                    mp.setPosition(adjustmentEvent.getValue()/1000f);
-                    mp.play();
                 }
             }
         });
     }
-
 
     public void start(JList<DBHandler.NameID> listControl) {
         if (playerFrame != null)
@@ -59,6 +58,22 @@ public class MediaPlayerBox {
                     stop();
                 }
             });
+//            sbar.requestFocusInWindow();
+//            sbar.addKeyListener(new KeyAdapter() {
+//                static boolean stopped = false;
+//                @Override
+//                public void keyTyped(KeyEvent keyEvent) {
+//                    System.out.println(stopped);
+//                    if (keyEvent.getKeyCode() == KeyEvent.VK_S) {
+//                        var mp = mpc.mediaPlayer().controls();
+//                        stopped = !stopped;
+//                        if (stopped)
+//                            mp.pause();
+//                        else
+//                            mp.play();
+//                    }
+//                }
+//            });
             playerFrame.setLayout(new BorderLayout());
             playerFrame.add (mpc, BorderLayout.CENTER); //setContentPane(mpc);
             playerFrame.add (sbar, BorderLayout.SOUTH);

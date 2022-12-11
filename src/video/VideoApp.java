@@ -137,11 +137,18 @@ public class VideoApp extends JDialog {
         });
     }
 
-    public static void main(Frame owner) {
+    public static void open(Frame owner) {
         VideoApp dialog = new VideoApp();
         dialog.owner = owner;
         if (owner != null)
             owner.setEnabled(false);
+        dialog.setSize(400,400);
+        dialog.setLocationRelativeTo(null);
+        dialog.setVisible(true);
+    }
+
+    public static void main(String[] args) {
+        VideoApp dialog = new VideoApp();
         dialog.setSize(400,400);
         dialog.setLocationRelativeTo(null);
         dialog.setVisible(true);

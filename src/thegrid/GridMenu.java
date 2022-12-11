@@ -78,7 +78,7 @@ public class GridMenu extends JMenuBar {
         m4.addActionListener(new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                VideoApp.main(theGrid);
+                VideoApp.open(theGrid);
             }
         });
 

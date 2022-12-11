@@ -20,7 +20,7 @@ import java.util.UUID;
 
 public class DBHandler {
 
-    private static final String rootDir = "C:\\peter.home\\java\\IMG2\\datastore\\";
+    private static final String rootDir = "C:\\Databases\\";
     private static final String dbFile = "mydb";
     private static final String dbFileFull = "mydb" + ".mv.db";
     private static String aes_pwd = null;
