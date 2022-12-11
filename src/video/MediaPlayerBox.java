@@ -17,9 +17,8 @@ public class MediaPlayerBox {
     public MediaPlayerBox() {
         sbar = new JScrollBar(Adjustable.HORIZONTAL);
         sbar.setBackground(Color.YELLOW);
-        UIManager.getLookAndFeelDefaults().put( "ScrollBar.thumb", Color.blue );
         sbar.setMaximum(1000);
-        /**
+        /*
          * forward/backward by scrollbar move
          */
         sbar.addAdjustmentListener(adjustmentEvent -> {
@@ -32,7 +31,7 @@ public class MediaPlayerBox {
                 mp.play();
             }
         });
-        /**
+        /*
          * start/stop by right click on scrollbar
          */
         sbar.addMouseListener(new MouseAdapter() {
@@ -46,10 +45,9 @@ public class MediaPlayerBox {
         });
     }
 
-    public void start(JList<DBHandler.NameID> listControl) {
+    public void start(String name) {
         if (playerFrame != null)
             return;
-        String name = listControl.getSelectedValue().name;
         try {
             String tempFile = DBHandler.getInst().transferVideoIntoFile(name);
             System.out.println(tempFile);
@@ -59,7 +57,7 @@ public class MediaPlayerBox {
             playerFrame.setTitle("Video Player Box, hit s-key to start and stop the vid");
             playerFrame.setBounds(100, 100, 600, 400);
             playerFrame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-            /**
+            /*
              * cleanup on window close
              */
             playerFrame.addWindowListener(new WindowAdapter() {
@@ -68,7 +66,7 @@ public class MediaPlayerBox {
                     stop();
                 }
             });
-            /**
+            /*
              * Keep focus on playerframe
              */
             playerFrame.addFocusListener(new FocusAdapter() {
@@ -79,7 +77,7 @@ public class MediaPlayerBox {
                     }
                 }
             });
-            /**
+            /*
              * Start/Stop using 's'
              */
             playerFrame.addKeyListener(new KeyAdapter() {
@@ -102,7 +100,7 @@ public class MediaPlayerBox {
             playerFrame.add (mpc, BorderLayout.CENTER); //setContentPane(mpc);
             playerFrame.add (sbar, BorderLayout.SOUTH);
             playerFrame.setVisible(true);
-            /**
+            /*
              * update scrollbar
              */
             mpc.mediaPlayer().events().addMediaPlayerEventListener(new MediaPlayerEventAdapter() {

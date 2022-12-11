@@ -97,7 +97,7 @@ public class VideoApp extends JDialog {
     MediaPlayerBox playerBox = new MediaPlayerBox();
 
     private void onOK() {
-        playerBox.start (listControl);
+        playerBox.start (listControl.getSelectedValue().name);
     }
 
     private void onCancel() {
@@ -111,6 +111,9 @@ public class VideoApp extends JDialog {
         listControl.setModel(model);
     }
 
+    /**
+     * DragDrop, only one vid
+     */
     private void enableDrop() {
         new DropTarget(this, new DropTargetAdapter() {
             @Override
