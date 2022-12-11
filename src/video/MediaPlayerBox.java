@@ -49,7 +49,8 @@ public class MediaPlayerBox {
             System.out.println(tempFile);
             mpc = new EmbeddedMediaPlayerComponent();
             playerFrame = new JFrame();
-            playerFrame.setTitle("Media Player Box");
+            playerFrame.requestFocus();
+            playerFrame.setTitle("Video Player Box, hit s-key to start and stop the vid");
             playerFrame.setBounds(100, 100, 600, 400);
             playerFrame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
             playerFrame.addWindowListener(new WindowAdapter() {
@@ -58,22 +59,30 @@ public class MediaPlayerBox {
                     stop();
                 }
             });
-//            sbar.requestFocusInWindow();
-//            sbar.addKeyListener(new KeyAdapter() {
-//                static boolean stopped = false;
-//                @Override
-//                public void keyTyped(KeyEvent keyEvent) {
-//                    System.out.println(stopped);
-//                    if (keyEvent.getKeyCode() == KeyEvent.VK_S) {
-//                        var mp = mpc.mediaPlayer().controls();
-//                        stopped = !stopped;
-//                        if (stopped)
-//                            mp.pause();
-//                        else
-//                            mp.play();
-//                    }
-//                }
-//            });
+            playerFrame.addFocusListener(new FocusAdapter() {
+                @Override
+                public void focusLost(FocusEvent e) {
+                    if (playerFrame != null) {
+                        playerFrame.requestFocus();
+                    }
+                }
+            });
+            playerFrame.addKeyListener(new KeyAdapter() {
+                static boolean stopped = false;
+                @Override
+                public void keyTyped(KeyEvent keyEvent) {
+                    System.out.println(stopped);
+                    if (keyEvent.getKeyChar() == 's') {
+                        System.out.println("s pressed");
+                        var mp = mpc.mediaPlayer().controls();
+                        stopped = !stopped;
+                        if (stopped)
+                            mp.pause();
+                        else
+                            mp.play();
+                    }
+                }
+            });
             playerFrame.setLayout(new BorderLayout());
             playerFrame.add (mpc, BorderLayout.CENTER); //setContentPane(mpc);
             playerFrame.add (sbar, BorderLayout.SOUTH);
