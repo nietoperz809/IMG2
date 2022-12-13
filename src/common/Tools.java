@@ -192,4 +192,10 @@ public class Tools {
         }
         vp.setViewPosition(p);
     }
+
+    public static void gc() {
+        System.gc();
+        Runtime.getRuntime().gc();
+        Runtime.getRuntime().runFinalization();
+    }
 }

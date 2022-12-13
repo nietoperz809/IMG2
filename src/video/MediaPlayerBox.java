@@ -1,5 +1,6 @@
 package video;
 
+import common.Tools;
 import database.DBHandler;
 import uk.co.caprica.vlcj.player.base.MediaPlayer;
 import uk.co.caprica.vlcj.player.base.MediaPlayerEventAdapter;
@@ -8,8 +9,10 @@ import uk.co.caprica.vlcj.player.component.EmbeddedMediaPlayerComponent;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.io.File;
 
 public class MediaPlayerBox {
+    static String SNAPDIR = "C:\\Users\\Administrator\\Desktop\\snaps\\";
     private volatile JFrame playerFrame;
     private EmbeddedMediaPlayerComponent mpc;
     private final JScrollBar sbar;
@@ -24,11 +27,13 @@ public class MediaPlayerBox {
         sbar.addAdjustmentListener(adjustmentEvent -> {
             if (mpc == null)
                 return;
-            if (adjustmentEvent.getValueIsAdjusting()) {
-                var mp = mpc.mediaPlayer().controls();
-                mp.pause();
-                mp.setPosition(adjustmentEvent.getValue()/1000f);
-                mp.play();
+            synchronized (MediaPlayerBox.this) {
+                if (adjustmentEvent.getValueIsAdjusting()) {
+                    var mp = mpc.mediaPlayer().controls();
+                    mp.pause();
+                    mp.setPosition(adjustmentEvent.getValue() / 1000f);
+                    mp.play();
+                }
             }
         });
         /*
@@ -45,16 +50,17 @@ public class MediaPlayerBox {
         });
     }
 
-    public void start(String name) {
+    public synchronized void start(String name) {
         if (playerFrame != null)
             return;
         try {
+            sbar.setValue(0);
             String tempFile = DBHandler.getInst().transferVideoIntoFile(name);
             System.out.println(tempFile);
             mpc = new EmbeddedMediaPlayerComponent();
             playerFrame = new JFrame();
             playerFrame.requestFocus();
-            playerFrame.setTitle("Video Player Box, hit s-key to start and stop the vid");
+            playerFrame.setTitle("Player Box, hit 's' to start and stop, 'p' to take shapshot");
             playerFrame.setBounds(100, 100, 600, 400);
             playerFrame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
             /*
@@ -79,20 +85,24 @@ public class MediaPlayerBox {
             });
             /*
              * Start/Stop using 's'
+             * Snapshot using 'p'
              */
             playerFrame.addKeyListener(new KeyAdapter() {
                 static boolean stopped = false;
                 @Override
                 public void keyTyped(KeyEvent keyEvent) {
-                    System.out.println(stopped);
-                    if (keyEvent.getKeyChar() == 's') {
-                        System.out.println("s pressed");
+                    char c = keyEvent.getKeyChar();
+                    if (c == 's') {
                         var mp = mpc.mediaPlayer().controls();
                         stopped = !stopped;
                         if (stopped)
                             mp.pause();
                         else
                             mp.play();
+                    }
+                    else if (c == 'p') {
+                        mpc.mediaPlayer().snapshots()
+                                .save(new File(SNAPDIR+System.currentTimeMillis()+".png"));
                     }
                 }
             });
@@ -116,13 +126,14 @@ public class MediaPlayerBox {
         }
     }
 
-    public void stop() {
+    public synchronized void stop() {
         if (playerFrame == null)
             return;
         System.out.println("stop");
         mpc.release();
         playerFrame.dispose();
         playerFrame = null;
+        Tools.gc();
     }
 
 }

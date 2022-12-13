@@ -13,6 +13,7 @@ import java.awt.dnd.DropTargetAdapter;
 import java.awt.dnd.DropTargetDropEvent;
 import java.awt.event.*;
 import java.io.File;
+import java.lang.ref.SoftReference;
 import java.nio.file.Files;
 import java.util.List;
 
@@ -74,9 +75,9 @@ public class VideoApp extends JDialog {
                     fileChooser.setSelectedFile(new File(nameid.name));
                     int option = fileChooser.showSaveDialog(VideoApp.this);
                     if(option == JFileChooser.APPROVE_OPTION){
-                        byte[] bt = DBHandler.getInst().loadVideoBytes(nameid.name);
+                        SoftReference<byte[]> bt = DBHandler.getInst().loadVideoBytes(nameid.name);
                         File f = fileChooser.getSelectedFile();
-                        Files.write(f.toPath(),bt);
+                        Files.write(f.toPath(),bt.get());
                     }
                 } catch (Exception e) {
                     throw new RuntimeException(e);

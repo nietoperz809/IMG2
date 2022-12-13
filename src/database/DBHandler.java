@@ -8,9 +8,10 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.*;
+import java.lang.ref.SoftReference;
 import java.nio.MappedByteBuffer;
 import java.nio.channels.FileChannel;
-import java.nio.file.Files;
+import java.nio.file.*;
 import java.security.MessageDigest;
 import java.sql.*;
 import java.text.SimpleDateFormat;
@@ -146,24 +147,33 @@ public class DBHandler {
     public void backup() {
         String timeStamp = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss")
                 .format(new java.util.Date());
-        String newFile = rootDir + timeStamp + ".backup";
-        String origFile = rootDir + dbFileFull;
+        String dest = rootDir + timeStamp + ".backup";
+        String src = rootDir + dbFileFull;
 
         close();
+//        try {
+//            Files.copy(Paths.get(src),
+//                    Paths.get(dest),
+//                    StandardCopyOption.COPY_ATTRIBUTES);
+//        } catch (IOException e) {
+//            throw new RuntimeException(e);
+//        }
         try {
-            InputStream in = new BufferedInputStream(
-                    new FileInputStream(origFile));
+            InputStream in = //new BufferedInputStream(
+                    new FileInputStream(src); //);
 
-            OutputStream out = new BufferedOutputStream(
-                    new FileOutputStream(newFile));
+            OutputStream out = //new BufferedOutputStream(
+                    new FileOutputStream(dest); //);
 
             byte[] buffer = new byte[1024*1024*4];
             int lengthRead;
             while ((lengthRead = in.read(buffer)) > 0) {
                 out.write(buffer, 0, lengthRead);
                 System.out.print(".");
-                out.flush();
             }
+            out.close();
+            in.close();
+            System.out.println("done!");
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -254,14 +264,14 @@ public class DBHandler {
         return null;
     }
 
-    public byte[] loadVideoBytes (String filename) throws Exception {
+    public SoftReference<byte[]> loadVideoBytes (String filename) throws Exception {
         filename = filename.replace("'", "''");
         ResultSet res = DBHandler.getInst()
                 .query("select VID from VIDEOS where name='"+filename+"'");
         if (res == null)
             throw new RuntimeException("no query results");
         if (res.next()) {
-            byte[] bt = res.getBytes(1);
+            SoftReference<byte[]> bt = new SoftReference<>(res.getBytes(1));
             res.close();
             return bt;
         }
@@ -275,12 +285,12 @@ public class DBHandler {
      * @throws Exception if smth gone wrong
      */
     public String transferVideoIntoFile (String videoName) throws Exception {
-        byte[] bt = loadVideoBytes(videoName);
+        SoftReference<byte[]> bt = loadVideoBytes(videoName);
         File fi = new File(System.getProperty("java.io.tmpdir")+File.separator+"myra.dat");
         try (RandomAccessFile rafile = new RandomAccessFile(fi, "rw")) {
             MappedByteBuffer out = rafile.getChannel()
-                    .map(FileChannel.MapMode.READ_WRITE, 0, bt.length);
-            out.put (bt);
+                    .map(FileChannel.MapMode.READ_WRITE, 0, bt.get().length);
+            out.put (bt.get());
             out.load();
         }
         return fi.getAbsolutePath();

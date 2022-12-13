@@ -13,13 +13,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ddb69741-e020-4d21-a32f-f00e79c6818a" name="Changes" comment="backup">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+    <list default="true" id="ddb69741-e020-4d21-a32f-f00e79c6818a" name="Changes" comment="removed unnecessary stuff">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IMG2_jar/IMG2.jar" beforeDir="false" afterPath="$PROJECT_DIR$/IMG2_jar/IMG2.jar" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/buildinfo/BuildInfo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/buildinfo/BuildInfo.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/buildinfo/build.number" beforeDir="false" afterPath="$PROJECT_DIR$/src/buildinfo/build.number" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/common/Tools.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/common/Tools.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/database/DBHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/database/DBHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/thegrid/GridMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/thegrid/GridMenu.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/thegrid/TheGrid.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/thegrid/TheGrid.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/video/MediaPlayerBox.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/video/MediaPlayerBox.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/video/VideoApp.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/video/VideoApp.form" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/video/VideoApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/video/VideoApp.java" afterDir="false" />
@@ -79,9 +80,9 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "UI_DESIGNER_EDITOR_MODE.PaletteManager.WIDTH": "57",
-    "UI_DESIGNER_EDITOR_MODE.UIDesignerToolWindowManager.WIDTH": "300",
-    "last_opened_file_path": "C:/Libraries/Java/vlcj-4.7.1/vlcj-natives-4.1.0.jar",
+    "UI_DESIGNER_EDITOR_MODE.PaletteManager.WIDTH": "187",
+    "UI_DESIGNER_EDITOR_MODE.UIDesignerToolWindowManager.WIDTH": "339",
+    "last_opened_file_path": "C:/peter.home/java/sirens",
     "project.structure.last.edited": "Project",
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.2",
@@ -459,7 +460,35 @@
       <option name="project" value="LOCAL" />
       <updated>1670660300902</updated>
     </task>
-    <option name="localTasksCounter" value="38" />
+    <task id="LOCAL-00038" summary="some improvements">
+      <created>1670718385735</created>
+      <option name="number" value="00038" />
+      <option name="presentableId" value="LOCAL-00038" />
+      <option name="project" value="LOCAL" />
+      <updated>1670718385735</updated>
+    </task>
+    <task id="LOCAL-00039" summary="stop (key s) now works in video panel">
+      <created>1670778696737</created>
+      <option name="number" value="00039" />
+      <option name="presentableId" value="LOCAL-00039" />
+      <option name="project" value="LOCAL" />
+      <updated>1670778696737</updated>
+    </task>
+    <task id="LOCAL-00040" summary="added some comments">
+      <created>1670779144483</created>
+      <option name="number" value="00040" />
+      <option name="presentableId" value="LOCAL-00040" />
+      <option name="project" value="LOCAL" />
+      <updated>1670779144483</updated>
+    </task>
+    <task id="LOCAL-00041" summary="removed unnecessary stuff">
+      <created>1670780873633</created>
+      <option name="number" value="00041" />
+      <option name="presentableId" value="LOCAL-00041" />
+      <option name="project" value="LOCAL" />
+      <updated>1670780873633</updated>
+    </task>
+    <option name="localTasksCounter" value="42" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -474,9 +503,8 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
+    <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="new repo of imagegrid" />
-    <MESSAGE value="backup + jar" />
     <MESSAGE value="immediately show freshly inserted pix" />
     <MESSAGE value="made DBHandler a singleton" />
     <MESSAGE value="added img save feature" />
@@ -498,7 +526,11 @@
     <MESSAGE value="repo restored" />
     <MESSAGE value="scrollbar now can change video pos" />
     <MESSAGE value="backup" />
-    <option name="LAST_COMMIT_MESSAGE" value="backup" />
+    <MESSAGE value="some improvements" />
+    <MESSAGE value="stop (key s) now works in video panel" />
+    <MESSAGE value="added some comments" />
+    <MESSAGE value="removed unnecessary stuff" />
+    <option name="LAST_COMMIT_MESSAGE" value="removed unnecessary stuff" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

@@ -2,6 +2,7 @@ package thegrid;
 
 import buildinfo.BuildInfo;
 import common.ProgressBox;
+import common.Tools;
 import database.DBHandler;
 
 import javax.swing.*;
@@ -86,6 +87,7 @@ public class TheGrid extends JFrame {
             scrollPane.getViewport().setView(rootPane);
             setTitle (BuildInfo.buildInfo + " -- " + info);
             setVisible(true);
+            Tools.gc();
         }
     }
 }
