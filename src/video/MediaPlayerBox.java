@@ -10,12 +10,17 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.File;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 public class MediaPlayerBox {
     static String SNAPDIR = "C:\\Users\\Administrator\\Desktop\\snaps\\";
+    private static final Lock lock = new ReentrantLock();
+    private final JScrollBar sbar;
     private volatile JFrame playerFrame;
     private EmbeddedMediaPlayerComponent mpc;
-    private final JScrollBar sbar;
+    private boolean paused = false;
+
 
     public MediaPlayerBox() {
         sbar = new JScrollBar(Adjustable.HORIZONTAL);
@@ -27,13 +32,13 @@ public class MediaPlayerBox {
         sbar.addAdjustmentListener(adjustmentEvent -> {
             if (mpc == null)
                 return;
-            synchronized (MediaPlayerBox.this) {
-                if (adjustmentEvent.getValueIsAdjusting()) {
-                    var mp = mpc.mediaPlayer().controls();
-                    mp.pause();
-                    mp.setPosition(adjustmentEvent.getValue() / 1000f);
-                    mp.play();
-                }
+            if (adjustmentEvent.getValueIsAdjusting()) {
+                var mp = mpc.mediaPlayer().controls();
+                lock.lock();
+                //mp.pause();
+                mp.setPosition(adjustmentEvent.getValue() / 1000f);
+                //mp.play();
+                lock.unlock();
             }
         });
         /*
@@ -44,15 +49,18 @@ public class MediaPlayerBox {
             public void mouseClicked(MouseEvent mouseEvent) {
                 if (mpc != null && SwingUtilities.isRightMouseButton(mouseEvent)) {
                     var mp = mpc.mediaPlayer().controls();
+                    lock.lock();
                     mp.pause();
+                    lock.unlock();
                 }
             }
         });
     }
 
-    public synchronized void start(String name) {
+    public void start(String name) {
         if (playerFrame != null)
             return;
+        lock.lock();
         try {
             sbar.setValue(0);
             String tempFile = DBHandler.getInst().transferVideoIntoFile(name);
@@ -88,27 +96,28 @@ public class MediaPlayerBox {
              * Snapshot using 'p'
              */
             playerFrame.addKeyListener(new KeyAdapter() {
-                static boolean stopped = false;
                 @Override
                 public void keyTyped(KeyEvent keyEvent) {
                     char c = keyEvent.getKeyChar();
                     if (c == 's') {
                         var mp = mpc.mediaPlayer().controls();
-                        stopped = !stopped;
-                        if (stopped)
-                            mp.pause();
-                        else
+                        lock.lock();
+                        if (paused)
                             mp.play();
-                    }
-                    else if (c == 'p') {
+                        else
+                            mp.pause();
+                        paused = !paused;
+                        lock.unlock();
+                    } else if (c == 'p') {
                         mpc.mediaPlayer().snapshots()
-                                .save(new File(SNAPDIR+System.currentTimeMillis()+".png"));
+                                .save(new File(SNAPDIR + System.currentTimeMillis() + ".png"));
                     }
+                    //lock.unlock();
                 }
             });
             playerFrame.setLayout(new BorderLayout());
-            playerFrame.add (mpc, BorderLayout.CENTER); //setContentPane(mpc);
-            playerFrame.add (sbar, BorderLayout.SOUTH);
+            playerFrame.add(mpc, BorderLayout.CENTER); //setContentPane(mpc);
+            playerFrame.add(sbar, BorderLayout.SOUTH);
             playerFrame.setVisible(true);
             /*
              * update scrollbar
@@ -116,24 +125,28 @@ public class MediaPlayerBox {
             mpc.mediaPlayer().events().addMediaPlayerEventListener(new MediaPlayerEventAdapter() {
                 @Override
                 public void positionChanged(MediaPlayer mediaPlayer, float v) {
-                    sbar.setValue((int)(v*1000));
+                    sbar.setValue((int) (v * 1000));
                 }
             });
             mpc.mediaPlayer().videoSurface().attachVideoSurface();
             mpc.mediaPlayer().media().play(tempFile);
         } catch (Exception e) {
             throw new RuntimeException(e);
+        } finally {
+            lock.unlock();
         }
     }
 
-    public synchronized void stop() {
+    public void stop() {
         if (playerFrame == null)
             return;
+        lock.lock();
         System.out.println("stop");
         mpc.release();
         playerFrame.dispose();
         playerFrame = null;
         Tools.gc();
+        lock.unlock();
     }
 
 }
