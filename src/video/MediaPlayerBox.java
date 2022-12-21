@@ -14,15 +14,16 @@ import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
 public class MediaPlayerBox {
-    static String SNAPDIR = "C:\\Users\\Administrator\\Desktop\\snaps\\";
     private static final Lock lock = new ReentrantLock();
     private final JScrollBar sbar;
     private volatile JFrame playerFrame;
     private EmbeddedMediaPlayerComponent mpc;
     private boolean paused = false;
+    private VideoApp parent;
 
 
-    public MediaPlayerBox() {
+    public MediaPlayerBox (VideoApp parent) {
+        this.parent = parent;
         sbar = new JScrollBar(Adjustable.HORIZONTAL);
         sbar.setBackground(Color.YELLOW);
         sbar.setMaximum(1000);
@@ -110,7 +111,7 @@ public class MediaPlayerBox {
                         lock.unlock();
                     } else if (c == 'p') {
                         mpc.mediaPlayer().snapshots()
-                                .save(new File(SNAPDIR + System.currentTimeMillis() + ".png"));
+                                .save(new File(parent.snapDir + System.currentTimeMillis() + ".png"));
                     }
                     //lock.unlock();
                 }

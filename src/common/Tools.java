@@ -198,4 +198,15 @@ public class Tools {
         Runtime.getRuntime().gc();
         Runtime.getRuntime().runFinalization();
     }
+
+    public static String chooseDir (Component parent) {
+        JFileChooser f = new JFileChooser();
+        f.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+        f.showSaveDialog (parent);
+        return f.getSelectedFile().getAbsolutePath();
+    }
+
+//    public static void main(String[] args) {
+//        chooseDir(null);
+//    }
 }

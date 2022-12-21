@@ -1,6 +1,7 @@
 package video;
 
 import common.LineInput;
+import common.Tools;
 import database.DBHandler;
 
 import javax.swing.*;
@@ -26,8 +27,20 @@ public class VideoApp extends JDialog {
     private JButton deleteButton;
     private JButton exportButton;
     private JButton renameButton;
+    private JLabel outputDirLabel;
+    public String snapDir = "C:\\Users\\Administrator\\Desktop\\snaps\\";
 
     public VideoApp () {
+        outputDirLabel.setText (snapDir);
+        outputDirLabel.setToolTipText("Output Dir, klick to change ...");
+        outputDirLabel.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                snapDir = Tools.chooseDir(VideoApp.this)+File.separator;
+                outputDirLabel.setText (snapDir);
+                repaint();
+            }
+        });
         setContentPane(contentPane);
         //setModal(true);
         getRootPane().setDefaultButton(buttonPlay);
@@ -95,7 +108,7 @@ public class VideoApp extends JDialog {
         });
     }
 
-    MediaPlayerBox playerBox = new MediaPlayerBox();
+    MediaPlayerBox playerBox = new MediaPlayerBox(this);
 
     private void onOK() {
         playerBox.start (listControl.getSelectedValue().name);
