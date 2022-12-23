@@ -13,13 +13,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ddb69741-e020-4d21-a32f-f00e79c6818a" name="Changes" comment="better media player locking">
+    <list default="true" id="ddb69741-e020-4d21-a32f-f00e79c6818a" name="Changes" comment="new jar">
+      <change afterPath="$PROJECT_DIR$/src/common/PersistString.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/buildinfo/BuildInfo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/buildinfo/BuildInfo.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/buildinfo/build.number" beforeDir="false" afterPath="$PROJECT_DIR$/src/buildinfo/build.number" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/common/Tools.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/common/Tools.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/video/MediaPlayerBox.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/video/MediaPlayerBox.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/video/VideoApp.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/video/VideoApp.form" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/thegrid/GridMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/thegrid/GridMenu.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/thegrid/ImageView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/thegrid/ImageView.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/video/VideoApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/video/VideoApp.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -84,7 +85,7 @@
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.2",
     "run.code.analysis.last.selected.profile": "pProject Default",
-    "settings.editor.selected.configurable": "preferences.pluginManager"
+    "settings.editor.selected.configurable": "settings.space"
   }
 }]]></component>
   <component name="RecentsManager">
@@ -98,7 +99,7 @@
       <recent name="C:\peter.home\java\IMG2\src\common" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.VideoApp">
+  <component name="RunManager" selected="Application.Main">
     <configuration name="GUIConsole (1)" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="org.h2.tools.GUIConsole" />
       <module name="IMG2" />
@@ -499,7 +500,21 @@
       <option name="project" value="LOCAL" />
       <updated>1671400704273</updated>
     </task>
-    <option name="localTasksCounter" value="44" />
+    <task id="LOCAL-00044" summary="video snap output dir now changeable">
+      <created>1671659586232</created>
+      <option name="number" value="00044" />
+      <option name="presentableId" value="LOCAL-00044" />
+      <option name="project" value="LOCAL" />
+      <updated>1671659586232</updated>
+    </task>
+    <task id="LOCAL-00045" summary="new jar">
+      <created>1671659667388</created>
+      <option name="number" value="00045" />
+      <option name="presentableId" value="LOCAL-00045" />
+      <option name="project" value="LOCAL" />
+      <updated>1671659667388</updated>
+    </task>
+    <option name="localTasksCounter" value="46" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -516,8 +531,6 @@
   <component name="VcsManagerConfiguration">
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="made DBHandler a singleton" />
-    <MESSAGE value="added img save feature" />
     <MESSAGE value="regionselector box must not be too small" />
     <MESSAGE value="added dnd functionality" />
     <MESSAGE value="minor changes" />
@@ -541,20 +554,32 @@
     <MESSAGE value="removed unnecessary stuff" />
     <MESSAGE value="some improvements" />
     <MESSAGE value="better media player locking" />
-    <option name="LAST_COMMIT_MESSAGE" value="better media player locking" />
+    <MESSAGE value="video snap output dir now changeable" />
+    <MESSAGE value="new jar" />
+    <option name="LAST_COMMIT_MESSAGE" value="new jar" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/common/Tools.java</url>
-          <line>49</line>
+          <line>50</line>
           <option name="timeStamp" value="8" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/thegrid/ImageView.java</url>
-          <line>195</line>
+          <line>194</line>
           <option name="timeStamp" value="9" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/common/Tools.java</url>
+          <line>205</line>
+          <option name="timeStamp" value="12" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/common/Tools.java</url>
+          <line>209</line>
+          <option name="timeStamp" value="13" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

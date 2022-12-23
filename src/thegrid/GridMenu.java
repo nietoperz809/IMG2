@@ -1,5 +1,6 @@
 package thegrid;
 
+import common.PersistString;
 import common.Tools;
 import database.DBHandler;
 import video.VideoApp;
@@ -10,7 +11,6 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.io.File;
 import java.util.Arrays;
-import java.util.prefs.Preferences;
 
 public class GridMenu extends JMenuBar {
     public GridMenu(TheGrid theGrid) {
@@ -20,7 +20,8 @@ public class GridMenu extends JMenuBar {
         m1.addActionListener(new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String lastDirectory = Preferences.userNodeForPackage(theGrid.rootPane.getClass()).get("Images.lastDirectory", System.getProperty("user.home"));
+                PersistString ps = new PersistString("Images.lastDirectory", System.getProperty("user.home"));
+                String lastDirectory = ps.get();
                 JFileChooser fc = new JFileChooser();
                 File lastPath = new File(lastDirectory);
                 if (lastPath.exists() && lastPath.isDirectory()) {
@@ -31,7 +32,7 @@ public class GridMenu extends JMenuBar {
                 fc.setMultiSelectionEnabled(true);
                 if (fc.showOpenDialog(theGrid.rootPane) == JFileChooser.APPROVE_OPTION) {
                     lastDirectory = fc.getCurrentDirectory().getPath();
-                    Preferences.userNodeForPackage(theGrid.rootPane.getClass()).put("Images.lastDirectory", lastDirectory);
+                    ps.set(lastDirectory);
                     try {
                         theGrid.addImageFilesToDatabase(fc.getSelectedFiles());
                     } catch (Exception ex) {

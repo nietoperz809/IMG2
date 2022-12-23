@@ -154,13 +154,12 @@ public class ImageView extends JFrame implements KeyListener {
                 }
             }
             case KeyEvent.VK_F -> {
-                JFileChooser fileChooser = new JFileChooser();
-                fileChooser.setSelectedFile(new File(allFiles.get(currentIdx)+".jpg"));
-                int option = fileChooser.showSaveDialog(this);
-                if(option == JFileChooser.APPROVE_OPTION){
+                String outPath = Tools.chooseDir(this);
+                if (outPath != null) {
+                    outPath = outPath+File.separator+allFiles.get(currentIdx).rowid+".jpg";
                     BufferedImage img = loadImgFromStore();
                     try {
-                        ImageIO.write(img, "jpg", fileChooser.getSelectedFile());
+                        ImageIO.write(img, "jpg", new File(outPath));
                     } catch (IOException ex) {
                         throw new RuntimeException(ex);
                     }

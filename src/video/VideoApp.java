@@ -28,7 +28,7 @@ public class VideoApp extends JDialog {
     private JButton exportButton;
     private JButton renameButton;
     private JLabel outputDirLabel;
-    public String snapDir = "C:\\Users\\Administrator\\Desktop\\snaps\\";
+    public String snapDir = "C:\\Users\\Administrator\\Desktop\\snaps";
 
     public VideoApp () {
         outputDirLabel.setText (snapDir);
@@ -36,9 +36,12 @@ public class VideoApp extends JDialog {
         outputDirLabel.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                snapDir = Tools.chooseDir(VideoApp.this)+File.separator;
-                outputDirLabel.setText (snapDir);
-                repaint();
+                String dir = Tools.chooseDir(VideoApp.this)+File.separator;
+                if (dir != null) {
+                    snapDir = dir;
+                    outputDirLabel.setText(snapDir);
+                    repaint();
+                }
             }
         });
         setContentPane(contentPane);

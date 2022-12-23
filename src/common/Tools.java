@@ -14,6 +14,7 @@ import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
 import java.io.*;
 import java.security.MessageDigest;
+import java.util.prefs.Preferences;
 
 import static javax.swing.JOptionPane.YES_NO_OPTION;
 
@@ -201,9 +202,15 @@ public class Tools {
 
     public static String chooseDir (Component parent) {
         JFileChooser f = new JFileChooser();
+        PersistString ps = new PersistString("Common.lastDirectory", System.getProperty("user.home"));
+        String lastDirectory = ps.get();
+        f.setSelectedFile(new File(lastDirectory));
         f.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-        f.showSaveDialog (parent);
-        return f.getSelectedFile().getAbsolutePath();
+        if (f.showOpenDialog(parent) == JFileChooser.APPROVE_OPTION) {
+            String dir = f.getSelectedFile().getAbsolutePath();
+            return ps.set (dir);
+        }
+        return null;
     }
 
 //    public static void main(String[] args) {
