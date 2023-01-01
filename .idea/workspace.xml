@@ -13,15 +13,22 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ddb69741-e020-4d21-a32f-f00e79c6818a" name="Changes" comment="new jar">
-      <change afterPath="$PROJECT_DIR$/src/common/PersistString.java" afterDir="false" />
+    <list default="true" id="ddb69741-e020-4d21-a32f-f00e79c6818a" name="Changes" comment="bugfix in persiststring">
+      <change afterPath="$PROJECT_DIR$/resource/SamClass16" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/common/ByteArrayClassLoader.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/common/Sam.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/org/ibex/nestedvm/Registers.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/org/ibex/nestedvm/Runtime.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/org/ibex/nestedvm/UsermodeConstants.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/org/ibex/nestedvm/util/Platform.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/org/ibex/nestedvm/util/Seekable.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IMG2_jar/IMG2.jar" beforeDir="false" afterPath="$PROJECT_DIR$/IMG2_jar/IMG2.jar" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/buildinfo/BuildInfo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/buildinfo/BuildInfo.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/buildinfo/build.number" beforeDir="false" afterPath="$PROJECT_DIR$/src/buildinfo/build.number" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/common/Tools.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/common/Tools.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/thegrid/GridMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/thegrid/GridMenu.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/thegrid/ImageView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/thegrid/ImageView.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/video/VideoApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/video/VideoApp.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/database/DBHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/database/DBHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/video/MediaPlayerBox.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/video/MediaPlayerBox.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -80,7 +87,7 @@
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "UI_DESIGNER_EDITOR_MODE.PaletteManager.WIDTH": "187",
     "UI_DESIGNER_EDITOR_MODE.UIDesignerToolWindowManager.WIDTH": "195",
-    "last_opened_file_path": "C:/peter.home/java/sirens",
+    "last_opened_file_path": "C:/peter.home/java/IMG2/src",
     "project.structure.last.edited": "Project",
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.2",
@@ -90,6 +97,8 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\peter.home\java\IMG2\src" />
+      <recent name="C:\peter.home\java\IMG2\resource" />
       <recent name="C:\peter.home\java\IMG2\src\buildinfo" />
     </key>
     <key name="MoveMembersDialog.RECENTS_KEY">
@@ -97,6 +106,9 @@
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\peter.home\java\IMG2\src\common" />
+    </key>
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="common" />
     </key>
   </component>
   <component name="RunManager" selected="Application.Main">
@@ -514,7 +526,14 @@
       <option name="project" value="LOCAL" />
       <updated>1671659667388</updated>
     </task>
-    <option name="localTasksCounter" value="46" />
+    <task id="LOCAL-00046" summary="bugfix in persiststring">
+      <created>1671794481777</created>
+      <option name="number" value="00046" />
+      <option name="presentableId" value="LOCAL-00046" />
+      <option name="project" value="LOCAL" />
+      <updated>1671794481777</updated>
+    </task>
+    <option name="localTasksCounter" value="47" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -531,7 +550,6 @@
   <component name="VcsManagerConfiguration">
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="regionselector box must not be too small" />
     <MESSAGE value="added dnd functionality" />
     <MESSAGE value="minor changes" />
     <MESSAGE value="moved things around" />
@@ -556,30 +574,21 @@
     <MESSAGE value="better media player locking" />
     <MESSAGE value="video snap output dir now changeable" />
     <MESSAGE value="new jar" />
-    <option name="LAST_COMMIT_MESSAGE" value="new jar" />
+    <MESSAGE value="bugfix in persiststring" />
+    <option name="LAST_COMMIT_MESSAGE" value="bugfix in persiststring" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/common/Tools.java</url>
-          <line>50</line>
+          <line>53</line>
           <option name="timeStamp" value="8" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/thegrid/ImageView.java</url>
           <line>194</line>
           <option name="timeStamp" value="9" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/common/Tools.java</url>
-          <line>205</line>
-          <option name="timeStamp" value="12" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/common/Tools.java</url>
-          <line>209</line>
-          <option name="timeStamp" value="13" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

@@ -111,7 +111,7 @@ public class MediaPlayerBox {
                         lock.unlock();
                     } else if (c == 'p') {
                         mpc.mediaPlayer().snapshots()
-                                .save(new File(parent.snapDir + System.currentTimeMillis() + ".png"));
+                                .save(new File(parent.snapDir + File.separator + System.currentTimeMillis() + ".png"));
                     }
                     //lock.unlock();
                 }

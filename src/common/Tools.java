@@ -6,6 +6,9 @@ import gifdecoder.AnimatedGIFReader;
 import javax.imageio.ImageIO;
 import javax.imageio.ImageReader;
 import javax.imageio.stream.FileImageInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.Line;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -212,6 +215,34 @@ public class Tools {
         }
         return null;
     }
+
+    static public byte[] extractResource (String name) throws Exception
+    {
+        InputStream is = ClassLoader.getSystemResourceAsStream (name);
+
+        ByteArrayOutputStream out = new ByteArrayOutputStream ();
+        byte[] buffer = new byte[1024];
+        while (true)
+        {
+            int r = is.read (buffer);
+            if (r == -1)
+            {
+                break;
+            }
+            out.write (buffer, 0, r);
+        }
+
+        return out.toByteArray ();
+    }
+
+    public static void playWave (byte[] data) throws Exception
+    {
+        final Clip clip = (Clip) AudioSystem.getLine (new Line.Info (Clip.class));
+        InputStream inp  = new BufferedInputStream(new ByteArrayInputStream (data));
+        clip.open (AudioSystem.getAudioInputStream (inp));
+        clip.start ();
+    }
+
 
 //    public static void main(String[] args) {
 //        chooseDir(null);

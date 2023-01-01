@@ -1,5 +1,6 @@
 package database;
 
+import common.Sam;
 import common.Tools;
 import thegrid.ImageScaler;
 import common.UnlockDBDialog;
@@ -45,11 +46,13 @@ public class DBHandler {
             String pwd = aes_pwd + " dumm";
             connection = DriverManager.getConnection(url, user, pwd);
             statement = connection.createStatement();
+            Sam.speak("deta base is on line.");
             // create video table
             String sql = "create table if not exists VIDEOS " +
                     "(VID blob, NAME varchar(200), HASHVAL blob(16))";
             statement.execute(sql);
         } catch (SQLException e) {
+            Sam.speak("Failed to connect to deta base");
             Tools.Error(e.toString());
             System.exit(-1);
         }
