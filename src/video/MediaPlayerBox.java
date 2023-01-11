@@ -146,7 +146,7 @@ public class MediaPlayerBox {
         mpc.release();
         playerFrame.dispose();
         playerFrame = null;
-        Tools.gc();
+        Tools.gc_now();
         lock.unlock();
     }
 

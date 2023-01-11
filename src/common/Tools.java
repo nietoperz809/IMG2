@@ -17,7 +17,6 @@ import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
 import java.io.*;
 import java.security.MessageDigest;
-import java.util.prefs.Preferences;
 
 import static javax.swing.JOptionPane.YES_NO_OPTION;
 
@@ -69,8 +68,6 @@ public class Tools {
             return ImageIO.read(new File (name));
         }
     }
-
-
 
     /**
      * Makes BufferedImage vom java.awt.Image
@@ -197,7 +194,7 @@ public class Tools {
         vp.setViewPosition(p);
     }
 
-    public static void gc() {
+    public static void gc_now() {
         System.gc();
         Runtime.getRuntime().gc();
         Runtime.getRuntime().runFinalization();

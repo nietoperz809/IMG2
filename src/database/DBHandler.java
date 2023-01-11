@@ -1,5 +1,6 @@
 package database;
 
+import common.PersistString;
 import common.Sam;
 import common.Tools;
 import thegrid.ImageScaler;
@@ -22,9 +23,10 @@ import java.util.UUID;
 
 public class DBHandler {
 
-    private static final String rootDir = "C:\\Databases\\";
-    private static final String dbFile = "mydb";
-    private static final String dbFileFull = "mydb" + ".mv.db";
+    private static final String ROOT_DIR = "C:\\Databases\\";
+    private static final String NO_PASS = "NoPass";
+    private static final String DB_FILE = "mydb";
+    private static final String DB_FILE_FULL = "mydb" + ".mv.db";
     private static String aes_pwd = null;
     private static DBHandler _inst = null;
     private Connection connection;
@@ -37,11 +39,16 @@ public class DBHandler {
      * Private constructor like Singletons should have
      */
     private DBHandler() {
+        PersistString pers = new PersistString("pwddb", NO_PASS);
         try {
-            if (aes_pwd == null) {
+            if (pers.get().equals(NO_PASS)) {
                 aes_pwd = UnlockDBDialog.xmain();
+                pers.set(aes_pwd);
             }
-            String url = "jdbc:h2:" + rootDir + dbFile + ";CIPHER=AES";
+            else {
+                aes_pwd = pers.get();
+            }
+            String url = "jdbc:h2:" + ROOT_DIR + DB_FILE + ";CIPHER=AES";
             String user = "LALA";
             String pwd = aes_pwd + " dumm";
             connection = DriverManager.getConnection(url, user, pwd);
@@ -53,6 +60,7 @@ public class DBHandler {
             statement.execute(sql);
         } catch (SQLException e) {
             Sam.speak("Failed to connect to deta base");
+            pers.reset();
             Tools.Error(e.toString());
             System.exit(-1);
         }
@@ -150,8 +158,8 @@ public class DBHandler {
     public void backup() {
         String timeStamp = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss")
                 .format(new java.util.Date());
-        String dest = rootDir + timeStamp + ".backup";
-        String src = rootDir + dbFileFull;
+        String dest = ROOT_DIR + timeStamp + ".backup";
+        String src = ROOT_DIR + DB_FILE_FULL;
 
         close();
 //        try {

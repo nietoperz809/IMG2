@@ -19,6 +19,10 @@ public class PersistString {
         return s;
     }
 
+    public void reset() {
+        set (defaultStr);
+    }
+
     public String get() {
         return Preferences.userNodeForPackage(this.getClass())
                 .get(entry, defaultStr);

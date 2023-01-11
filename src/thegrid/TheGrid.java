@@ -87,7 +87,7 @@ public class TheGrid extends JFrame {
             scrollPane.getViewport().setView(rootPane);
             setTitle (BuildInfo.buildInfo + " -- " + info);
             setVisible(true);
-            Tools.gc();
+            Tools.gc_now();
         }
     }
 }
