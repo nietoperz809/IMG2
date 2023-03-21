@@ -5,6 +5,7 @@ import database.DBHandler;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
+import javax.swing.Timer;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -18,6 +19,7 @@ public class ImageView extends JFrame implements KeyListener {
     private final JScrollPane scrollPane;
     private final java.util.List<DBHandler.NameID> allFiles;
     private final JLabel imgLabel;
+    private final UniqueRng ring;
     private float scale = 1.0f;
     private String imgPath;
     private int currentIdx;
@@ -25,6 +27,7 @@ public class ImageView extends JFrame implements KeyListener {
     private Timer timer = null;
 
     public ImageView(java.util.List<DBHandler.NameID> files, int idx) {
+        ring = new UniqueRng (files.size());
         allFiles = files;
         currentIdx = idx;
         imgPath = files.get(idx).name;
@@ -61,7 +64,8 @@ public class ImageView extends JFrame implements KeyListener {
                         "esc - close window<br>" +
                         "s - slideshow<br>" +
                         "f - save to file<br>"+
-                        "t - random image<br>" +
+                        "t - random image forward<br>" +
+                        "z - random image backward<br>" +
                         "m - mirror</html>");
     }
 
@@ -131,15 +135,17 @@ public class ImageView extends JFrame implements KeyListener {
             }
             case KeyEvent.VK_H -> adjustOnHeight();
             case KeyEvent.VK_T -> {
-                currentIdx = (int) (Math.random() * allFiles.size());
-                imgPath = allFiles.get(currentIdx).name;
-                setTitle(imgPath);
-                adjustOnHeight();
+                currentIdx = ring.getNext();
+                showByIdx();
+            }
+            case KeyEvent.VK_Z -> {
+                currentIdx = ring.getPrev();
+                showByIdx();
             }
             case KeyEvent.VK_S -> {
                 if (timer == null) {
                     timer = new Timer(10000, e1 -> {
-                        currentIdx = (int) (Math.random() * allFiles.size());
+                        currentIdx = ring.getNext();
                         imgPath = allFiles.get(currentIdx).name;
                         setTitle("Slideshow: " + imgPath);
                         adjustOnHeight();
@@ -168,6 +174,12 @@ public class ImageView extends JFrame implements KeyListener {
             case KeyEvent.VK_L -> setImg();
             case KeyEvent.VK_ESCAPE -> dispose();
         }
+    }
+
+    private void showByIdx() {
+        imgPath = allFiles.get(currentIdx).name;
+        setTitle(imgPath + " -- " + currentIdx);
+        adjustOnHeight();
     }
 
     private void adjustOnHeight() {

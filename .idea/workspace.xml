@@ -13,15 +13,15 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ddb69741-e020-4d21-a32f-f00e79c6818a" name="Changes" comment="added speech &amp; new jar">
+    <list default="true" id="ddb69741-e020-4d21-a32f-f00e79c6818a" name="Changes" comment="stored db pwd in props">
+      <change afterPath="$PROJECT_DIR$/src/thegrid/UniqueRng.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IMG2_jar/IMG2.jar" beforeDir="false" afterPath="$PROJECT_DIR$/IMG2_jar/IMG2.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IMG2_jar/run.bat" beforeDir="false" afterPath="$PROJECT_DIR$/IMG2_jar/run.bat" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/buildinfo/BuildInfo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/buildinfo/BuildInfo.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/buildinfo/build.number" beforeDir="false" afterPath="$PROJECT_DIR$/src/buildinfo/build.number" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/common/PersistString.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/common/PersistString.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/common/Tools.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/common/Tools.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/database/DBHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/database/DBHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/thegrid/TheGrid.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/thegrid/TheGrid.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/video/MediaPlayerBox.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/video/MediaPlayerBox.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/thegrid/ImageView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/thegrid/ImageView.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -84,7 +84,7 @@
     &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
     &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
     &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
-    &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,
+    &quot;run.code.analysis.last.selected.profile&quot;: &quot;aDefault&quot;,
     &quot;settings.editor.selected.configurable&quot;: &quot;settings.space&quot;
   }
 }</component>
@@ -100,17 +100,20 @@
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\peter.home\java\IMG2\src\common" />
     </key>
+    <key name="MoveInnerDialog.RECENTS_KEY">
+      <recent name="thegrid" />
+    </key>
     <key name="CopyClassDialog.RECENTS_KEY">
       <recent name="common" />
     </key>
   </component>
   <component name="RunManager" selected="Application.Main">
-    <configuration name="GUIConsole (1)" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="org.h2.tools.GUIConsole" />
+    <configuration name="ImageView" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="thegrid.ImageView" />
       <module name="IMG2" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="org.h2.tools.*" />
+          <option name="PATTERN" value="thegrid.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -179,19 +182,19 @@
     </configuration>
     <list>
       <item itemvalue="Application.Main" />
+      <item itemvalue="Application.ImageView" />
       <item itemvalue="Application.Tools" />
       <item itemvalue="Application.LineInput" />
       <item itemvalue="Application.VideoApp" />
       <item itemvalue="Application.VideoFiller" />
-      <item itemvalue="Application.GUIConsole (1)" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.ImageView" />
         <item itemvalue="Application.VideoApp" />
         <item itemvalue="Application.Tools" />
         <item itemvalue="Application.LineInput" />
         <item itemvalue="Application.VideoFiller" />
-        <item itemvalue="Application.GUIConsole (1)" />
       </list>
     </recent_temporary>
   </component>
@@ -533,7 +536,14 @@
       <option name="project" value="LOCAL" />
       <updated>1672556699711</updated>
     </task>
-    <option name="localTasksCounter" value="48" />
+    <task id="LOCAL-00048" summary="stored db pwd in props">
+      <created>1673399516489</created>
+      <option name="number" value="00048" />
+      <option name="presentableId" value="LOCAL-00048" />
+      <option name="project" value="LOCAL" />
+      <updated>1673399516489</updated>
+    </task>
+    <option name="localTasksCounter" value="49" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -550,7 +560,6 @@
   <component name="VcsManagerConfiguration">
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="minor changes" />
     <MESSAGE value="moved things around" />
     <MESSAGE value="+ backup menu" />
     <MESSAGE value="added fast up/down scroll on main page" />
@@ -575,7 +584,8 @@
     <MESSAGE value="new jar" />
     <MESSAGE value="bugfix in persiststring" />
     <MESSAGE value="added speech &amp; new jar" />
-    <option name="LAST_COMMIT_MESSAGE" value="added speech &amp; new jar" />
+    <MESSAGE value="stored db pwd in props" />
+    <option name="LAST_COMMIT_MESSAGE" value="stored db pwd in props" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -584,11 +594,6 @@
           <url>file://$PROJECT_DIR$/src/common/Tools.java</url>
           <line>52</line>
           <option name="timeStamp" value="8" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/thegrid/ImageView.java</url>
-          <line>194</line>
-          <option name="timeStamp" value="9" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

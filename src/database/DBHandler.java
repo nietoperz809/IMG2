@@ -26,8 +26,7 @@ public class DBHandler {
     private static final String ROOT_DIR = "C:\\Databases\\";
     private static final String NO_PASS = "NoPass";
     private static final String DB_FILE = "mydb";
-    private static final String DB_FILE_FULL = "mydb" + ".mv.db";
-    private static String aes_pwd = null;
+    private static final String DB_FILE_FULL = DB_FILE + ".mv.db";
     private static DBHandler _inst = null;
     private Connection connection;
     private Statement statement;
@@ -41,6 +40,7 @@ public class DBHandler {
     private DBHandler() {
         PersistString pers = new PersistString("pwddb", NO_PASS);
         try {
+            String aes_pwd = null;
             if (pers.get().equals(NO_PASS)) {
                 aes_pwd = UnlockDBDialog.xmain();
                 pers.set(aes_pwd);
@@ -91,7 +91,7 @@ public class DBHandler {
                 "Warning",
                 JOptionPane.DEFAULT_OPTION,
                 JOptionPane.WARNING_MESSAGE, null, options, options[1]
-        ) == 0;
+        ) != 0;
     }
 
     public Connection getConn() {
@@ -130,7 +130,7 @@ public class DBHandler {
     }
 
     public boolean deleteImage (int rowid) {
-        if (!askForDel(null, "" + rowid)) {
+        if (askForDel(null, "" + rowid)) {
             return false;
         }
         try {
@@ -143,7 +143,7 @@ public class DBHandler {
     }
 
     public boolean deleteVideo (int rowid) {
-        if (!askForDel(null, "" + rowid)) {
+        if (askForDel(null, "" + rowid)) {
             return false;
         }
         try {
@@ -180,6 +180,7 @@ public class DBHandler {
             int lengthRead;
             while ((lengthRead = in.read(buffer)) > 0) {
                 out.write(buffer, 0, lengthRead);
+                Thread.yield();
                 System.out.print(".");
             }
             out.close();
