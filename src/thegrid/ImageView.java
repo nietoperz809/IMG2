@@ -65,7 +65,7 @@ public class ImageView extends JFrame implements KeyListener {
                         "s - slideshow<br>" +
                         "f - save to file<br>"+
                         "t - random image forward<br>" +
-                        "z - random image backward<br>" +
+                        "z - random image backwardt<br>" +
                         "m - mirror</html>");
     }
 

@@ -2,6 +2,7 @@ package thegrid;
 
 import buildinfo.BuildInfo;
 import common.ProgressBox;
+import common.Sam;
 import common.Tools;
 import database.DBHandler;
 
@@ -62,6 +63,7 @@ public class TheGrid extends JFrame {
             rootPane.add(lab);
         });
         rootPane.doLayout();
+        Sam.speak(files.length+"New files added");
     }
 
     /**
