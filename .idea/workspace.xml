@@ -13,12 +13,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ddb69741-e020-4d21-a32f-f00e79c6818a" name="Changes" comment="added menu point to remove dupes">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/IMG2_jar/IMG2.jar" beforeDir="false" afterPath="$PROJECT_DIR$/IMG2_jar/IMG2.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/buildinfo/BuildInfo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/buildinfo/BuildInfo.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/buildinfo/build.number" beforeDir="false" afterPath="$PROJECT_DIR$/src/buildinfo/build.number" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/thegrid/ImageView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/thegrid/ImageView.java" afterDir="false" />
+    <list default="true" id="ddb69741-e020-4d21-a32f-f00e79c6818a" name="Changes" comment="introduce contrast up/down + minor enhancements">
       <change beforePath="$PROJECT_DIR$/src/thegrid/TheGrid.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/thegrid/TheGrid.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -204,13 +199,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1666905269701</updated>
-    </task>
-    <task id="LOCAL-00002" summary="backup">
-      <created>1666914590276</created>
-      <option name="number" value="00002" />
-      <option name="presentableId" value="LOCAL-00002" />
-      <option name="project" value="LOCAL" />
-      <updated>1666914590276</updated>
     </task>
     <task id="LOCAL-00003" summary="backup">
       <created>1666983641939</created>
@@ -548,7 +536,14 @@
       <option name="project" value="LOCAL" />
       <updated>1681058751071</updated>
     </task>
-    <option name="localTasksCounter" value="51" />
+    <task id="LOCAL-00051" summary="introduce contrast up/down + minor enhancements">
+      <created>1681515723479</created>
+      <option name="number" value="00051" />
+      <option name="presentableId" value="LOCAL-00051" />
+      <option name="project" value="LOCAL" />
+      <updated>1681515723495</updated>
+    </task>
+    <option name="localTasksCounter" value="52" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -565,7 +560,6 @@
   <component name="VcsManagerConfiguration">
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="added fast up/down scroll on main page" />
     <MESSAGE value="added buildinfo &amp; ant task" />
     <MESSAGE value="put rowid on display" />
     <MESSAGE value="new backup, a lot faster without zipping" />
@@ -590,7 +584,8 @@
     <MESSAGE value="stored db pwd in props" />
     <MESSAGE value="added z-key to traverse randomly backwards" />
     <MESSAGE value="added menu point to remove dupes" />
-    <option name="LAST_COMMIT_MESSAGE" value="added menu point to remove dupes" />
+    <MESSAGE value="introduce contrast up/down + minor enhancements" />
+    <option name="LAST_COMMIT_MESSAGE" value="introduce contrast up/down + minor enhancements" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

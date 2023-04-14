@@ -24,7 +24,7 @@ public class TheGrid extends JFrame {
 
     public TheGrid() {
         allFiles = DBHandler.getInst().getImageFileNames();
-        allFiles = allFiles.subList(0, 10); // Debug mode
+        //allFiles = allFiles.subList(0, 10); // Debug mode
         progress = new ProgressBox(this, allFiles.size());
         rootPane = new JPanel();
         scrollPane = new JScrollPane(rootPane);
