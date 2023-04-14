@@ -12,6 +12,7 @@ import java.awt.event.KeyListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
+import java.awt.image.RescaleOp;
 import java.io.File;
 import java.io.IOException;
 
@@ -63,7 +64,10 @@ public class ImageView extends JFrame implements KeyListener {
                         "l - reload<br>" +
                         "esc - close window<br>" +
                         "s - slideshow<br>" +
-                        "f - save to file<br>"+
+                        "f - save original img to file<br>"+
+                        "g - save manipulated img to file<br>"+
+                        "c - contrast up<br>"+
+                        "v - contrast down<br>"+
                         "t - random image forward<br>" +
                         "z - random image backwardt<br>" +
                         "m - mirror</html>");
@@ -78,11 +82,39 @@ public class ImageView extends JFrame implements KeyListener {
         return Tools.toBufferedImage(imgIcon.getImage());
     }
 
+    private void changeContrast (float val) {
+        BufferedImage img = getIconImg();
+        RescaleOp op = new RescaleOp (val, 0, null);
+        img = op.filter(img, img);
+        imgLabel.setIcon(new ImageIcon(img));
+        repaint();
+    }
+
+
+    private void saveAsFile (boolean orig) {
+        String outPath = Tools.chooseDir(this);
+        if (outPath != null) {
+            outPath = outPath+File.separator+allFiles.get(currentIdx).rowid+orig+".jpg";
+            BufferedImage img;
+            if (orig)
+                img = loadImgFromStore();
+            else
+                img = getIconImg();
+            try {
+                ImageIO.write(img, "jpg", new File(outPath));
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
+        }
+    }
+
     @Override
     public void keyPressed(KeyEvent e) {
         int ev = e.getKeyCode();
         Tools.fastScroll(ev,scrollPane.getViewport());
         switch (ev) {
+            case KeyEvent.VK_C -> changeContrast(1.1f);
+            case KeyEvent.VK_V -> changeContrast(0.9f);
             case KeyEvent.VK_PAGE_DOWN -> {
                 if (currentIdx < (allFiles.size() - 1))
                     currentIdx++;
@@ -159,18 +191,8 @@ public class ImageView extends JFrame implements KeyListener {
                     setTitle("Slideshow STOPPED");
                 }
             }
-            case KeyEvent.VK_F -> {
-                String outPath = Tools.chooseDir(this);
-                if (outPath != null) {
-                    outPath = outPath+File.separator+allFiles.get(currentIdx).rowid+".jpg";
-                    BufferedImage img = loadImgFromStore();
-                    try {
-                        ImageIO.write(img, "jpg", new File(outPath));
-                    } catch (IOException ex) {
-                        throw new RuntimeException(ex);
-                    }
-                }
-            }
+            case KeyEvent.VK_F -> saveAsFile(true);
+            case KeyEvent.VK_G -> saveAsFile(false);
             case KeyEvent.VK_L -> setImg();
             case KeyEvent.VK_ESCAPE -> dispose();
         }

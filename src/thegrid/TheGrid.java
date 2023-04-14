@@ -15,16 +15,16 @@ import java.time.Instant;
 
 
 public class TheGrid extends JFrame {
-    //public final String srcDir;
     public final JPanel rootPane;
     public final JScrollPane scrollPane;
-    private final java.util.List<DBHandler.NameID> allFiles;
+    private java.util.List<DBHandler.NameID> allFiles;
     private final ProgressBox progress;
     private Instant startTime;
     private int imageCount;
 
     public TheGrid() {
         allFiles = DBHandler.getInst().getImageFileNames();
+        allFiles = allFiles.subList(0, 10); // Debug mode
         progress = new ProgressBox(this, allFiles.size());
         rootPane = new JPanel();
         scrollPane = new JScrollPane(rootPane);
