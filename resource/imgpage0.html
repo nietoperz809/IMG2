@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <style>
+    a:hover {
+    color: white;
+    background-color: black;
+    }
+    a:visited {
+    color: green;
+    }
+    img.special:hover {
+    -webkit-transform: scaleX(-1);
+    transform: scaleX(-1);
+    }
+    </style>
+</head>
+<body>
+<script>
+    document.onkeydown = checkKey;
+    function checkKey(e) {
+        e = e || window.event;
+        if (e.keyCode == '37') prv.click();
+        else if (e.keyCode == '39')  nxt.click();
+    }
+</script>
+<small>Use Left/Right Arrow keys to traverse through images<small>
+<a id="prv" href="show.html?img=@@PRV" target="_self"><img src="backarrow.ico"></a>
+<a id="nxt" href="show.html?img=@@NXT" target="_self"><img src="fwdarrow.ico"></a>
+<img class="special" src="@@THEIMG" style="width: 100%;"/>
+</body>
+</html>
