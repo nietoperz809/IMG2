@@ -14,11 +14,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ddb69741-e020-4d21-a32f-f00e79c6818a" name="Changes" comment="added web interface (webserver)">
-      <change afterPath="$PROJECT_DIR$/resource/backarrow.ico" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resource/favicon.ico" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resource/fwdarrow.ico" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resource/imgpage0.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IMG2_jar/IMG2.jar" beforeDir="false" afterPath="$PROJECT_DIR$/IMG2_jar/IMG2.jar" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/buildinfo/BuildInfo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/buildinfo/BuildInfo.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/buildinfo/build.number" beforeDir="false" afterPath="$PROJECT_DIR$/src/buildinfo/build.number" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/thegrid/WebApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/thegrid/WebApp.java" afterDir="false" />
@@ -81,7 +78,7 @@
     "UI_DESIGNER_EDITOR_MODE.PaletteManager.WIDTH": "187",
     "UI_DESIGNER_EDITOR_MODE.UIDesignerToolWindowManager.WIDTH": "195",
     "last_opened_file_path": "C:/peter.home/java/IMG2/resource",
-    "project.structure.last.edited": "Libraries",
+    "project.structure.last.edited": "Artifacts",
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.2",
     "run.code.analysis.last.selected.profile": "aDefault",
@@ -216,13 +213,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1666905269701</updated>
-    </task>
-    <task id="LOCAL-00005" summary="backup">
-      <created>1667060363021</created>
-      <option name="number" value="00005" />
-      <option name="presentableId" value="LOCAL-00005" />
-      <option name="project" value="LOCAL" />
-      <updated>1667060363021</updated>
     </task>
     <task id="LOCAL-00006" summary="immediately show freshly inserted pix">
       <created>1667062955952</created>
@@ -560,7 +550,14 @@
       <option name="project" value="LOCAL" />
       <updated>1681695745455</updated>
     </task>
-    <option name="localTasksCounter" value="54" />
+    <task id="LOCAL-00054" summary="added web interface (webserver)">
+      <created>1681752678040</created>
+      <option name="number" value="00054" />
+      <option name="presentableId" value="LOCAL-00054" />
+      <option name="project" value="LOCAL" />
+      <updated>1681752678040</updated>
+    </task>
+    <option name="localTasksCounter" value="55" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
