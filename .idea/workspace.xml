@@ -13,7 +13,16 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ddb69741-e020-4d21-a32f-f00e79c6818a" name="Changes" comment="introduce contrast up/down + minor enhancements">
+    <list default="true" id="ddb69741-e020-4d21-a32f-f00e79c6818a" name="Changes" comment="switched off debug mode">
+      <change afterPath="$PROJECT_DIR$/src/thegrid/WebApp.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IMG2.iml" beforeDir="false" afterPath="$PROJECT_DIR$/IMG2.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IMG2_jar/IMG2.jar" beforeDir="false" afterPath="$PROJECT_DIR$/IMG2_jar/IMG2.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/buildinfo/BuildInfo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/buildinfo/BuildInfo.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/buildinfo/build.number" beforeDir="false" afterPath="$PROJECT_DIR$/src/buildinfo/build.number" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/common/Tools.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/common/Tools.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/database/DBHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/database/DBHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/thegrid/ImageView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/thegrid/ImageView.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/thegrid/TheGrid.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/thegrid/TheGrid.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -74,7 +83,7 @@
     &quot;UI_DESIGNER_EDITOR_MODE.PaletteManager.WIDTH&quot;: &quot;187&quot;,
     &quot;UI_DESIGNER_EDITOR_MODE.UIDesignerToolWindowManager.WIDTH&quot;: &quot;195&quot;,
     &quot;last_opened_file_path&quot;: &quot;C:/peter.home/java/IMG2/src&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Libraries&quot;,
     &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
     &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
     &quot;run.code.analysis.last.selected.profile&quot;: &quot;aDefault&quot;,
@@ -100,7 +109,7 @@
       <recent name="common" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.Main">
+  <component name="RunManager" selected="Application.web">
     <configuration name="ImageView" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="thegrid.ImageView" />
       <module name="IMG2" />
@@ -130,6 +139,7 @@
     <configuration name="Main" type="Application" factoryName="Application">
       <option name="MAIN_CLASS_NAME" value="thegrid.TheGrid" />
       <module name="IMG2" />
+      <option name="PROGRAM_PARAMETERS" value="max100" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -173,7 +183,16 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="web" type="Application" factoryName="Application">
+      <option name="MAIN_CLASS_NAME" value="thegrid.TheGrid" />
+      <module name="IMG2" />
+      <option name="PROGRAM_PARAMETERS" value="web" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <list>
+      <item itemvalue="Application.web" />
       <item itemvalue="Application.Main" />
       <item itemvalue="Application.ImageView" />
       <item itemvalue="Application.Tools" />
@@ -199,13 +218,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1666905269701</updated>
-    </task>
-    <task id="LOCAL-00003" summary="backup">
-      <created>1666983641939</created>
-      <option name="number" value="00003" />
-      <option name="presentableId" value="LOCAL-00003" />
-      <option name="project" value="LOCAL" />
-      <updated>1666983641939</updated>
     </task>
     <task id="LOCAL-00004" summary="backup + jar">
       <created>1667041398413</created>
@@ -543,7 +555,14 @@
       <option name="project" value="LOCAL" />
       <updated>1681515723495</updated>
     </task>
-    <option name="localTasksCounter" value="52" />
+    <task id="LOCAL-00052" summary="switched off debug mode">
+      <created>1681515842790</created>
+      <option name="number" value="00052" />
+      <option name="presentableId" value="LOCAL-00052" />
+      <option name="project" value="LOCAL" />
+      <updated>1681515842790</updated>
+    </task>
+    <option name="localTasksCounter" value="53" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -560,7 +579,6 @@
   <component name="VcsManagerConfiguration">
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="added buildinfo &amp; ant task" />
     <MESSAGE value="put rowid on display" />
     <MESSAGE value="new backup, a lot faster without zipping" />
     <MESSAGE value="+ video playback 1st version" />
@@ -585,7 +603,8 @@
     <MESSAGE value="added z-key to traverse randomly backwards" />
     <MESSAGE value="added menu point to remove dupes" />
     <MESSAGE value="introduce contrast up/down + minor enhancements" />
-    <option name="LAST_COMMIT_MESSAGE" value="introduce contrast up/down + minor enhancements" />
+    <MESSAGE value="switched off debug mode" />
+    <option name="LAST_COMMIT_MESSAGE" value="switched off debug mode" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -594,6 +613,11 @@
           <url>file://$PROJECT_DIR$/src/common/Tools.java</url>
           <line>52</line>
           <option name="timeStamp" value="8" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/thegrid/WebApp.java</url>
+          <line>45</line>
+          <option name="timeStamp" value="18" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

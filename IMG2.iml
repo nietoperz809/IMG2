@@ -12,5 +12,6 @@
     <orderEntry type="library" name="sejda.webp.imageio" level="project" />
     <orderEntry type="library" name="h2database.h2" level="project" />
     <orderEntry type="library" name="vlcj" level="project" />
+    <orderEntry type="library" name="nanohttpd" level="project" />
   </component>
 </module>

@@ -22,9 +22,10 @@ public class TheGrid extends JFrame {
     private Instant startTime;
     private int imageCount;
 
-    public TheGrid() {
+    public TheGrid (int max) {
         allFiles = DBHandler.getInst().getImageFileNames();
-        //allFiles = allFiles.subList(0, 10); // Debug mode
+        if (max > 0)
+            allFiles = allFiles.subList(0, max); // Debug mode
         progress = new ProgressBox(this, allFiles.size());
         rootPane = new JPanel();
         scrollPane = new JScrollPane(rootPane);
@@ -36,19 +37,29 @@ public class TheGrid extends JFrame {
         rootPane.setToolTipText(allFiles.size() + " Images, press 'a' to add more");
         new GridListeners(this);
         new GridMenu(this);
+        // Action ...
+        imageCount = 0;
+        startTime = Instant.now();
+
+        for (int s = 0; s < allFiles.size(); s++) {
+            addImageLabel(s);
+        }
     }
 
-    public static void main(String... ignored) {
+    public static void main(String... input) {
         try {
             //UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
-            TheGrid tg = new TheGrid();
-            //VideoApp.main(null);
-            tg.imageCount = 0;
-            tg.startTime = Instant.now();
-
-            for (int s = 0; s < tg.allFiles.size(); s++) {
-                tg.addImageLabel(s);
+            int m = -1;
+            if (input.length != 0) {
+                if (input[0].startsWith("max")) {
+                    m = Integer.parseInt(input[0].substring(3));
+                }
+                if (input[0].startsWith("web")) {
+                    new WebApp();
+                    return;
+                }
             }
+            new TheGrid(m);
         } catch (Exception e) {
             System.err.println("run fail\n" + e);
         }

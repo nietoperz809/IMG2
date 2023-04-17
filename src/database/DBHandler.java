@@ -59,7 +59,7 @@ public class DBHandler {
                     "(VID blob, NAME varchar(200), HASHVAL blob(16))";
             statement.execute(sql);
         } catch (SQLException e) {
-            Sam.speak("Failed to connect to deta base");
+            Sam.speak("Failed to connect to dta base");
             pers.reset();
             Tools.Error(e.toString());
             System.exit(-1);
@@ -317,6 +317,31 @@ public class DBHandler {
         }
 
     }
+
+    public byte[] loadThumbnail (int rowid) {
+        String q = "select thumb from IMAGES where _rowid_ =" + rowid;
+        try (ResultSet res = query(q)) {
+            if (res.next()) {
+                return res.getBytes(1);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return null;
+    }
+
+    public byte[] loadImage (int rowid) {
+        String q = "select image from IMAGES where _rowid_ =" + rowid;
+        try (ResultSet res = query(q)) {
+            if (res.next()) {
+                return res.getBytes(1);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return null;
+    }
+
 
     public ThumbHash loadThumbnail(String filename) {
         String q = "select thumb from IMAGES where name = '" + filename + "'";

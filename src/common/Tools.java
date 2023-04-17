@@ -110,6 +110,15 @@ public class Tools {
         return dest;
     }
 
+    private BufferedImage rotateImage (BufferedImage src, float angle) {
+        AffineTransform tx = new AffineTransform();
+        tx.rotate(angle, src.getWidth() / 2.0,src.getHeight() / 2.0);
+        AffineTransformOp op = new AffineTransformOp(tx,
+                AffineTransformOp.TYPE_BILINEAR);
+        return op.filter(src, null);
+    }
+
+
     /**
      * Flips image like a mirror
      * @param img original image

@@ -11,8 +11,8 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.awt.image.BufferedImage;
-import java.awt.image.RescaleOp;
+import java.awt.geom.AffineTransform;
+import java.awt.image.*;
 import java.io.File;
 import java.io.IOException;
 
@@ -67,6 +67,7 @@ public class ImageView extends JFrame implements KeyListener {
                         "f - save original img to file<br>"+
                         "g - save manipulated img to file<br>"+
                         "c - contrast up<br>"+
+                        "x - sharpen<br>"+
                         "v - contrast down<br>"+
                         "t - random image forward<br>" +
                         "z - random image backwardt<br>" +
@@ -80,6 +81,17 @@ public class ImageView extends JFrame implements KeyListener {
     private BufferedImage getIconImg() {
         ImageIcon imgIcon = (ImageIcon) (imgLabel.getIcon());
         return Tools.toBufferedImage(imgIcon.getImage());
+    }
+
+    private void sharpenImage() {
+        BufferedImage img = getIconImg();
+
+        Kernel kernel = new Kernel(3, 3, new float[] { -1, -1, -1, -1, 9, -1, -1,
+                -1, -1 });
+        BufferedImageOp op = new ConvolveOp(kernel);
+        img = op.filter(img, null);
+        imgLabel.setIcon(new ImageIcon(img));
+        repaint();
     }
 
     private void changeContrast (float val) {
@@ -113,8 +125,6 @@ public class ImageView extends JFrame implements KeyListener {
         int ev = e.getKeyCode();
         Tools.fastScroll(ev,scrollPane.getViewport());
         switch (ev) {
-            case KeyEvent.VK_C -> changeContrast(1.1f);
-            case KeyEvent.VK_V -> changeContrast(0.9f);
             case KeyEvent.VK_PAGE_DOWN -> {
                 if (currentIdx < (allFiles.size() - 1))
                     currentIdx++;
@@ -191,6 +201,9 @@ public class ImageView extends JFrame implements KeyListener {
                     setTitle("Slideshow STOPPED");
                 }
             }
+            case KeyEvent.VK_C -> changeContrast(1.1f);
+            case KeyEvent.VK_V -> changeContrast(0.9f);
+            case KeyEvent.VK_X -> sharpenImage();
             case KeyEvent.VK_F -> saveAsFile(true);
             case KeyEvent.VK_G -> saveAsFile(false);
             case KeyEvent.VK_L -> setImg();
