@@ -14,7 +14,7 @@ import fi.iki.elonen.NanoHTTPD;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Map;
+
 
 import static common.Tools.extractResource;
 
@@ -22,10 +22,15 @@ public class WebApp extends NanoHTTPD {
     private final java.util.List<DBHandler.NameID> allFiles;
     private final UniqueRng ring;
 
+    /**
+     * Constructor,
+     * start http server and initialisation
+     */
     public WebApp() {
         super(80);
         allFiles = DBHandler.getInst().getImageFileNames();
         ring = new UniqueRng (allFiles.size());
+        //ring.reset();
 
         try {
             start(NanoHTTPD.SOCKET_READ_TIMEOUT, false);
@@ -35,6 +40,11 @@ public class WebApp extends NanoHTTPD {
         }
     }
 
+    /**
+     * Send JPEG represented by byte[]
+     * @param bytes the JPEG
+     * @return response object
+     */
     private Response sendImageBytes(byte[] bytes) {
         InputStream is = new ByteArrayInputStream(bytes);
         try {
@@ -45,7 +55,17 @@ public class WebApp extends NanoHTTPD {
         }
     }
 
+
+    int startimg = -1;
+
+    /**
+     * Send whole image page
+     * @param rowid the database id of the image
+     * @return response object
+     */
     private Response sendImagePage (int rowid) {
+        if (startimg == -1)
+            startimg = rowid;
         try {
             String str = new String (extractResource("imgpage0.html"));
             str = str.replace ("@@THEIMG", rowid+".pix");
@@ -55,6 +75,10 @@ public class WebApp extends NanoHTTPD {
         }
     }
 
+    /**
+     * Send the main page containing thumbnails
+     * @return response object
+     */
     private Response sendDirectory() {
         StringBuilder msg = new StringBuilder("<html><body>\n");
         for (DBHandler.NameID nid : allFiles) {
@@ -68,6 +92,11 @@ public class WebApp extends NanoHTTPD {
         return newFixedLengthResponse(msg.toString());
     }
 
+    /**
+     * Send icon from the resource package
+     * @param uri requested icon
+     * @return response object
+     */
     private Response sendIcon(String uri) {
         byte[] bytes;
         try {
@@ -78,17 +107,29 @@ public class WebApp extends NanoHTTPD {
         }
     }
 
+    /**
+     * send adjusted image page regarding to user action
+     * @param session request object from browser
+     * @return response object
+     */
     private Response switchImage(IHTTPSession session) {
         int rowid;
         String parm = session.getParms().get("img");
         if (parm.equals("@@PRV")) {
             rowid = allFiles.get(ring.getPrev()).rowid;
-        } else {
+        } else if (parm.equals("@@NXT")) {
             rowid = allFiles.get(ring.getNext()).rowid;
+        } else /* @@RES */{
+            rowid = startimg;
         }
         return sendImagePage (rowid);
     }
 
+    /**
+     * main function of the server
+     * @param session input object from client
+     * @return the response
+     */
     @Override
     public Response serve(IHTTPSession session) {
         String uri = session.getUri();
