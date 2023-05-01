@@ -31,7 +31,7 @@ public class ImageView extends JFrame implements KeyListener {
         ring = new UniqueRng (files.size());
         allFiles = files;
         currentIdx = idx;
-        imgPath = files.get(idx).name;
+        imgPath = files.get(idx).name();
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setTitle(imgPath);
         addKeyListener(this);
@@ -71,6 +71,7 @@ public class ImageView extends JFrame implements KeyListener {
                         "v - contrast down<br>"+
                         "t - random image forward<br>" +
                         "z - random image backwardt<br>" +
+                        "d - delete from database<br>" +
                         "m - mirror</html>");
     }
 
@@ -106,7 +107,7 @@ public class ImageView extends JFrame implements KeyListener {
     private void saveAsFile (boolean orig) {
         String outPath = Tools.chooseDir(this);
         if (outPath != null) {
-            outPath = outPath+File.separator+allFiles.get(currentIdx).rowid+orig+".jpg";
+            outPath = outPath+File.separator+allFiles.get(currentIdx).rowid()+orig+".jpg";
             BufferedImage img;
             if (orig)
                 img = loadImgFromStore();
@@ -130,7 +131,7 @@ public class ImageView extends JFrame implements KeyListener {
                     currentIdx++;
                 else
                     currentIdx = 0;
-                imgPath = allFiles.get(currentIdx).name;
+                imgPath = allFiles.get(currentIdx).name();
                 setImg();
             }
             case KeyEvent.VK_PAGE_UP -> {
@@ -138,7 +139,7 @@ public class ImageView extends JFrame implements KeyListener {
                     currentIdx--;
                 else
                     currentIdx = allFiles.size() - 1;
-                imgPath = allFiles.get(currentIdx).name;
+                imgPath = allFiles.get(currentIdx).name();
                 setImg();
             }
             case KeyEvent.VK_PLUS -> {
@@ -175,7 +176,6 @@ public class ImageView extends JFrame implements KeyListener {
                 imgLabel.setIcon(new ImageIcon(img));
                 repaint();
             }
-            case KeyEvent.VK_H -> adjustOnHeight();
             case KeyEvent.VK_T -> {
                 currentIdx = ring.getNext();
                 showByIdx();
@@ -188,7 +188,7 @@ public class ImageView extends JFrame implements KeyListener {
                 if (timer == null) {
                     timer = new Timer(10000, e1 -> {
                         currentIdx = ring.getNext();
-                        imgPath = allFiles.get(currentIdx).name;
+                        imgPath = allFiles.get(currentIdx).name();
                         setTitle("Slideshow: " + imgPath);
                         adjustOnHeight();
                     });
@@ -201,6 +201,8 @@ public class ImageView extends JFrame implements KeyListener {
                     setTitle("Slideshow STOPPED");
                 }
             }
+            case KeyEvent.VK_D -> DBHandler.getInst().deleteImage(allFiles.get(currentIdx).rowid());
+            case KeyEvent.VK_H -> adjustOnHeight();
             case KeyEvent.VK_C -> changeContrast(1.1f);
             case KeyEvent.VK_V -> changeContrast(0.9f);
             case KeyEvent.VK_X -> sharpenImage();
@@ -212,7 +214,7 @@ public class ImageView extends JFrame implements KeyListener {
     }
 
     private void showByIdx() {
-        imgPath = allFiles.get(currentIdx).name;
+        imgPath = allFiles.get(currentIdx).name();
         setTitle(imgPath + " -- " + currentIdx);
         adjustOnHeight();
     }

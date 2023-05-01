@@ -40,7 +40,7 @@ public class DBHandler {
     private DBHandler() {
         PersistString pers = new PersistString("pwddb", NO_PASS);
         try {
-            String aes_pwd = null;
+            String aes_pwd;
             if (pers.get().equals(NO_PASS)) {
                 aes_pwd = UnlockDBDialog.xmain();
                 pers.set(aes_pwd);
@@ -94,9 +94,9 @@ public class DBHandler {
         ) != 0;
     }
 
-    public Connection getConn() {
-        return connection;
-    }
+//    public Connection getConn() {
+//        return connection;
+//    }
 
     public ResultSet query(String txt) {
         try {
@@ -143,7 +143,7 @@ public class DBHandler {
     }
 
     public boolean deleteVideo (int rowid) {
-        if (askForDel(null, "" + rowid)) {
+        if (askForDel(null, String.valueOf(rowid))) {
             return false;
         }
         try {
@@ -364,20 +364,12 @@ public class DBHandler {
         }
     }
 
-    public static class NameID {
-        public final String name;
-        public final int rowid;
-
-        public NameID(String name, int rowid) {
-            this.name = name;
-            this.rowid = rowid;
-        }
-
+    public record NameID(String name, int rowid) {
         @Override
-        public String toString() {
-            return name + " : (" + rowid + ")";
+            public String toString() {
+                return name + " : (" + rowid + ")";
+            }
         }
-    }
 
     public static class ThumbHash {
         public final BufferedImage img;

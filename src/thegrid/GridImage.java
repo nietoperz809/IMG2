@@ -24,18 +24,18 @@ class GridImage extends JLabel {
 
     private void init (List<DBHandler.NameID> files, int index, JPanel rootPane) {
         DBHandler.NameID thisID = files.get(index);
-        rowID = thisID.rowid;
-        setToolTipText (thisID.name+" -- right mouse button to delete");
+        rowID = thisID.rowid();
+        setToolTipText (thisID.name()+" -- right mouse button to delete");
         setVerticalTextPosition(JLabel.BOTTOM);
         setHorizontalTextPosition(JLabel.CENTER);
-        setText("-> "+thisID.rowid);
+        setText("-> "+thisID.rowid());
         addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 if (e.getButton() == 3) { // right click
-                    if (!Tools.Question("Really delete "+thisID.rowid+"?"))
+                    if (!Tools.Question("Really delete "+thisID.rowid()+"?"))
                         return;
-                    if (DBHandler.getInst().deleteImage(thisID.rowid)) {
+                    if (DBHandler.getInst().deleteImage(thisID.rowid())) {
                         rootPane.remove(GridImage.this);
                         rootPane.doLayout();
                         rootPane.repaint();

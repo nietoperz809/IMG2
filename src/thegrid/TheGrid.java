@@ -81,7 +81,7 @@ public class TheGrid extends JFrame {
      * Add one single image to the frame
      */
     public void addImageLabel(int s) {
-        String fileName = allFiles.get(s).name;
+        String fileName = allFiles.get(s).name();
         DBHandler.ThumbHash tbh = null;
         try {
             tbh = DBHandler.getInst().loadThumbnail(fileName);

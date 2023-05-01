@@ -15,12 +15,12 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
-
 import static common.Tools.extractResource;
 
 public class WebApp extends NanoHTTPD {
     private final java.util.List<DBHandler.NameID> allFiles;
     private final UniqueRng ring;
+    int firstimg = -1;
 
     /**
      * Constructor,
@@ -29,7 +29,7 @@ public class WebApp extends NanoHTTPD {
     public WebApp() {
         super(80);
         allFiles = DBHandler.getInst().getImageFileNames();
-        ring = new UniqueRng (allFiles.size());
+        ring = new UniqueRng(allFiles.size());
         //ring.reset();
 
         try {
@@ -42,6 +42,7 @@ public class WebApp extends NanoHTTPD {
 
     /**
      * Send JPEG represented by byte[]
+     *
      * @param bytes the JPEG
      * @return response object
      */
@@ -55,20 +56,19 @@ public class WebApp extends NanoHTTPD {
         }
     }
 
-
-    int startimg = -1;
-
     /**
      * Send whole image page
-     * @param rowid the database id of the image
+     *
+     * @param session from serve function
+     * @param rowid   the database id of the image
      * @return response object
      */
-    private Response sendImagePage (int rowid) {
-        if (startimg == -1)
-            startimg = rowid;
+    private Response sendImagePage(IHTTPSession session, int rowid) {
+        if (firstimg == -1)
+            firstimg = rowid;
         try {
-            String str = new String (extractResource("imgpage0.html"));
-            str = str.replace ("@@THEIMG", rowid+".pix");
+            String str = new String(extractResource("imgpage0.html"));
+            str = str.replace("@@THEIMG", rowid + ".jpg");
             return newFixedLengthResponse (str);
         } catch (Exception e) {
             return newFixedLengthResponse(Response.Status.BAD_REQUEST, "text/html", "Error");
@@ -77,16 +77,17 @@ public class WebApp extends NanoHTTPD {
 
     /**
      * Send the main page containing thumbnails
+     *
      * @return response object
      */
     private Response sendDirectory() {
         StringBuilder msg = new StringBuilder("<html><body>\n");
         for (DBHandler.NameID nid : allFiles) {
             msg.append("<a href=\"")
-                    .append(nid.rowid)
+                    .append(nid.rowid())
                     .append(".lnk\" target=\"_blank\"><img src=\"")
-                    .append(nid.rowid)
-                    .append (".jpg\" width=\"50\" height=\"50\"></a>\n");
+                    .append(nid.rowid())
+                    .append(".tmb\" width=\"50\" height=\"50\"></a>\n");
         }
         msg.append("</body></html>\n");
         return newFixedLengthResponse(msg.toString());
@@ -94,6 +95,7 @@ public class WebApp extends NanoHTTPD {
 
     /**
      * Send icon from the resource package
+     *
      * @param uri requested icon
      * @return response object
      */
@@ -109,6 +111,7 @@ public class WebApp extends NanoHTTPD {
 
     /**
      * send adjusted image page regarding to user action
+     *
      * @param session request object from browser
      * @return response object
      */
@@ -116,17 +119,19 @@ public class WebApp extends NanoHTTPD {
         int rowid;
         String parm = session.getParms().get("img");
         if (parm.equals("@@PRV")) {
-            rowid = allFiles.get(ring.getPrev()).rowid;
+            rowid = allFiles.get(ring.getPrev()).rowid();
         } else if (parm.equals("@@NXT")) {
-            rowid = allFiles.get(ring.getNext()).rowid;
-        } else /* @@RES */{
-            rowid = startimg;
+            rowid = allFiles.get(ring.getNext()).rowid();
+        } else /* @@RES */ {
+            rowid = firstimg;
         }
-        return sendImagePage (rowid);
+        return sendImagePage(null, rowid);
     }
+
 
     /**
      * main function of the server
+     *
      * @param session input object from client
      * @return the response
      */
@@ -143,12 +148,12 @@ public class WebApp extends NanoHTTPD {
         }
         if (uri.equals("/")) {
             return sendDirectory();
-        } else if (uri.endsWith(".jpg")) {
+        } else if (uri.endsWith(".tmb")) {
             byte[] bytes = DBHandler.getInst().loadThumbnail(rowid);
             return sendImageBytes(bytes);
         } else if (uri.endsWith(".lnk")) {
-            return sendImagePage (rowid);
-        } else if (uri.endsWith(".pix")) {
+            return sendImagePage(session, rowid);
+        } else if (uri.endsWith(".jpg")) {
             byte[] bytes = DBHandler.getInst().loadImage(rowid);
             return sendImageBytes(bytes);
         } else if (uri.endsWith(".ico")) {

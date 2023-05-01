@@ -76,7 +76,7 @@ public class VideoApp extends JDialog {
         deleteButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                int id = listControl.getSelectedValue().rowid;
+                int id = listControl.getSelectedValue().rowid();
                 DBHandler.getInst().deleteVideo(id);
                 setListContent();
                 repaint();
@@ -88,10 +88,10 @@ public class VideoApp extends JDialog {
                 DBHandler.NameID nameid = listControl.getSelectedValue();
                 try {
                     JFileChooser fileChooser = new JFileChooser();
-                    fileChooser.setSelectedFile(new File(nameid.name));
+                    fileChooser.setSelectedFile(new File(nameid.name()));
                     int option = fileChooser.showSaveDialog(VideoApp.this);
                     if(option == JFileChooser.APPROVE_OPTION){
-                        SoftReference<byte[]> bt = DBHandler.getInst().loadVideoBytes(nameid.name);
+                        SoftReference<byte[]> bt = DBHandler.getInst().loadVideoBytes(nameid.name());
                         File f = fileChooser.getSelectedFile();
                         Files.write(f.toPath(),bt.get());
                     }
@@ -105,7 +105,7 @@ public class VideoApp extends JDialog {
             public void actionPerformed(ActionEvent actionEvent) {
                 DBHandler.NameID nameid = listControl.getSelectedValue();
                 String res = LineInput.xmain();
-                DBHandler.getInst().changeVideoName(res, nameid.rowid);
+                DBHandler.getInst().changeVideoName(res, nameid.rowid());
                 setListContent();
             }
         });
@@ -114,7 +114,7 @@ public class VideoApp extends JDialog {
     MediaPlayerBox playerBox = new MediaPlayerBox(this);
 
     private void onOK() {
-        playerBox.start (listControl.getSelectedValue().name);
+        playerBox.start (listControl.getSelectedValue().name());
     }
 
     private void onCancel() {

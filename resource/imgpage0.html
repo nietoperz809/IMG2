@@ -23,10 +23,16 @@
         if (e.keyCode == '37') prv.click();
         else if (e.keyCode == '39')  nxt.click();
     }
+<!--    function myFunction() {-->
+<!--        var value = document.getElementById("var1").value;-->
+<!--        alert(value);-->
+<!--    }-->
 </script>
-<small>Use Left/Right Arrow keys to traverse through images<small>
+<small>Use left/right arrow keys to scroll through the images</small>
+<input type="hidden" id="var1" name="var1" value="@@VAR1">
 <a id="prv" href="show.html?img=@@PRV" target="_self"><img src="backarrow.ico"></a>
 <a id="nxt" href="show.html?img=@@NXT" target="_self"><img src="fwdarrow.ico"></a>
+<a onclick="myFunction()" id="res" href="show.html?img=@@RES" target="_self"><img src="cross.ico"></a>
 <img class="special" src="@@THEIMG" style="width: 100%;"/>
 </body>
 </html>
