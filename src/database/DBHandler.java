@@ -30,6 +30,7 @@ public class DBHandler {
     private static DBHandler _inst = null;
     private Connection connection;
     private Statement statement;
+    private volatile boolean _backupIsRunning;
     /*
         jdbc:h2:C:\peter.home\java\IMG2\datastore\mydb;CIPHER=AES
      */
@@ -74,6 +75,10 @@ public class DBHandler {
     public static DBHandler getInst() {
         if (_inst == null) {
             _inst = new DBHandler();
+        }
+        if (_inst._backupIsRunning) {
+            Sam.speak("backup is running");
+            return null;
         }
         return _inst;
     }
@@ -156,40 +161,39 @@ public class DBHandler {
     }
 
     public void backup() {
-        String timeStamp = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss")
+        final String timeStamp = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
                 .format(new java.util.Date());
-        String dest = ROOT_DIR + timeStamp + ".backup";
-        String src = ROOT_DIR + DB_FILE_FULL;
+        final String dest = ROOT_DIR + timeStamp + ".backup";
+        final String src = ROOT_DIR + DB_FILE_FULL;
 
         close();
-//        try {
-//            Files.copy(Paths.get(src),
-//                    Paths.get(dest),
-//                    StandardCopyOption.COPY_ATTRIBUTES);
-//        } catch (IOException e) {
-//            throw new RuntimeException(e);
-//        }
-        try {
-            InputStream in = //new BufferedInputStream(
-                    new FileInputStream(src); //);
 
-            OutputStream out = //new BufferedOutputStream(
-                    new FileOutputStream(dest); //);
+        new Thread(() -> {
+            try {
+                _backupIsRunning = true;
+                InputStream in = new BufferedInputStream(
+                        new FileInputStream(src));
 
-            byte[] buffer = new byte[1024*1024*4];
-            int lengthRead;
-            while ((lengthRead = in.read(buffer)) > 0) {
-                out.write(buffer, 0, lengthRead);
-                Thread.yield();
-                System.out.print(".");
+                OutputStream out = new BufferedOutputStream(
+                        new FileOutputStream(dest));
+
+                final byte[] buffer = new byte[1024*1024*4];
+                int lengthRead;
+                while ((lengthRead = in.read(buffer)) > 0) {
+                    out.write(buffer, 0, lengthRead);
+                    //Thread.yield();
+                    //System.out.print(".");
+                }
+                out.close();
+                in.close();
+                _backupIsRunning = false;
+                System.out.println("done!");
+            } catch (Exception e) {
+                System.out.println(e);
             }
-            out.close();
-            in.close();
-            System.out.println("done!");
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-        getInst(); // reopen
+        }).start();
+
+        //getInst(); // reopen
     }
 
     public void addImageFiles (File[] files, InsertCallback ic) throws Exception {
@@ -358,7 +362,7 @@ public class DBHandler {
     public void close() {
         try {
             connection.close();
-            _inst = null;
+            //_inst = null;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
