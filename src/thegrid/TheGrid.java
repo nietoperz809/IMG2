@@ -12,18 +12,23 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.time.Duration;
 import java.time.Instant;
+import java.util.Objects;
 
 
-public class TheGrid extends JFrame {
+public class TheGrid extends MyFrame {
     public final JPanel rootPane;
     public final JScrollPane scrollPane;
     private java.util.List<DBHandler.NameID> allFiles;
     private final ProgressBox progress;
-    private Instant startTime;
+    private final Instant startTime;
     private int imageCount;
 
+    public void notifyClick() {
+        stopThumbViewFill ("-- prematurely stopped --");
+    }
+
     public TheGrid (int max) {
-        allFiles = DBHandler.getInst().getImageFileNames();
+        allFiles = Objects.requireNonNull(DBHandler.getInst()).getImageFileNames();
         if (max > 0)
             allFiles = allFiles.subList(0, max); // Debug mode
         progress = new ProgressBox(this, allFiles.size());
@@ -77,6 +82,15 @@ public class TheGrid extends JFrame {
         Sam.speak(files.length+"New files added");
     }
 
+    public void stopThumbViewFill(String info) {
+        progress.dispose();
+        rootPane.doLayout();
+        scrollPane.getViewport().setView(rootPane);
+        setTitle (BuildInfo.buildInfo + " -- " + info);
+        setVisible(true);
+        Tools.gc_now();
+    }
+
     /**
      * Add one single image to the frame
      */
@@ -95,12 +109,7 @@ public class TheGrid extends JFrame {
         String info = "Loaded " + (++imageCount) + " Thumbs in " + Duration.between(startTime, end).toMillis() / 1000 + " Seconds";
         progress.setTextAndValue(info, imageCount);
         if (imageCount >= allFiles.size()) {
-            progress.dispose();
-            rootPane.doLayout();
-            scrollPane.getViewport().setView(rootPane);
-            setTitle (BuildInfo.buildInfo + " -- " + info);
-            setVisible(true);
-            Tools.gc_now();
+            stopThumbViewFill(info);
         }
     }
 }

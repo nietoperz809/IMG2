@@ -17,8 +17,11 @@ import java.nio.file.*;
 import java.security.MessageDigest;
 import java.sql.*;
 import java.text.SimpleDateFormat;
+import java.time.Duration;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 
 public class DBHandler {
@@ -83,6 +86,15 @@ public class DBHandler {
         return _inst;
     }
 
+    public void close() {
+        try {
+            connection.close();
+            //_inst = null;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     /**
      * Warning box if an image is about to be deleted
      *
@@ -135,7 +147,7 @@ public class DBHandler {
     }
 
     public boolean deleteImage (int rowid) {
-        if (askForDel(null, "" + rowid)) {
+        if (askForDel(null, String.valueOf(rowid))) {
             return false;
         }
         try {
@@ -161,7 +173,7 @@ public class DBHandler {
     }
 
     public void backup() {
-        final String timeStamp = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
+        final String timeStamp = new SimpleDateFormat("yyyy-MM-dd HH꞉mm꞉ss")
                 .format(new java.util.Date());
         final String dest = ROOT_DIR + timeStamp + ".backup";
         final String src = ROOT_DIR + DB_FILE_FULL;
@@ -169,27 +181,38 @@ public class DBHandler {
         close();
 
         new Thread(() -> {
+            InputStream in = null;
+            OutputStream out = null;
+            Instant startTime = Instant.now();
             try {
-                _backupIsRunning = true;
-                InputStream in = new BufferedInputStream(
-                        new FileInputStream(src));
-
-                OutputStream out = new BufferedOutputStream(
-                        new FileOutputStream(dest));
-
+                in = new BufferedInputStream(new FileInputStream(src));
+                out = new BufferedOutputStream(new FileOutputStream(dest));
                 final byte[] buffer = new byte[1024*1024*4];
                 int lengthRead;
+                long total = 0;
+                _backupIsRunning = true;
                 while ((lengthRead = in.read(buffer)) > 0) {
                     out.write(buffer, 0, lengthRead);
+                    total += lengthRead;
+                    System.out.print("."+total);
                     //Thread.yield();
                     //System.out.print(".");
                 }
-                out.close();
-                in.close();
-                _backupIsRunning = false;
-                System.out.println("done!");
             } catch (Exception e) {
-                System.out.println(e);
+                throw new RuntimeException(e);
+            } finally {
+                _backupIsRunning = false;
+                _inst = null;
+                Instant end = Instant.now();
+                String msg = "DB backup took: " + Duration.between(startTime, end).toSeconds() + " Seconds";
+                Tools.Info(msg);
+                System.out.println("done!");
+                try {
+                    Objects.requireNonNull(out).close();
+                    Objects.requireNonNull(in).close();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
             }
         }).start();
 
@@ -359,14 +382,6 @@ public class DBHandler {
         return null;
     }
 
-    public void close() {
-        try {
-            connection.close();
-            //_inst = null;
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
 
     public record NameID(String name, int rowid) {
         @Override
