@@ -71,7 +71,7 @@ public class TheGrid extends MyFrame {
     }
 
     public void addImageFilesToDatabase(File[] files) throws Exception {
-        DBHandler.getInst().addImageFiles(files, (img, name) -> {
+        Objects.requireNonNull(DBHandler.getInst()).MoveImageFilesToDB(files, (img, name) -> {
             BufferedImage thumbnailImage = ImageScaler.scaleExact(img,
                     new Dimension(100, 100));
             GridImage lab = new GridImage(thumbnailImage, allFiles,

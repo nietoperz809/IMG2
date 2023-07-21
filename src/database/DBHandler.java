@@ -219,7 +219,13 @@ public class DBHandler {
         //getInst(); // reopen
     }
 
-    public void addImageFiles (File[] files, InsertCallback ic) throws Exception {
+    /**
+     * Ad Files to DB and delete the source
+     * @param files Array of files
+     * @param ic Callback object after insertion into DB
+     * @throws Exception if smth. went wrong
+     */
+    public void MoveImageFilesToDB (File[] files, InsertCallback ic) throws Exception {
         for (File file : files) {
             String name = UUID.randomUUID().toString();
             BufferedImage img = Tools.loadImage(file.getPath());
@@ -229,6 +235,7 @@ public class DBHandler {
             }
             insertImageRecord(name, img);
             ic.justInserted(img, name);
+            file.delete();
         }
         connection.commit();
     }
