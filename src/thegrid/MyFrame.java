@@ -2,9 +2,7 @@ package thegrid;
 
 import javax.swing.*;
 
-public class MyFrame extends JFrame {
+public abstract class MyFrame extends JFrame {
 
-    public void notifyClick() {
-
-    }
+    abstract public void notifyClick();
 }
