@@ -9,12 +9,12 @@ import java.awt.event.ActionListener;
 public class LineInput extends JDialog {
     private JPanel contentPane;
     private JTextField textField1;
-    private JButton buttonOK;
+    //private JButton buttonOK;
 
     public LineInput() {
         setContentPane(contentPane);
         setModal(true);
-        getRootPane().setDefaultButton(buttonOK);
+        //getRootPane().setDefaultButton(buttonOK);
         setUndecorated(true);
         LineBorder border = new LineBorder(Color.RED, 4, false);
         contentPane.setBorder(border);
@@ -26,8 +26,9 @@ public class LineInput extends JDialog {
         });
     }
 
-    public static String xmain() {
+    public static String xmain (String init) {
         LineInput dialog = new LineInput();
+        dialog.textField1.setText(init);
         dialog.pack();
         dialog.setLocationRelativeTo(null);
         dialog.setVisible(true);
@@ -35,7 +36,7 @@ public class LineInput extends JDialog {
     }
 
 
-    public static void main(String[] args) {
-        System.out.println(xmain());
-    }
+//    public static void main(String[] args) {
+//        System.out.println(xmain());
+//    }
 }

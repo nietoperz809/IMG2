@@ -61,9 +61,12 @@ public class Tools {
             WebPReadParam readParam = new WebPReadParam();
             readParam.setBypassFiltering(true);
             // Configure the input on the ImageReader
-            reader.setInput(new FileImageInputStream(new File(name)));
+            FileImageInputStream fis = new FileImageInputStream(new File(name));
+            reader.setInput(fis);
             // Decode the image
-            return reader.read(0, readParam);
+            BufferedImage buff = reader.read(0, readParam);
+            fis.close();
+            return buff;
         } else {
             return ImageIO.read(new File (name));
         }

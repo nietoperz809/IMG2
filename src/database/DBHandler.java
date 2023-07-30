@@ -115,7 +115,7 @@ public class DBHandler {
 //        return connection;
 //    }
 
-    public ResultSet query(String txt) {
+    public synchronized ResultSet query(String txt) {
         try {
             return statement.executeQuery(txt);
         } catch (SQLException e) {
@@ -129,11 +129,11 @@ public class DBHandler {
     }
 
     public List<NameID> getVideoFileNames() {
-        String sql = "select name,_ROWID_ from VIDEOS order by _ROWID_ asc";
+        String sql = "select name,_ROWID_ from VIDEOS order by VIDEOS.name asc";
         return getNames(sql);
     }
 
-    private List<NameID> getNames(String sql) {
+    private synchronized List<NameID> getNames(String sql) {
         ArrayList<NameID> al = new ArrayList<>();
         try (ResultSet res = query(sql)) {
             while (res.next()) {
@@ -225,7 +225,8 @@ public class DBHandler {
      * @param ic Callback object after insertion into DB
      * @throws Exception if smth. went wrong
      */
-    public void MoveImageFilesToDB (File[] files, InsertCallback ic) throws Exception {
+    public int MoveImageFilesToDB (File[] files, InsertCallback ic) throws Exception {
+        int ret = 0;
         for (File file : files) {
             String name = UUID.randomUUID().toString();
             BufferedImage img = Tools.loadImage(file.getPath());
@@ -235,9 +236,11 @@ public class DBHandler {
             }
             insertImageRecord(name, img);
             ic.justInserted(img, name);
-            file.delete();
+            if (file.delete())
+                ret++;
         }
         connection.commit();
+        return ret;
     }
 
     /**

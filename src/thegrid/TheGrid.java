@@ -22,6 +22,7 @@ public class TheGrid extends MyFrame {
     private final ProgressBox progress;
     private final Instant startTime;
     private int imageCount;
+    private boolean stopFill = false;
 
     public void notifyClick() {
         stopThumbViewFill ("-- prematurely stopped --");
@@ -47,6 +48,8 @@ public class TheGrid extends MyFrame {
         startTime = Instant.now();
 
         for (int s = 0; s < allFiles.size(); s++) {
+            if (stopFill)
+                break;
             addImageLabel(s);
         }
     }
@@ -83,6 +86,7 @@ public class TheGrid extends MyFrame {
     }
 
     public void stopThumbViewFill(String info) {
+        stopFill = true;
         progress.dispose();
         rootPane.doLayout();
         scrollPane.getViewport().setView(rootPane);
