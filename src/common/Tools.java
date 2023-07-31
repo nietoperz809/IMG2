@@ -188,18 +188,31 @@ public class Tools {
 
     /**
      * Fast scroll of scrollbar content by up/down keys
-     * @param keyCode vvk_up or vk_down
-     * @param vp Viewport of scrollbar
+     *
+     * @param keyCode  vvk_up or vk_down
+     * @param vp       Viewport of scrollbar
+     * @param usePageKeys wether to process pageup/pagedown keys
      */
-    public static void fastScroll(int keyCode, JViewport vp) {
+    public static void fastScroll(int keyCode, JViewport vp, boolean usePageKeys) {
         Point p = vp.getViewPosition();
         switch (keyCode) {
             case KeyEvent.VK_DOWN -> p.y += 10;
+            case KeyEvent.VK_PAGE_DOWN -> {
+                if (usePageKeys)
+                    p.y += 100;
+            }
             case KeyEvent.VK_RIGHT -> p.x += 10;
             case KeyEvent.VK_UP -> {
                 p.y -= 10;
                 if (p.y < 0)
                     return;
+            }
+            case KeyEvent.VK_PAGE_UP -> {
+                if (usePageKeys) {
+                    p.y -= 100;
+                    if (p.y < 0)
+                        return;
+                }
             }
             case KeyEvent.VK_LEFT -> {
                 p.x -= 10;

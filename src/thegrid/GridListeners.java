@@ -61,7 +61,7 @@ public class GridListeners implements KeyListener {
 
     @Override
     public void keyPressed(KeyEvent e) {
-        Tools.fastScroll(e.getKeyCode(),theGrid.scrollPane.getViewport());
+        Tools.fastScroll(e.getKeyCode(),theGrid.scrollPane.getViewport(), true);
     }
 
     @Override

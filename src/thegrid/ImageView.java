@@ -124,7 +124,7 @@ public class ImageView extends JFrame implements KeyListener {
     @Override
     public void keyPressed(KeyEvent e) {
         int ev = e.getKeyCode();
-        Tools.fastScroll(ev,scrollPane.getViewport());
+        Tools.fastScroll(ev,scrollPane.getViewport(), false);
         switch (ev) {
             case KeyEvent.VK_PAGE_DOWN -> {
                 if (currentIdx < (allFiles.size() - 1))
