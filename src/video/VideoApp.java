@@ -70,7 +70,7 @@ public class VideoApp extends JDialog {
             }
         });
 
-        setListContent();
+        setListContent(false);
 
         enableDrop();
         deleteButton.addActionListener(new ActionListener() {
@@ -78,7 +78,7 @@ public class VideoApp extends JDialog {
             public void actionPerformed(ActionEvent e) {
                 int id = listControl.getSelectedValue().rowid();
                 DBHandler.getInst().deleteVideo(id);
-                setListContent();
+                setListContent(false);
                 repaint();
             }
         });
@@ -106,7 +106,16 @@ public class VideoApp extends JDialog {
                 DBHandler.NameID nameid = listControl.getSelectedValue();
                 String res = LineInput.xmain(nameid.name());
                 DBHandler.getInst().changeVideoName(res, nameid.rowid());
-                setListContent();
+                setListContent(false);
+            }
+        });
+        listControl.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (e.getButton() == MouseEvent.BUTTON3) {
+                    setListContent(true);
+                    repaint();
+                }
             }
         });
     }
@@ -121,8 +130,8 @@ public class VideoApp extends JDialog {
         playerBox.stop();
     }
 
-    private void setListContent() {
-        List<DBHandler.NameID> list = DBHandler.getInst().getVideoFileNames();
+    private void setListContent(boolean sort_by_id) {
+        List<DBHandler.NameID> list = DBHandler.getInst().getVideoFileNames(sort_by_id);
         DefaultListModel<DBHandler.NameID> model = new DefaultListModel<>();
         model.addAll (list);
         listControl.setModel(model);
@@ -145,7 +154,7 @@ public class VideoApp extends JDialog {
                             files = (java.util.List<File>) transferable.getTransferData(flavor);
                             File[] array = files.toArray(new File[0]);
                             DBHandler.getInst().addVideoFile(array[0]);
-                            setListContent();
+                            setListContent(false);
                             repaint();
                         } catch (Exception e) {
                             throw new RuntimeException(e);
@@ -162,15 +171,15 @@ public class VideoApp extends JDialog {
         dialog.owner = owner;
         if (owner != null)
             owner.setEnabled(false);
-        dialog.setSize(400,400);
+        dialog.setSize(600,600);
         dialog.setLocationRelativeTo(null);
         dialog.setVisible(true);
     }
 
-    public static void main(String[] args) {
-        VideoApp dialog = new VideoApp();
-        dialog.setSize(400,400);
-        dialog.setLocationRelativeTo(null);
-        dialog.setVisible(true);
-    }
+//    public static void main(String[] args) {
+//        VideoApp dialog = new VideoApp();
+//        dialog.setSize(400,400);
+//        dialog.setLocationRelativeTo(null);
+//        dialog.setVisible(true);
+//    }
 }

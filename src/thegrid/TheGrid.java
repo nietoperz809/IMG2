@@ -14,6 +14,8 @@ import java.time.Duration;
 import java.time.Instant;
 import java.util.Objects;
 
+import static java.util.Objects.*;
+
 
 public class TheGrid extends MyFrame {
     public final JPanel rootPane;
@@ -29,7 +31,7 @@ public class TheGrid extends MyFrame {
     }
 
     public TheGrid (int max) {
-        allFiles = Objects.requireNonNull(DBHandler.getInst()).getImageFileNames();
+        allFiles = requireNonNull(DBHandler.getInst()).getImageFileNames();
         if (max > 0)
             allFiles = allFiles.subList(0, max); // Debug mode
         progress = new ProgressBox(this, allFiles.size());
@@ -74,7 +76,7 @@ public class TheGrid extends MyFrame {
     }
 
     public void addImageFilesToDatabase(File[] files) throws Exception {
-        Objects.requireNonNull(DBHandler.getInst()).MoveImageFilesToDB(files, (img, name) -> {
+        int numadd = requireNonNull(DBHandler.getInst()).MoveImageFilesToDB(files, (img, name) -> {
             BufferedImage thumbnailImage = ImageScaler.scaleExact(img,
                     new Dimension(100, 100));
             GridImage lab = new GridImage(thumbnailImage, allFiles,
@@ -82,7 +84,7 @@ public class TheGrid extends MyFrame {
             rootPane.add(lab);
         });
         rootPane.doLayout();
-        Sam.speak(files.length+"New files added");
+        Sam.speak(numadd+"New files added");
     }
 
     public void stopThumbViewFill(String info) {

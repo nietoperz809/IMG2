@@ -128,8 +128,9 @@ public class DBHandler {
         return getNames(sql);
     }
 
-    public List<NameID> getVideoFileNames() {
-        String sql = "select name,_ROWID_ from VIDEOS order by VIDEOS.name asc";
+    public List<NameID> getVideoFileNames(boolean sort_by_id) {
+        String sort = sort_by_id ? "_ROWID_" : "name";
+        String sql = "select name,_ROWID_ from VIDEOS order by "+sort+" asc";
         return getNames(sql);
     }
 
