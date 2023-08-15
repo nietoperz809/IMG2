@@ -96,6 +96,14 @@ public class Tools {
         return bimage;
     }
 
+    public static BufferedImage removeAlpha (BufferedImage img) {
+        BufferedImage newImage = new BufferedImage(img.getWidth(), img.getHeight(), BufferedImage.TYPE_INT_RGB);
+        Graphics2D g = newImage.createGraphics();
+        g.drawImage(img, 0, 0, img.getWidth(), img.getHeight(), null);
+        g.dispose();
+        return newImage;
+    }
+
     /**
      * Rotate clockwise by 90 degrees
      * @param src source image

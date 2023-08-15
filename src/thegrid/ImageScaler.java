@@ -1,6 +1,8 @@
 package thegrid;
 
 import java.awt.*;
+import java.awt.geom.AffineTransform;
+import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
 
 public class ImageScaler {
@@ -55,4 +57,15 @@ public class ImageScaler {
         return Math.max(dim.width / (float) width, dim.height / (float) height);
     }
 
+    public static BufferedImage scaleImg(BufferedImage img, float scale) {
+        int w = (int)(img.getWidth()*scale);
+        int h = (int)(img.getHeight()*scale);
+        BufferedImage after = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
+        AffineTransform at = new AffineTransform();
+        at.scale(scale, scale);
+        AffineTransformOp scaleOp =
+                new AffineTransformOp(at, AffineTransformOp.TYPE_BILINEAR);
+        after = scaleOp.filter(img, after);
+        return after;
+    }
 }

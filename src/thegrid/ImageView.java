@@ -11,17 +11,16 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.awt.geom.AffineTransform;
 import java.awt.image.*;
 import java.io.File;
 import java.io.IOException;
+import java.util.UUID;
 
 public class ImageView extends JFrame implements KeyListener {
     private final JScrollPane scrollPane;
     private final java.util.List<DBHandler.NameID> allFiles;
     private final JLabel imgLabel;
     private final UniqueRng ring;
-    private float scale = 1.0f;
     private String imgPath;
     private int currentIdx;
 
@@ -107,15 +106,19 @@ public class ImageView extends JFrame implements KeyListener {
     private void saveAsFile (boolean orig) {
         String outPath = Tools.chooseDir(this);
         if (outPath != null) {
-            outPath = outPath+File.separator+allFiles.get(currentIdx).rowid()+orig+".jpg";
             BufferedImage img;
             if (orig)
                 img = loadImgFromStore();
             else
-                img = getIconImg();
+                img = Tools.removeAlpha(getIconImg());
+            outPath = outPath+File.separator + UUID.randomUUID() + ".jpg";
+            System.out.println(outPath);
             try {
-                ImageIO.write(img, "jpg", new File(outPath));
-            } catch (IOException ex) {
+                boolean success = ImageIO.write(img, "jpg", new File(outPath));
+                if (!success)
+                    System.err.println("imgIO write fail ");
+            } catch (Exception ex) {
+                System.err.println("imgIO write fail "+ex);
                 throw new RuntimeException(ex);
             }
         }
@@ -143,13 +146,13 @@ public class ImageView extends JFrame implements KeyListener {
                 setImg();
             }
             case KeyEvent.VK_PLUS -> {
-                scale += 0.1f;
-                scaleIconImg();
+                //scale += 0.1f;
+                scaleIconImg(1.1f);
             }
             case KeyEvent.VK_MINUS -> {
-                if (scale > 0.2f)
-                    scale -= 0.1f;
-                scaleIconImg();
+//                if (scale > 0.2f)
+//                    scale -= 0.1f;
+                scaleIconImg(0.9f);
             }
             case KeyEvent.VK_R -> {
                 BufferedImage img = getIconImg();
@@ -250,15 +253,9 @@ public class ImageView extends JFrame implements KeyListener {
 
     }
 
-    private void scaleIconImg() {
-        BufferedImage img = loadImgFromStore();
-        Dimension dim = new Dimension(
-                (int) (img.getWidth(null) * scale),
-                (int) (img.getHeight(null) * scale)
-        );
-        if (dim.height <= 0 || dim.width <= 0 || dim.height > 4000 || dim.width > 4000)
-            return;
-        img = ImageScaler.scaleExact(img, dim);
+    private void scaleIconImg (float factor) {
+        BufferedImage img = ImageScaler.scaleImg(getIconImg(), factor);
+
         imgLabel.setIcon(new ImageIcon(img));
         repaint();
     }

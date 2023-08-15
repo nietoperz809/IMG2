@@ -25,7 +25,6 @@ import java.util.Objects;
 import java.util.UUID;
 
 public class DBHandler {
-
     private static final String ROOT_DIR = "C:\\Databases\\";
     private static final String NO_PASS = "NoPass";
     private static final String DB_FILE = "mydb";
