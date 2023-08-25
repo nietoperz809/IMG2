@@ -8,9 +8,14 @@ import video.VideoApp;
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
+import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.DataFlavor;
+import java.awt.datatransfer.UnsupportedFlavorException;
 import java.awt.event.ActionEvent;
 import java.io.File;
+import java.io.IOException;
 import java.util.Arrays;
+
 
 public class GridMenu extends JMenuBar {
     public GridMenu(TheGrid theGrid) {
@@ -42,6 +47,21 @@ public class GridMenu extends JMenuBar {
             }
         });
 
+        JMenuItem m1_1 = new JMenuItem("Paste more pictures ...");
+        m1_1.addActionListener(new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+                try {
+                    java.util.List<File> list  = (java.util.List<File>)clipboard.getData(DataFlavor.javaFileListFlavor);
+                    File[] arr = list.toArray(new File[0]);
+                    theGrid.addImageFilesToDatabase (arr);
+                } catch (Exception ex) {
+                    throw new RuntimeException(ex);
+                }
+            }
+        });
+
         JMenuItem m2 = new JMenuItem("Backup DB ...");
         m2.addActionListener(new AbstractAction() {
             @Override
@@ -62,6 +82,7 @@ public class GridMenu extends JMenuBar {
         });
 
         jm.add(m1);
+        jm.add(m1_1);
         jm.add(m2);
         jm.add(m3);
         jm.add(m31);

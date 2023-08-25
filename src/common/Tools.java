@@ -11,6 +11,8 @@ import javax.sound.sampled.Clip;
 import javax.sound.sampled.Line;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.DataFlavor;
 import java.awt.event.KeyEvent;
 import java.awt.geom.AffineTransform;
 import java.awt.image.AffineTransformOp;
@@ -279,6 +281,25 @@ public class Tools {
         clip.open (AudioSystem.getAudioInputStream (inp));
         clip.start ();
     }
+
+//    public static File readAsFileList(Clipboard clipboard) {
+//        try {
+//            java.util.List<File> paths = (java.util.List<File>)clipboard.getData(DataFlavor.javaFileListFlavor);
+//            return paths.isEmpty() ? null : paths.iterator().next();
+//        } catch(Exception e) {
+//            System.err.println(e);
+//            return null;
+//        }
+//    }
+//
+//    public static File readAsString(Clipboard clipboard) {
+//        try {
+//            return (File)clipboard.getData(DataFlavor.stringFlavor);
+//        } catch(Exception e) {
+//            System.err.println(e);
+//            return null;
+//        }
+//    }
 
 
 //    public static void main(String[] args) {
