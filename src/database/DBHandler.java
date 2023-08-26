@@ -61,6 +61,8 @@ public class DBHandler {
             String sql = "create table if not exists VIDEOS " +
                     "(VID blob, NAME varchar(200), HASHVAL blob(16))";
             statement.execute(sql);
+            sql = "alter table IMAGES add if not exists TAG varchar(128)";
+            statement.execute(sql);
         } catch (SQLException e) {
             Sam.speak("Failed to connect to dta base");
             pers.reset();
@@ -170,6 +172,44 @@ public class DBHandler {
             //throw new RuntimeException(e);
             return false;
         }
+    }
+
+    public void setTag (int rowid, String tag) {
+        try {
+            statement.execute("update IMAGES set tag = '"+tag+"' where _ROWID_ = " + rowid);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public String getTag (int rowid) {
+        String strres = null;
+        try {
+            try (ResultSet res = query("select tag from IMAGES where _ROWID_ = " + rowid)) {
+                if (res.next()) {
+                    strres = res.getString(1);
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return strres;
+    }
+
+    public ArrayList<String> getTagList() {
+        ArrayList<String> list = new ArrayList<>();
+        try {
+            try (ResultSet res = query("select distinct tag from IMAGES")) {
+                while (res.next()) {
+                    String s = res.getString(1);
+                    if (s != null)
+                        list.add(s);
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return list;
     }
 
     public void backup() {

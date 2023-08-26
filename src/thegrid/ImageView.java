@@ -1,5 +1,6 @@
 package thegrid;
 
+import common.LineInput;
 import common.Tools;
 import database.DBHandler;
 
@@ -55,6 +56,7 @@ public class ImageView extends JFrame implements KeyListener {
         });
         imgLabel.setToolTipText
                 ("<html>+/- - scale<br>" +
+                        "a - tagger<br>" +
                         "r - rotate<br>" +
                         "page up/down - load next/prev image<br>" +
                         "up/down/left/right - move<br>" +
@@ -213,6 +215,11 @@ public class ImageView extends JFrame implements KeyListener {
             case KeyEvent.VK_G -> saveAsFile(false);
             case KeyEvent.VK_L -> setImg();
             case KeyEvent.VK_ESCAPE -> dispose();
+            case KeyEvent.VK_A -> {
+                int rowid = allFiles.get(currentIdx).rowid();
+                String tag = LineInput.xmain(DBHandler.getInst().getTag(rowid)).trim().toLowerCase();
+                DBHandler.getInst().setTag(rowid, tag);
+            }
         }
     }
 

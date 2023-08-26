@@ -1,6 +1,7 @@
 package thegrid;
 
 import common.PersistString;
+import common.TagSelectorDlg;
 import common.Tools;
 import database.DBHandler;
 import video.VideoApp;
@@ -14,6 +15,7 @@ import java.awt.datatransfer.UnsupportedFlavorException;
 import java.awt.event.ActionEvent;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
 
 
@@ -81,12 +83,21 @@ public class GridMenu extends JMenuBar {
             }
         });
 
+        JMenuItem m5 = new JMenuItem("Tag List");
+        m5.addActionListener(new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                TagSelectorDlg.main(null);
+            }
+        });
+
         jm.add(m1);
         jm.add(m1_1);
         jm.add(m2);
         jm.add(m3);
         jm.add(m31);
         jm.add(m4);
+        jm.add(m5);
         this.add(jm);
         theGrid.setJMenuBar(this);
     }

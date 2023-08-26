@@ -13,12 +13,15 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ddb69741-e020-4d21-a32f-f00e79c6818a" name="Changes" comment="made more stable">
+    <list default="true" id="ddb69741-e020-4d21-a32f-f00e79c6818a" name="Changes" comment="2nd copy&amp;paste menu item">
+      <change afterPath="$PROJECT_DIR$/src/common/TagSelectorDlg.form" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/common/TagSelectorDlg.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/IMG2_jar/IMG2.jar" beforeDir="false" afterPath="$PROJECT_DIR$/IMG2_jar/IMG2.jar" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/buildinfo/BuildInfo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/buildinfo/BuildInfo.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/buildinfo/build.number" beforeDir="false" afterPath="$PROJECT_DIR$/src/buildinfo/build.number" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/thegrid/MyFrame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/thegrid/MyFrame.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/database/DBHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/database/DBHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/thegrid/GridMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/thegrid/GridMenu.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/thegrid/ImageView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/thegrid/ImageView.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -56,6 +59,10 @@
   <component name="ProblemsViewState">
     <option name="selectedTabId" value="CurrentFile" />
   </component>
+  <component name="ProjectColorInfo">{
+  &quot;customColor&quot;: &quot;&quot;,
+  &quot;associatedIndex&quot;: 6
+}</component>
   <component name="ProjectId" id="2Gjc7adzp2KGrxTuOD6fCgHjxU7" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <ConfirmationsSetting value="2" id="Add" />
@@ -92,6 +99,7 @@
       <recent name="C:\peter.home\java\IMG2\src\buildinfo" />
     </key>
     <key name="MoveMembersDialog.RECENTS_KEY">
+      <recent name="thegrid.ImageScaler" />
       <recent name="thegrid.Tools" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
@@ -105,19 +113,6 @@
     </key>
   </component>
   <component name="RunManager" selected="Application.Main">
-    <configuration name="ImageView" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="thegrid.ImageView" />
-      <module name="IMG2" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="thegrid.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <configuration name="LineInput" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="common.LineInput" />
       <module name="IMG2" />
@@ -135,6 +130,19 @@
       <option name="MAIN_CLASS_NAME" value="thegrid.TheGrid" />
       <module name="IMG2" />
       <option name="PROGRAM_PARAMETERS" value="_removethis_max100" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="TagSelectorDlg" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="common.TagSelectorDlg" />
+      <module name="IMG2" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="common.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -189,7 +197,7 @@
     <list>
       <item itemvalue="Application.web" />
       <item itemvalue="Application.Main" />
-      <item itemvalue="Application.ImageView" />
+      <item itemvalue="Application.TagSelectorDlg" />
       <item itemvalue="Application.Tools" />
       <item itemvalue="Application.LineInput" />
       <item itemvalue="Application.VideoApp" />
@@ -197,11 +205,11 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.ImageView" />
+        <item itemvalue="Application.TagSelectorDlg" />
+        <item itemvalue="Application.VideoFiller" />
         <item itemvalue="Application.VideoApp" />
         <item itemvalue="Application.Tools" />
         <item itemvalue="Application.LineInput" />
-        <item itemvalue="Application.VideoFiller" />
       </list>
     </recent_temporary>
   </component>
@@ -557,7 +565,7 @@
       <option name="project" value="LOCAL" />
       <updated>1683976691765</updated>
     </task>
-    <option name="localTasksCounter" value="62" />
+    <option name="localTasksCounter" value="68" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -574,11 +582,6 @@
   <component name="VcsManagerConfiguration">
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="+ renaming videos" />
-    <MESSAGE value="fixed InserImageRecord, wrong img type on WEBP conversion" />
-    <MESSAGE value="added scrollbar to video player" />
-    <MESSAGE value="repo restored" />
-    <MESSAGE value="scrollbar now can change video pos" />
     <MESSAGE value="stop (key s) now works in video panel" />
     <MESSAGE value="removed unnecessary stuff" />
     <MESSAGE value="some improvements" />
@@ -599,7 +602,12 @@
     <MESSAGE value="added stop button to fill dialog" />
     <MESSAGE value="delete img files from disk after moving to db" />
     <MESSAGE value="made more stable" />
-    <option name="LAST_COMMIT_MESSAGE" value="made more stable" />
+    <MESSAGE value="next release" />
+    <MESSAGE value="implemented pageup/down functionality in grid view" />
+    <MESSAGE value="small improvement" />
+    <MESSAGE value="better scaling for ImageView" />
+    <MESSAGE value="2nd copy&amp;paste menu item" />
+    <option name="LAST_COMMIT_MESSAGE" value="2nd copy&amp;paste menu item" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
