@@ -5,14 +5,15 @@ import database.DBHandler;
 import javax.swing.*;
 import java.awt.event.*;
 import java.util.ArrayList;
+import java.util.List;
 
 public class TagSelectorDlg extends JDialog {
     private JPanel contentPane;
     private JButton buttonOK;
-    private JButton buttonCancel;
-    private JList list1;
+    private JList<String> list1;
 
     public TagSelectorDlg() {
+        setUndecorated(true);
         setContentPane(contentPane);
         setModal(true);
         getRootPane().setDefaultButton(buttonOK);
@@ -23,26 +24,6 @@ public class TagSelectorDlg extends JDialog {
             }
         });
 
-        buttonCancel.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                onCancel();
-            }
-        });
-
-//        // call onCancel() when cross is clicked
-//        setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
-//        addWindowListener(new WindowAdapter() {
-//            public void windowClosing(WindowEvent e) {
-//                onCancel();
-//            }
-//        });
-//
-//        // call onCancel() on ESCAPE
-//        contentPane.registerKeyboardAction(new ActionListener() {
-//            public void actionPerformed(ActionEvent e) {
-//                onCancel();
-//            }
-//        }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
     }
 
     private void onOK() {
@@ -53,15 +34,16 @@ public class TagSelectorDlg extends JDialog {
         dispose();
     }
 
-    public static void main(String[] args) {
+    public static List<String> xmain(String[] args) {
         TagSelectorDlg dialog = new TagSelectorDlg();
         dialog.pack();
         dialog.setLocationRelativeTo(null);
         dialog.setVisible(true);
+        return dialog.list1.getSelectedValuesList();
     }
 
     private void createUIComponents() {
         ArrayList<String> tags = DBHandler.getInst().getTagList();
-        list1 = new JList(tags.toArray(new String[0]));
+        list1 = new JList<>(tags.toArray(new String[0]));
     }
 }

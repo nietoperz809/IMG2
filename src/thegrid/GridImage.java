@@ -12,23 +12,36 @@ import java.util.List;
 
 class GridImage extends JLabel {
 
-    private byte[] imgHash;
-    private int rowID;
+    private final byte[] imgHash;
+    private DBHandler.NameID thisID;
 
     public byte[] getHash() {
         return imgHash;
     }
     public int getRowID() {
-        return rowID;
+        return thisID.rowid();
+    }
+
+    void hide (List<String> tags) {
+        if (tags.isEmpty()) {
+            setVisible (true);
+            return;
+        }
+        boolean hidden = true;
+        for (String s : tags) {
+            if (s.equals(thisID.tag()))
+                hidden = false;
+        }
+        setVisible(!hidden);
     }
 
     private void init (List<DBHandler.NameID> files, int index, JPanel rootPane) {
-        DBHandler.NameID thisID = files.get(index);
-        rowID = thisID.rowid();
+        thisID = files.get(index);
         setToolTipText (thisID.name()+" -- right mouse button to delete");
         setVerticalTextPosition(JLabel.BOTTOM);
         setHorizontalTextPosition(JLabel.CENTER);
-        setText("-> "+thisID.rowid());
+        String tag = thisID.tag() == null ? "": thisID.tag()+" : ";
+        setText(tag+thisID.rowid());
         addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -57,7 +70,7 @@ class GridImage extends JLabel {
     GridImage(Image iconImage, List<DBHandler.NameID> files,
               JPanel rootPane, String ImageName) throws Exception {
         super(new ImageIcon(iconImage));
-        files.add (new DBHandler.NameID(ImageName, -1)); //(ImageName);
+        files.add (new DBHandler.NameID(ImageName, -1, null)); //(ImageName);
         int index = files.size()-1;
         imgHash = Tools.imgHash((BufferedImage)iconImage);
         init (files, index, rootPane);

@@ -63,6 +63,8 @@ public class DBHandler {
             statement.execute(sql);
             sql = "alter table IMAGES add if not exists TAG varchar(128)";
             statement.execute(sql);
+            sql = "alter table VIDEOS add if not exists TAG varchar(128)";
+            statement.execute(sql);
         } catch (SQLException e) {
             Sam.speak("Failed to connect to dta base");
             pers.reset();
@@ -125,13 +127,13 @@ public class DBHandler {
     }
 
     public List<NameID> getImageFileNames() {
-        String sql = "select name,_ROWID_ from IMAGES order by _ROWID_ asc";
+        String sql = "select name,_ROWID_,tag from IMAGES order by _ROWID_ asc";
         return getNames(sql);
     }
 
     public List<NameID> getVideoFileNames(boolean sort_by_id) {
         String sort = sort_by_id ? "_ROWID_" : "name";
-        String sql = "select name,_ROWID_ from VIDEOS order by "+sort+" asc";
+        String sql = "select name,_ROWID_,tag from VIDEOS order by "+sort+" asc";
         return getNames(sql);
     }
 
@@ -140,7 +142,8 @@ public class DBHandler {
         try (ResultSet res = query(sql)) {
             while (res.next()) {
                 al.add(new NameID(res.getString(1),
-                        res.getInt(2)));
+                        res.getInt(2),
+                        res.getString(3)));
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -433,7 +436,7 @@ public class DBHandler {
     }
 
 
-    public record NameID(String name, int rowid) {
+    public record NameID(String name, int rowid, String tag) {
         @Override
             public String toString() {
                 return name + " : (" + rowid + ")";

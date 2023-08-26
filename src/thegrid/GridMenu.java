@@ -11,11 +11,8 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.DataFlavor;
-import java.awt.datatransfer.UnsupportedFlavorException;
 import java.awt.event.ActionEvent;
 import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Arrays;
 
 
@@ -87,7 +84,13 @@ public class GridMenu extends JMenuBar {
         m5.addActionListener(new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                TagSelectorDlg.main(null);
+                java.util.List<String> list = TagSelectorDlg.xmain(null);
+                //System.out.println(list.toString());
+                Component[] comps = theGrid.rootPane.getComponents();
+                for (Component gi : comps) {
+                    GridImage g = (GridImage)gi;
+                    g.hide(list);
+                }
             }
         });
 
