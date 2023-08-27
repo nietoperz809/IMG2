@@ -8,12 +8,17 @@ import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 class GridImage extends JLabel {
 
+    private static LinkedList<GridImage> buffer = new LinkedList<>();
+
     private final byte[] imgHash;
     private DBHandler.NameID thisID;
+    private JPanel rootPane;
 
     public byte[] getHash() {
         return imgHash;
@@ -24,7 +29,13 @@ class GridImage extends JLabel {
 
     void hide (List<String> tags) {
         if (tags.isEmpty()) {
-            setVisible (true);
+            GridImage g;
+            for(;;) {
+                g = buffer.poll();
+                if (g == null)
+                    break;
+                rootPane.add(g);
+            }
             return;
         }
         boolean hidden = true;
@@ -32,10 +43,14 @@ class GridImage extends JLabel {
             if (s.equals(thisID.tag()))
                 hidden = false;
         }
-        setVisible(!hidden);
+        if (hidden) {
+            buffer.add(this);
+            rootPane.remove(this);
+        }
     }
 
-    private void init (List<DBHandler.NameID> files, int index, JPanel rootPane) {
+    private void init (List<DBHandler.NameID> files, int index, JPanel jp) {
+        rootPane = jp;
         thisID = files.get(index);
         setToolTipText (thisID.name()+" -- right mouse button to delete");
         setVerticalTextPosition(JLabel.BOTTOM);

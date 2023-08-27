@@ -91,6 +91,8 @@ public class GridMenu extends JMenuBar {
                     GridImage g = (GridImage)gi;
                     g.hide(list);
                 }
+                theGrid.rootPane.doLayout();
+                theGrid.rootPane.repaint();
             }
         });
 
