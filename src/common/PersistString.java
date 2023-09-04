@@ -14,7 +14,7 @@ public class PersistString {
     }
 
     public String set(String s) {
-        Preferences.userNodeForPackage(this.getClass())
+        Preferences.userNodeForPackage(PersistString.class)
                 .put(entry, s);
         return s;
     }
@@ -24,7 +24,7 @@ public class PersistString {
     }
 
     public String get() {
-        return Preferences.userNodeForPackage(this.getClass())
+        return Preferences.userNodeForPackage(PersistString.class)
                 .get(entry, defaultStr);
     }
 }

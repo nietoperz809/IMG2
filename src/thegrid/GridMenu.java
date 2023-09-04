@@ -93,6 +93,7 @@ public class GridMenu extends JMenuBar {
                 }
                 theGrid.rootPane.doLayout();
                 theGrid.rootPane.repaint();
+                //theGrid.refresh();
             }
         });
 

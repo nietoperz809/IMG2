@@ -30,10 +30,12 @@ public class TheGrid extends MyFrame {
         stopThumbViewFill ("-- prematurely stopped --");
     }
 
-    public TheGrid (int max) {
+    public void refresh() {
         allFiles = requireNonNull(DBHandler.getInst()).getImageFileNames();
-        if (max > 0)
-            allFiles = allFiles.subList(0, max); // Debug mode
+    }
+
+    public TheGrid (int max) {
+        refresh();
         progress = new ProgressBox(this, allFiles.size());
         rootPane = new JPanel();
         scrollPane = new JScrollPane(rootPane);

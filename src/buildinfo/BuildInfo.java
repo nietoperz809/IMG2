@@ -1,8 +1,8 @@
 package buildinfo;
 
 public class BuildInfo {
-    private static final String BUILD_NUMBER = "734";
-    private static final String BUILD_DATE = "08/27/2023 02:17:41 AM";
+    private static final String BUILD_NUMBER = "744";
+    private static final String BUILD_DATE = "09/04/2023 01:56:27 PM";
 
     public static final String buildInfo = "ImageBase, Build: " + BUILD_NUMBER + " -- " + BUILD_DATE
             + " -- " + System.getProperty("java.version");
