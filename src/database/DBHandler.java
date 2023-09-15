@@ -57,8 +57,13 @@ public class DBHandler {
             connection = DriverManager.getConnection(url, user, pwd);
             statement = connection.createStatement();
             Sam.speak("deta base is on line.");
+            String sql;
+            // create log table
+            sql = "create table if not exists LOG " +
+                    "(ltime timestamp GENERATED ALWAYS AS CURRENT_TIMESTAMP, entry varchar(256))";
+            statement.execute(sql);
             // create video table
-            String sql = "create table if not exists VIDEOS " +
+            sql = "create table if not exists VIDEOS " +
                     "(VID blob, NAME varchar(200), HASHVAL blob(16))";
             statement.execute(sql);
             sql = "alter table IMAGES add if not exists TAG varchar(128)";
@@ -66,7 +71,7 @@ public class DBHandler {
             sql = "alter table VIDEOS add if not exists TAG varchar(128)";
             statement.execute(sql);
         } catch (SQLException e) {
-            Sam.speak("Failed to connect to dta base");
+            Sam.speak("Failed to connect to data base");
             pers.reset();
             Tools.Error(e.toString());
             System.exit(-1);
@@ -125,6 +130,40 @@ public class DBHandler {
             throw new RuntimeException(e);
         }
     }
+
+    public void log (String str) {
+        try {
+            statement.execute("insert into LOG(entry) values ('"+str+"')");
+        } catch (SQLException e) {
+            System.out.println(e);
+            //throw new RuntimeException(e);
+        }
+    }
+
+    public void reduceLog () {
+        try {
+            statement.execute("delete from log where _rowid_ < (select max (_rowid_)-50 from log)");
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public ArrayList<LogMessage> getLog() {
+        String sql = "select * from LOG order by ltime";
+        ArrayList<LogMessage> al = new ArrayList<>();
+        try (ResultSet res = query(sql)) {
+            while (res.next()) {
+                al.add(new LogMessage(res.getString(1),
+                        res.getString(2)));
+            }
+        } catch (SQLException e) {
+            System.out.println(e.toString());
+            throw new RuntimeException(e);
+        }
+        return al;
+
+    }
+
 
     public List<NameID> getImageFileNames() {
         String sql = "select name,_ROWID_,tag from IMAGES order by _ROWID_ asc";
@@ -442,6 +481,13 @@ public class DBHandler {
                 return name + " : (" + rowid + ")";
             }
         }
+
+    public record LogMessage(String time, String entry) {
+        @Override
+        public String toString() {
+            return time + " : " + entry+"\n";
+        }
+    }
 
     public static class ThumbHash {
         public final BufferedImage img;

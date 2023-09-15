@@ -21,6 +21,7 @@ public class GridListeners implements KeyListener {
         g.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
+                DBHandler.getInst().log("--- TheGrid emded");
                 super.windowClosing(e);
                 DBHandler.getInst().close();
                 System.exit(1);

@@ -36,6 +36,7 @@ public class TheGrid extends MyFrame {
 
     public TheGrid (int max) {
         refresh();
+        DBHandler.getInst().log("Images in DB: "+allFiles.size());
         progress = new ProgressBox(this, allFiles.size());
         rootPane = new JPanel();
         scrollPane = new JScrollPane(rootPane);
@@ -58,6 +59,8 @@ public class TheGrid extends MyFrame {
         }
     }
 
+
+
     public static void main(String... input) {
         try {
             //UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
@@ -71,9 +74,13 @@ public class TheGrid extends MyFrame {
                     return;
                 }
             }
+            Thread hook = new Thread(() ->
+                    DBHandler.getInst().log ("SHUTDOWN"));
+            Runtime.getRuntime().addShutdownHook(hook);
+            DBHandler.getInst().log("+++ TheGrid started");
             new TheGrid(m);
         } catch (Exception e) {
-            System.err.println("run fail\n" + e);
+            DBHandler.getInst().log ("FAIL: "+e.toString());
         }
     }
 

@@ -97,6 +97,15 @@ public class GridMenu extends JMenuBar {
             }
         });
 
+        JMenuItem m6 = new JMenuItem("view Log");
+        m6.addActionListener(new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                LogBox.xmain();
+            }
+        });
+
+
         jm.add(m1);
         jm.add(m1_1);
         jm.add(m2);
@@ -104,6 +113,7 @@ public class GridMenu extends JMenuBar {
         jm.add(m31);
         jm.add(m4);
         jm.add(m5);
+        jm.add(m6);
         this.add(jm);
         theGrid.setJMenuBar(this);
     }
