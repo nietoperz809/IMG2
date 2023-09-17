@@ -85,16 +85,54 @@ public class ImageView extends JFrame implements KeyListener {
         return Tools.toBufferedImage(imgIcon.getImage());
     }
 
+
     private void sharpenImage() {
         BufferedImage img = getIconImg();
+        int kernelWidth = 3;
+        int kernelHeight = 3;
+        int xOffset = (kernelWidth - 1) / 2;
+        int yOffset = (kernelHeight - 1) / 2;
+        float[] kern = new float[] {
+                0.0f, -1.0f, 0.0f,
+                -1.0f, 5.0f, -1.0f,
+                0.0f, -1.0f, 0.0f
+        };
+        Kernel kernel = new Kernel(3, 3, kern);
 
-        Kernel kernel = new Kernel(3, 3, new float[] { -1, -1, -1, -1, 9, -1, -1,
-                -1, -1 });
-        BufferedImageOp op = new ConvolveOp(kernel);
-        img = op.filter(img, null);
+
+        BufferedImage newSource = new BufferedImage(
+                img.getWidth() + kernelWidth - 1,
+                img.getHeight() + kernelHeight - 1,
+                BufferedImage.TYPE_INT_ARGB);
+        Graphics2D g2 = newSource.createGraphics();
+        g2.drawImage(img, xOffset, yOffset, null);
+        g2.dispose();
+
+        ConvolveOp op = new ConvolveOp (kernel,ConvolveOp.EDGE_NO_OP,null);
+        img = op.filter(newSource, null);
         imgLabel.setIcon(new ImageIcon(img));
         repaint();
     }
+
+
+//    private void sharpenImage() {
+//        BufferedImage img = getIconImg();
+//        float[] kern = new float[] {
+//                0.0f, -1.0f, 0.0f,
+//                -1.0f, 5.0f, -1.0f,
+//                0.0f, -1.0f, 0.0f
+//        };
+////        float[] kern = new float[] {
+////                -1, -1, -1,
+////                -1, 9, -1,  /* 9 */
+////                -1, -1, -1
+////        };
+//        Kernel kernel = new Kernel(3, 3, kern);
+//        BufferedImageOp op = new ConvolveOp(kernel);
+//        img = op.filter(img, null);
+//        imgLabel.setIcon(new ImageIcon(img));
+//        repaint();
+//    }
 
     private void changeContrast (float val) {
         BufferedImage img = getIconImg();

@@ -18,7 +18,7 @@ public class LogBox {
             @Override
             public void mouseClicked(MouseEvent e) {
                 DBHandler.getInst().reduceLog();
-                createUIComponents();
+                fillTextArea();
             }
         });
     }
@@ -34,12 +34,17 @@ public class LogBox {
         frame.setVisible(true);
     }
 
-    private void createUIComponents() {
-        textArea1 = new JTextArea();
+    private void fillTextArea() {
+        textArea1.setText("");
         ArrayList<DBHandler.LogMessage> al = DBHandler.getInst().getLog();
         for (DBHandler.LogMessage lm: al) {
             textArea1.append(lm.toString());
         }
         textArea1.append("LogEntries: "+al.size());
+    }
+
+    private void createUIComponents() {
+        textArea1 = new JTextArea();
+        fillTextArea();
     }
 }

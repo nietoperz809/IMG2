@@ -106,12 +106,11 @@ public class DBHandler {
     /**
      * Warning box if an image is about to be deleted
      *
-     * @param f Reference to parent component
      * @return true if user clicked OK
      */
-    static boolean askForDel(Component f, String imgName) {
+    static boolean askForDel(String imgName) {
         Object[] options = {"OK", "NO! NEVER!!"};
-        return JOptionPane.showOptionDialog(f,
+        return JOptionPane.showOptionDialog(null,
                 "Delete " + imgName + " from DB?",
                 "Warning",
                 JOptionPane.DEFAULT_OPTION,
@@ -157,7 +156,7 @@ public class DBHandler {
                         res.getString(2)));
             }
         } catch (SQLException e) {
-            System.out.println(e.toString());
+            System.out.println(e);
             throw new RuntimeException(e);
         }
         return al;
@@ -191,7 +190,7 @@ public class DBHandler {
     }
 
     public boolean deleteImage (int rowid) {
-        if (askForDel(null, String.valueOf(rowid))) {
+        if (askForDel(String.valueOf(rowid))) {
             return false;
         }
         try {
@@ -204,7 +203,7 @@ public class DBHandler {
     }
 
     public boolean deleteVideo (int rowid) {
-        if (askForDel(null, String.valueOf(rowid))) {
+        if (askForDel(String.valueOf(rowid))) {
             return false;
         }
         try {
@@ -255,7 +254,7 @@ public class DBHandler {
     }
 
     public void backup() {
-        final String timeStamp = new SimpleDateFormat("yyyy-MM-dd HH꞉mm꞉ss")
+        final String timeStamp = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
                 .format(new java.util.Date());
         final String dest = ROOT_DIR + timeStamp + ".backup";
         final String src = ROOT_DIR + DB_FILE_FULL;
@@ -293,7 +292,7 @@ public class DBHandler {
                     Objects.requireNonNull(out).close();
                     Objects.requireNonNull(in).close();
                 } catch (IOException e) {
-                    throw new RuntimeException(e);
+                    System.out.println(e);
                 }
             }
         }).start();
