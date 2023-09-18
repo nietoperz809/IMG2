@@ -1,6 +1,7 @@
 package thegrid;
 
 import common.PersistString;
+import common.Sam;
 import common.TagSelectorDlg;
 import common.Tools;
 import database.DBHandler;
@@ -105,6 +106,18 @@ public class GridMenu extends JMenuBar {
             }
         });
 
+        JMenuItem m7 = new JMenuItem("WebServer");
+        m7.addActionListener(new AbstractAction() {
+            static WebApp wapp;
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (wapp != null) {
+                    Sam.speak("Webserver already running.");
+                    return;
+                }
+                wapp = new WebApp();
+            }
+        });
 
         jm.add(m1);
         jm.add(m1_1);
@@ -114,6 +127,7 @@ public class GridMenu extends JMenuBar {
         jm.add(m4);
         jm.add(m5);
         jm.add(m6);
+        jm.add(m7);
         this.add(jm);
         theGrid.setJMenuBar(this);
     }

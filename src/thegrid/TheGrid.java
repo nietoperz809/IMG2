@@ -59,8 +59,6 @@ public class TheGrid extends MyFrame {
         }
     }
 
-
-
     public static void main(String... input) {
         try {
             //UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
@@ -68,10 +66,6 @@ public class TheGrid extends MyFrame {
             if (input.length != 0) {
                 if (input[0].startsWith("max")) {
                     m = Integer.parseInt(input[0].substring(3));
-                }
-                if (input[0].startsWith("web")) {
-                    new WebApp();
-                    return;
                 }
             }
             Thread hook = new Thread(() ->
