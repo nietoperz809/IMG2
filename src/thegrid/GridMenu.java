@@ -106,7 +106,7 @@ public class GridMenu extends JMenuBar {
             }
         });
 
-        JMenuItem m7 = new JMenuItem("WebServer");
+        JCheckBoxMenuItem m7 = new JCheckBoxMenuItem("WebServer");
         m7.addActionListener(new AbstractAction() {
             static WebApp wapp;
             @Override
@@ -116,6 +116,7 @@ public class GridMenu extends JMenuBar {
                     return;
                 }
                 wapp = new WebApp();
+                m7.setState(true);
             }
         });
 

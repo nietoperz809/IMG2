@@ -1,5 +1,6 @@
 package thegrid;
 
+import common.GammaCorrection;
 import common.LineInput;
 import common.Tools;
 import database.DBHandler;
@@ -56,6 +57,7 @@ public class ImageView extends JFrame implements KeyListener {
         });
         imgLabel.setToolTipText
                 ("<html>+/- - scale<br>" +
+                        "1,2 - gamma<br>" +
                         "a - tagger<br>" +
                         "r - rotate<br>" +
                         "page up/down - load next/prev image<br>" +
@@ -243,6 +245,18 @@ public class ImageView extends JFrame implements KeyListener {
                     timer = null;
                     setTitle("Slideshow STOPPED");
                 }
+            }
+            case KeyEvent.VK_1 -> {
+                BufferedImage img = getIconImg();
+                img = GammaCorrection.gammaCorrection(img, 0.7f);
+                imgLabel.setIcon(new ImageIcon(img));
+                repaint();
+            }
+            case KeyEvent.VK_2 -> {
+                BufferedImage img = getIconImg();
+                img = GammaCorrection.gammaCorrection(img, 1f/0.7f);
+                imgLabel.setIcon(new ImageIcon(img));
+                repaint();
             }
             case KeyEvent.VK_D -> DBHandler.getInst().deleteImage(allFiles.get(currentIdx).rowid());
             case KeyEvent.VK_H -> adjustOnHeight();
