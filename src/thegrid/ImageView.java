@@ -23,7 +23,6 @@ public class ImageView extends JFrame implements KeyListener {
     private final java.util.List<DBHandler.NameID> allFiles;
     private final JLabel imgLabel;
     private final UniqueRng ring;
-    private String imgPath;
     private int currentIdx;
 
     private Timer timer = null;
@@ -32,9 +31,8 @@ public class ImageView extends JFrame implements KeyListener {
         ring = new UniqueRng (files.size());
         allFiles = files;
         currentIdx = idx;
-        imgPath = files.get(idx).name();
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        setTitle(imgPath);
+        setTitle(files.get(idx).name());
         addKeyListener(this);
         scrollPane = new JScrollPane();
         imgLabel = new JLabel(new ImageIcon(loadImgFromStore()));
@@ -58,8 +56,10 @@ public class ImageView extends JFrame implements KeyListener {
         imgLabel.setToolTipText
                 ("<html>+/- - scale<br>" +
                         "1,2 - gamma<br>" +
+                        "3/4 - change contrast<br>"+
                         "a - tagger<br>" +
                         "r - rotate<br>" +
+                        "c - change img in database<br>" +
                         "page up/down - load next/prev image<br>" +
                         "up/down/left/right - move<br>" +
                         "w - scale to width" +
@@ -69,9 +69,7 @@ public class ImageView extends JFrame implements KeyListener {
                         "s - slideshow<br>" +
                         "f - save original img to file<br>"+
                         "g - save manipulated img to file<br>"+
-                        "c - contrast up<br>"+
                         "x - sharpen<br>"+
-                        "v - contrast down<br>"+
                         "t - random image forward<br>" +
                         "z - random image backwardt<br>" +
                         "d - delete from database<br>" +
@@ -176,7 +174,6 @@ public class ImageView extends JFrame implements KeyListener {
                     currentIdx++;
                 else
                     currentIdx = 0;
-                imgPath = allFiles.get(currentIdx).name();
                 setImg();
             }
             case KeyEvent.VK_PAGE_UP -> {
@@ -184,16 +181,12 @@ public class ImageView extends JFrame implements KeyListener {
                     currentIdx--;
                 else
                     currentIdx = allFiles.size() - 1;
-                imgPath = allFiles.get(currentIdx).name();
                 setImg();
             }
             case KeyEvent.VK_PLUS -> {
-                //scale += 0.1f;
                 scaleIconImg(1.1f);
             }
             case KeyEvent.VK_MINUS -> {
-//                if (scale > 0.2f)
-//                    scale -= 0.1f;
                 scaleIconImg(0.9f);
             }
             case KeyEvent.VK_R -> {
@@ -233,8 +226,7 @@ public class ImageView extends JFrame implements KeyListener {
                 if (timer == null) {
                     timer = new Timer(10000, e1 -> {
                         currentIdx = ring.getNext();
-                        imgPath = allFiles.get(currentIdx).name();
-                        setTitle("Slideshow: " + imgPath);
+                        setTitle("Slideshow: " + allFiles.get(currentIdx).name());
                         adjustOnHeight();
                     });
                     timer.setRepeats(true);
@@ -260,8 +252,8 @@ public class ImageView extends JFrame implements KeyListener {
             }
             case KeyEvent.VK_D -> DBHandler.getInst().deleteImage(allFiles.get(currentIdx).rowid());
             case KeyEvent.VK_H -> adjustOnHeight();
-            case KeyEvent.VK_C -> changeContrast(1.1f);
-            case KeyEvent.VK_V -> changeContrast(0.9f);
+            case KeyEvent.VK_3 -> changeContrast(1.1f);
+            case KeyEvent.VK_4 -> changeContrast(0.9f);
             case KeyEvent.VK_X -> sharpenImage();
             case KeyEvent.VK_F -> saveAsFile(true);
             case KeyEvent.VK_G -> saveAsFile(false);
@@ -272,12 +264,17 @@ public class ImageView extends JFrame implements KeyListener {
                 String tag = LineInput.xmain(DBHandler.getInst().getTag(rowid)).trim().toLowerCase();
                 DBHandler.getInst().setTag(rowid, tag);
             }
+            case KeyEvent.VK_C -> {
+                if (Tools.Question("Change image in DB?")) {
+                    BufferedImage img = getIconImg();
+                    DBHandler.getInst().changeBigImg(img, allFiles.get(currentIdx).rowid());
+                }
+            }
         }
     }
 
     private void showByIdx() {
-        imgPath = allFiles.get(currentIdx).name();
-        setTitle(imgPath + " -- " + currentIdx);
+        setTitle(allFiles.get(currentIdx).name() + " -- " + currentIdx);
         adjustOnHeight();
     }
 
@@ -294,14 +291,24 @@ public class ImageView extends JFrame implements KeyListener {
     }
 
     private void setImg() {
-        setTitle(imgPath);
+        setTitle(allFiles.get(currentIdx).name());
         imgLabel.setIcon(new ImageIcon(loadImgFromStore()));
         repaint();
     }
 
     private BufferedImage loadImgFromStore() {
         try {
-            return DBHandler.getInst().loadImage(imgPath);
+            byte[] b = DBHandler.getInst().loadImage(allFiles.get(currentIdx).rowid());
+            if (b == null) {
+                System.out.println("loadImgFromStore-1 fail!!!");
+                return null;
+            }
+            BufferedImage b2 = Tools.byteArrayToImg (b);
+            if (b2 == null) {
+                System.out.println("loadImgFromStore-2 fail!!!");
+                return null;
+            }
+            return b2;
         } catch (Exception ex) {
             throw new RuntimeException(ex);
         }

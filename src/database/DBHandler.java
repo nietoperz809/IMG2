@@ -340,6 +340,20 @@ public class DBHandler {
         insertImageRecord(buff, buff2, name);
     }
 
+    public void changeBigImg (BufferedImage img, int id) {
+        try {
+            img = Tools.removeAlpha(img);
+            byte[] buff = Tools.imgToByteArray(img);
+            PreparedStatement prep;
+            prep = connection.prepareStatement(
+                    "update IMAGES set image=? where _rowid_ = "+id);
+            prep.setBytes(1, buff);
+            prep.execute();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     public void addVideoFile (File file) {
         try {
             byte[] fileContent = Files.readAllBytes(file.toPath());
@@ -382,17 +396,17 @@ public class DBHandler {
         }
     }
 
-    public BufferedImage loadImage(String filename) throws IOException {
-        try (ResultSet res = query("select image from IMAGES where name = '" + filename + "'")) {
-            if (res.next()) {
-                byte[] b = res.getBytes(1);
-                return Tools.byteArrayToImg(b);
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-        return null;
-    }
+//    public BufferedImage loadImage(int id) throws IOException {
+//        try (ResultSet res = query("select image from IMAGES where _rowid_ = "+id) {
+//            if (res.next()) {
+//                byte[] b = res.getBytes(1);
+//                return Tools.byteArrayToImg(b);
+//            }
+//        } catch (SQLException e) {
+//            throw new RuntimeException(e);
+//        }
+//        return null;
+//    }
 
     public SoftReference<byte[]> loadVideoBytes (String filename) throws Exception {
         filename = filename.replace("'", "''");
@@ -455,6 +469,7 @@ public class DBHandler {
                 return res.getBytes(1);
             }
         } catch (SQLException e) {
+            System.out.println(e);
             throw new RuntimeException(e);
         }
         return null;
