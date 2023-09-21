@@ -1,5 +1,6 @@
 package thegrid;
 
+import common.ImgTools;
 import common.Tools;
 import database.DBHandler;
 
@@ -8,13 +9,12 @@ import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
 class GridImage extends JLabel {
 
-    private static LinkedList<GridImage> buffer = new LinkedList<>();
+    private static LinkedList<GridImage> tempImgBuffer = new LinkedList<>();
 
     private final byte[] imgHash;
     private DBHandler.NameID thisID;
@@ -31,7 +31,7 @@ class GridImage extends JLabel {
         if (tags.isEmpty()) {
             GridImage g;
             for(;;) {
-                g = buffer.poll();
+                g = tempImgBuffer.poll();
                 if (g == null)
                     break;
                 rootPane.add(g);
@@ -44,7 +44,7 @@ class GridImage extends JLabel {
                 hidden = false;
         }
         if (hidden) {
-            buffer.add(this);
+            tempImgBuffer.add(this);
             rootPane.remove(this);
         }
     }
@@ -87,7 +87,7 @@ class GridImage extends JLabel {
         super(new ImageIcon(iconImage));
         files.add (new DBHandler.NameID(ImageName, -1, null)); //(ImageName);
         int index = files.size()-1;
-        imgHash = Tools.imgHash((BufferedImage)iconImage);
+        imgHash = ImgTools.imgHash((BufferedImage)iconImage);
         init (files, index, rootPane);
     }
 

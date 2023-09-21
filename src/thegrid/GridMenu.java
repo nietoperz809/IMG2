@@ -1,9 +1,6 @@
 package thegrid;
 
-import common.PersistString;
-import common.Sam;
-import common.TagSelectorDlg;
-import common.Tools;
+import common.*;
 import database.DBHandler;
 import video.VideoApp;
 
@@ -32,7 +29,7 @@ public class GridMenu extends JMenuBar {
                 if (lastPath.exists() && lastPath.isDirectory()) {
                     fc.setCurrentDirectory(new File(lastDirectory));
                 }
-                FileNameExtensionFilter filter = new FileNameExtensionFilter("Image Files", Tools.getImageExtensions());
+                FileNameExtensionFilter filter = new FileNameExtensionFilter("Image Files", ImgTools.getImageExtensions());
                 fc.setFileFilter(filter);
                 fc.setMultiSelectionEnabled(true);
                 if (fc.showOpenDialog(theGrid.rootPane) == JFileChooser.APPROVE_OPTION) {

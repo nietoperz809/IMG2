@@ -1,24 +1,15 @@
 package common;
 
-import com.luciad.imageio.webp.WebPReadParam;
-import gifdecoder.AnimatedGIFReader;
-
-import javax.imageio.ImageIO;
-import javax.imageio.ImageReader;
-import javax.imageio.stream.FileImageInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import javax.sound.sampled.Line;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.datatransfer.Clipboard;
-import java.awt.datatransfer.DataFlavor;
 import java.awt.event.KeyEvent;
 import java.awt.geom.AffineTransform;
 import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
 import java.io.*;
-import java.security.MessageDigest;
 
 import static javax.swing.JOptionPane.YES_NO_OPTION;
 
@@ -37,145 +28,6 @@ public class Tools {
                 return true;
         }
         return false;
-    }
-
-    public static String[] getImageExtensions() {
-        return new String[] {"jpg", "jpeg", "png", "bmp", "gif", "jfif", "webp"};
-    }
-
-
-    public static boolean isImage(String in) {
-        return hasExtension(in, getImageExtensions());
-    }
-
-
-    public static BufferedImage loadImage(String name) throws IOException {
-        if (hasExtension(name, ".gif")) {
-            FileInputStream fin = new FileInputStream(name);
-            AnimatedGIFReader reader = new AnimatedGIFReader();
-            BufferedImage img = reader.read(fin);
-            fin.close();
-            return img;
-        } else if (hasExtension(name, ".webp")) {
-            // Obtain a WebP ImageReader instance
-            ImageReader reader = ImageIO.getImageReadersByMIMEType("image/webp").next();
-            // Configure decoding parameters
-            WebPReadParam readParam = new WebPReadParam();
-            readParam.setBypassFiltering(true);
-            // Configure the input on the ImageReader
-            FileImageInputStream fis = new FileImageInputStream(new File(name));
-            reader.setInput(fis);
-            // Decode the image
-            BufferedImage buff = reader.read(0, readParam);
-            fis.close();
-            return buff;
-        } else {
-            return ImageIO.read(new File (name));
-        }
-    }
-
-    /**
-     * Makes BufferedImage vom java.awt.Image
-     * @param img primitive image
-     * @return buffered image with same content
-     */
-    public static BufferedImage toBufferedImage(Image img)
-    {
-        if (img instanceof BufferedImage)
-        {
-            return (BufferedImage) img;
-        }
-
-        // Create a buffered image with transparency
-        BufferedImage bimage = new BufferedImage(img.getWidth(null), img.getHeight(null), BufferedImage.TYPE_INT_RGB);
-
-        // Draw the image on to the buffered image
-        Graphics2D bGr = bimage.createGraphics();
-        bGr.drawImage(img, 0, 0, null);
-        bGr.dispose();
-
-        // Return the buffered image
-        return bimage;
-    }
-
-    public static BufferedImage removeAlpha (BufferedImage img) {
-        BufferedImage newImage = new BufferedImage(img.getWidth(), img.getHeight(), BufferedImage.TYPE_INT_RGB);
-        Graphics2D g = newImage.createGraphics();
-        g.drawImage(img, 0, 0, img.getWidth(), img.getHeight(), null);
-        g.dispose();
-        return newImage;
-    }
-
-    /**
-     * Rotate clockwise by 90 degrees
-     * @param src source image
-     * @return rotated image
-     */
-    public static BufferedImage rotateClockwise90(BufferedImage src) {
-        int width = src.getWidth();
-        int height = src.getHeight();
-        BufferedImage dest = new BufferedImage(height, width,
-                src.getType());
-        Graphics2D graphics2D = dest.createGraphics();
-        graphics2D.translate((height - width) / 2, (height - width) / 2);
-        graphics2D.rotate(Math.PI / 2, height / 2, width / 2);
-        graphics2D.drawRenderedImage(src, null);
-        return dest;
-    }
-
-    private BufferedImage rotateImage (BufferedImage src, float angle) {
-        AffineTransform tx = new AffineTransform();
-        tx.rotate(angle, src.getWidth() / 2.0,src.getHeight() / 2.0);
-        AffineTransformOp op = new AffineTransformOp(tx,
-                AffineTransformOp.TYPE_BILINEAR);
-        return op.filter(src, null);
-    }
-
-
-    /**
-     * Flips image like a mirror
-     * @param img original image
-     * @return flipped image
-     */
-    public static BufferedImage flip (BufferedImage img) {
-        AffineTransform tx = AffineTransform.getScaleInstance(-1, 1);
-        tx.translate(-img.getWidth(null), 0);
-        AffineTransformOp op = new AffineTransformOp(tx, AffineTransformOp.TYPE_NEAREST_NEIGHBOR);
-        img = op.filter(img, null);
-        return img;
-    }
-
-    public static byte[] imgHash (BufferedImage in) throws Exception {
-        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-        ImageIO.write(in, "jpg", outputStream);
-        byte[] data = outputStream.toByteArray();
-        MessageDigest md = MessageDigest.getInstance("MD5");
-        md.update(data);
-        return md.digest();
-    }
-
-
-    /**
-     * Converts Image to byte array
-     * @param img source image
-     * @return the image as byte array
-     * @throws IOException if smth. gone wrong
-     */
-    public static byte[] imgToByteArray (BufferedImage img) throws IOException {
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        ImageIO.write (img, "jpg", baos);
-        return baos.toByteArray();
-    }
-
-    /**
-     * make image from byte array
-     * @param arr image als byte array
-     * @return a BufferedImage object
-     * @throws IOException if smth. gone wrong
-     */
-    public static BufferedImage byteArrayToImg (byte[] arr) throws IOException {
-        InputStream is = new ByteArrayInputStream(arr);
-        return ImageIO.read(is);
     }
 
     public static void Error (String msg) {

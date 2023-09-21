@@ -1,10 +1,7 @@
 package database;
 
-import common.PersistString;
-import common.Sam;
-import common.Tools;
+import common.*;
 import thegrid.ImageScaler;
-import common.UnlockDBDialog;
 
 import javax.swing.*;
 import java.awt.*;
@@ -310,7 +307,7 @@ public class DBHandler {
         int ret = 0;
         for (File file : files) {
             String name = UUID.randomUUID().toString();
-            BufferedImage img = Tools.loadImage(file.getPath());
+            BufferedImage img = ImgTools.loadImage(file.getPath());
             if (img == null) {
                 System.err.println("no image");
                 continue;
@@ -333,17 +330,17 @@ public class DBHandler {
     public void insertImageRecord (String name, BufferedImage img) throws IOException {
         BufferedImage big = ImageScaler.scaleExact(img,
                 new Dimension (img.getWidth(), img.getWidth()));
-        byte[] buff = Tools.imgToByteArray(big);
+        byte[] buff = ImgTools.imgToByteArray(big);
         BufferedImage thumbnailImage = ImageScaler.scaleExact(img,
                 new Dimension(100, 100));
-        byte[] buff2 = Tools.imgToByteArray(thumbnailImage);
+        byte[] buff2 = ImgTools.imgToByteArray(thumbnailImage);
         insertImageRecord(buff, buff2, name);
     }
 
     public void changeBigImg (BufferedImage img, int id) {
         try {
-            img = Tools.removeAlpha(img);
-            byte[] buff = Tools.imgToByteArray(img);
+            img = ImgTools.removeAlpha(img);
+            byte[] buff = ImgTools.imgToByteArray(img);
             PreparedStatement prep;
             prep = connection.prepareStatement(
                     "update IMAGES set image=? where _rowid_ = "+id);
@@ -509,7 +506,7 @@ public class DBHandler {
 
         public ThumbHash(byte[] bytes) {
             try {
-                img = Tools.byteArrayToImg(bytes);
+                img = ImgTools.byteArrayToImg(bytes);
                 MessageDigest md = MessageDigest.getInstance("MD5");
                 md.update(bytes);
                 hash = md.digest();

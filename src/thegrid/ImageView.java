@@ -1,6 +1,6 @@
 package thegrid;
 
-import common.GammaCorrection;
+import common.ImgTools;
 import common.LineInput;
 import common.Tools;
 import database.DBHandler;
@@ -15,7 +15,6 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.image.*;
 import java.io.File;
-import java.io.IOException;
 import java.util.UUID;
 
 public class ImageView extends JFrame implements KeyListener {
@@ -82,57 +81,16 @@ public class ImageView extends JFrame implements KeyListener {
 
     private BufferedImage getIconImg() {
         ImageIcon imgIcon = (ImageIcon) (imgLabel.getIcon());
-        return Tools.toBufferedImage(imgIcon.getImage());
+        return ImgTools.toBufferedImage(imgIcon.getImage());
     }
 
 
     private void sharpenImage() {
-        BufferedImage img = getIconImg();
-        int kernelWidth = 3;
-        int kernelHeight = 3;
-        int xOffset = (kernelWidth - 1) / 2;
-        int yOffset = (kernelHeight - 1) / 2;
-        float[] kern = new float[] {
-                0.0f, -1.0f, 0.0f,
-                -1.0f, 5.0f, -1.0f,
-                0.0f, -1.0f, 0.0f
-        };
-        Kernel kernel = new Kernel(3, 3, kern);
-
-
-        BufferedImage newSource = new BufferedImage(
-                img.getWidth() + kernelWidth - 1,
-                img.getHeight() + kernelHeight - 1,
-                BufferedImage.TYPE_INT_ARGB);
-        Graphics2D g2 = newSource.createGraphics();
-        g2.drawImage(img, xOffset, yOffset, null);
-        g2.dispose();
-
-        ConvolveOp op = new ConvolveOp (kernel,ConvolveOp.EDGE_NO_OP,null);
-        img = op.filter(newSource, null);
+        BufferedImage img = ImgTools.sharpenImage(getIconImg());
         imgLabel.setIcon(new ImageIcon(img));
         repaint();
     }
 
-
-//    private void sharpenImage() {
-//        BufferedImage img = getIconImg();
-//        float[] kern = new float[] {
-//                0.0f, -1.0f, 0.0f,
-//                -1.0f, 5.0f, -1.0f,
-//                0.0f, -1.0f, 0.0f
-//        };
-////        float[] kern = new float[] {
-////                -1, -1, -1,
-////                -1, 9, -1,  /* 9 */
-////                -1, -1, -1
-////        };
-//        Kernel kernel = new Kernel(3, 3, kern);
-//        BufferedImageOp op = new ConvolveOp(kernel);
-//        img = op.filter(img, null);
-//        imgLabel.setIcon(new ImageIcon(img));
-//        repaint();
-//    }
 
     private void changeContrast (float val) {
         BufferedImage img = getIconImg();
@@ -150,7 +108,7 @@ public class ImageView extends JFrame implements KeyListener {
             if (orig)
                 img = loadImgFromStore();
             else
-                img = Tools.removeAlpha(getIconImg());
+                img = ImgTools.removeAlpha(getIconImg());
             outPath = outPath+File.separator + UUID.randomUUID() + ".jpg";
             System.out.println(outPath);
             try {
@@ -191,13 +149,13 @@ public class ImageView extends JFrame implements KeyListener {
             }
             case KeyEvent.VK_R -> {
                 BufferedImage img = getIconImg();
-                img = Tools.rotateClockwise90(img);
+                img = ImgTools.rotateClockwise90(img);
                 imgLabel.setIcon(new ImageIcon(img));
                 repaint();
             }
             case KeyEvent.VK_M -> {
                 BufferedImage img = getIconImg();
-                img = Tools.flip(img);
+                img = ImgTools.flip(img);
                 imgLabel.setIcon(new ImageIcon(img));
                 repaint();
             }
@@ -240,13 +198,13 @@ public class ImageView extends JFrame implements KeyListener {
             }
             case KeyEvent.VK_1 -> {
                 BufferedImage img = getIconImg();
-                img = GammaCorrection.gammaCorrection(img, 0.7f);
+                img = ImgTools.gammaCorrection(img, 0.7f);
                 imgLabel.setIcon(new ImageIcon(img));
                 repaint();
             }
             case KeyEvent.VK_2 -> {
                 BufferedImage img = getIconImg();
-                img = GammaCorrection.gammaCorrection(img, 1f/0.7f);
+                img = ImgTools.gammaCorrection(img, 1f/0.7f);
                 imgLabel.setIcon(new ImageIcon(img));
                 repaint();
             }
@@ -303,7 +261,7 @@ public class ImageView extends JFrame implements KeyListener {
                 System.out.println("loadImgFromStore-1 fail!!!");
                 return null;
             }
-            BufferedImage b2 = Tools.byteArrayToImg (b);
+            BufferedImage b2 = ImgTools.byteArrayToImg (b);
             if (b2 == null) {
                 System.out.println("loadImgFromStore-2 fail!!!");
                 return null;
@@ -327,17 +285,8 @@ public class ImageView extends JFrame implements KeyListener {
     }
 
     public void zoomIn(Rectangle r) {
-        BufferedImage img = getIconImg();
-        BufferedImage part = new BufferedImage(img.getWidth(), img.getHeight(), BufferedImage.TYPE_INT_RGB);
-        Graphics2D g = (Graphics2D) part.getGraphics();
-        g.setRenderingHint(RenderingHints.KEY_INTERPOLATION,
-                RenderingHints.VALUE_INTERPOLATION_BILINEAR);
-        g.drawImage(img, 0, 0,
-                img.getWidth(), img.getHeight(),
-                r.x, r.y,
-                r.x + r.width, r.y + r.height,
-                null);
-        imgLabel.setIcon(new ImageIcon(part));
+        BufferedImage img = ImgTools.zoomIn(getIconImg(), r);
+        imgLabel.setIcon(new ImageIcon(img));
         repaint();
     }
 }
