@@ -8,6 +8,7 @@ import javax.imageio.ImageReader;
 import javax.imageio.stream.FileImageInputStream;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.datatransfer.*;
 import java.awt.geom.AffineTransform;
 import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
@@ -19,6 +20,50 @@ import java.security.MessageDigest;
 import static common.Tools.hasExtension;
 
 public class ImgTools {
+
+
+    private record TransferableImage(Image i) implements Transferable, ClipboardOwner {
+
+        @Override
+        public Object getTransferData(DataFlavor flavor)
+                throws UnsupportedFlavorException {
+            if (flavor.equals(DataFlavor.imageFlavor) && i != null) {
+                return i;
+            } else {
+                throw new UnsupportedFlavorException(flavor);
+            }
+        }
+
+        @Override
+        public DataFlavor[] getTransferDataFlavors() {
+            DataFlavor[] flavors = new DataFlavor[1];
+            flavors[0] = DataFlavor.imageFlavor;
+            return flavors;
+        }
+
+        @Override
+        public boolean isDataFlavorSupported(DataFlavor flavor) {
+            DataFlavor[] flavors = getTransferDataFlavors();
+            for (DataFlavor dataFlavor : flavors) {
+                if (flavor.equals(dataFlavor)) {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        @Override
+        public void lostOwnership(Clipboard clipboard, Transferable contents) {
+
+        }
+    }
+
+    public static void copyImage (BufferedImage bi)
+    {
+        TransferableImage trans = new TransferableImage( bi );
+        Clipboard c = Toolkit.getDefaultToolkit().getSystemClipboard();
+        c.setContents( trans, trans );
+    }
 
     public static BufferedImage gammaCorrection(BufferedImage original, float gamma) {
 

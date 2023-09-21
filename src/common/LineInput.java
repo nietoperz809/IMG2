@@ -9,7 +9,7 @@ import java.awt.event.ActionListener;
 public class LineInput extends JDialog {
     private JPanel contentPane;
     private JTextField textField1;
-    //private JButton buttonOK;
+    private JLabel label;
 
     public LineInput() {
         setContentPane(contentPane);
@@ -26,17 +26,13 @@ public class LineInput extends JDialog {
         });
     }
 
-    public static String xmain (String init) {
+    public static String xmain (String init, String lab) {
         LineInput dialog = new LineInput();
         dialog.textField1.setText(init);
+        dialog.label.setText(lab);
         dialog.pack();
         dialog.setLocationRelativeTo(null);
         dialog.setVisible(true);
         return dialog.textField1.getText();
     }
-
-
-//    public static void main(String[] args) {
-//        System.out.println(xmain());
-//    }
 }

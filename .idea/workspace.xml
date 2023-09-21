@@ -14,17 +14,19 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ddb69741-e020-4d21-a32f-f00e79c6818a" name="Changes" comment="backup">
+    <list default="true" id="ddb69741-e020-4d21-a32f-f00e79c6818a" name="Changes" comment="current release">
       <change afterPath="$PROJECT_DIR$/IMG2_jar/hs_err_pid15956.log" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IMG2_jar/IMG2.jar" beforeDir="false" afterPath="$PROJECT_DIR$/IMG2_jar/IMG2.jar" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/buildinfo/BuildInfo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/buildinfo/BuildInfo.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/buildinfo/build.number" beforeDir="false" afterPath="$PROJECT_DIR$/src/buildinfo/build.number" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/common/GammaCorrection.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/common/ImgTools.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/common/Tools.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/common/Tools.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/database/DBHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/database/DBHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/thegrid/GridImage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/thegrid/GridImage.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/thegrid/GridMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/thegrid/GridMenu.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/common/ImgTools.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/common/ImgTools.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/common/LineInput.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/common/LineInput.form" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/common/LineInput.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/common/LineInput.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/thegrid/ImageView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/thegrid/ImageView.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/thegrid/RegionSelectorListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/thegrid/RegionSelectorListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/thegrid/UniqueRng.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/thegrid/UniqueRng.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/video/VideoApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/video/VideoApp.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -569,7 +571,7 @@
       <option name="project" value="LOCAL" />
       <updated>1683976691765</updated>
     </task>
-    <option name="localTasksCounter" value="77" />
+    <option name="localTasksCounter" value="78" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -586,7 +588,6 @@
   <component name="VcsManagerConfiguration">
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="new jar" />
     <MESSAGE value="bugfix in persiststring" />
     <MESSAGE value="added speech &amp; new jar" />
     <MESSAGE value="stored db pwd in props" />
@@ -611,7 +612,8 @@
     <MESSAGE value="some improvements" />
     <MESSAGE value="introduced GammaCorrection keys 1+2" />
     <MESSAGE value="backup" />
-    <option name="LAST_COMMIT_MESSAGE" value="backup" />
+    <MESSAGE value="current release" />
+    <option name="LAST_COMMIT_MESSAGE" value="current release" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

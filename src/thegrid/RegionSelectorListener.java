@@ -4,16 +4,19 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.image.BufferedImage;
 
 public class RegionSelectorListener extends MouseAdapter {
     final JLabel label;
+    private final float corr;
     Rectangle box = null;
     Graphics2D g2d;
     Point pressed  = null;
     Rectangle before = null;
     final ImageView parent;
 
-    public RegionSelectorListener(JLabel theLabel, ImageView p) {
+    public RegionSelectorListener(BufferedImage img, JLabel theLabel, ImageView p) {
+        corr = (float) img.getHeight() / img.getWidth();
         this.label = theLabel;
         parent = p;
         theLabel.addMouseListener(this);
@@ -23,7 +26,6 @@ public class RegionSelectorListener extends MouseAdapter {
     @Override
     public void mousePressed(MouseEvent e) {
         super.mousePressed(e);
-        //System.out.println("pressed "+ e.getPoint());
         pressed = e.getPoint();
         box = new Rectangle();
         box.x = e.getX();
@@ -54,7 +56,6 @@ public class RegionSelectorListener extends MouseAdapter {
         super.mouseDragged(e);
         if (pressed == null)
             return;
-        //System.out.println("dragged "+ e.getPoint());
         Rectangle rect = new Rectangle(pressed);
         calcBox(rect, e);
         g2d = (Graphics2D)label.getGraphics();
@@ -73,5 +74,7 @@ public class RegionSelectorListener extends MouseAdapter {
         r.height = Math.abs(e.getY() - r.y);
         r.x = Math.min(r.x, e.getX());
         r.y = Math.min(r.y, e.getY());
+
+        r.height = (int)(r.width * corr);
     }
 }

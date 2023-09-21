@@ -104,7 +104,7 @@ public class VideoApp extends JDialog {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 DBHandler.NameID nameid = listControl.getSelectedValue();
-                String res = LineInput.xmain(nameid.name());
+                String res = LineInput.xmain(nameid.name(), "NewName");
                 DBHandler.getInst().changeVideoName(res, nameid.rowid());
                 setListContent(false);
             }

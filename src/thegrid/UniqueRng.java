@@ -27,9 +27,18 @@ class UniqueRng {
         idx = 0;
     }
 
-    public void setPointer (int n) {
-        idx = n % _list.size();
-    }
+//    public void setPointer (int n) {
+//        idx = n % _list.size();
+//    }
+//
+//    public int findElement (int e) {
+//        for (int n=0; n<_list.size(); n++) {
+//            if (_list.get(n) == e) {
+//                return n;
+//            }
+//        }
+//        return -1; // not found
+//    }
 
     /**
      * Get next element
