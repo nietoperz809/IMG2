@@ -1,26 +1,27 @@
 package thegrid;
 
-import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 
 public class RegionSelectorListener extends MouseAdapter {
-    final JLabel label;
-    private final float corr;
+    final ImgPanel imgPanel;
+    private final float A;
+    private final float B;
     Rectangle box = null;
     Graphics2D g2d;
     Point pressed  = null;
     Rectangle before = null;
     final ImageView parent;
 
-    public RegionSelectorListener(BufferedImage img, JLabel theLabel, ImageView p) {
-        corr = (float) img.getHeight() / img.getWidth();
-        this.label = theLabel;
+    public RegionSelectorListener(BufferedImage img, ImgPanel thePanel, ImageView p) {
+        A = img.getHeight();
+        B = img.getWidth();
+        this.imgPanel = thePanel;
         parent = p;
-        theLabel.addMouseListener(this);
-        theLabel.addMouseMotionListener(this);
+        thePanel.addMouseListener(this);
+        thePanel.addMouseMotionListener(this);
     }
 
     @Override
@@ -40,12 +41,17 @@ public class RegionSelectorListener extends MouseAdapter {
         //System.out.println("released "+ e.getPoint());
         calcBox(box,e);
         if (box.width > 10 && box.height > 10) {
-            g2d = (Graphics2D) label.getGraphics();
+            g2d = (Graphics2D) imgPanel.getGraphics();
             g2d.setStroke(new BasicStroke(4));
             g2d.setPaintMode();
             g2d.setColor(Color.RED);
             g2d.drawRect(box.x, box.y, box.width, box.height);
-            parent.zoomIn(box);
+
+            Rectangle r2 = new Rectangle(box);
+            Point p = imgPanel.getOffset();
+            r2.x -= p.x;
+            r2.y -= p.y;
+            parent.zoomIn(r2);
         }
         pressed = null;
         before= null;
@@ -58,7 +64,7 @@ public class RegionSelectorListener extends MouseAdapter {
             return;
         Rectangle rect = new Rectangle(pressed);
         calcBox(rect, e);
-        g2d = (Graphics2D)label.getGraphics();
+        g2d = (Graphics2D) imgPanel.getGraphics();
         g2d.setStroke(new BasicStroke(4));
         g2d.setXORMode (Color.RED);
         if (before != null) {
@@ -75,6 +81,9 @@ public class RegionSelectorListener extends MouseAdapter {
         r.x = Math.min(r.x, e.getX());
         r.y = Math.min(r.y, e.getY());
 
-        r.height = (int)(r.width * corr);
+        float C = r.height;
+        float D = r.width;
+
+        r.width = (int)(C/(A/B));
     }
 }

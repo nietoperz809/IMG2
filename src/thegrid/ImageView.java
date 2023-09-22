@@ -2,6 +2,7 @@ package thegrid;
 
 import common.ImgTools;
 import common.LineInput;
+import common.Sam;
 import common.Tools;
 import database.DBHandler;
 
@@ -15,13 +16,12 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.image.*;
 import java.io.File;
-import java.io.IOException;
 import java.util.UUID;
 
 public class ImageView extends JFrame implements KeyListener {
-    private final JScrollPane scrollPane;
+    //private final JScrollPane scrollPane;
     private final java.util.List<DBHandler.NameID> allFiles;
-    private final JLabel imgLabel;
+    private final ImgPanel imgPanel;
     private final UniqueRng ring;
     private int currentIdx;
 
@@ -34,16 +34,10 @@ public class ImageView extends JFrame implements KeyListener {
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setTitle(allFiles.get(currentIdx).name() + " -- " + currentIdx+ " -- " + allFiles.get(currentIdx).rowid());
         addKeyListener(this);
-        scrollPane = new JScrollPane();
         BufferedImage img = loadImgFromStore();
-        ImageIcon icon = new ImageIcon(img);
-        imgLabel = new JLabel(icon);
-        new RegionSelectorListener(img,imgLabel, this);
-        imgLabel.setBorder(null);
-        scrollPane.add(imgLabel);
-        scrollPane.getViewport().setView(imgLabel);
-        scrollPane.setBorder(null);
-        setContentPane(scrollPane);
+        imgPanel = new ImgPanel(img);
+        new RegionSelectorListener(img, imgPanel, this);
+        setContentPane(imgPanel);
         setExtendedState(JFrame.MAXIMIZED_BOTH);
         setLocationRelativeTo(null);
         setVisible(true);
@@ -55,7 +49,7 @@ public class ImageView extends JFrame implements KeyListener {
                 }
             }
         });
-        imgLabel.setToolTipText
+        imgPanel.setToolTipText
                 ("<html>+/- - scale<br>" +
                         "1,2 - gamma<br>" +
                         "3,4 - change contrast<br>"+
@@ -84,14 +78,13 @@ public class ImageView extends JFrame implements KeyListener {
     }
 
     private BufferedImage getIconImg() {
-        ImageIcon imgIcon = (ImageIcon) (imgLabel.getIcon());
-        return ImgTools.toBufferedImage(imgIcon.getImage());
+        return imgPanel.getImage();
     }
 
 
     private void sharpenImage() {
         BufferedImage img = ImgTools.sharpenImage(getIconImg());
-        imgLabel.setIcon(new ImageIcon(img));
+        imgPanel.setImage(img);
         repaint();
     }
 
@@ -100,7 +93,7 @@ public class ImageView extends JFrame implements KeyListener {
         BufferedImage img = getIconImg();
         RescaleOp op = new RescaleOp (val, 0, null);
         img = op.filter(img, img);
-        imgLabel.setIcon(new ImageIcon(img));
+        imgPanel.setImage(img);
         repaint();
     }
 
@@ -129,7 +122,7 @@ public class ImageView extends JFrame implements KeyListener {
     @Override
     public void keyPressed(KeyEvent e) {
         int ev = e.getKeyCode();
-        Tools.fastScroll(ev,scrollPane.getViewport(), false);
+        //Tools.fastScroll(ev,scrollPane.getViewport(), false);
         switch (ev) {
             case KeyEvent.VK_PAGE_DOWN -> {
                 if (currentIdx < (allFiles.size() - 1))
@@ -150,26 +143,23 @@ public class ImageView extends JFrame implements KeyListener {
             case KeyEvent.VK_R -> {
                 BufferedImage img = getIconImg();
                 img = ImgTools.rotateClockwise90(img);
-                imgLabel.setIcon(new ImageIcon(img));
+                imgPanel.setImage(img);
                 repaint();
             }
             case KeyEvent.VK_M -> {
                 BufferedImage img = getIconImg();
                 img = ImgTools.flip(img);
-                imgLabel.setIcon(new ImageIcon(img));
+                imgPanel.setImage(img);
                 repaint();
             }
             case KeyEvent.VK_W -> {
                 BufferedImage img = loadImgFromStore();
-                JScrollBar vert = scrollPane.getVerticalScrollBar();
-                int newWidth = scrollPane.getWidth();
-                if (vert.isVisible())
-                    newWidth -= vert.getWidth();
+                int newWidth = imgPanel.getWidth();
                 float fact = (float) img.getWidth() / (float) newWidth;
                 int newHeight = (int) ((float) img.getHeight() / fact);
                 Dimension d = new Dimension(newWidth, newHeight);
                 img = ImageScaler.scaleDirect(img, d);
-                imgLabel.setIcon(new ImageIcon(img));
+                imgPanel.setImage(img);
                 repaint();
             }
             case KeyEvent.VK_T -> {
@@ -199,16 +189,20 @@ public class ImageView extends JFrame implements KeyListener {
             case KeyEvent.VK_1 -> {
                 BufferedImage img = getIconImg();
                 img = ImgTools.gammaCorrection(img, 0.7f);
-                imgLabel.setIcon(new ImageIcon(img));
+                imgPanel.setImage(img);
                 repaint();
             }
             case KeyEvent.VK_2 -> {
                 BufferedImage img = getIconImg();
                 img = ImgTools.gammaCorrection(img, 1f/0.7f);
-                imgLabel.setIcon(new ImageIcon(img));
+                imgPanel.setImage(img);
                 repaint();
             }
-            case KeyEvent.VK_D -> DBHandler.getInst().deleteImage(allFiles.get(currentIdx).rowid());
+            case KeyEvent.VK_D -> {
+                if (Tools.Question("Delet image from DB?")) {
+                    DBHandler.getInst().deleteImage(allFiles.get(currentIdx).rowid());
+                }
+            }
             case KeyEvent.VK_H -> adjustOnHeight();
             case KeyEvent.VK_3 -> changeContrast(1.1f);
             case KeyEvent.VK_4 -> changeContrast(0.9f);
@@ -241,6 +235,19 @@ public class ImageView extends JFrame implements KeyListener {
                     }
                 }
             }
+            case KeyEvent.VK_UP -> {
+                imgPanel.up();
+            }
+            case KeyEvent.VK_DOWN -> {
+                imgPanel.down();
+            }
+            case KeyEvent.VK_LEFT -> {
+                imgPanel.left();
+            }
+            case KeyEvent.VK_RIGHT -> {
+                imgPanel.right();
+            }
+            default -> Sam.speak("Key not used");
         }
     }
 
@@ -266,13 +273,13 @@ public class ImageView extends JFrame implements KeyListener {
         int newWidth = (int) ((float) img.getWidth() / fact);
         Dimension d = new Dimension(newWidth, newHeight);
         img = ImageScaler.scaleDirect(img, d);
-        imgLabel.setIcon(new ImageIcon(img));
+        imgPanel.setImage(img);
         repaint();
     }
 
     private void setImg() {
         setTitle(allFiles.get(currentIdx).name() + " -- " + currentIdx+ " -- " + allFiles.get(currentIdx).rowid());
-        imgLabel.setIcon(new ImageIcon(loadImgFromStore()));
+        imgPanel.setImage(loadImgFromStore());
         repaint();
     }
 
@@ -302,13 +309,13 @@ public class ImageView extends JFrame implements KeyListener {
     private void scaleIconImg (float factor) {
         BufferedImage img = ImageScaler.scaleImg(getIconImg(), factor);
 
-        imgLabel.setIcon(new ImageIcon(img));
+        imgPanel.setImage(img);
         repaint();
     }
 
     public void zoomIn(Rectangle r) {
         BufferedImage img = ImgTools.zoomIn(getIconImg(), r);
-        imgLabel.setIcon(new ImageIcon(img));
+        imgPanel.setImage(img);
         repaint();
     }
 }

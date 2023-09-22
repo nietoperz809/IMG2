@@ -48,9 +48,6 @@ public class Tools {
                 "Please select", JOptionPane.QUESTION_MESSAGE,
                 null, new String[] {"No","Yes"},"No");
         return response.equals("Yes");
-//        int i = JOptionPane.showConfirmDialog (null, msg,
-//                "Do it?", YES_NO_OPTION);
-//        return i == 0; /* true if yes */
     }
 
     /**
