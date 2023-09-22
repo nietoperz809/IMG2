@@ -6,7 +6,6 @@ import gifdecoder.AnimatedGIFReader;
 import javax.imageio.ImageIO;
 import javax.imageio.ImageReader;
 import javax.imageio.stream.FileImageInputStream;
-import javax.swing.*;
 import java.awt.*;
 import java.awt.datatransfer.*;
 import java.awt.geom.AffineTransform;
@@ -280,7 +279,7 @@ public class ImgTools {
         BufferedImage newSource = new BufferedImage(
                 img.getWidth() + kernelWidth - 1,
                 img.getHeight() + kernelHeight - 1,
-                BufferedImage.TYPE_INT_ARGB);
+                BufferedImage.TYPE_INT_RGB);
         Graphics2D g2 = newSource.createGraphics();
         g2.drawImage(img, xOffset, yOffset, null);
         g2.dispose();

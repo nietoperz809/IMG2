@@ -60,14 +60,13 @@ public class ImageView extends JFrame implements KeyListener {
                         "1,2 - gamma<br>" +
                         "3,4 - change contrast<br>"+
                         "a - tagger<br>" +
-                        "o - copy to clipboard<br>" +
+                        "ctrl+c - copy to clipboard<br>" +
                         "r - rotate<br>" +
                         "c - change img in database<br>" +
                         "n - go to specific rowid<br>" +
                         "page up/down - load next/prev image<br>" +
                         "up/down/left/right - move<br>" +
-                        "w - scale to width" +
-                        "h - scale to height" +
+                        "w,h - scale to width or height<br>" +
                         "l - reload<br>" +
                         "esc - close window<br>" +
                         "s - slideshow<br>" +
@@ -146,12 +145,8 @@ public class ImageView extends JFrame implements KeyListener {
                     currentIdx = allFiles.size() - 1;
                 setImg();
             }
-            case KeyEvent.VK_PLUS -> {
-                scaleIconImg(1.1f);
-            }
-            case KeyEvent.VK_MINUS -> {
-                scaleIconImg(0.9f);
-            }
+            case KeyEvent.VK_PLUS -> scaleIconImg(1.1f);
+            case KeyEvent.VK_MINUS -> scaleIconImg(0.9f);
             case KeyEvent.VK_R -> {
                 BufferedImage img = getIconImg();
                 img = ImgTools.rotateClockwise90(img);
@@ -222,11 +217,6 @@ public class ImageView extends JFrame implements KeyListener {
             case KeyEvent.VK_G -> saveAsFile(false);
             case KeyEvent.VK_L -> setImg();
 
-            case KeyEvent.VK_O -> {
-                BufferedImage img = getIconImg();
-                ImgTools.copyImage(img);
-            }
-
             case KeyEvent.VK_ESCAPE -> dispose();
             case KeyEvent.VK_A -> {
                 int rowid = allFiles.get(currentIdx).rowid();
@@ -240,10 +230,15 @@ public class ImageView extends JFrame implements KeyListener {
                 showByIdx();
             }
             case KeyEvent.VK_C -> {
-                int id = allFiles.get(currentIdx).rowid();
-                if (Tools.Question("Replace image #"+id)) {
+                if (e.isControlDown()) {
                     BufferedImage img = getIconImg();
-                    DBHandler.getInst().changeBigImg(img, id);
+                    ImgTools.copyImage(img);
+                } else {
+                    int id = allFiles.get(currentIdx).rowid();
+                    if (Tools.Question("Replace image #" + id)) {
+                        BufferedImage img = getIconImg();
+                        DBHandler.getInst().changeBigImg(img, id);
+                    }
                 }
             }
         }
