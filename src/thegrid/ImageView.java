@@ -85,7 +85,6 @@ public class ImageView extends JFrame implements KeyListener {
     private void sharpenImage() {
         BufferedImage img = ImgTools.sharpenImage(getIconImg());
         imgPanel.setImage(img);
-        repaint();
     }
 
 
@@ -94,7 +93,6 @@ public class ImageView extends JFrame implements KeyListener {
         RescaleOp op = new RescaleOp (val, 0, null);
         img = op.filter(img, img);
         imgPanel.setImage(img);
-        repaint();
     }
 
 
@@ -144,13 +142,11 @@ public class ImageView extends JFrame implements KeyListener {
                 BufferedImage img = getIconImg();
                 img = ImgTools.rotateClockwise90(img);
                 imgPanel.setImage(img);
-                repaint();
             }
             case KeyEvent.VK_M -> {
                 BufferedImage img = getIconImg();
                 img = ImgTools.flip(img);
                 imgPanel.setImage(img);
-                repaint();
             }
             case KeyEvent.VK_W -> {
                 BufferedImage img = loadImgFromStore();
@@ -160,7 +156,6 @@ public class ImageView extends JFrame implements KeyListener {
                 Dimension d = new Dimension(newWidth, newHeight);
                 img = ImageScaler.scaleDirect(img, d);
                 imgPanel.setImage(img);
-                repaint();
             }
             case KeyEvent.VK_T -> {
                 currentIdx = ring.getNext();
@@ -190,13 +185,11 @@ public class ImageView extends JFrame implements KeyListener {
                 BufferedImage img = getIconImg();
                 img = ImgTools.gammaCorrection(img, 0.7f);
                 imgPanel.setImage(img);
-                repaint();
             }
             case KeyEvent.VK_2 -> {
                 BufferedImage img = getIconImg();
                 img = ImgTools.gammaCorrection(img, 1f/0.7f);
                 imgPanel.setImage(img);
-                repaint();
             }
             case KeyEvent.VK_D -> {
                 if (Tools.Question("Delet image from DB?")) {
@@ -274,13 +267,11 @@ public class ImageView extends JFrame implements KeyListener {
         Dimension d = new Dimension(newWidth, newHeight);
         img = ImageScaler.scaleDirect(img, d);
         imgPanel.setImage(img);
-        repaint();
     }
 
     private void setImg() {
         setTitle(allFiles.get(currentIdx).name() + " -- " + currentIdx+ " -- " + allFiles.get(currentIdx).rowid());
         imgPanel.setImage(loadImgFromStore());
-        repaint();
     }
 
     private BufferedImage loadImgFromStore() {
@@ -310,12 +301,10 @@ public class ImageView extends JFrame implements KeyListener {
         BufferedImage img = ImageScaler.scaleImg(getIconImg(), factor);
 
         imgPanel.setImage(img);
-        repaint();
     }
 
     public void zoomIn(Rectangle r) {
         BufferedImage img = ImgTools.zoomIn(getIconImg(), r);
         imgPanel.setImage(img);
-        repaint();
     }
 }
