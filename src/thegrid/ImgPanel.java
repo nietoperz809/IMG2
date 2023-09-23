@@ -21,8 +21,11 @@ public class ImgPanel extends JPanel {
 
     public void setImage (BufferedImage img) {
         image = img;
-        offset = new Point();
         repaint();
+    }
+
+    public void clearOffset() {
+        offset = new Point();
     }
 
     @Override

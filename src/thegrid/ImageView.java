@@ -120,13 +120,13 @@ public class ImageView extends JFrame implements KeyListener {
     @Override
     public void keyPressed(KeyEvent e) {
         int ev = e.getKeyCode();
-        //Tools.fastScroll(ev,scrollPane.getViewport(), false);
         switch (ev) {
             case KeyEvent.VK_PAGE_DOWN -> {
                 if (currentIdx < (allFiles.size() - 1))
                     currentIdx++;
                 else
                     currentIdx = 0;
+                imgPanel.clearOffset();
                 setImg();
             }
             case KeyEvent.VK_PAGE_UP -> {
@@ -134,6 +134,7 @@ public class ImageView extends JFrame implements KeyListener {
                     currentIdx--;
                 else
                     currentIdx = allFiles.size() - 1;
+                imgPanel.clearOffset();
                 setImg();
             }
             case KeyEvent.VK_PLUS -> scaleIconImg(1.1f);
@@ -159,10 +160,12 @@ public class ImageView extends JFrame implements KeyListener {
             }
             case KeyEvent.VK_T -> {
                 currentIdx = ring.getNext();
+                imgPanel.clearOffset();
                 showByIdx();
             }
             case KeyEvent.VK_Z -> {
                 currentIdx = ring.getPrev();
+                imgPanel.clearOffset();
                 showByIdx();
             }
             case KeyEvent.VK_S -> {
@@ -202,7 +205,10 @@ public class ImageView extends JFrame implements KeyListener {
             case KeyEvent.VK_X -> sharpenImage();
             case KeyEvent.VK_F -> saveAsFile(true);
             case KeyEvent.VK_G -> saveAsFile(false);
-            case KeyEvent.VK_L -> setImg();
+            case KeyEvent.VK_L -> {
+                imgPanel.clearOffset();
+                setImg();
+            }
 
             case KeyEvent.VK_ESCAPE -> dispose();
             case KeyEvent.VK_A -> {
@@ -304,7 +310,7 @@ public class ImageView extends JFrame implements KeyListener {
     }
 
     public void zoomIn(Rectangle r) {
-        BufferedImage img = ImgTools.zoomIn(getIconImg(), r);
+        BufferedImage img = ImgTools.crop(getIconImg(), r);
         imgPanel.setImage(img);
     }
 }

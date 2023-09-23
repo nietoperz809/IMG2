@@ -288,7 +288,7 @@ public class ImgTools {
         return op.filter(newSource, null);
     }
 
-    public static BufferedImage zoomIn (BufferedImage img, Rectangle r) {
+    public static BufferedImage crop (BufferedImage img, Rectangle r) {
         BufferedImage part = new BufferedImage(r.width, r.height, BufferedImage.TYPE_INT_RGB);
         Graphics2D g = (Graphics2D) part.getGraphics();
         g.setRenderingHint(RenderingHints.KEY_INTERPOLATION,
