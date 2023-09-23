@@ -35,32 +35,23 @@ public class ImgPanel extends JPanel {
         return offset;
     }
 
-    public void right() {
-        int a = getWidth()-image.getWidth()+10;
-        int x = offset.x + 10;
-        if (x <= a)
-            offset.x = x;
-        repaint();
-    }
-    public void left() {
-        int x = offset.x - 10;
-        if (x >= 0)
-            offset.x = x;
+    public void scrollRight() {
+        offset.x += 10;
         repaint();
     }
 
-    public void down() {
-        int a = getHeight()-image.getHeight()+10;
-        int y = offset.y + 10;
-        if (y <= a)
-            offset.y = y;
+    public void scrollLeft() {
+        offset.x -= 10;
         repaint();
     }
 
-    public void up() {
-        int y = offset.y - 10;
-        if (y >= 0)
-            offset.y = y;
+    public void scrollDown() {
+        offset.y += 10;
+        repaint();
+    }
+
+    public void scrollUp() {
+        offset.y -= 10;
         repaint();
     }
 }

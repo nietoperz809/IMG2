@@ -289,12 +289,12 @@ public class ImgTools {
     }
 
     public static BufferedImage zoomIn (BufferedImage img, Rectangle r) {
-        BufferedImage part = new BufferedImage(img.getWidth(), img.getHeight(), BufferedImage.TYPE_INT_RGB);
+        BufferedImage part = new BufferedImage(r.width, r.height, BufferedImage.TYPE_INT_RGB);
         Graphics2D g = (Graphics2D) part.getGraphics();
         g.setRenderingHint(RenderingHints.KEY_INTERPOLATION,
                 RenderingHints.VALUE_INTERPOLATION_BILINEAR);
         g.drawImage(img, 0, 0,
-                img.getWidth(), img.getHeight(),
+                r.width, r.height,
                 r.x, r.y,
                 r.x + r.width, r.y + r.height,
                 null);

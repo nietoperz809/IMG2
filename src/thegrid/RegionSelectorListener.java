@@ -81,9 +81,9 @@ public class RegionSelectorListener extends MouseAdapter {
         r.x = Math.min(r.x, e.getX());
         r.y = Math.min(r.y, e.getY());
 
-        float C = r.height;
-        float D = r.width;
-
-        r.width = (int)(C/(A/B));
+//        float C = r.height;
+//        float D = r.width;
+//
+//        r.width = (int)(C/(A/B));
     }
 }

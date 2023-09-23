@@ -229,16 +229,16 @@ public class ImageView extends JFrame implements KeyListener {
                 }
             }
             case KeyEvent.VK_UP -> {
-                imgPanel.up();
+                imgPanel.scrollUp();
             }
             case KeyEvent.VK_DOWN -> {
-                imgPanel.down();
+                imgPanel.scrollDown();
             }
             case KeyEvent.VK_LEFT -> {
-                imgPanel.left();
+                imgPanel.scrollLeft();
             }
             case KeyEvent.VK_RIGHT -> {
-                imgPanel.right();
+                imgPanel.scrollRight();
             }
             default -> Sam.speak("Key not used");
         }
