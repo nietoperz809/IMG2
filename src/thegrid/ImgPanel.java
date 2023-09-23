@@ -1,6 +1,7 @@
 package thegrid;
 
 import java.awt.*;
+import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import javax.swing.*;
 
@@ -9,10 +10,29 @@ public class ImgPanel extends JPanel {
     private BufferedImage image;
     private Point offset = new Point();
 
+    JToolTip thisJT;
+
     public ImgPanel (BufferedImage img) {
         super();
         image = img;
         setSize(img.getWidth(), img.getHeight());
+    }
+
+    /**
+     * set TT Location
+     * @param event  the <code>MouseEvent</code> that caused the
+     *          <code>ToolTipManager</code> to show the tooltip
+     * @return Point to set the TT
+     */
+    public Point getToolTipLocation(MouseEvent event) {
+        if (thisJT == null)
+            return null;
+        return new Point(0, this.getHeight()-thisJT.getHeight());
+    }
+
+    public JToolTip createToolTip() {
+        thisJT = super.createToolTip();
+        return thisJT;
     }
 
     public BufferedImage getImage() {

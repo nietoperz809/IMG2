@@ -49,6 +49,7 @@ public class ImageView extends JFrame implements KeyListener {
                 }
             }
         });
+
         imgPanel.setToolTipText
                 ("<html>+/- - scale<br>" +
                         "1,2 - gamma<br>" +
@@ -59,7 +60,7 @@ public class ImageView extends JFrame implements KeyListener {
                         "c - change img in database<br>" +
                         "n - go to specific rowid<br>" +
                         "page up/down - load next/prev image<br>" +
-                        "up/down/left/right - move<br>" +
+                        "up/down/left/right - move image<br>" +
                         "w,h - scale to width or height<br>" +
                         "l - reload<br>" +
                         "esc - close window<br>" +
@@ -246,6 +247,8 @@ public class ImageView extends JFrame implements KeyListener {
             case KeyEvent.VK_RIGHT -> {
                 imgPanel.scrollRight();
             }
+            case KeyEvent.VK_CONTROL -> {}
+
             default -> Sam.speak("Key not used");
         }
     }
@@ -305,12 +308,12 @@ public class ImageView extends JFrame implements KeyListener {
 
     private void scaleIconImg (float factor) {
         BufferedImage img = ImageScaler.scaleImg(getIconImg(), factor);
-
         imgPanel.setImage(img);
     }
 
     public void zoomIn(Rectangle r) {
         BufferedImage img = ImgTools.crop(getIconImg(), r);
+        imgPanel.clearOffset();
         imgPanel.setImage(img);
     }
 }
