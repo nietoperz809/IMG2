@@ -14,10 +14,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ddb69741-e020-4d21-a32f-f00e79c6818a" name="Changes" comment="save">
+    <list default="true" id="ddb69741-e020-4d21-a32f-f00e79c6818a" name="Changes" comment="some improvements">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IMG2_jar/IMG2.jar" beforeDir="false" afterPath="$PROJECT_DIR$/IMG2_jar/IMG2.jar" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/buildinfo/BuildInfo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/buildinfo/BuildInfo.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/buildinfo/build.number" beforeDir="false" afterPath="$PROJECT_DIR$/src/buildinfo/build.number" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/database/DBHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/database/DBHandler.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/thegrid/ImageView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/thegrid/ImageView.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/thegrid/ImgPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/thegrid/ImgPanel.java" afterDir="false" />
     </list>
@@ -204,11 +206,11 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.Console" />
-        <item itemvalue="Application.TagSelectorDlg" />
         <item itemvalue="Application.VideoFiller" />
         <item itemvalue="Application.VideoApp" />
         <item itemvalue="Application.Tools" />
+        <item itemvalue="Application.TagSelectorDlg" />
+        <item itemvalue="Application.Console" />
       </list>
     </recent_temporary>
   </component>
@@ -564,7 +566,7 @@
       <option name="project" value="LOCAL" />
       <updated>1683976691765</updated>
     </task>
-    <option name="localTasksCounter" value="84" />
+    <option name="localTasksCounter" value="85" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -601,12 +603,12 @@
     <MESSAGE value="introduced GammaCorrection keys 1+2" />
     <MESSAGE value="backup" />
     <MESSAGE value="current release" />
-    <MESSAGE value="some improvements" />
     <MESSAGE value="new scroller &amp; zoomer" />
     <MESSAGE value="better scrolling" />
     <MESSAGE value="fixed crop function" />
     <MESSAGE value="save" />
-    <option name="LAST_COMMIT_MESSAGE" value="save" />
+    <MESSAGE value="some improvements" />
+    <option name="LAST_COMMIT_MESSAGE" value="some improvements" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

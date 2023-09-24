@@ -251,7 +251,7 @@ public class DBHandler {
     }
 
     public void backup() {
-        final String timeStamp = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
+        final String timeStamp = new SimpleDateFormat("yyyy-MM-dd HH-mm-ss")
                 .format(new java.util.Date());
         final String dest = ROOT_DIR + timeStamp + ".backup";
         final String src = ROOT_DIR + DB_FILE_FULL;

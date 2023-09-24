@@ -24,12 +24,14 @@ public class ImgPanel extends JPanel {
      *          <code>ToolTipManager</code> to show the tooltip
      * @return Point to set the TT
      */
+    @Override
     public Point getToolTipLocation(MouseEvent event) {
         if (thisJT == null)
             return null;
         return new Point(0, this.getHeight()-thisJT.getHeight());
     }
 
+    @Override
     public JToolTip createToolTip() {
         thisJT = super.createToolTip();
         return thisJT;

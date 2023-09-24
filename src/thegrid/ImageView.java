@@ -8,17 +8,14 @@ import database.DBHandler;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
-import javax.swing.Timer;
 import java.awt.*;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
+import java.awt.event.*;
 import java.awt.image.*;
 import java.io.File;
+import java.util.Objects;
 import java.util.UUID;
 
-public class ImageView extends JFrame implements KeyListener {
+public class ImageView extends JFrame implements KeyListener, MouseWheelListener {
     //private final JScrollPane scrollPane;
     private final java.util.List<DBHandler.NameID> allFiles;
     private final ImgPanel imgPanel;
@@ -34,7 +31,9 @@ public class ImageView extends JFrame implements KeyListener {
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setTitle(allFiles.get(currentIdx).name() + " -- " + currentIdx+ " -- " + allFiles.get(currentIdx).rowid());
         addKeyListener(this);
+        addMouseWheelListener(this);
         BufferedImage img = loadImgFromStore();
+        assert img != null;
         imgPanel = new ImgPanel(img);
         new RegionSelectorListener(img, imgPanel, this);
         setContentPane(imgPanel);
@@ -108,6 +107,7 @@ public class ImageView extends JFrame implements KeyListener {
             outPath = outPath+File.separator + UUID.randomUUID() + ".jpg";
             System.out.println(outPath);
             try {
+                assert img != null;
                 boolean success = ImageIO.write(img, "jpg", new File(outPath));
                 if (!success)
                     System.err.println("imgIO write fail ");
@@ -153,6 +153,7 @@ public class ImageView extends JFrame implements KeyListener {
             case KeyEvent.VK_W -> {
                 BufferedImage img = loadImgFromStore();
                 int newWidth = imgPanel.getWidth();
+                assert img != null;
                 float fact = (float) img.getWidth() / (float) newWidth;
                 int newHeight = (int) ((float) img.getHeight() / fact);
                 Dimension d = new Dimension(newWidth, newHeight);
@@ -197,7 +198,7 @@ public class ImageView extends JFrame implements KeyListener {
             }
             case KeyEvent.VK_D -> {
                 if (Tools.Question("Delet image from DB?")) {
-                    DBHandler.getInst().deleteImage(allFiles.get(currentIdx).rowid());
+                    Objects.requireNonNull(DBHandler.getInst()).deleteImage(allFiles.get(currentIdx).rowid());
                 }
             }
             case KeyEvent.VK_H -> adjustOnHeight();
@@ -214,7 +215,7 @@ public class ImageView extends JFrame implements KeyListener {
             case KeyEvent.VK_ESCAPE -> dispose();
             case KeyEvent.VK_A -> {
                 int rowid = allFiles.get(currentIdx).rowid();
-                String tag = LineInput.xmain(DBHandler.getInst().getTag(rowid), "Tag:").trim().toLowerCase();
+                String tag = LineInput.xmain(Objects.requireNonNull(DBHandler.getInst()).getTag(rowid), "Tag:").trim().toLowerCase();
                 DBHandler.getInst().setTag(rowid, tag);
             }
             case KeyEvent.VK_N -> {
@@ -231,26 +232,31 @@ public class ImageView extends JFrame implements KeyListener {
                     int id = allFiles.get(currentIdx).rowid();
                     if (Tools.Question("Replace image #" + id)) {
                         BufferedImage img = getIconImg();
-                        DBHandler.getInst().changeBigImg(img, id);
+                        Objects.requireNonNull(DBHandler.getInst()).changeBigImg(img, id);
                     }
                 }
             }
-            case KeyEvent.VK_UP -> {
-                imgPanel.scrollUp();
-            }
-            case KeyEvent.VK_DOWN -> {
-                imgPanel.scrollDown();
-            }
-            case KeyEvent.VK_LEFT -> {
-                imgPanel.scrollLeft();
-            }
-            case KeyEvent.VK_RIGHT -> {
-                imgPanel.scrollRight();
-            }
+            case KeyEvent.VK_UP -> imgPanel.scrollDown();
+            case KeyEvent.VK_DOWN -> imgPanel.scrollUp();
+            case KeyEvent.VK_LEFT -> imgPanel.scrollRight();
+            case KeyEvent.VK_RIGHT -> imgPanel.scrollLeft();
             case KeyEvent.VK_CONTROL -> {}
 
             default -> Sam.speak("Key not used");
         }
+    }
+
+    @Override
+    public void keyReleased(KeyEvent e) {
+
+    }
+
+    @Override
+    public void mouseWheelMoved(MouseWheelEvent e) {
+        if (e.getWheelRotation() < 0)
+            imgPanel.scrollDown();
+        else
+            imgPanel.scrollUp();
     }
 
     private int seekRowid (int rowid) {
@@ -271,6 +277,7 @@ public class ImageView extends JFrame implements KeyListener {
         BufferedImage img = loadImgFromStore();
         Insets in = getInsets();
         int newHeight = getHeight() - in.top - in.bottom;
+        assert img != null;
         float fact = (float) img.getHeight() / (float) newHeight;
         int newWidth = (int) ((float) img.getWidth() / fact);
         Dimension d = new Dimension(newWidth, newHeight);
@@ -285,7 +292,7 @@ public class ImageView extends JFrame implements KeyListener {
 
     private BufferedImage loadImgFromStore() {
         try {
-            byte[] b = DBHandler.getInst().loadImage(allFiles.get(currentIdx).rowid());
+            byte[] b = Objects.requireNonNull(DBHandler.getInst()).loadImage(allFiles.get(currentIdx).rowid());
             if (b == null) {
                 System.out.println("loadImgFromStore-1 fail!!!");
                 return null;
@@ -299,11 +306,6 @@ public class ImageView extends JFrame implements KeyListener {
         } catch (Exception ex) {
             throw new RuntimeException(ex);
         }
-    }
-
-    @Override
-    public void keyReleased(KeyEvent e) {
-
     }
 
     private void scaleIconImg (float factor) {
