@@ -1,8 +1,11 @@
 package thegrid;
 
+import common.SizedStack;
+import common.TextParamBox;
 import common.Watermark;
 
 import java.awt.*;
+import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import javax.swing.*;
@@ -10,15 +13,25 @@ import javax.swing.*;
 public class ImgPanel extends JPanel {
 
     private BufferedImage image;
-    private Point offset = new Point();
+    public Point offset = new Point();
 
     JToolTip thisJT;
 
     public static final int SCROLLAMOUNT = 10;
-    private Watermark watermark;
+
+    private final SizedStack<BufferedImage> stack = new SizedStack<>(10);
 
     public ImgPanel (BufferedImage img) {
         super();
+        addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                //super.mouseClicked(e);
+                if (e.getButton() == 3) {
+                    TextParamBox.xmain(ImgPanel.this, e);
+                }
+            }
+        });
         image = img;
         setSize(img.getWidth(), img.getHeight());
 
@@ -26,9 +39,10 @@ public class ImgPanel extends JPanel {
                 ("<html>+/- - scale<br>" +
                         "1,2 - gamma<br>" +
                         "3,4 - change contrast<br>"+
-                        "5 - set watermark<br>"+
+                        "right mouse - set watermark<br>"+
                         "a - tagger<br>" +
                         "ctrl+c - copy to clipboard<br>" +
+                        "ctrl+z - undo<br>" +
                         "r - rotate<br>" +
                         "c - change img in database<br>" +
                         "n - go to specific rowid<br>" +
@@ -71,9 +85,19 @@ public class ImgPanel extends JPanel {
         return image;
     }
 
+    public void undo() {
+        BufferedImage img = stack.pop();
+        if (img != null) {
+            image = img;
+            SwingUtilities.invokeLater(this::repaint);
+        }
+    }
+
     public void setImage (BufferedImage img) {
+        if (image != null)
+            stack.push(image);
         image = img;
-        repaint();
+        SwingUtilities.invokeLater(this::repaint);
     }
 
     public static void paintText(Graphics2D g, Point pos, Font fnt, String txt, Color col, float alpha) {
@@ -93,11 +117,6 @@ public class ImgPanel extends JPanel {
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        if (watermark != null) {
-            paintText (image.createGraphics(), watermark.pos, watermark.font,
-                    watermark.text, watermark.col, watermark.alpha);
-            watermark = null;
-        }
         g.drawImage(image, offset.x, offset.y, this);
     }
 
@@ -125,14 +144,12 @@ public class ImgPanel extends JPanel {
         repaint();
     }
 
-    public void setWatermark(Watermark wm) {
-        watermark = wm;
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                repaint();
-            }
-        });
-
+    public void setWatermark(Watermark watermark) {
+        if (image != null) {
+            stack.push(image);
+            paintText(image.createGraphics(), watermark.pos, watermark.font,
+                    watermark.text, watermark.col, watermark.alpha);
+            SwingUtilities.invokeLater(this::repaint);
+        }
     }
 }

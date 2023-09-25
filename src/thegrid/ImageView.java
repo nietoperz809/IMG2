@@ -147,6 +147,10 @@ public class ImageView extends JFrame implements KeyListener, MouseWheelListener
                 showByIdx();
             }
             case KeyEvent.VK_Z -> {
+                if (e.isControlDown()) {
+                    imgPanel.undo();
+                    return;
+                }
                 currentIdx = ring.getPrev();
                 imgPanel.clearOffset();
                 showByIdx();
@@ -182,7 +186,7 @@ public class ImageView extends JFrame implements KeyListener, MouseWheelListener
                     Objects.requireNonNull(DBHandler.getInst()).deleteImage(allFiles.get(currentIdx).rowid());
                 }
             }
-            case KeyEvent.VK_5 -> TextParamBox.xmain(imgPanel);
+            //case KeyEvent.VK_5 -> imgPanel.undo();
             case KeyEvent.VK_H -> adjustOnHeight();
             case KeyEvent.VK_3 -> changeContrast(1.1f);
             case KeyEvent.VK_4 -> changeContrast(0.9f);

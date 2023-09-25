@@ -6,6 +6,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
 
 public class TextParamBox extends JDialog {
     private JPanel contentPane;
@@ -50,7 +51,10 @@ public class TextParamBox extends JDialog {
         });
     }
 
-    public static void xmain (ImgPanel imgp) {
+    public static void xmain (ImgPanel imgp, MouseEvent e) {
+        int x = e.getX()-imgp.offset.x;
+        int y = e.getY()-imgp.offset.y;
+        instance.a2020TextField.setText(x+","+y);
         instance.imgPanel = imgp;
         instance.pack();
         instance.setVisible(true);
