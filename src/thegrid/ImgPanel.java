@@ -1,5 +1,7 @@
 package thegrid;
 
+import common.Watermark;
+
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
@@ -12,10 +14,37 @@ public class ImgPanel extends JPanel {
 
     JToolTip thisJT;
 
+    public static final int SCROLLAMOUNT = 10;
+    private Watermark watermark;
+
     public ImgPanel (BufferedImage img) {
         super();
         image = img;
         setSize(img.getWidth(), img.getHeight());
+
+        setToolTipText
+                ("<html>+/- - scale<br>" +
+                        "1,2 - gamma<br>" +
+                        "3,4 - change contrast<br>"+
+                        "5 - set watermark<br>"+
+                        "a - tagger<br>" +
+                        "ctrl+c - copy to clipboard<br>" +
+                        "r - rotate<br>" +
+                        "c - change img in database<br>" +
+                        "n - go to specific rowid<br>" +
+                        "page up/down - load next/prev image<br>" +
+                        "up/down/left/right - move image<br>" +
+                        "w,h - scale to width or height<br>" +
+                        "l - reload<br>" +
+                        "esc - close window<br>" +
+                        "s - slideshow<br>" +
+                        "f - save original img to file<br>"+
+                        "g - save manipulated img to file<br>"+
+                        "x - sharpen<br>"+
+                        "t - random image forward<br>" +
+                        "z - random image backwardt<br>" +
+                        "d - delete from database<br>" +
+                        "m - mirror</html>");
     }
 
     /**
@@ -28,7 +57,8 @@ public class ImgPanel extends JPanel {
     public Point getToolTipLocation(MouseEvent event) {
         if (thisJT == null)
             return null;
-        return new Point(0, this.getHeight()-thisJT.getHeight());
+        return new Point(this.getWidth() - thisJT.getWidth(),
+                this.getHeight() - thisJT.getHeight());
     }
 
     @Override
@@ -46,6 +76,16 @@ public class ImgPanel extends JPanel {
         repaint();
     }
 
+    public static void paintText(Graphics2D g, Point pos, Font fnt, String txt, Color col, float alpha) {
+        Composite c = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, alpha);
+        g.setComposite(c);
+        // Draw some text.
+        g.setPaint(col);
+        g.setFont(fnt);
+        g.drawString(txt, pos.x, pos.y);
+    }
+
+
     public void clearOffset() {
         offset = new Point();
     }
@@ -53,6 +93,11 @@ public class ImgPanel extends JPanel {
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
+        if (watermark != null) {
+            paintText (image.createGraphics(), watermark.pos, watermark.font,
+                    watermark.text, watermark.col, watermark.alpha);
+            watermark = null;
+        }
         g.drawImage(image, offset.x, offset.y, this);
     }
 
@@ -61,22 +106,33 @@ public class ImgPanel extends JPanel {
     }
 
     public void scrollRight() {
-        offset.x += 10;
+        offset.x += SCROLLAMOUNT;
         repaint();
     }
 
     public void scrollLeft() {
-        offset.x -= 10;
+        offset.x -= SCROLLAMOUNT;
         repaint();
     }
 
     public void scrollDown() {
-        offset.y += 10;
+        offset.y += SCROLLAMOUNT;
         repaint();
     }
 
     public void scrollUp() {
-        offset.y -= 10;
+        offset.y -= SCROLLAMOUNT;
         repaint();
+    }
+
+    public void setWatermark(Watermark wm) {
+        watermark = wm;
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                repaint();
+            }
+        });
+
     }
 }

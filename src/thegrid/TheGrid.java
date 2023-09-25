@@ -14,6 +14,8 @@ import java.time.Duration;
 import java.time.Instant;
 import java.util.Objects;
 
+import static common.ImgTools.byteArrayToImg;
+import static common.Tools.extractResource;
 import static java.util.Objects.*;
 
 
@@ -25,6 +27,16 @@ public class TheGrid extends MyFrame {
     private final Instant startTime;
     private int imageCount;
     private boolean stopFill = false;
+
+    public final static BufferedImage failImg;
+
+    static {
+        try {
+            failImg = byteArrayToImg (extractResource ("fail.png"));
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
 
     public void notifyClick() {
         stopThumbViewFill ("-- prematurely stopped --");

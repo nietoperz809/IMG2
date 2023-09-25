@@ -293,12 +293,10 @@ public class DBHandler {
                 }
             }
         }).start();
-
-        //getInst(); // reopen
     }
 
     /**
-     * Ad Files to DB and delete the source
+     * Add Files to DB and delete the source
      * @param files Array of files
      * @param ic Callback object after insertion into DB
      * @throws Exception if smth. went wrong

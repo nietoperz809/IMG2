@@ -1,9 +1,6 @@
 package thegrid;
 
-import common.ImgTools;
-import common.LineInput;
-import common.Sam;
-import common.Tools;
+import common.*;
 import database.DBHandler;
 
 import javax.imageio.ImageIO;
@@ -12,6 +9,7 @@ import java.awt.*;
 import java.awt.event.*;
 import java.awt.image.*;
 import java.io.File;
+import java.io.IOException;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -48,33 +46,6 @@ public class ImageView extends JFrame implements KeyListener, MouseWheelListener
                 }
             }
         });
-
-        imgPanel.setToolTipText
-                ("<html>+/- - scale<br>" +
-                        "1,2 - gamma<br>" +
-                        "3,4 - change contrast<br>"+
-                        "a - tagger<br>" +
-                        "ctrl+c - copy to clipboard<br>" +
-                        "r - rotate<br>" +
-                        "c - change img in database<br>" +
-                        "n - go to specific rowid<br>" +
-                        "page up/down - load next/prev image<br>" +
-                        "up/down/left/right - move image<br>" +
-                        "w,h - scale to width or height<br>" +
-                        "l - reload<br>" +
-                        "esc - close window<br>" +
-                        "s - slideshow<br>" +
-                        "f - save original img to file<br>"+
-                        "g - save manipulated img to file<br>"+
-                        "x - sharpen<br>"+
-                        "t - random image forward<br>" +
-                        "z - random image backwardt<br>" +
-                        "d - delete from database<br>" +
-                        "m - mirror</html>");
-    }
-
-    @Override
-    public void keyTyped(KeyEvent e) {
     }
 
     private BufferedImage getIconImg() {
@@ -118,8 +89,18 @@ public class ImageView extends JFrame implements KeyListener, MouseWheelListener
         }
     }
 
+    volatile boolean inEvent = false;
+
     @Override
     public void keyPressed(KeyEvent e) {
+        if (inEvent)
+            return;
+        inEvent = true;
+        __keyPressed(e);
+        inEvent = false;
+    }
+
+    private void __keyPressed(KeyEvent e) {
         int ev = e.getKeyCode();
         switch (ev) {
             case KeyEvent.VK_PAGE_DOWN -> {
@@ -197,10 +178,11 @@ public class ImageView extends JFrame implements KeyListener, MouseWheelListener
                 imgPanel.setImage(img);
             }
             case KeyEvent.VK_D -> {
-                if (Tools.Question("Delet image from DB?")) {
+                if (Tools.Question("Delete image from DB?")) {
                     Objects.requireNonNull(DBHandler.getInst()).deleteImage(allFiles.get(currentIdx).rowid());
                 }
             }
+            case KeyEvent.VK_5 -> TextParamBox.xmain(imgPanel);
             case KeyEvent.VK_H -> adjustOnHeight();
             case KeyEvent.VK_3 -> changeContrast(1.1f);
             case KeyEvent.VK_4 -> changeContrast(0.9f);
@@ -242,6 +224,19 @@ public class ImageView extends JFrame implements KeyListener, MouseWheelListener
             case KeyEvent.VK_RIGHT -> imgPanel.scrollLeft();
             case KeyEvent.VK_CONTROL -> {}
 
+            case KeyEvent.VK_I -> {
+                String name = "?";
+                name = LineInput.xmain(name, "New Entry:");
+                if (name.equals("?") || name.length() < 1)
+                    return;
+                BufferedImage img = getIconImg();
+                try {
+                    DBHandler.getInst().insertImageRecord(name, img);
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                }
+            }
+
             default -> Sam.speak("Key not used");
         }
     }
@@ -249,6 +244,10 @@ public class ImageView extends JFrame implements KeyListener, MouseWheelListener
     @Override
     public void keyReleased(KeyEvent e) {
 
+    }
+
+    @Override
+    public void keyTyped(KeyEvent e) {
     }
 
     @Override
@@ -286,7 +285,8 @@ public class ImageView extends JFrame implements KeyListener, MouseWheelListener
     }
 
     private void setImg() {
-        setTitle(allFiles.get(currentIdx).name() + " -- " + currentIdx+ " -- " + allFiles.get(currentIdx).rowid());
+        DBHandler.NameID dbh = allFiles.get(currentIdx);
+        setTitle(dbh.name() + " -- " + currentIdx+ " -- " + dbh.rowid());
         imgPanel.setImage(loadImgFromStore());
     }
 
@@ -295,16 +295,16 @@ public class ImageView extends JFrame implements KeyListener, MouseWheelListener
             byte[] b = Objects.requireNonNull(DBHandler.getInst()).loadImage(allFiles.get(currentIdx).rowid());
             if (b == null) {
                 System.out.println("loadImgFromStore-1 fail!!!");
-                return null;
+                return TheGrid.failImg;
             }
             BufferedImage b2 = ImgTools.byteArrayToImg (b);
             if (b2 == null) {
                 System.out.println("loadImgFromStore-2 fail!!!");
-                return null;
+                return TheGrid.failImg;
             }
             return b2;
         } catch (Exception ex) {
-            throw new RuntimeException(ex);
+            return TheGrid.failImg;
         }
     }
 
