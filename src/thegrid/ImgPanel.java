@@ -1,6 +1,7 @@
 package thegrid;
 
-import common.SizedStack;
+import common.ImgTools;
+import common.UndoStack;
 import common.TextParamBox;
 import common.Watermark;
 
@@ -19,14 +20,13 @@ public class ImgPanel extends JPanel {
 
     public static final int SCROLLAMOUNT = 10;
 
-    private final SizedStack<BufferedImage> stack = new SizedStack<>(10);
+    private final UndoStack<BufferedImage> stack = new UndoStack<>(10);
 
     public ImgPanel (BufferedImage img) {
         super();
         addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                //super.mouseClicked(e);
                 if (e.getButton() == 3) {
                     TextParamBox.xmain(ImgPanel.this, e);
                 }
@@ -103,7 +103,6 @@ public class ImgPanel extends JPanel {
     public static void paintText(Graphics2D g, Point pos, Font fnt, String txt, Color col, float alpha) {
         Composite c = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, alpha);
         g.setComposite(c);
-        // Draw some text.
         g.setPaint(col);
         g.setFont(fnt);
         g.drawString(txt, pos.x, pos.y);
@@ -146,7 +145,7 @@ public class ImgPanel extends JPanel {
 
     public void setWatermark(Watermark watermark) {
         if (image != null) {
-            stack.push(image);
+            stack.push (ImgTools.deepCopy(image));
             paintText(image.createGraphics(), watermark.pos, watermark.font,
                     watermark.text, watermark.col, watermark.alpha);
             SwingUtilities.invokeLater(this::repaint);

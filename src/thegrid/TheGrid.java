@@ -12,7 +12,6 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.time.Duration;
 import java.time.Instant;
-import java.util.Objects;
 
 import static common.ImgTools.byteArrayToImg;
 import static common.Tools.extractResource;
@@ -22,7 +21,7 @@ import static java.util.Objects.*;
 public class TheGrid extends MyFrame {
     public final JPanel rootPane;
     public final JScrollPane scrollPane;
-    private java.util.List<DBHandler.NameID> allFiles;
+    //private java.util.List<DBHandler.NameID> allFiles;
     private final ProgressBox progress;
     private final Instant startTime;
     private int imageCount;
@@ -42,14 +41,14 @@ public class TheGrid extends MyFrame {
         stopThumbViewFill ("-- prematurely stopped --");
     }
 
-    public void refresh() {
-        allFiles = requireNonNull(DBHandler.getInst()).getImageFileNames();
-    }
+//    public void refresh() {
+//        allFiles = requireNonNull(DBHandler.getInst()).getAllImageInfos();
+//    }
 
     public TheGrid (int max) {
-        refresh();
-        DBHandler.getInst().log("Images in DB: "+allFiles.size());
-        progress = new ProgressBox(this, allFiles.size());
+        //refresh();
+        DBHandler.getInst().log("Images in DB: "+ImageList.size());
+        progress = new ProgressBox(this, ImageList.size());
         rootPane = new JPanel();
         scrollPane = new JScrollPane(rootPane);
         rootPane.setLayout(new GridLayout(0, 10, 2, 2));
@@ -57,14 +56,14 @@ public class TheGrid extends MyFrame {
         setSize(1050, 800);
         setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         setLocationRelativeTo(null);
-        rootPane.setToolTipText(allFiles.size() + " Images, press 'a' to add more");
+        rootPane.setToolTipText(ImageList.size() + " Images, press 'a' to add more");
         new GridListeners(this);
         new GridMenu(this);
         // Action ...
         imageCount = 0;
         startTime = Instant.now();
 
-        for (int s = 0; s < allFiles.size(); s++) {
+        for (int s = 0; s < ImageList.size(); s++) {
             if (stopFill)
                 break;
             addImageLabel(s);
@@ -94,8 +93,7 @@ public class TheGrid extends MyFrame {
         int numadd = requireNonNull(DBHandler.getInst()).MoveImageFilesToDB(files, (img, name) -> {
             BufferedImage thumbnailImage = ImageScaler.scaleExact(img,
                     new Dimension(100, 100));
-            GridImage lab = new GridImage(thumbnailImage, allFiles,
-                    rootPane, name);
+            GridImage lab = new GridImage(thumbnailImage, rootPane, name);
             rootPane.add(lab);
         });
         rootPane.doLayout();
@@ -116,20 +114,20 @@ public class TheGrid extends MyFrame {
      * Add one single image to the frame
      */
     public void addImageLabel(int s) {
-        String fileName = allFiles.get(s).name();
+        String fileName = ImageList.get(s).name();
         DBHandler.ThumbHash tbh = null;
         try {
             tbh = DBHandler.getInst().loadThumbnail(fileName);
         } catch (Exception e) {
             System.err.println("thumb read fail: " + fileName);
         }
-        GridImage lab = new GridImage(tbh, allFiles, s, rootPane);
+        GridImage lab = new GridImage(tbh, s, rootPane);
 
         rootPane.add(lab);
         Instant end = Instant.now();
         String info = "Loaded " + (++imageCount) + " Thumbs in " + Duration.between(startTime, end).toMillis() / 1000 + " Seconds";
         progress.setTextAndValue(info, imageCount);
-        if (imageCount >= allFiles.size()) {
+        if (imageCount >= ImageList.size()) {
             stopThumbViewFill(info);
         }
     }

@@ -14,7 +14,7 @@ import java.util.List;
 
 class GridImage extends JLabel {
 
-    private static LinkedList<GridImage> tempImgBuffer = new LinkedList<>();
+    private static final LinkedList<GridImage> tempImgBuffer = new LinkedList<>();
 
     private final byte[] imgHash;
     private DBHandler.NameID thisID;
@@ -49,9 +49,9 @@ class GridImage extends JLabel {
         }
     }
 
-    private void init (List<DBHandler.NameID> files, int index, JPanel jp) {
+    private void init (int index, JPanel jp) {
         rootPane = jp;
-        thisID = files.get(index);
+        thisID = ImageList.get(index);
         setToolTipText (thisID.name()+" -- right mouse button to delete");
         setVerticalTextPosition(JLabel.BOTTOM);
         setHorizontalTextPosition(JLabel.CENTER);
@@ -70,7 +70,7 @@ class GridImage extends JLabel {
                     }
                     return;
                 }
-                new ImageView(files, index); // left click
+                new ImageView (index); // left click
             }
         });
     }
@@ -78,28 +78,25 @@ class GridImage extends JLabel {
     /**
      * Constructor for later insertion of new Images
      * @param iconImage smaller Icon image
-     * @param files list of all names of images in the Image store
      * @param rootPane the Imagegrid itself
      * @param ImageName name of the new Image
      */
-    GridImage(Image iconImage, List<DBHandler.NameID> files,
-              JPanel rootPane, String ImageName) throws Exception {
+    GridImage(Image iconImage, JPanel rootPane, String ImageName) throws Exception {
         super(new ImageIcon(iconImage));
-        files.add (new DBHandler.NameID(ImageName, -1, null)); //(ImageName);
-        int index = files.size()-1;
+        ImageList.add (new DBHandler.NameID(ImageName, -1, null)); //(ImageName);
+        int index = ImageList.size()-1;
         imgHash = ImgTools.imgHash((BufferedImage)iconImage);
-        init (files, index, rootPane);
+        init (index, rootPane);
     }
 
     /**
      * Constructor for initial fill of the ImageGrid
-     * @param files list of all names of images in the Image store
      * @param currentIndex index of current image file
      * @param rootPane the Imagegrid itself
      */
-    GridImage(DBHandler.ThumbHash tbh, List<DBHandler.NameID> files, int currentIndex, JPanel rootPane) {
+    GridImage(DBHandler.ThumbHash tbh, int currentIndex, JPanel rootPane) {
         super(new ImageIcon(tbh.img));
         imgHash = tbh.hash;
-        init (files, currentIndex, rootPane);
+        init (currentIndex, rootPane);
     }
 }

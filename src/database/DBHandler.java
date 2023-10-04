@@ -85,7 +85,7 @@ public class DBHandler {
             _inst = new DBHandler();
         }
         if (_inst._backupIsRunning) {
-            Sam.speak("backup is running");
+            Sam.speak("backup is running.");
             return null;
         }
         return _inst;
@@ -161,7 +161,7 @@ public class DBHandler {
     }
 
 
-    public List<NameID> getImageFileNames() {
+    public List<NameID> getAllImageInfos() {
         String sql = "select name,_ROWID_,tag from IMAGES order by _ROWID_ asc";
         return getNames(sql);
     }

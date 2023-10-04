@@ -13,21 +13,23 @@ import java.io.IOException;
 import java.util.Objects;
 import java.util.UUID;
 
+import static java.util.Objects.requireNonNull;
+
 public class ImageView extends JFrame implements KeyListener, MouseWheelListener {
     //private final JScrollPane scrollPane;
-    private final java.util.List<DBHandler.NameID> allFiles;
+    //private java.util.List<DBHandler.NameID> allFiles;
     private final ImgPanel imgPanel;
     private final UniqueRng ring;
     private int currentIdx;
 
     private Timer timer = null;
 
-    public ImageView(java.util.List<DBHandler.NameID> files, int idx) {
-        ring = new UniqueRng (files.size());
-        allFiles = files;
+    public ImageView (int idx) {
+        ring = new UniqueRng (ImageList.size());
+        //allFiles = files;
         currentIdx = idx;
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        setTitle(allFiles.get(currentIdx).name() + " -- " + currentIdx+ " -- " + allFiles.get(currentIdx).rowid());
+        setTitle(ImageList.get(currentIdx).name() + " -- " + currentIdx+ " -- " + ImageList.get(currentIdx).rowid());
         addKeyListener(this);
         addMouseWheelListener(this);
         BufferedImage img = loadImgFromStore();
@@ -57,7 +59,6 @@ public class ImageView extends JFrame implements KeyListener, MouseWheelListener
         BufferedImage img = ImgTools.sharpenImage(getIconImg());
         imgPanel.setImage(img);
     }
-
 
     private void changeContrast (float val) {
         BufferedImage img = getIconImg();
@@ -100,25 +101,29 @@ public class ImageView extends JFrame implements KeyListener, MouseWheelListener
         inEvent = false;
     }
 
+    private void setNextImage() {
+        if (currentIdx < (ImageList.size() - 1))
+            currentIdx++;
+        else
+            currentIdx = 0;
+        imgPanel.clearOffset();
+        setImg();
+    }
+
+    private void setBeforeImage() {
+        if (currentIdx > 0)
+            currentIdx--;
+        else
+            currentIdx = ImageList.size() - 1;
+        imgPanel.clearOffset();
+        setImg();
+    }
+
     private void __keyPressed(KeyEvent e) {
         int ev = e.getKeyCode();
         switch (ev) {
-            case KeyEvent.VK_PAGE_DOWN -> {
-                if (currentIdx < (allFiles.size() - 1))
-                    currentIdx++;
-                else
-                    currentIdx = 0;
-                imgPanel.clearOffset();
-                setImg();
-            }
-            case KeyEvent.VK_PAGE_UP -> {
-                if (currentIdx > 0)
-                    currentIdx--;
-                else
-                    currentIdx = allFiles.size() - 1;
-                imgPanel.clearOffset();
-                setImg();
-            }
+            case KeyEvent.VK_PAGE_DOWN -> setNextImage();
+            case KeyEvent.VK_PAGE_UP -> setBeforeImage();
             case KeyEvent.VK_PLUS -> scaleIconImg(1.1f);
             case KeyEvent.VK_MINUS -> scaleIconImg(0.9f);
             case KeyEvent.VK_R -> {
@@ -183,10 +188,9 @@ public class ImageView extends JFrame implements KeyListener, MouseWheelListener
             }
             case KeyEvent.VK_D -> {
                 if (Tools.Question("Delete image from DB?")) {
-                    Objects.requireNonNull(DBHandler.getInst()).deleteImage(allFiles.get(currentIdx).rowid());
+                    Objects.requireNonNull(DBHandler.getInst()).deleteImage(ImageList.get(currentIdx).rowid());
                 }
             }
-            //case KeyEvent.VK_5 -> imgPanel.undo();
             case KeyEvent.VK_H -> adjustOnHeight();
             case KeyEvent.VK_3 -> changeContrast(1.1f);
             case KeyEvent.VK_4 -> changeContrast(0.9f);
@@ -200,22 +204,48 @@ public class ImageView extends JFrame implements KeyListener, MouseWheelListener
 
             case KeyEvent.VK_ESCAPE -> dispose();
             case KeyEvent.VK_A -> {
-                int rowid = allFiles.get(currentIdx).rowid();
-                String tag = LineInput.xmain(Objects.requireNonNull(DBHandler.getInst()).getTag(rowid), "Tag:").trim().toLowerCase();
+                int rowid = ImageList.get(currentIdx).rowid();
+                String tag = LineInput.xmain(
+                        Objects.requireNonNull(DBHandler.getInst()).getTag(rowid), "Tag:", Color.YELLOW)
+                        .trim().toLowerCase();
                 DBHandler.getInst().setTag(rowid, tag);
             }
+            
             case KeyEvent.VK_N -> {
-                String str = LineInput.xmain("?", "Goto:");
-                int rowid = Integer.parseInt(str);
-                currentIdx = seekRowid (rowid);
+                String str = LineInput.xmain("?", "Goto:", Color.GREEN,
+                        "rowid or 'last/first' keyword");
+                if (str.startsWith("?")) {
+                    str = str.substring(1);
+                }
+                int n = -1;
+                switch (str) {
+                    case "first":
+                        n = 0;
+                        break;
+                    case "last":
+                        n = IndexByRowID(-1);
+                        break;
+                    default:
+                        int rowid = 0;
+                        try {
+                            rowid = Integer.parseInt(str);
+                        } catch (NumberFormatException ex) {
+                            return;
+                        }
+                        n = IndexByRowID(rowid);
+                        if (n == -1)
+                            return;
+                }
+                currentIdx = n;
                 showByIdx();
             }
+
             case KeyEvent.VK_C -> {
                 if (e.isControlDown()) {
                     BufferedImage img = getIconImg();
                     ImgTools.copyImage(img);
                 } else {
-                    int id = allFiles.get(currentIdx).rowid();
+                    int id = ImageList.get(currentIdx).rowid();
                     if (Tools.Question("Replace image #" + id)) {
                         BufferedImage img = getIconImg();
                         Objects.requireNonNull(DBHandler.getInst()).changeBigImg(img, id);
@@ -230,7 +260,7 @@ public class ImageView extends JFrame implements KeyListener, MouseWheelListener
 
             case KeyEvent.VK_I -> {
                 String name = "?";
-                name = LineInput.xmain(name, "New Entry:");
+                name = LineInput.xmain(name, "New Entry:", Color.RED);
                 if (name.equals("?") || name.length() < 1)
                     return;
                 BufferedImage img = getIconImg();
@@ -241,7 +271,7 @@ public class ImageView extends JFrame implements KeyListener, MouseWheelListener
                 }
             }
 
-            default -> Sam.speak("Key not used");
+            default -> Sam.speak("Key not used.");
         }
     }
 
@@ -262,17 +292,21 @@ public class ImageView extends JFrame implements KeyListener, MouseWheelListener
             imgPanel.scrollUp();
     }
 
-    private int seekRowid (int rowid) {
-        for (int n=0; n<allFiles.size(); n++) {
-            if (allFiles.get(n).rowid() == rowid) {
+    private int IndexByRowID(int rowid) {
+        ImageList.refresh();
+        if (rowid == -1) {  // last rowid
+            return ImageList.size()-1;
+        }
+        for (int n=0; n<ImageList.size(); n++) {
+            if (ImageList.get(n).rowid() == rowid) {
                 return n;
             }
         }
-        throw new RuntimeException("rowid not found in list: "+rowid);
+        return -1;
     }
 
     private void showByIdx() {
-        setTitle(allFiles.get(currentIdx).name() + " -- " + currentIdx+ " -- " + allFiles.get(currentIdx).rowid());
+        setTitle(ImageList.get(currentIdx).name() + " -- " + currentIdx+ " -- " + ImageList.get(currentIdx).rowid());
         adjustOnHeight();
     }
 
@@ -289,14 +323,14 @@ public class ImageView extends JFrame implements KeyListener, MouseWheelListener
     }
 
     private void setImg() {
-        DBHandler.NameID dbh = allFiles.get(currentIdx);
+        DBHandler.NameID dbh = ImageList.get(currentIdx);
         setTitle(dbh.name() + " -- " + currentIdx+ " -- " + dbh.rowid());
         imgPanel.setImage(loadImgFromStore());
     }
 
     private BufferedImage loadImgFromStore() {
         try {
-            byte[] b = Objects.requireNonNull(DBHandler.getInst()).loadImage(allFiles.get(currentIdx).rowid());
+            byte[] b = Objects.requireNonNull(DBHandler.getInst()).loadImage(ImageList.get(currentIdx).rowid());
             if (b == null) {
                 System.out.println("loadImgFromStore-1 fail!!!");
                 return TheGrid.failImg;

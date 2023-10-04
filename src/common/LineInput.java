@@ -11,28 +11,28 @@ public class LineInput extends JDialog {
     private JTextField textField1;
     private JLabel label;
 
-    public LineInput() {
+    public LineInput (Color col) {
         setContentPane(contentPane);
         setModal(true);
-        //getRootPane().setDefaultButton(buttonOK);
         setUndecorated(true);
-        LineBorder border = new LineBorder(Color.RED, 4, false);
+        LineBorder border = new LineBorder(col,4,false);
         contentPane.setBorder(border);
-        textField1.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent actionEvent) {
-                dispose();
-            }
-        });
+        textField1.addActionListener(actionEvent -> dispose());
     }
 
-    public static String xmain (String init, String lab) {
-        LineInput dialog = new LineInput();
+    public static String xmain (String init, String lab, Color col) {
+        return xmain (init, lab, col, null);
+    }
+
+    public static String xmain (String init, String lab, Color col, String tooltip) {
+        LineInput dialog = new LineInput(col);
         dialog.textField1.setText(init);
+        dialog.textField1.setToolTipText(tooltip);
         dialog.label.setText(lab);
         dialog.pack();
         dialog.setLocationRelativeTo(null);
         dialog.setVisible(true);
         return dialog.textField1.getText();
     }
+
 }
