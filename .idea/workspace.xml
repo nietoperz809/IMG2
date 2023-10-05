@@ -14,12 +14,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ddb69741-e020-4d21-a32f-f00e79c6818a" name="Changes" comment="introduced text marker">
-      <change afterPath="$PROJECT_DIR$/src/common/SizedStack.java" afterDir="false" />
+    <list default="true" id="ddb69741-e020-4d21-a32f-f00e79c6818a" name="Changes" comment="added undo stack">
+      <change afterPath="$PROJECT_DIR$/src/denoise/Denoise.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/buildinfo/BuildInfo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/buildinfo/BuildInfo.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/buildinfo/build.number" beforeDir="false" afterPath="$PROJECT_DIR$/src/buildinfo/build.number" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/common/TextParamBox.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/common/TextParamBox.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/thegrid/GridImage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/thegrid/GridImage.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/thegrid/GridListeners.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/thegrid/GridListeners.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/thegrid/ImageList.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/thegrid/ImageList.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/thegrid/ImageView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/thegrid/ImageView.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/thegrid/ImgPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/thegrid/ImgPanel.java" afterDir="false" />
     </list>
@@ -71,29 +73,29 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ASKED_ADD_EXTERNAL_FILES": "true",
-    "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "Downloaded.Files.Path.Enabled": "true",
-    "Repository.Attach.Annotations": "false",
-    "Repository.Attach.JavaDocs": "true",
-    "Repository.Attach.Sources": "false",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "UI_DESIGNER_EDITOR_MODE.PaletteManager.SHOW": "true",
-    "UI_DESIGNER_EDITOR_MODE.PaletteManager.WIDTH": "187",
-    "UI_DESIGNER_EDITOR_MODE.UIDesignerToolWindowManager.SHOW": "true",
-    "UI_DESIGNER_EDITOR_MODE.UIDesignerToolWindowManager.WIDTH": "255",
-    "last_opened_file_path": "C:/peter.home/java/IMG2/resource",
-    "project.structure.last.edited": "Artifacts",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.2",
-    "run.code.analysis.last.selected.profile": "aDefault",
-    "settings.editor.selected.configurable": "preferences.pluginManager"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
+    &quot;ASKED_SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;Downloaded.Files.Path.Enabled&quot;: &quot;true&quot;,
+    &quot;Repository.Attach.Annotations&quot;: &quot;false&quot;,
+    &quot;Repository.Attach.JavaDocs&quot;: &quot;true&quot;,
+    &quot;Repository.Attach.Sources&quot;: &quot;false&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;UI_DESIGNER_EDITOR_MODE.PaletteManager.SHOW&quot;: &quot;true&quot;,
+    &quot;UI_DESIGNER_EDITOR_MODE.PaletteManager.WIDTH&quot;: &quot;187&quot;,
+    &quot;UI_DESIGNER_EDITOR_MODE.UIDesignerToolWindowManager.SHOW&quot;: &quot;true&quot;,
+    &quot;UI_DESIGNER_EDITOR_MODE.UIDesignerToolWindowManager.WIDTH&quot;: &quot;255&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/peter.home/java/IMG2/resource&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Artifacts&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;run.code.analysis.last.selected.profile&quot;: &quot;aDefault&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\peter.home\java\IMG2\resource" />
@@ -569,7 +571,7 @@
       <option name="project" value="LOCAL" />
       <updated>1683976691765</updated>
     </task>
-    <option name="localTasksCounter" value="87" />
+    <option name="localTasksCounter" value="88" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -586,7 +588,6 @@
   <component name="VcsManagerConfiguration">
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="switched off debug mode" />
     <MESSAGE value="added web interface (webserver)" />
     <MESSAGE value="some improvements &amp; new jarfile" />
     <MESSAGE value="added some comments" />
@@ -611,7 +612,8 @@
     <MESSAGE value="some improvements" />
     <MESSAGE value="introduced mouse wheel listener in ImageView.java" />
     <MESSAGE value="introduced text marker" />
-    <option name="LAST_COMMIT_MESSAGE" value="introduced text marker" />
+    <MESSAGE value="added undo stack" />
+    <option name="LAST_COMMIT_MESSAGE" value="added undo stack" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -619,7 +621,7 @@
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/src/common/SizedStack.java</url>
           <line>15</line>
-          <properties class="common.SizedStack" method="pop">
+          <properties class="common.SizedStack">
             <option name="EMULATED" value="true" />
             <option name="WATCH_EXIT" value="false" />
           </properties>
@@ -628,7 +630,7 @@
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/src/common/SizedStack.java</url>
           <line>24</line>
-          <properties class="common.SizedStack" method="push">
+          <properties class="common.SizedStack">
             <option name="EMULATED" value="true" />
             <option name="WATCH_EXIT" value="false" />
           </properties>
@@ -636,7 +638,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/thegrid/ImgPanel.java</url>
-          <line>149</line>
+          <line>150</line>
           <option name="timeStamp" value="4" />
         </line-breakpoint>
       </breakpoints>
