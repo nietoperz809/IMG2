@@ -6,6 +6,10 @@ import static java.util.Objects.requireNonNull;
 
 public class ImageList {
 
+    private ImageList() {
+        // prevent instantiation
+    }
+    
     private static java.util.List<DBHandler.NameID> allFiles
             = requireNonNull(DBHandler.getInst()).getAllImageInfos();
 
@@ -23,5 +27,10 @@ public class ImageList {
 
     public static void add (DBHandler.NameID nid) {
         allFiles.add(nid);
+    }
+
+    public static int getNextRowid() {
+        refresh();
+        return allFiles.get (allFiles.size()-1).rowid();
     }
 }

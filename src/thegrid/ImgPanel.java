@@ -39,6 +39,7 @@ public class ImgPanel extends JPanel {
                 ("<html>+/- - scale<br>" +
                         "1,2 - gamma<br>" +
                         "3,4 - change contrast<br>"+
+                        "5 - denoise<br>"+
                         "right mouse - set watermark<br>"+
                         "a - tagger<br>" +
                         "ctrl+c - copy to clipboard<br>" +

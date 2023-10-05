@@ -83,7 +83,7 @@ class GridImage extends JLabel {
      */
     GridImage(Image iconImage, JPanel rootPane, String ImageName) throws Exception {
         super(new ImageIcon(iconImage));
-        ImageList.add (new DBHandler.NameID(ImageName, -1, null)); //(ImageName);
+        ImageList.add (new DBHandler.NameID(ImageName, ImageList.getNextRowid(), null)); //(ImageName);
         int index = ImageList.size()-1;
         imgHash = ImgTools.imgHash((BufferedImage)iconImage);
         init (index, rootPane);

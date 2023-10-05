@@ -2,6 +2,7 @@ package thegrid;
 
 import common.*;
 import database.DBHandler;
+import denoise.Denoise;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -13,11 +14,8 @@ import java.io.IOException;
 import java.util.Objects;
 import java.util.UUID;
 
-import static java.util.Objects.requireNonNull;
 
 public class ImageView extends JFrame implements KeyListener, MouseWheelListener {
-    //private final JScrollPane scrollPane;
-    //private java.util.List<DBHandler.NameID> allFiles;
     private final ImgPanel imgPanel;
     private final UniqueRng ring;
     private int currentIdx;
@@ -97,7 +95,7 @@ public class ImageView extends JFrame implements KeyListener, MouseWheelListener
         if (inEvent)
             return;
         inEvent = true;
-        __keyPressed(e);
+        InternalKeyPressed(e);
         inEvent = false;
     }
 
@@ -119,7 +117,7 @@ public class ImageView extends JFrame implements KeyListener, MouseWheelListener
         setImg();
     }
 
-    private void __keyPressed(KeyEvent e) {
+    private void InternalKeyPressed(KeyEvent e) {
         int ev = e.getKeyCode();
         switch (ev) {
             case KeyEvent.VK_PAGE_DOWN -> setNextImage();
@@ -137,7 +135,8 @@ public class ImageView extends JFrame implements KeyListener, MouseWheelListener
                 imgPanel.setImage(img);
             }
             case KeyEvent.VK_W -> {
-                BufferedImage img = loadImgFromStore();
+                imgPanel.clearOffset();
+                BufferedImage img = getIconImg();
                 int newWidth = imgPanel.getWidth();
                 assert img != null;
                 float fact = (float) img.getWidth() / (float) newWidth;
@@ -191,7 +190,10 @@ public class ImageView extends JFrame implements KeyListener, MouseWheelListener
                     Objects.requireNonNull(DBHandler.getInst()).deleteImage(ImageList.get(currentIdx).rowid());
                 }
             }
-            case KeyEvent.VK_H -> adjustOnHeight();
+            case KeyEvent.VK_H -> {
+                imgPanel.clearOffset();
+                adjustOnHeight();
+            }
             case KeyEvent.VK_3 -> changeContrast(1.1f);
             case KeyEvent.VK_4 -> changeContrast(0.9f);
             case KeyEvent.VK_X -> sharpenImage();
@@ -210,14 +212,22 @@ public class ImageView extends JFrame implements KeyListener, MouseWheelListener
                         .trim().toLowerCase();
                 DBHandler.getInst().setTag(rowid, tag);
             }
-            
+
+            case KeyEvent.VK_5 -> {
+                BufferedImage img = getIconImg();
+                Denoise d = new Denoise(img);
+                d.laplace_denoise();
+                img = d.getImage();
+                imgPanel.setImage(img);
+            }
+
             case KeyEvent.VK_N -> {
                 String str = LineInput.xmain("?", "Goto:", Color.GREEN,
                         "rowid or 'last/first' keyword");
                 if (str.startsWith("?")) {
                     str = str.substring(1);
                 }
-                int n = -1;
+                int n;
                 switch (str) {
                     case "first":
                         n = 0;
@@ -226,7 +236,7 @@ public class ImageView extends JFrame implements KeyListener, MouseWheelListener
                         n = IndexByRowID(-1);
                         break;
                     default:
-                        int rowid = 0;
+                        int rowid;
                         try {
                             rowid = Integer.parseInt(str);
                         } catch (NumberFormatException ex) {
@@ -261,7 +271,7 @@ public class ImageView extends JFrame implements KeyListener, MouseWheelListener
             case KeyEvent.VK_I -> {
                 String name = "?";
                 name = LineInput.xmain(name, "New Entry:", Color.RED);
-                if (name.equals("?") || name.length() < 1)
+                if (name.equals("?") || name.isEmpty())
                     return;
                 BufferedImage img = getIconImg();
                 try {
