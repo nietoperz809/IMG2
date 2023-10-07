@@ -11,6 +11,7 @@ import java.awt.dnd.DropTargetAdapter;
 import java.awt.dnd.DropTargetDropEvent;
 import java.awt.event.*;
 import java.io.File;
+import java.util.Arrays;
 
 public class GridListeners implements KeyListener {
     private final TheGrid theGrid;
@@ -21,9 +22,9 @@ public class GridListeners implements KeyListener {
         g.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
-                DBHandler.getInst().log("--- TheGrid emded");
+                DBHandler.getInst().log("--- TheGrid ended");
                 super.windowClosing(e);
-                DBHandler.getInst().close();
+                //DBHandler.getInst().close();
                 System.exit(1);
             }
         });
@@ -62,8 +63,17 @@ public class GridListeners implements KeyListener {
 
     @Override
     public void keyPressed(KeyEvent e) {
+        int kc = e.getKeyCode();
+        switch (kc) {
+            default:
+                Tools.fastScroll(kc,theGrid.scrollPane.getViewport(), true);
+            break;
 
-        Tools.fastScroll(e.getKeyCode(),theGrid.scrollPane.getViewport(), true);
+            case KeyEvent.VK_N:
+                ImageView iv = new ImageView(0);
+                iv.handleN();
+                break;
+        }
     }
 
     @Override

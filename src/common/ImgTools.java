@@ -57,7 +57,7 @@ public class ImgTools {
         }
     }
 
-    public static void copyImage (BufferedImage bi)
+    public static void imageToClipboard(BufferedImage bi)
     {
         TransferableImage trans = new TransferableImage( bi );
         Clipboard c = Toolkit.getDefaultToolkit().getSystemClipboard();
@@ -128,13 +128,13 @@ public class ImgTools {
 
     }
 
-    private BufferedImage rotateImage (BufferedImage src, float angle) {
-        AffineTransform tx = new AffineTransform();
-        tx.rotate(angle, src.getWidth() / 2.0,src.getHeight() / 2.0);
-        AffineTransformOp op = new AffineTransformOp(tx,
-                AffineTransformOp.TYPE_BILINEAR);
-        return op.filter(src, null);
-    }
+//    private BufferedImage rotateImage (BufferedImage src, float angle) {
+//        AffineTransform tx = new AffineTransform();
+//        tx.rotate(angle, src.getWidth() / 2.0,src.getHeight() / 2.0);
+//        AffineTransformOp op = new AffineTransformOp(tx,
+//                AffineTransformOp.TYPE_BILINEAR);
+//        return op.filter(src, null);
+//    }
 
     public static String[] getImageExtensions() {
         return new String[] {"jpg", "jpeg", "png", "bmp", "gif", "jfif", "webp"};

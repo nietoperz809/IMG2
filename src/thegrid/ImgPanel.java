@@ -96,7 +96,7 @@ public class ImgPanel extends JPanel {
 
     public void setImage (BufferedImage img) {
         if (image != null)
-            stack.push(image);
+            stack.push (ImgTools.deepCopy(image));
         image = img;
         SwingUtilities.invokeLater(this::repaint);
     }

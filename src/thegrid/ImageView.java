@@ -221,39 +221,12 @@ public class ImageView extends JFrame implements KeyListener, MouseWheelListener
                 imgPanel.setImage(img);
             }
 
-            case KeyEvent.VK_N -> {
-                String str = LineInput.xmain("?", "Goto:", Color.GREEN,
-                        "rowid or 'last/first' keyword");
-                if (str.startsWith("?")) {
-                    str = str.substring(1);
-                }
-                int n;
-                switch (str) {
-                    case "first":
-                        n = 0;
-                        break;
-                    case "last":
-                        n = IndexByRowID(-1);
-                        break;
-                    default:
-                        int rowid;
-                        try {
-                            rowid = Integer.parseInt(str);
-                        } catch (NumberFormatException ex) {
-                            return;
-                        }
-                        n = IndexByRowID(rowid);
-                        if (n == -1)
-                            return;
-                }
-                currentIdx = n;
-                showByIdx();
-            }
+            case KeyEvent.VK_N -> handleN();
 
             case KeyEvent.VK_C -> {
                 if (e.isControlDown()) {
                     BufferedImage img = getIconImg();
-                    ImgTools.copyImage(img);
+                    ImgTools.imageToClipboard(img);
                 } else {
                     int id = ImageList.get(currentIdx).rowid();
                     if (Tools.Question("Replace image #" + id)) {
@@ -283,6 +256,35 @@ public class ImageView extends JFrame implements KeyListener, MouseWheelListener
 
             default -> Sam.speak("Key not used.");
         }
+    }
+
+    public void handleN() {
+        String str = LineInput.xmain("?", "Goto:", Color.GREEN,
+                "rowid or 'last/first' keyword");
+        if (str.startsWith("?")) {
+            str = str.substring(1);
+        }
+        int n;
+        switch (str) {
+            case "first":
+                n = 0;
+                break;
+            case "last":
+                n = IndexByRowID(-1);
+                break;
+            default:
+                int rowid;
+                try {
+                    rowid = Integer.parseInt(str);
+                } catch (NumberFormatException ex) {
+                    return;
+                }
+                n = IndexByRowID(rowid);
+                if (n == -1)
+                    return;
+        }
+        currentIdx = n;
+        showByIdx();
     }
 
     @Override
