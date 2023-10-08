@@ -29,8 +29,22 @@ public class ImageList {
         allFiles.add(nid);
     }
 
-    public static int getNextRowid() {
+    public static int getLastRowid() {
         refresh();
         return allFiles.get (allFiles.size()-1).rowid();
     }
+
+    public static int IndexByRowID(int rowid) {
+        refresh();
+        if (rowid == -1) {  // last rowid
+            return size()-1;
+        }
+        for (int n=0; n<size(); n++) {
+            if (get(n).rowid() == rowid) {
+                return n;
+            }
+        }
+        return -1;
+    }
+
 }

@@ -47,6 +47,8 @@ public class Tools {
                 msg,
                 "Please select", JOptionPane.QUESTION_MESSAGE,
                 null, new String[] {"No","Yes"},"No");
+        if (response == null)
+            return false;
         return response.equals("Yes");
     }
 

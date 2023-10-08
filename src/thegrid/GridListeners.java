@@ -11,7 +11,6 @@ import java.awt.dnd.DropTargetAdapter;
 import java.awt.dnd.DropTargetDropEvent;
 import java.awt.event.*;
 import java.io.File;
-import java.util.Arrays;
 
 public class GridListeners implements KeyListener {
     private final TheGrid theGrid;
@@ -71,7 +70,7 @@ public class GridListeners implements KeyListener {
 
             case KeyEvent.VK_N:
                 ImageView iv = new ImageView(0);
-                iv.handleN();
+                iv.selectAnotherImage();
                 break;
         }
     }

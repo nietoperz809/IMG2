@@ -1,4 +1,4 @@
-package denoise;
+package common;
 
 
 import java.awt.image.BufferedImage;
@@ -149,10 +149,10 @@ public class Denoise {
         }
     }
 
-    /**
-     * Save an image
-     * @param filetype
-     */
+//    /**
+//     * Save an image
+//     * @param filetype
+//     */
 //    public void save(String filetype) {
 //        image.save();
 //    }
@@ -309,7 +309,7 @@ public class Denoise {
     /**
      * Perform a denoise
      */
-    private void perform_denoise() {
+    public BufferedImage perform_denoise() {
         // TODO performs the denoise in laplace *default
 
         BufferedImage proxyimage=image;
@@ -386,6 +386,7 @@ public class Denoise {
         // compare the original image and the image where noise was found and
         // average where noise was found
         denoise_compare_from_fft(image2);
+        return image;
     }
 
     /**

@@ -2,7 +2,7 @@ package thegrid;
 
 import common.*;
 import database.DBHandler;
-import denoise.Denoise;
+import common.Denoise;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -13,6 +13,8 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Objects;
 import java.util.UUID;
+
+import static thegrid.ImageList.IndexByRowID;
 
 
 public class ImageView extends JFrame implements KeyListener, MouseWheelListener {
@@ -216,12 +218,11 @@ public class ImageView extends JFrame implements KeyListener, MouseWheelListener
             case KeyEvent.VK_5 -> {
                 BufferedImage img = getIconImg();
                 Denoise d = new Denoise(img);
-                d.laplace_denoise();
-                img = d.getImage();
+                img = d.perform_denoise();
                 imgPanel.setImage(img);
             }
 
-            case KeyEvent.VK_N -> handleN();
+            case KeyEvent.VK_N -> selectAnotherImage();
 
             case KeyEvent.VK_C -> {
                 if (e.isControlDown()) {
@@ -258,7 +259,7 @@ public class ImageView extends JFrame implements KeyListener, MouseWheelListener
         }
     }
 
-    public void handleN() {
+    public void selectAnotherImage() {
         String str = LineInput.xmain("?", "Goto:", Color.GREEN,
                 "rowid or 'last/first' keyword");
         if (str.startsWith("?")) {
@@ -304,18 +305,6 @@ public class ImageView extends JFrame implements KeyListener, MouseWheelListener
             imgPanel.scrollUp();
     }
 
-    private int IndexByRowID(int rowid) {
-        ImageList.refresh();
-        if (rowid == -1) {  // last rowid
-            return ImageList.size()-1;
-        }
-        for (int n=0; n<ImageList.size(); n++) {
-            if (ImageList.get(n).rowid() == rowid) {
-                return n;
-            }
-        }
-        return -1;
-    }
 
     private void showByIdx() {
         setTitle(ImageList.get(currentIdx).name() + " -- " + currentIdx+ " -- " + ImageList.get(currentIdx).rowid());

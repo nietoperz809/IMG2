@@ -19,10 +19,7 @@ import java.security.MessageDigest;
 import static common.Tools.hasExtension;
 
 public class ImgTools {
-
-
     private record TransferableImage(Image i) implements Transferable, ClipboardOwner {
-
         @Override
         public Object getTransferData(DataFlavor flavor)
                 throws UnsupportedFlavorException {
@@ -96,9 +93,7 @@ public class ImgTools {
             }
 
         }
-
         return gamma_cor;
-
     }
 
     // Create the gamma correction lookup table
@@ -140,9 +135,9 @@ public class ImgTools {
         return new String[] {"jpg", "jpeg", "png", "bmp", "gif", "jfif", "webp"};
     }
 
-    public static boolean isImage(String in) {
-        return hasExtension(in, getImageExtensions());
-    }
+//    public static boolean isImage(String in) {
+//        return hasExtension(in, getImageExtensions());
+//    }
 
     public static BufferedImage loadImage(String name) throws IOException {
         if (hasExtension(name, ".gif")) {
@@ -169,29 +164,29 @@ public class ImgTools {
         }
     }
 
-    /**
-     * Makes BufferedImage vom java.awt.Image
-     * @param img primitive image
-     * @return buffered image with same content
-     */
-    public static BufferedImage toBufferedImage(Image img)
-    {
-        if (img instanceof BufferedImage)
-        {
-            return (BufferedImage) img;
-        }
-
-        // Create a buffered image with transparency
-        BufferedImage bimage = new BufferedImage(img.getWidth(null), img.getHeight(null), BufferedImage.TYPE_INT_RGB);
-
-        // Draw the image on to the buffered image
-        Graphics2D bGr = bimage.createGraphics();
-        bGr.drawImage(img, 0, 0, null);
-        bGr.dispose();
-
-        // Return the buffered image
-        return bimage;
-    }
+//    /**
+//     * Makes BufferedImage vom java.awt.Image
+//     * @param img primitive image
+//     * @return buffered image with same content
+//     */
+//    public static BufferedImage toBufferedImage(Image img)
+//    {
+//        if (img instanceof BufferedImage)
+//        {
+//            return (BufferedImage) img;
+//        }
+//
+//        // Create a buffered image with transparency
+//        BufferedImage bimage = new BufferedImage(img.getWidth(null), img.getHeight(null), BufferedImage.TYPE_INT_RGB);
+//
+//        // Draw the image on to the buffered image
+//        Graphics2D bGr = bimage.createGraphics();
+//        bGr.drawImage(img, 0, 0, null);
+//        bGr.dispose();
+//
+//        // Return the buffered image
+//        return bimage;
+//    }
 
     public static BufferedImage removeAlpha (BufferedImage img) {
         BufferedImage newImage = new BufferedImage(img.getWidth(), img.getHeight(), BufferedImage.TYPE_INT_RGB);
