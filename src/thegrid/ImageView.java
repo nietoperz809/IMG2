@@ -3,6 +3,7 @@ package thegrid;
 import common.*;
 import database.DBHandler;
 import common.Denoise;
+import jhlabs.image.DiffuseFilter;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -218,8 +219,15 @@ public class ImageView extends JFrame implements KeyListener, MouseWheelListener
             case KeyEvent.VK_5 -> {
                 BufferedImage img = getIconImg();
                 Denoise d = new Denoise(img);
-                img = d.perform_denoise();
-                imgPanel.setImage(img);
+                BufferedImage out = d.perform_denoise();
+                imgPanel.setImage(out);
+            }
+
+            case KeyEvent.VK_6 -> {
+                BufferedImage img = getIconImg();
+                DiffuseFilter df = new DiffuseFilter();
+                BufferedImage out = df.filter(img, null);
+                imgPanel.setImage(out);
             }
 
             case KeyEvent.VK_N -> selectAnotherImage();

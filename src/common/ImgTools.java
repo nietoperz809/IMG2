@@ -298,7 +298,7 @@ public class ImgTools {
     }
 
     public static BufferedImage deepCopy (BufferedImage source){
-        BufferedImage b = new BufferedImage(source.getWidth(), source.getHeight(), source.getType());
+        BufferedImage b = new BufferedImage(source.getWidth(), source.getHeight(), BufferedImage.TYPE_INT_RGB);
         Graphics g = b.getGraphics();
         g.drawImage(source, 0, 0, null);
         g.dispose();
