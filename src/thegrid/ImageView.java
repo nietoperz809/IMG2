@@ -3,7 +3,6 @@ package thegrid;
 import common.*;
 import database.DBHandler;
 import common.Denoise;
-import jhlabs.image.DiffuseFilter;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -30,12 +29,12 @@ public class ImageView extends JFrame implements KeyListener, MouseWheelListener
         //allFiles = files;
         currentIdx = idx;
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        setTitle(ImageList.get(currentIdx).name() + " -- " + currentIdx+ " -- " + ImageList.get(currentIdx).rowid());
         addKeyListener(this);
         addMouseWheelListener(this);
         BufferedImage img = loadImgFromStore();
         assert img != null;
         imgPanel = new ImgPanel(img);
+        setTitle(toString());
         new RegionSelectorListener(img, imgPanel, this);
         setContentPane(imgPanel);
         setExtendedState(JFrame.MAXIMIZED_BOTH);
@@ -166,7 +165,7 @@ public class ImageView extends JFrame implements KeyListener, MouseWheelListener
                 if (timer == null) {
                     timer = new Timer(10000, e1 -> {
                         currentIdx = ring.getNext();
-                        setTitle("Slideshow: " + getTitle());
+                        setTitle("Slideshow: " + toString());
                         adjustOnHeight();
                     });
                     timer.setRepeats(true);
@@ -175,7 +174,7 @@ public class ImageView extends JFrame implements KeyListener, MouseWheelListener
                 } else {
                     timer.stop();
                     timer = null;
-                    setTitle("Slideshow STOPPED "+ getTitle());
+                    setTitle("Slideshow STOPPED "+ toString());
                 }
             }
             case KeyEvent.VK_1 -> {
@@ -224,10 +223,12 @@ public class ImageView extends JFrame implements KeyListener, MouseWheelListener
             }
 
             case KeyEvent.VK_6 -> {
-                BufferedImage img = getIconImg();
-                DiffuseFilter df = new DiffuseFilter();
-                BufferedImage out = df.filter(img, null);
-                imgPanel.setImage(out);
+//                BufferedImage img = getIconImg();
+//                UnsharpFilter df = new UnsharpFilter();
+//                //                ExposureFilter df = new ExposureFilter();
+//                //                df.setExposure(1.8f);  // 1.2f = darken step
+//                BufferedImage out = df.filter(img, null);
+//                imgPanel.setImage(out);
             }
 
             case KeyEvent.VK_N -> selectAnotherImage();
@@ -313,10 +314,16 @@ public class ImageView extends JFrame implements KeyListener, MouseWheelListener
             imgPanel.scrollUp();
     }
 
+    public String toString() {
+        return ImageList.get(currentIdx).name() + " - " +
+                currentIdx+ " - " +
+                ImageList.get(currentIdx).rowid() + " - " +
+                imgPanel.getImage().hashCode();
+    }
 
     private void showByIdx() {
-        setTitle(ImageList.get(currentIdx).name() + " -- " + currentIdx+ " -- " + ImageList.get(currentIdx).rowid());
         adjustOnHeight();
+        setTitle (toString());
     }
 
     private void adjustOnHeight() {
@@ -333,8 +340,8 @@ public class ImageView extends JFrame implements KeyListener, MouseWheelListener
 
     private void setImg() {
         DBHandler.NameID dbh = ImageList.get(currentIdx);
-        setTitle(dbh.name() + " -- " + currentIdx+ " -- " + dbh.rowid());
         imgPanel.setImage(loadImgFromStore());
+        setTitle(toString());
     }
 
     private BufferedImage loadImgFromStore() {

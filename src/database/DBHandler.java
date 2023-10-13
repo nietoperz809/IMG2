@@ -344,6 +344,7 @@ public class DBHandler {
                     "update IMAGES set image=? where _rowid_ = "+id);
             prep.setBytes(1, buff);
             prep.execute();
+            connection.commit();
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -469,7 +470,6 @@ public class DBHandler {
         }
         return null;
     }
-
 
     public ThumbHash loadThumbnail(String filename) {
         String q = "select thumb from IMAGES where name = '" + filename + "'";

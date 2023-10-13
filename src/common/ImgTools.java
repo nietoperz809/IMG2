@@ -69,7 +69,7 @@ public class ImgTools {
         float gamma_new = 1f / gamma;
         int[] gamma_LUT = gamma_LUT(gamma_new);
 
-        BufferedImage gamma_cor = new BufferedImage(original.getWidth(), original.getHeight(), original.getType());
+        BufferedImage gamma_cor = new BufferedImage(original.getWidth(), original.getHeight(), BufferedImage.TYPE_INT_RGB);
 
         for (int i = 0; i < original.getWidth(); i++) {
             for (int j = 0; j < original.getHeight(); j++) {
