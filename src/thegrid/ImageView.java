@@ -3,6 +3,8 @@ package thegrid;
 import Catalano.Imaging.FastBitmap;
 import Catalano.Imaging.Filters.*;
 import Catalano.Imaging.Filters.Artistic.OilPainting;
+import Catalano.Imaging.Filters.Artistic.PencilSketch;
+import Catalano.Imaging.Filters.Artistic.SpecularBloom;
 import Catalano.Imaging.IApplyInPlace;
 import common.*;
 import database.DBHandler;
@@ -21,19 +23,223 @@ import java.util.UUID;
 import static thegrid.ImageList.IndexByRowID;
 
 
-public class ImageView extends JFrame implements KeyListener, MouseWheelListener {
+public class ImageView extends JFrame implements MouseWheelListener {
     private final ImgPanel imgPanel;
     private final UniqueRng ring;
     private int currentIdx;
 
     private Timer timer = null;
 
+    class KA extends KeyAdapter {
+        private long keyTime;
+
+        private boolean slowDownKeyEvents() {
+            long t = System.currentTimeMillis();
+            long diff = t - keyTime;
+            if (diff < 1000)
+                return false;
+            else
+                keyTime = t;
+            return true;
+        }
+
+        public void keyPressed (KeyEvent e) {
+            int ev = e.getKeyCode();
+            switch (ev) {
+                case KeyEvent.VK_UP -> imgPanel.scrollDown();
+                case KeyEvent.VK_DOWN -> imgPanel.scrollUp();
+                case KeyEvent.VK_LEFT -> imgPanel.scrollRight();
+                case KeyEvent.VK_RIGHT -> imgPanel.scrollLeft();
+            }
+            if (!slowDownKeyEvents())
+                return;
+            switch (ev) {
+                case KeyEvent.VK_PAGE_DOWN -> setNextImage();
+                case KeyEvent.VK_PAGE_UP -> setBeforeImage();
+                case KeyEvent.VK_PLUS -> scaleIconImg(1.1f);
+                case KeyEvent.VK_MINUS -> scaleIconImg(0.9f);
+
+                case KeyEvent.VK_R -> {
+                    BufferedImage img = getIconImg();
+                    img = ImgTools.rotateClockwise90(img);
+                    imgPanel.setImage(img);
+                }
+
+                case KeyEvent.VK_M -> {
+                    BufferedImage img = getIconImg();
+                    img = ImgTools.flip(img);
+                    imgPanel.setImage(img);
+                }
+
+                case KeyEvent.VK_W -> {
+                    imgPanel.clearOffset();
+                    adjustOn('w');
+                }
+
+                case KeyEvent.VK_T -> {
+                    currentIdx = ring.getNext();
+                    setImg();
+                    imgPanel.clearOffset();
+                    showByIdx();
+                }
+
+                case KeyEvent.VK_Z -> {
+                    if (e.isControlDown()) {
+                        imgPanel.undo();
+                        return;
+                    }
+                    currentIdx = ring.getPrev();
+                    setImg();
+                    imgPanel.clearOffset();
+                    showByIdx();
+                }
+
+                case KeyEvent.VK_S -> {
+                    if (timer == null) {
+                        timer = new Timer(10000, e1 -> {
+                            currentIdx = ring.getNext();
+                            setTitle("Slideshow: " + this);
+                            adjustOn('h');
+                        });
+                        timer.setRepeats(true);
+                        timer.setInitialDelay(0);
+                        timer.start();
+                    } else {
+                        timer.stop();
+                        timer = null;
+                        setTitle("Slideshow STOPPED "+ this);
+                    }
+                }
+
+                case KeyEvent.VK_1 -> {
+                    BufferedImage img = getIconImg();
+                    img = ImgTools.gammaCorrection(img, 0.7f);
+                    imgPanel.setImage(img);
+                }
+
+                case KeyEvent.VK_2 -> {
+                    BufferedImage img = getIconImg();
+                    img = ImgTools.gammaCorrection(img, 1f/0.7f);
+                    imgPanel.setImage(img);
+                }
+
+                case KeyEvent.VK_D -> {
+                    if (Tools.Question("Delete image from DB?")) {
+                        Objects.requireNonNull(DBHandler.getInst()).deleteImage(ImageList.get(currentIdx).rowid());
+                    }
+                }
+
+                case KeyEvent.VK_H -> {
+                    imgPanel.clearOffset();
+                    adjustOn('h');
+                }
+
+                case KeyEvent.VK_3 -> changeContrast(1.1f);
+                case KeyEvent.VK_4 -> changeContrast(0.9f);
+                case KeyEvent.VK_X -> sharpenImage();
+                case KeyEvent.VK_F -> saveAsFile(true);
+                case KeyEvent.VK_G -> saveAsFile(false);
+
+                case KeyEvent.VK_L -> {
+                    imgPanel.clearOffset();
+                    setImg();
+                }
+
+                case KeyEvent.VK_ESCAPE -> dispose();
+
+                case KeyEvent.VK_A -> {
+                    int rowid = ImageList.get(currentIdx).rowid();
+                    String tag = LineInput.xmain(
+                                    Objects.requireNonNull(DBHandler.getInst()).getTag(rowid), "Tag:", Color.YELLOW)
+                            .trim().toLowerCase();
+                    DBHandler.getInst().setTag(rowid, tag);
+                }
+
+                case KeyEvent.VK_5 -> { // denoise
+                    BufferedImage img = getIconImg();
+                    Denoise d = new Denoise(img);
+                    BufferedImage out = d.perform_denoise();
+                    imgPanel.setImage(out);
+                }
+
+                case KeyEvent.VK_6 -> {   // dilatation
+                    FastBitmap fb = IconToFastBitmap();
+                    IApplyInPlace bl = new Dilatation();
+                    bl.applyInPlace(fb);
+                    imgPanel.setImage(fb);
+                }
+
+                case KeyEvent.VK_7 -> {   // oilpaint
+                    FastBitmap fb = IconToFastBitmap();
+                    IApplyInPlace bl = new OilPainting();
+                    bl.applyInPlace(fb);
+                    imgPanel.setImage(fb);
+                }
+
+                case KeyEvent.VK_8 -> {   // erosion
+                    FastBitmap fb = IconToFastBitmap();
+                    Erosion bl = new Erosion();
+                    bl.applyInPlace(fb);
+                    imgPanel.setImage(fb);
+                }
+
+                case KeyEvent.VK_9 -> {   //
+                    FastBitmap fb = IconToFastBitmap();
+                    SpecularBloom bl = new SpecularBloom();
+                    bl.applyInPlace(fb);
+                    imgPanel.setImage(fb);
+                }
+
+                case KeyEvent.VK_0 -> {   //
+                    FastBitmap fb = IconToFastBitmap();
+                    HistogramEqualization bl = new HistogramEqualization();
+                    bl.applyInPlace(fb);
+                    imgPanel.setImage(fb);
+                }
+
+
+                case KeyEvent.VK_N -> selectAnotherImage();
+
+                case KeyEvent.VK_C -> {
+                    if (e.isControlDown()) {
+                        BufferedImage img = getIconImg();
+                        ImgTools.imageToClipboard(img);
+                    } else {
+                        int id = ImageList.get(currentIdx).rowid();
+                        if (Tools.Question("Replace image #" + id)) {
+                            BufferedImage img = getIconImg();
+                            Objects.requireNonNull(DBHandler.getInst()).changeBigImg(img, id);
+                        }
+                    }
+                }
+
+                case KeyEvent.VK_CONTROL -> {}
+
+                case KeyEvent.VK_I -> {
+                    String name = "?";
+                    name = LineInput.xmain(name, "New Entry:", Color.RED);
+                    if (name.equals("?") || name.isEmpty())
+                        return;
+                    BufferedImage img = getIconImg();
+                    try {
+                        DBHandler.getInst().insertImageRecord(name, img);
+                    } catch (IOException ex) {
+                        throw new RuntimeException(ex);
+                    }
+                }
+
+                default -> Sam.speak("Key not used.");
+            }
+        }
+    }
+
+
     public ImageView (int idx) {
         ring = new UniqueRng (ImageList.size());
         //allFiles = files;
         currentIdx = idx;
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        addKeyListener(this);
+        addKeyListener(new KA());
         addMouseWheelListener(this);
         BufferedImage img = loadImgFromStore();
         assert img != null;
@@ -94,17 +300,6 @@ public class ImageView extends JFrame implements KeyListener, MouseWheelListener
         }
     }
 
-    volatile boolean inEvent = false;
-
-    @Override
-    public void keyPressed(KeyEvent e) {
-        if (inEvent)
-            return;
-        inEvent = true;
-        InternalKeyPressed(e);
-        inEvent = false;
-    }
-
     private void setNextImage() {
         if (currentIdx < (ImageList.size() - 1))
             currentIdx++;
@@ -121,162 +316,6 @@ public class ImageView extends JFrame implements KeyListener, MouseWheelListener
             currentIdx = ImageList.size() - 1;
         imgPanel.clearOffset();
         setImg();
-    }
-
-    private void InternalKeyPressed(KeyEvent e) {
-        int ev = e.getKeyCode();
-        switch (ev) {
-            case KeyEvent.VK_PAGE_DOWN -> setNextImage();
-            case KeyEvent.VK_PAGE_UP -> setBeforeImage();
-            case KeyEvent.VK_PLUS -> scaleIconImg(1.1f);
-            case KeyEvent.VK_MINUS -> scaleIconImg(0.9f);
-            case KeyEvent.VK_R -> {
-                BufferedImage img = getIconImg();
-                img = ImgTools.rotateClockwise90(img);
-                imgPanel.setImage(img);
-            }
-            case KeyEvent.VK_M -> {
-                BufferedImage img = getIconImg();
-                img = ImgTools.flip(img);
-                imgPanel.setImage(img);
-            }
-            case KeyEvent.VK_W -> {
-                imgPanel.clearOffset();
-                adjustOn('w');
-            }
-            case KeyEvent.VK_T -> {
-                currentIdx = ring.getNext();
-                setImg();
-                imgPanel.clearOffset();
-                showByIdx();
-            }
-            case KeyEvent.VK_Z -> {
-                if (e.isControlDown()) {
-                    imgPanel.undo();
-                    return;
-                }
-                currentIdx = ring.getPrev();
-                setImg();
-                imgPanel.clearOffset();
-                showByIdx();
-            }
-            case KeyEvent.VK_S -> {
-                if (timer == null) {
-                    timer = new Timer(10000, e1 -> {
-                        currentIdx = ring.getNext();
-                        setTitle("Slideshow: " + this);
-                        adjustOn('h');
-                    });
-                    timer.setRepeats(true);
-                    timer.setInitialDelay(0);
-                    timer.start();
-                } else {
-                    timer.stop();
-                    timer = null;
-                    setTitle("Slideshow STOPPED "+ this);
-                }
-            }
-            case KeyEvent.VK_1 -> {
-                BufferedImage img = getIconImg();
-                img = ImgTools.gammaCorrection(img, 0.7f);
-                imgPanel.setImage(img);
-            }
-            case KeyEvent.VK_2 -> {
-                BufferedImage img = getIconImg();
-                img = ImgTools.gammaCorrection(img, 1f/0.7f);
-                imgPanel.setImage(img);
-            }
-            case KeyEvent.VK_D -> {
-                if (Tools.Question("Delete image from DB?")) {
-                    Objects.requireNonNull(DBHandler.getInst()).deleteImage(ImageList.get(currentIdx).rowid());
-                }
-            }
-            case KeyEvent.VK_H -> {
-                imgPanel.clearOffset();
-                adjustOn('h');
-            }
-            case KeyEvent.VK_3 -> changeContrast(1.1f);
-            case KeyEvent.VK_4 -> changeContrast(0.9f);
-            case KeyEvent.VK_X -> sharpenImage();
-            case KeyEvent.VK_F -> saveAsFile(true);
-            case KeyEvent.VK_G -> saveAsFile(false);
-            case KeyEvent.VK_L -> {
-                imgPanel.clearOffset();
-                setImg();
-            }
-
-            case KeyEvent.VK_ESCAPE -> dispose();
-            case KeyEvent.VK_A -> {
-                int rowid = ImageList.get(currentIdx).rowid();
-                String tag = LineInput.xmain(
-                        Objects.requireNonNull(DBHandler.getInst()).getTag(rowid), "Tag:", Color.YELLOW)
-                        .trim().toLowerCase();
-                DBHandler.getInst().setTag(rowid, tag);
-            }
-
-            case KeyEvent.VK_5 -> { // denoise
-                BufferedImage img = getIconImg();
-                Denoise d = new Denoise(img);
-                BufferedImage out = d.perform_denoise();
-                imgPanel.setImage(out);
-            }
-
-            case KeyEvent.VK_6 -> {   // dilatation
-                FastBitmap fb = IconToFastBitmap();
-                IApplyInPlace bl = new Dilatation();
-                bl.applyInPlace(fb);
-                imgPanel.setImage(fb);
-            }
-
-            case KeyEvent.VK_7 -> {   // oilpaint
-                FastBitmap fb = IconToFastBitmap();
-                IApplyInPlace bl = new OilPainting();
-                bl.applyInPlace(fb);
-                imgPanel.setImage(fb);
-            }
-
-            case KeyEvent.VK_8 -> {   // erosion 
-                FastBitmap fb = IconToFastBitmap();
-                Erosion bl = new Erosion();
-                bl.applyInPlace(fb);
-                imgPanel.setImage(fb);
-            }
-
-            case KeyEvent.VK_N -> selectAnotherImage();
-
-            case KeyEvent.VK_C -> {
-                if (e.isControlDown()) {
-                    BufferedImage img = getIconImg();
-                    ImgTools.imageToClipboard(img);
-                } else {
-                    int id = ImageList.get(currentIdx).rowid();
-                    if (Tools.Question("Replace image #" + id)) {
-                        BufferedImage img = getIconImg();
-                        Objects.requireNonNull(DBHandler.getInst()).changeBigImg(img, id);
-                    }
-                }
-            }
-            case KeyEvent.VK_UP -> imgPanel.scrollDown();
-            case KeyEvent.VK_DOWN -> imgPanel.scrollUp();
-            case KeyEvent.VK_LEFT -> imgPanel.scrollRight();
-            case KeyEvent.VK_RIGHT -> imgPanel.scrollLeft();
-            case KeyEvent.VK_CONTROL -> {}
-
-            case KeyEvent.VK_I -> {
-                String name = "?";
-                name = LineInput.xmain(name, "New Entry:", Color.RED);
-                if (name.equals("?") || name.isEmpty())
-                    return;
-                BufferedImage img = getIconImg();
-                try {
-                    DBHandler.getInst().insertImageRecord(name, img);
-                } catch (IOException ex) {
-                    throw new RuntimeException(ex);
-                }
-            }
-
-            default -> Sam.speak("Key not used.");
-        }
     }
 
     private FastBitmap IconToFastBitmap() {
@@ -310,15 +349,6 @@ public class ImageView extends JFrame implements KeyListener, MouseWheelListener
         }
         currentIdx = n;
         showByIdx();
-    }
-
-    @Override
-    public void keyReleased(KeyEvent e) {
-
-    }
-
-    @Override
-    public void keyTyped(KeyEvent e) {
     }
 
     @Override
