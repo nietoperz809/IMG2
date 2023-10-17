@@ -1,5 +1,9 @@
 package thegrid;
 
+import Catalano.Imaging.FastBitmap;
+import Catalano.Imaging.Filters.*;
+import Catalano.Imaging.Filters.Artistic.OilPainting;
+import Catalano.Imaging.IApplyInPlace;
 import common.*;
 import database.DBHandler;
 import common.Denoise;
@@ -138,17 +142,11 @@ public class ImageView extends JFrame implements KeyListener, MouseWheelListener
             }
             case KeyEvent.VK_W -> {
                 imgPanel.clearOffset();
-                BufferedImage img = getIconImg();
-                int newWidth = imgPanel.getWidth();
-                assert img != null;
-                float fact = (float) img.getWidth() / (float) newWidth;
-                int newHeight = (int) ((float) img.getHeight() / fact);
-                Dimension d = new Dimension(newWidth, newHeight);
-                img = ImageScaler.scaleDirect(img, d);
-                imgPanel.setImage(img);
+                adjustOn('w');
             }
             case KeyEvent.VK_T -> {
                 currentIdx = ring.getNext();
+                setImg();
                 imgPanel.clearOffset();
                 showByIdx();
             }
@@ -158,6 +156,7 @@ public class ImageView extends JFrame implements KeyListener, MouseWheelListener
                     return;
                 }
                 currentIdx = ring.getPrev();
+                setImg();
                 imgPanel.clearOffset();
                 showByIdx();
             }
@@ -165,8 +164,8 @@ public class ImageView extends JFrame implements KeyListener, MouseWheelListener
                 if (timer == null) {
                     timer = new Timer(10000, e1 -> {
                         currentIdx = ring.getNext();
-                        setTitle("Slideshow: " + toString());
-                        adjustOnHeight();
+                        setTitle("Slideshow: " + this);
+                        adjustOn('h');
                     });
                     timer.setRepeats(true);
                     timer.setInitialDelay(0);
@@ -174,7 +173,7 @@ public class ImageView extends JFrame implements KeyListener, MouseWheelListener
                 } else {
                     timer.stop();
                     timer = null;
-                    setTitle("Slideshow STOPPED "+ toString());
+                    setTitle("Slideshow STOPPED "+ this);
                 }
             }
             case KeyEvent.VK_1 -> {
@@ -194,7 +193,7 @@ public class ImageView extends JFrame implements KeyListener, MouseWheelListener
             }
             case KeyEvent.VK_H -> {
                 imgPanel.clearOffset();
-                adjustOnHeight();
+                adjustOn('h');
             }
             case KeyEvent.VK_3 -> changeContrast(1.1f);
             case KeyEvent.VK_4 -> changeContrast(0.9f);
@@ -215,20 +214,32 @@ public class ImageView extends JFrame implements KeyListener, MouseWheelListener
                 DBHandler.getInst().setTag(rowid, tag);
             }
 
-            case KeyEvent.VK_5 -> {
+            case KeyEvent.VK_5 -> { // denoise
                 BufferedImage img = getIconImg();
                 Denoise d = new Denoise(img);
                 BufferedImage out = d.perform_denoise();
                 imgPanel.setImage(out);
             }
 
-            case KeyEvent.VK_6 -> {
-//                BufferedImage img = getIconImg();
-//                UnsharpFilter df = new UnsharpFilter();
-//                //                ExposureFilter df = new ExposureFilter();
-//                //                df.setExposure(1.8f);  // 1.2f = darken step
-//                BufferedImage out = df.filter(img, null);
-//                imgPanel.setImage(out);
+            case KeyEvent.VK_6 -> {   // dilatation
+                FastBitmap fb = IconToFastBitmap();
+                IApplyInPlace bl = new Dilatation();
+                bl.applyInPlace(fb);
+                imgPanel.setImage(fb);
+            }
+
+            case KeyEvent.VK_7 -> {   // oilpaint
+                FastBitmap fb = IconToFastBitmap();
+                IApplyInPlace bl = new OilPainting();
+                bl.applyInPlace(fb);
+                imgPanel.setImage(fb);
+            }
+
+            case KeyEvent.VK_8 -> {   // erosion 
+                FastBitmap fb = IconToFastBitmap();
+                Erosion bl = new Erosion();
+                bl.applyInPlace(fb);
+                imgPanel.setImage(fb);
             }
 
             case KeyEvent.VK_N -> selectAnotherImage();
@@ -266,6 +277,10 @@ public class ImageView extends JFrame implements KeyListener, MouseWheelListener
 
             default -> Sam.speak("Key not used.");
         }
+    }
+
+    private FastBitmap IconToFastBitmap() {
+        return new FastBitmap(getIconImg());
     }
 
     public void selectAnotherImage() {
@@ -315,31 +330,38 @@ public class ImageView extends JFrame implements KeyListener, MouseWheelListener
     }
 
     public String toString() {
-        return ImageList.get(currentIdx).name() + " - " +
-                currentIdx+ " - " +
-                ImageList.get(currentIdx).rowid() + " - " +
-                imgPanel.getImage().hashCode();
+        var v = ImageList.get(currentIdx);
+        return v.name() + " - " + currentIdx+ " - " +
+                v.rowid() + " - " + v.tag();
     }
 
     private void showByIdx() {
-        adjustOnHeight();
+        adjustOn('h');
         setTitle (toString());
     }
 
-    private void adjustOnHeight() {
-        BufferedImage img = loadImgFromStore();
-        Insets in = getInsets();
-        int newHeight = getHeight() - in.top - in.bottom;
+    private void adjustOn(char which) {
+        BufferedImage img = getIconImg();
         assert img != null;
-        float fact = (float) img.getHeight() / (float) newHeight;
-        int newWidth = (int) ((float) img.getWidth() / fact);
+        int newWidth, newHeight;
+        if (which == 'h') {
+            Insets in = getInsets();
+            newHeight = getHeight() - in.top - in.bottom;
+            float fact = (float) img.getHeight() / (float) newHeight;
+            newWidth = (int) ((float) img.getWidth() / fact);
+        }
+        else {
+            newWidth = imgPanel.getWidth();
+            float fact = (float) img.getWidth() / (float) newWidth;
+            newHeight = (int) ((float) img.getHeight() / fact);
+        }
         Dimension d = new Dimension(newWidth, newHeight);
         img = ImageScaler.scaleDirect(img, d);
         imgPanel.setImage(img);
     }
 
     private void setImg() {
-        DBHandler.NameID dbh = ImageList.get(currentIdx);
+        //DBHandler.NameID dbh = ImageList.get(currentIdx);
         imgPanel.setImage(loadImgFromStore());
         setTitle(toString());
     }

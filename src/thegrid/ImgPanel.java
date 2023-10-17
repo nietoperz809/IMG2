@@ -1,5 +1,6 @@
 package thegrid;
 
+import Catalano.Imaging.FastBitmap;
 import common.ImgTools;
 import common.UndoStack;
 import common.TextParamBox;
@@ -92,6 +93,10 @@ public class ImgPanel extends JPanel {
             image = img;
             SwingUtilities.invokeLater(this::repaint);
         }
+    }
+
+    public void setImage (FastBitmap fb) {
+        setImage(fb.toBufferedImage());
     }
 
     public void setImage (BufferedImage img) {
