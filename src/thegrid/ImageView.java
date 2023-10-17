@@ -2,6 +2,7 @@ package thegrid;
 
 import Catalano.Imaging.FastBitmap;
 import Catalano.Imaging.Filters.*;
+import Catalano.Imaging.Filters.Artistic.HeatMap;
 import Catalano.Imaging.Filters.Artistic.OilPainting;
 import Catalano.Imaging.Filters.Artistic.PencilSketch;
 import Catalano.Imaging.Filters.Artistic.SpecularBloom;
@@ -36,7 +37,7 @@ public class ImageView extends JFrame implements MouseWheelListener {
         private boolean slowDownKeyEvents() {
             long t = System.currentTimeMillis();
             long diff = t - keyTime;
-            if (diff < 1000)
+            if (diff < 300)
                 return false;
             else
                 keyTime = t;
@@ -46,10 +47,25 @@ public class ImageView extends JFrame implements MouseWheelListener {
         public void keyPressed (KeyEvent e) {
             int ev = e.getKeyCode();
             switch (ev) {
-                case KeyEvent.VK_UP -> imgPanel.scrollDown();
-                case KeyEvent.VK_DOWN -> imgPanel.scrollUp();
-                case KeyEvent.VK_LEFT -> imgPanel.scrollRight();
-                case KeyEvent.VK_RIGHT -> imgPanel.scrollLeft();
+                case KeyEvent.VK_UP -> {
+                    imgPanel.scrollDown();
+                    return;
+                }
+                case KeyEvent.VK_DOWN -> {
+                    imgPanel.scrollUp();
+                    return;
+                }
+                case KeyEvent.VK_LEFT -> {
+                    imgPanel.scrollRight();
+                    return;
+                }
+                case KeyEvent.VK_RIGHT -> {
+                    imgPanel.scrollLeft();
+                    return;
+                }
+                case KeyEvent.VK_CONTROL -> {
+                    return;
+                }
             }
             if (!slowDownKeyEvents())
                 return;
@@ -162,41 +178,21 @@ public class ImageView extends JFrame implements MouseWheelListener {
                     imgPanel.setImage(out);
                 }
 
-                case KeyEvent.VK_6 -> {   // dilatation
+                case KeyEvent.VK_6 -> applyInplaceFilter(new Dilatation());
+                case KeyEvent.VK_7 -> applyInplaceFilter(new OilPainting());
+                case KeyEvent.VK_8 -> applyInplaceFilter(new Erosion());
+                case KeyEvent.VK_9 -> applyInplaceFilter(new SpecularBloom());
+                case KeyEvent.VK_0 -> applyInplaceFilter(new HistogramEqualization());
+                case KeyEvent.VK_B -> applyInplaceFilter(new FastVariance());
+
+                case KeyEvent.VK_Y -> {   //  heatmap
                     FastBitmap fb = IconToFastBitmap();
-                    IApplyInPlace bl = new Dilatation();
+                    HeatMap bl = new HeatMap();
+                    if (e.isControlDown())
+                        bl.setInvert(true);
                     bl.applyInPlace(fb);
                     imgPanel.setImage(fb);
                 }
-
-                case KeyEvent.VK_7 -> {   // oilpaint
-                    FastBitmap fb = IconToFastBitmap();
-                    IApplyInPlace bl = new OilPainting();
-                    bl.applyInPlace(fb);
-                    imgPanel.setImage(fb);
-                }
-
-                case KeyEvent.VK_8 -> {   // erosion
-                    FastBitmap fb = IconToFastBitmap();
-                    Erosion bl = new Erosion();
-                    bl.applyInPlace(fb);
-                    imgPanel.setImage(fb);
-                }
-
-                case KeyEvent.VK_9 -> {   //
-                    FastBitmap fb = IconToFastBitmap();
-                    SpecularBloom bl = new SpecularBloom();
-                    bl.applyInPlace(fb);
-                    imgPanel.setImage(fb);
-                }
-
-                case KeyEvent.VK_0 -> {   //
-                    FastBitmap fb = IconToFastBitmap();
-                    HistogramEqualization bl = new HistogramEqualization();
-                    bl.applyInPlace(fb);
-                    imgPanel.setImage(fb);
-                }
-
 
                 case KeyEvent.VK_N -> selectAnotherImage();
 
@@ -212,8 +208,6 @@ public class ImageView extends JFrame implements MouseWheelListener {
                         }
                     }
                 }
-
-                case KeyEvent.VK_CONTROL -> {}
 
                 case KeyEvent.VK_I -> {
                     String name = "?";
@@ -320,6 +314,12 @@ public class ImageView extends JFrame implements MouseWheelListener {
 
     private FastBitmap IconToFastBitmap() {
         return new FastBitmap(getIconImg());
+    }
+
+    private void applyInplaceFilter (IApplyInPlace bl) {
+        FastBitmap fb = IconToFastBitmap();
+        bl.applyInPlace(fb);
+        imgPanel.setImage(fb);
     }
 
     public void selectAnotherImage() {
