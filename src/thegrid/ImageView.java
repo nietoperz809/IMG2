@@ -366,6 +366,7 @@ public class ImageView extends JFrame implements MouseWheelListener {
     }
 
     private void showByIdx() {
+        setImg();
         adjustOn('h');
         setTitle (toString());
     }
