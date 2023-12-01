@@ -58,7 +58,7 @@ public class MediaPlayerBox {
         });
     }
 
-    public void start(String name) {
+    public void start (String name) {
         if (playerFrame != null)
             return;
         lock.lock();

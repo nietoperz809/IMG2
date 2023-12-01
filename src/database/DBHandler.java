@@ -464,6 +464,18 @@ public class DBHandler {
         throw new RuntimeException("no query results");
     }
 
+    public String transferGifIntoFile (String videoName) throws Exception {
+        byte[] bt = loadGifBytes(videoName);
+        File fi = new File(System.getProperty("java.io.tmpdir")+File.separator+"myra.dat");
+        try (RandomAccessFile rafile = new RandomAccessFile(fi, "rw")) {
+            MappedByteBuffer out = rafile.getChannel()
+                    .map(FileChannel.MapMode.READ_WRITE, 0, bt.length);
+            out.put (bt);
+            out.load();
+        }
+        return fi.getAbsolutePath();
+    }
+
     /**
      * Load video into mapped file
      * @param videoName name of video record in database

@@ -130,14 +130,14 @@ public class VideoApp extends JDialog {
     }
 
     MediaPlayerBox vidPlayerBox = new MediaPlayerBox(this);
-    GifPlayerBox gifPlayer = new GifPlayerBox();
+    // GifPlayerBox gifPlayer = new GifPlayerBox();
 
     private void onOK() {
         String name = listControl.getSelectedValue().name();
         if (name.endsWith(".gif")) {
             try {
-                byte[] gif = DBHandler.getInst().loadGifBytes(name);
-                gifPlayer.start(gif);
+                String path = DBHandler.getInst().transferGifIntoFile(name);
+                new GifPlayerBox().start(path);
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
