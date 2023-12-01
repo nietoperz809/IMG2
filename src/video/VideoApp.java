@@ -127,6 +127,7 @@ public class VideoApp extends JDialog {
                 }
             }
         });
+        listControl.setCellRenderer(new MyCellRenderer());
     }
 
     MediaPlayerBox vidPlayerBox = new MediaPlayerBox(this);
@@ -148,6 +149,33 @@ public class VideoApp extends JDialog {
 
     private void onCancel() {
         vidPlayerBox.stop();
+    }
+
+    class MyCellRenderer extends JLabel implements ListCellRenderer<Object> {
+        public Component getListCellRendererComponent(
+                JList<?> list,           // the list
+                Object value,            // value to display
+                int index,               // cell index
+                boolean isSelected,      // is the cell selected
+                boolean cellHasFocus)    // does the cell have focus
+        {
+            String s = value.toString();
+            if (s.contains(".gif :")) {
+                setForeground(Color.RED);
+            } else {
+                setForeground(Color.BLACK);
+            }
+            if (isSelected) {
+                setBackground(Color.YELLOW);
+            } else {
+                setBackground(Color.WHITE);
+            }
+            setText(s);
+            setEnabled(list.isEnabled());
+            setFont(list.getFont());
+            setOpaque(true);
+            return this;
+        }
     }
 
     private void setListContent(boolean sort_by_id) {

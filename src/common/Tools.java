@@ -138,6 +138,14 @@ public class Tools {
         clip.start ();
     }
 
+    public static void delay (int ms) {
+        try {
+            Thread.sleep(ms);
+        } catch (InterruptedException ioe) {
+            System.out.println("intExc");
+        }
+    }
+
 //    public static File readAsFileList(Clipboard clipboard) {
 //        try {
 //            java.util.List<File> paths = (java.util.List<File>)clipboard.getData(DataFlavor.javaFileListFlavor);
