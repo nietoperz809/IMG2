@@ -63,6 +63,10 @@ public class DBHandler {
             sql = "create table if not exists VIDEOS " +
                     "(VID blob, NAME varchar(200), HASHVAL blob(16))";
             statement.execute(sql);
+            // create GIF table
+            sql = "create table if not exists GIFS " +
+                    "(GIFDATA blob, NAME varchar(200), HASHVAL blob(16), TAG varchar(128))";
+            statement.execute(sql);
             sql = "alter table IMAGES add if not exists TAG varchar(128)";
             statement.execute(sql);
             sql = "alter table VIDEOS add if not exists TAG varchar(128)";
@@ -166,10 +170,18 @@ public class DBHandler {
         return getNames(sql);
     }
 
-    public List<NameID> getVideoFileNames(boolean sort_by_id) {
+    public List<NameID> getFileNames (String dbname, boolean sort_by_id) {
         String sort = sort_by_id ? "_ROWID_" : "name";
-        String sql = "select name,_ROWID_,tag from VIDEOS order by "+sort+" asc";
+        String sql = "select name,_ROWID_,tag from "+dbname+" order by "+sort+" asc";
         return getNames(sql);
+    }
+
+    public List<NameID> getVideoFileNames(boolean sort_by_id) {
+        return getFileNames("VIDEOS", sort_by_id);
+    }
+
+    public List<NameID> getGifFileNames(boolean sort_by_id) {
+        return getFileNames("GIFS", sort_by_id);
     }
 
     private synchronized List<NameID> getNames(String sql) {
@@ -200,11 +212,20 @@ public class DBHandler {
     }
 
     public boolean deleteVideo (int rowid) {
+        return deleteGifOrVideo ("VIDEOS", rowid);
+    }
+
+    public boolean deleteGif (int rowid) {
+        return deleteGifOrVideo ("GIFS", rowid);
+    }
+
+
+    public boolean deleteGifOrVideo (String dbname, int rowid) {
         if (askForDel(String.valueOf(rowid))) {
             return false;
         }
         try {
-            statement.execute("delete from VIDEOS where _ROWID_ = " + rowid);
+            statement.execute("delete from "+dbname+" where _ROWID_ = " + rowid);
             return true;
         } catch (SQLException e) {
             //throw new RuntimeException(e);
@@ -359,6 +380,15 @@ public class DBHandler {
         }
     }
 
+    public void addGifFile (File file) {
+        try {
+            byte[] fileContent = Files.readAllBytes(file.toPath());
+            insertGifRecord(fileContent, file.getName());
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     /**
      * Put raw data into IMAGES table
      * @param img image as byte array
@@ -392,17 +422,19 @@ public class DBHandler {
         }
     }
 
-//    public BufferedImage loadImage(int id) throws IOException {
-//        try (ResultSet res = query("select image from IMAGES where _rowid_ = "+id) {
-//            if (res.next()) {
-//                byte[] b = res.getBytes(1);
-//                return Tools.byteArrayToImg(b);
-//            }
-//        } catch (SQLException e) {
-//            throw new RuntimeException(e);
-//        }
-//        return null;
-//    }
+    private void insertGifRecord (byte[] gif, String name) {
+        PreparedStatement prep;
+        try {
+            prep = connection.prepareStatement(
+                    "insert into GiFS (gifdata,name) values (?,?)");
+            prep.setBytes(1, gif);
+            prep.setString(2, name);
+            prep.execute();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 
     public SoftReference<byte[]> loadVideoBytes (String filename) throws Exception {
         filename = filename.replace("'", "''");
@@ -412,6 +444,20 @@ public class DBHandler {
             throw new RuntimeException("no query results");
         if (res.next()) {
             SoftReference<byte[]> bt = new SoftReference<>(res.getBytes(1));
+            res.close();
+            return bt;
+        }
+        throw new RuntimeException("no query results");
+    }
+
+    public byte[] loadGifBytes (String filename) throws Exception {
+        filename = filename.replace("'", "''");
+        ResultSet res = DBHandler.getInst()
+                .query("select GIFDATA from GIFS where name='"+filename+"'");
+        if (res == null)
+            throw new RuntimeException("no query results");
+        if (res.next()) {
+            byte[] bt = res.getBytes(1);
             res.close();
             return bt;
         }

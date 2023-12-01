@@ -77,7 +77,12 @@ public class VideoApp extends JDialog {
             @Override
             public void actionPerformed(ActionEvent e) {
                 int id = listControl.getSelectedValue().rowid();
-                DBHandler.getInst().deleteVideo(id);
+                String name = listControl.getSelectedValue().name();
+                if (name.endsWith(".gif")) {
+                    DBHandler.getInst().deleteGif(id);
+                } else {
+                    DBHandler.getInst().deleteVideo(id);
+                }
                 setListContent(false);
                 repaint();
             }
@@ -104,6 +109,10 @@ public class VideoApp extends JDialog {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 DBHandler.NameID nameid = listControl.getSelectedValue();
+                if (nameid.name().endsWith(".gif")) {
+                    Tools.Error ("GIF renaming currently not allowed");
+                    return;
+                }
                 String res = LineInput.xmain(nameid.name(), "NewName", Color.orange);
                 DBHandler.getInst().changeVideoName(res, nameid.rowid());
                 setListContent(false);
@@ -120,20 +129,33 @@ public class VideoApp extends JDialog {
         });
     }
 
-    MediaPlayerBox playerBox = new MediaPlayerBox(this);
+    MediaPlayerBox vidPlayerBox = new MediaPlayerBox(this);
+    GifPlayerBox gifPlayer = new GifPlayerBox();
 
     private void onOK() {
-        playerBox.start (listControl.getSelectedValue().name());
+        String name = listControl.getSelectedValue().name();
+        if (name.endsWith(".gif")) {
+            try {
+                byte[] gif = DBHandler.getInst().loadGifBytes(name);
+                gifPlayer.start(gif);
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        } else {
+            vidPlayerBox.start (name);
+        }
     }
 
     private void onCancel() {
-        playerBox.stop();
+        vidPlayerBox.stop();
     }
 
     private void setListContent(boolean sort_by_id) {
         List<DBHandler.NameID> list = DBHandler.getInst().getVideoFileNames(sort_by_id);
+        List<DBHandler.NameID> list2 = DBHandler.getInst().getGifFileNames(sort_by_id);
         DefaultListModel<DBHandler.NameID> model = new DefaultListModel<>();
         model.addAll (list);
+        model.addAll (list2);
         listControl.setModel(model);
     }
 
@@ -153,7 +175,12 @@ public class VideoApp extends JDialog {
                         try {
                             files = (java.util.List<File>) transferable.getTransferData(flavor);
                             File[] array = files.toArray(new File[0]);
-                            DBHandler.getInst().addVideoFile(array[0]);
+                            File f = array[0];
+                            if (f.getPath().toLowerCase().endsWith(".gif")) {
+                                DBHandler.getInst().addGifFile(f);
+                            } else {
+                                DBHandler.getInst().addVideoFile(f);
+                            }
                             setListContent(false);
                             repaint();
                         } catch (Exception e) {
@@ -176,10 +203,10 @@ public class VideoApp extends JDialog {
         dialog.setVisible(true);
     }
 
-//    public static void main(String[] args) {
-//        VideoApp dialog = new VideoApp();
-//        dialog.setSize(400,400);
-//        dialog.setLocationRelativeTo(null);
-//        dialog.setVisible(true);
-//    }
+    public static void main(String[] args) {
+        VideoApp dialog = new VideoApp();
+        dialog.setSize(400,400);
+        dialog.setLocationRelativeTo(null);
+        dialog.setVisible(true);
+    }
 }
