@@ -7,33 +7,13 @@ import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class GifPlayerBox {
 
-//    public void start (byte[] gifdata) {
-//        JLabel playerLabel = new JLabel();
-//        ImageIcon icon = new ImageIcon(gifdata);
-//        int width = 600;
-//        int height = 600;
-//        icon.setImage(icon.getImage().getScaledInstance(width, height, Image.SCALE_DEFAULT));
-//        playerLabel.setIcon(icon);
-//
-//        JFrame playerFrame;
-//        playerFrame = new JFrame();
-//        playerFrame.requestFocus();
-//        playerFrame.setTitle("GifPlayer");
-//        playerFrame.setBounds(100, 100, width, height);
-//        playerFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-//
-//        playerFrame.setLayout(new BorderLayout());
-//        playerFrame.add(playerLabel, BorderLayout.CENTER); //setContentPane(mpc);
-//        playerFrame.setVisible(true);
-//
-//    }
+    AtomicBoolean bflag = new AtomicBoolean(false);
 
-    volatile boolean isClosing = false;
-
-    public void start(String path) {
+    public GifPlayerBox (String path) {
         GifDecoder d = new GifDecoder();
         d.read(path);
         //d.read("C:\\Users\\Administrator\\Desktop\\pcar.gif");
@@ -52,14 +32,14 @@ public class GifPlayerBox {
             @Override
             public void windowClosing(WindowEvent e) {
                 System.out.println("shouldClose");
-                isClosing = true;
+                bflag.set(true);
                 window.dispose();
             }
         });
 
         new Thread(() -> {
-            while (!isClosing) {
-                for (int i = 0; i < num && !isClosing; i++) {
+            while (!bflag.get()) {
+                for (int i = 0; i < num && !bflag.get(); i++) {
                     BufferedImage frame = d.getFrame(i);
                     Image im2 = frame.getScaledInstance (label.getWidth(), label.getHeight(),
                                     Image.SCALE_DEFAULT);

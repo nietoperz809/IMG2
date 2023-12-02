@@ -130,7 +130,7 @@ public class VideoApp extends JDialog {
         listControl.setCellRenderer(new MyCellRenderer());
     }
 
-    MediaPlayerBox vidPlayerBox = new MediaPlayerBox(this);
+    VideoPlayerBox vidPlayerBox = new VideoPlayerBox(this);
     // GifPlayerBox gifPlayer = new GifPlayerBox();
 
     private void onOK() {
@@ -138,7 +138,7 @@ public class VideoApp extends JDialog {
         if (name.endsWith(".gif")) {
             try {
                 String path = DBHandler.getInst().transferGifIntoFile(name);
-                new GifPlayerBox().start(path);
+                new GifPlayerBox(path);
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }

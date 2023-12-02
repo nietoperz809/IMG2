@@ -13,7 +13,7 @@ import java.io.File;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
-public class MediaPlayerBox {
+public class VideoPlayerBox {
     private static final Lock lock = new ReentrantLock();
     private final JScrollBar sbar;
     private volatile JFrame playerFrame;
@@ -22,7 +22,7 @@ public class MediaPlayerBox {
     private VideoApp parent;
 
 
-    public MediaPlayerBox (VideoApp parent) {
+    public VideoPlayerBox(VideoApp parent) {
         this.parent = parent;
         sbar = new JScrollBar(Adjustable.HORIZONTAL);
         sbar.setBackground(Color.YELLOW);

@@ -14,16 +14,17 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ddb69741-e020-4d21-a32f-f00e79c6818a" name="Changes" comment="added undo stack">
-      <change afterPath="$PROJECT_DIR$/src/denoise/Denoise.java" afterDir="false" />
+    <list default="true" id="ddb69741-e020-4d21-a32f-f00e79c6818a" name="Changes" comment="gif player fixed">
+      <change beforePath="$PROJECT_DIR$/.idea/artifacts/IMG2_jar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/artifacts/IMG2_jar.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IMG2.iml" beforeDir="false" afterPath="$PROJECT_DIR$/IMG2.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IMG2_jar/IMG2.jar" beforeDir="false" afterPath="$PROJECT_DIR$/IMG2_jar/IMG2.jar" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/buildinfo/BuildInfo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/buildinfo/BuildInfo.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/buildinfo/build.number" beforeDir="false" afterPath="$PROJECT_DIR$/src/buildinfo/build.number" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/thegrid/GridImage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/thegrid/GridImage.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/thegrid/GridListeners.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/thegrid/GridListeners.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/thegrid/ImageList.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/thegrid/ImageList.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/thegrid/ImageView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/thegrid/ImageView.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/thegrid/ImgPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/thegrid/ImgPanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/common/ImgTools.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/common/ImgTools.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/video/GifPlayerBox.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/video/GifPlayerBox.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/video/MediaPlayerBox.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/video/VideoPlayerBox.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/video/VideoApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/video/VideoApp.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -88,8 +89,9 @@
     &quot;UI_DESIGNER_EDITOR_MODE.PaletteManager.WIDTH&quot;: &quot;187&quot;,
     &quot;UI_DESIGNER_EDITOR_MODE.UIDesignerToolWindowManager.SHOW&quot;: &quot;true&quot;,
     &quot;UI_DESIGNER_EDITOR_MODE.UIDesignerToolWindowManager.WIDTH&quot;: &quot;255&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/peter.home/java/IMG2/resource&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Artifacts&quot;,
+    &quot;full.screen.before.presentation.mode&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/peter.home/java/IMG2/lib/Catalano.Image.jar&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Libraries&quot;,
     &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
     &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
     &quot;run.code.analysis.last.selected.profile&quot;: &quot;aDefault&quot;,
@@ -98,8 +100,10 @@
 }</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\peter.home\java\IMG2\resource" />
+      <recent name="C:\peter.home\java\IMG2\lib" />
+      <recent name="C:\peter.home\java\IMG2\src\Imaging" />
       <recent name="C:\peter.home\java\IMG2\src" />
+      <recent name="C:\peter.home\java\IMG2\resource" />
       <recent name="C:\peter.home\java\IMG2\src\buildinfo" />
     </key>
     <key name="MoveMembersDialog.RECENTS_KEY">
@@ -108,34 +112,39 @@
       <recent name="thegrid.Tools" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\peter.home\java\IMG2\src" />
       <recent name="C:\peter.home\java\IMG2\src\common" />
     </key>
     <key name="MoveInnerDialog.RECENTS_KEY">
-      <recent name="common" />
       <recent name="thegrid" />
+      <recent name="common" />
+    </key>
+    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="video" />
       <recent name="common" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.Main">
-    <configuration name="Main" type="Application" factoryName="Application">
-      <option name="MAIN_CLASS_NAME" value="thegrid.TheGrid" />
+  <component name="RunManager" selected="Application.VideoApp">
+    <configuration name="Imaging.Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="Imaging.Main" />
       <module name="IMG2" />
-      <option name="PROGRAM_PARAMETERS" value="_removethis_max100" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="Imaging.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="TagSelectorDlg" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="common.TagSelectorDlg" />
+    <configuration name="Main" type="Application" factoryName="Application">
+      <option name="MAIN_CLASS_NAME" value="thegrid.TheGrid" />
       <module name="IMG2" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="common.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
+      <option name="PROGRAM_PARAMETERS" value="_removethis_max100" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -203,19 +212,19 @@
     <list>
       <item itemvalue="Application.web" />
       <item itemvalue="Application.Main" />
+      <item itemvalue="Application.Imaging.Main" />
       <item itemvalue="Application.TextParamBox" />
-      <item itemvalue="Application.TagSelectorDlg" />
       <item itemvalue="Application.Tools" />
       <item itemvalue="Application.VideoApp" />
       <item itemvalue="Application.VideoFiller" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.VideoApp" />
+        <item itemvalue="Application.Imaging.Main" />
         <item itemvalue="Application.TextParamBox" />
         <item itemvalue="Application.VideoFiller" />
-        <item itemvalue="Application.VideoApp" />
         <item itemvalue="Application.Tools" />
-        <item itemvalue="Application.TagSelectorDlg" />
       </list>
     </recent_temporary>
   </component>
@@ -571,7 +580,7 @@
       <option name="project" value="LOCAL" />
       <updated>1683976691765</updated>
     </task>
-    <option name="localTasksCounter" value="88" />
+    <option name="localTasksCounter" value="104" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -587,13 +596,8 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
+    <option name="CHECK_NEW_TODO" value="false" />
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="added web interface (webserver)" />
-    <MESSAGE value="some improvements &amp; new jarfile" />
-    <MESSAGE value="added some comments" />
-    <MESSAGE value="added stop button to fill dialog" />
-    <MESSAGE value="delete img files from disk after moving to db" />
-    <MESSAGE value="made more stable" />
     <MESSAGE value="next release" />
     <MESSAGE value="implemented pageup/down functionality in grid view" />
     <MESSAGE value="small improvement" />
@@ -603,17 +607,23 @@
     <MESSAGE value="added logger window" />
     <MESSAGE value="some bugfixes" />
     <MESSAGE value="introduced GammaCorrection keys 1+2" />
-    <MESSAGE value="backup" />
     <MESSAGE value="current release" />
     <MESSAGE value="new scroller &amp; zoomer" />
     <MESSAGE value="better scrolling" />
     <MESSAGE value="fixed crop function" />
     <MESSAGE value="save" />
-    <MESSAGE value="some improvements" />
     <MESSAGE value="introduced mouse wheel listener in ImageView.java" />
     <MESSAGE value="introduced text marker" />
     <MESSAGE value="added undo stack" />
-    <option name="LAST_COMMIT_MESSAGE" value="added undo stack" />
+    <MESSAGE value="added jhlabs" />
+    <MESSAGE value="some improvements" />
+    <MESSAGE value="new keylistener" />
+    <MESSAGE value="backup" />
+    <MESSAGE value="little bugfix" />
+    <MESSAGE value="added GIF player" />
+    <MESSAGE value="gif player enhancement" />
+    <MESSAGE value="gif player fixed" />
+    <option name="LAST_COMMIT_MESSAGE" value="gif player fixed" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -637,9 +647,24 @@
           <option name="timeStamp" value="3" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/thegrid/ImgPanel.java</url>
-          <line>150</line>
-          <option name="timeStamp" value="4" />
+          <url>file://$PROJECT_DIR$/src/database/DBHandler.java</url>
+          <line>99</line>
+          <option name="timeStamp" value="5" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/thegrid/ImageView.java</url>
+          <line>401</line>
+          <option name="timeStamp" value="7" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/database/DBHandler.java</url>
+          <line>431</line>
+          <option name="timeStamp" value="10" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/video/VideoPlayerBox.java</url>
+          <line>65</line>
+          <option name="timeStamp" value="18" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

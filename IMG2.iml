@@ -6,6 +6,7 @@
       <sourceFolder url="file://$MODULE_DIR$/resource" type="java-resource" />
       <sourceFolder url="file://$MODULE_DIR$/src" isTestSource="false" />
       <excludeFolder url="file://$MODULE_DIR$/datastore" />
+      <excludeFolder url="file://$MODULE_DIR$/src/gifdecoder" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
@@ -13,5 +14,6 @@
     <orderEntry type="library" name="h2database.h2" level="project" />
     <orderEntry type="library" name="vlcj" level="project" />
     <orderEntry type="library" name="nanohttpd" level="project" />
+    <orderEntry type="library" name="Catalano.Image" level="project" />
   </component>
 </module>

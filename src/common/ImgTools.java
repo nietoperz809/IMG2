@@ -1,7 +1,6 @@
 package common;
 
 import com.luciad.imageio.webp.WebPReadParam;
-import gifdecoder.AnimatedGIFReader;
 
 import javax.imageio.ImageIO;
 import javax.imageio.ImageReader;
@@ -54,7 +53,7 @@ public class ImgTools {
         }
     }
 
-    public static void imageToClipboard(BufferedImage bi)
+    public static void imageToClipboard(Image bi)
     {
         TransferableImage trans = new TransferableImage( bi );
         Clipboard c = Toolkit.getDefaultToolkit().getSystemClipboard();
@@ -123,29 +122,20 @@ public class ImgTools {
 
     }
 
-//    private BufferedImage rotateImage (BufferedImage src, float angle) {
-//        AffineTransform tx = new AffineTransform();
-//        tx.rotate(angle, src.getWidth() / 2.0,src.getHeight() / 2.0);
-//        AffineTransformOp op = new AffineTransformOp(tx,
-//                AffineTransformOp.TYPE_BILINEAR);
-//        return op.filter(src, null);
-//    }
 
     public static String[] getImageExtensions() {
         return new String[] {"jpg", "jpeg", "png", "bmp", "gif", "jfif", "webp"};
     }
 
-//    public static boolean isImage(String in) {
-//        return hasExtension(in, getImageExtensions());
-//    }
-
     public static BufferedImage loadImage(String name) throws IOException {
         if (hasExtension(name, ".gif")) {
-            FileInputStream fin = new FileInputStream(name);
-            AnimatedGIFReader reader = new AnimatedGIFReader();
-            BufferedImage img = reader.read(fin);
-            fin.close();
-            return img;
+            Tools.Error ("Please put gifs in video app");
+            return null;
+//            FileInputStream fin = new FileInputStream(name);
+//            AnimatedGIFReader reader = new AnimatedGIFReader();
+//            BufferedImage img = reader.read(fin);
+//            fin.close();
+//            return img;
         } else if (hasExtension(name, ".webp")) {
             // Obtain a WebP ImageReader instance
             ImageReader reader = ImageIO.getImageReadersByMIMEType("image/webp").next();
