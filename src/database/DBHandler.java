@@ -326,7 +326,7 @@ public class DBHandler {
         int ret = 0;
         for (File file : files) {
             String name = UUID.randomUUID().toString();
-            BufferedImage img = ImgTools.loadImage(file.getPath());
+            BufferedImage img = ImgTools.loadImageFromFile(file.getPath());
             if (img == null) {
                 System.err.println("no image");
                 continue;

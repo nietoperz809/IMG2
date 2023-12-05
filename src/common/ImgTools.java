@@ -127,7 +127,7 @@ public class ImgTools {
         return new String[] {"jpg", "jpeg", "png", "bmp", "gif", "jfif", "webp"};
     }
 
-    public static BufferedImage loadImage(String name) throws IOException {
+    public static BufferedImage loadImageFromFile (String name) throws IOException {
         if (Tools.isGIF (name)) {
             Tools.Error ("Please put gifs in video app");
             return null;

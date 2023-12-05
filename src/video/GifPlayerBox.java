@@ -1,20 +1,35 @@
 package video;
 
 import common.Tools;
+import thegrid.ImageScaler;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.IOException;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.AtomicReference;
 
 public class GifPlayerBox {
 
-    AtomicBoolean bflag = new AtomicBoolean(false);
+    private final AtomicBoolean stopFlag = new AtomicBoolean(false);
 
-    public GifPlayerBox (File file) {
+    private final AtomicBoolean waitFlag = new AtomicBoolean(false);
+
+    private final AtomicReference<BufferedImage> currentFrame = new AtomicReference<>();
+
+    private boolean reverse = false;
+
+    private final AtomicInteger sleepTime = new AtomicInteger(150);
+
+    public GifPlayerBox(File file, VideoApp parent) {
         GifDecoder d = new GifDecoder();
         d.read(file.getAbsolutePath());
         int frameCount = d.getFrameCount();
@@ -28,24 +43,58 @@ public class GifPlayerBox {
         window.getContentPane().add(label, BorderLayout.CENTER);
         window.setSize(600, 600);
         window.setVisible(true);
+        window.setTitle("(p)photo (r)reverse, (+/-)faster/slower (s)wait");
         window.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
                 System.out.println("shouldClose");
-                bflag.set(true);
+                stopFlag.set(true);
                 window.dispose();
                 file.delete();
             }
         });
 
+        window.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyTyped(KeyEvent keyEvent) {
+                switch (keyEvent.getKeyChar()) {
+                    case 'r':
+                        reverse = !reverse;
+                        break;
+                    case 's':
+                        waitFlag.set(!waitFlag.get());
+                        break;
+                    case 'p':
+                        try {
+                            BufferedImage scaled = ImageScaler.scaleExact(currentFrame.get(), new Dimension(800, 800));
+                            ImageIO.write(scaled, "png",
+                                    new File(parent.snapDir + File.separator + System.currentTimeMillis() + ".png"));
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
+                        }
+                        break;
+                    case '+':
+                        sleepTime.getAndAdd(-100);
+                        if (sleepTime.get() < 0) sleepTime.set(0);
+                        break;
+                    case '-':
+                        sleepTime.getAndAdd(100);
+                        if (sleepTime.get() > 5000) sleepTime.set(5000);
+                        break;
+                }
+            }
+        });
+
         new Thread(() -> {
-            while (!bflag.get()) {
-                for (int i = 0; i < frameCount && !bflag.get(); i++) {
-                    BufferedImage frame = d.getFrame(i);
-                    Image im2 = frame.getScaledInstance (label.getWidth(), label.getHeight(),
-                                    Image.SCALE_DEFAULT);
-                    label.setIcon(new ImageIcon(im2));
-                    Tools.delay(150);
+            while (!stopFlag.get()) {
+                for (int i = 0; i < frameCount && !stopFlag.get(); i++) {
+                    if (!waitFlag.get()) {
+                        currentFrame.set(d.getFrame(reverse ? frameCount - 1 - i : i));
+                        Image im2 = currentFrame.get().getScaledInstance(label.getWidth(), label.getHeight(),
+                                Image.SCALE_DEFAULT);
+                        label.setIcon(new ImageIcon(im2));
+                        Tools.delay(sleepTime.get());
+                    }
                 }
             }
             System.out.println("end thread");

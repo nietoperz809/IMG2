@@ -143,7 +143,7 @@ public class VideoApp extends JDialog {
         if (Tools.isGIF(name)) {
             try {
                 File f = DBHandler.getInst().transferGifIntoFile(name);
-                new GifPlayerBox(f);
+                new GifPlayerBox(f, this);
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
