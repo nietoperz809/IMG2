@@ -64,7 +64,7 @@ public class VideoPlayerBox {
         lock.lock();
         try {
             sbar.setValue(0);
-            String tempFile = DBHandler.getInst().transferVideoIntoFile(name);
+            File tempFile = DBHandler.getInst().transferVideoIntoFile(name);
             System.out.println(tempFile);
             mpc = new EmbeddedMediaPlayerComponent();
             playerFrame = new JFrame();
@@ -130,7 +130,7 @@ public class VideoPlayerBox {
                 }
             });
             mpc.mediaPlayer().videoSurface().attachVideoSurface();
-            mpc.mediaPlayer().media().play(tempFile);
+            mpc.mediaPlayer().media().play(tempFile.getAbsolutePath());
         } catch (Exception e) {
             throw new RuntimeException(e);
         } finally {

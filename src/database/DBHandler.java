@@ -435,11 +435,10 @@ public class DBHandler {
         }
     }
 
-
-    public SoftReference<byte[]> loadVideoBytes (String filename) throws Exception {
+    public SoftReference<byte[]> loadBytes (String filename, String sql) throws Exception {
         filename = filename.replace("'", "''");
         ResultSet res = DBHandler.getInst()
-                .query("select VID from VIDEOS where name='"+filename+"'");
+                .query(sql);
         if (res == null)
             throw new RuntimeException("no query results");
         if (res.next()) {
@@ -450,48 +449,41 @@ public class DBHandler {
         throw new RuntimeException("no query results");
     }
 
-    public byte[] loadGifBytes (String filename) throws Exception {
-        filename = filename.replace("'", "''");
-        ResultSet res = DBHandler.getInst()
-                .query("select GIFDATA from GIFS where name='"+filename+"'");
-        if (res == null)
-            throw new RuntimeException("no query results");
-        if (res.next()) {
-            byte[] bt = res.getBytes(1);
-            res.close();
-            return bt;
-        }
-        throw new RuntimeException("no query results");
+
+    public SoftReference<byte[]> loadVideoBytes (String filename) throws Exception {
+        return loadBytes(filename, "select VID from VIDEOS where name='" + filename + "'");
     }
 
-    public String transferGifIntoFile (String videoName) throws Exception {
-        byte[] bt = loadGifBytes(videoName);
-        File fi = new File(System.getProperty("java.io.tmpdir")+File.separator+"myra.dat");
-        try (RandomAccessFile rafile = new RandomAccessFile(fi, "rw")) {
-            MappedByteBuffer out = rafile.getChannel()
-                    .map(FileChannel.MapMode.READ_WRITE, 0, bt.length);
-            out.put (bt);
-            out.load();
-        }
-        return fi.getAbsolutePath();
+    public SoftReference<byte[]> loadGifBytes (String filename) throws Exception {
+        return loadBytes(filename, "select GIFDATA from GIFS where name='"+filename+"'");
     }
 
     /**
-     * Load video into mapped file
-     * @param videoName name of video record in database
+     * Load DB record into mapped file
+     * @param fileName name of video record in database
      * @return file name of file on disk
      * @throws Exception if smth gone wrong
      */
-    public String transferVideoIntoFile (String videoName) throws Exception {
-        SoftReference<byte[]> bt = loadVideoBytes(videoName);
-        File fi = new File(System.getProperty("java.io.tmpdir")+File.separator+"myra.dat");
+    public File transferIntoFile (String fileName, boolean gif) throws Exception {
+        SoftReference<byte[]> bt = gif ? loadGifBytes(fileName) : loadVideoBytes(fileName);
+        File fi = new File(System.getProperty("java.io.tmpdir")+File.separator+fileName+"myra.dat");
         try (RandomAccessFile rafile = new RandomAccessFile(fi, "rw")) {
             MappedByteBuffer out = rafile.getChannel()
                     .map(FileChannel.MapMode.READ_WRITE, 0, bt.get().length);
             out.put (bt.get());
             out.load();
         }
-        return fi.getAbsolutePath();
+        return fi; //fi.getAbsolutePath();
+    }
+
+
+    public File transferGifIntoFile (String fileName) throws Exception {
+        return transferIntoFile (fileName, true);
+    }
+
+
+    public File transferVideoIntoFile (String fileName) throws Exception {
+        return transferIntoFile(fileName, false);
     }
 
     public void changeVideoName (String name, int rowid) {

@@ -7,15 +7,16 @@ import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class GifPlayerBox {
 
     AtomicBoolean bflag = new AtomicBoolean(false);
 
-    public GifPlayerBox (String path) {
+    public GifPlayerBox (File file) {
         GifDecoder d = new GifDecoder();
-        d.read(path);
+        d.read(file.getAbsolutePath());
         int frameCount = d.getFrameCount();
         System.out.println(frameCount);
 
@@ -33,6 +34,7 @@ public class GifPlayerBox {
                 System.out.println("shouldClose");
                 bflag.set(true);
                 window.dispose();
+                file.delete();
             }
         });
 
