@@ -78,7 +78,7 @@ public class VideoApp extends JDialog {
             public void actionPerformed(ActionEvent e) {
                 int id = listControl.getSelectedValue().rowid();
                 String name = listControl.getSelectedValue().name();
-                if (name.endsWith(".gif")) {
+                if (Tools.isGIF(name)) {
                     DBHandler.getInst().deleteGif(id);
                 } else {
                     DBHandler.getInst().deleteVideo(id);
@@ -96,9 +96,14 @@ public class VideoApp extends JDialog {
                     fileChooser.setSelectedFile(new File(nameid.name()));
                     int option = fileChooser.showSaveDialog(VideoApp.this);
                     if(option == JFileChooser.APPROVE_OPTION){
-                        SoftReference<byte[]> bt = DBHandler.getInst().loadVideoBytes(nameid.name());
                         File f = fileChooser.getSelectedFile();
-                        Files.write(f.toPath(),bt.get());
+                        if (Tools.isGIF(nameid.name())) {
+                            byte[] bytes = DBHandler.getInst().loadGifBytes(nameid.name());
+                            Files.write(f.toPath(), bytes);
+                        } else {
+                            SoftReference<byte[]> bt = DBHandler.getInst().loadVideoBytes(nameid.name());
+                            Files.write(f.toPath(), bt.get());
+                        }
                     }
                 } catch (Exception e) {
                     throw new RuntimeException(e);
@@ -109,7 +114,7 @@ public class VideoApp extends JDialog {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 DBHandler.NameID nameid = listControl.getSelectedValue();
-                if (nameid.name().endsWith(".gif")) {
+                if (Tools.isGIF(nameid.name())) {
                     Tools.Error ("GIF renaming currently not allowed");
                     return;
                 }
@@ -135,7 +140,7 @@ public class VideoApp extends JDialog {
 
     private void onOK() {
         String name = listControl.getSelectedValue().name();
-        if (name.endsWith(".gif")) {
+        if (Tools.isGIF(name)) {
             try {
                 String path = DBHandler.getInst().transferGifIntoFile(name);
                 new GifPlayerBox(path);
@@ -204,7 +209,7 @@ public class VideoApp extends JDialog {
                             files = (java.util.List<File>) transferable.getTransferData(flavor);
                             File[] array = files.toArray(new File[0]);
                             File f = array[0];
-                            if (f.getPath().toLowerCase().endsWith(".gif")) {
+                            if (Tools.isGIF(f.getPath())) {
                                 DBHandler.getInst().addGifFile(f);
                             } else {
                                 DBHandler.getInst().addVideoFile(f);

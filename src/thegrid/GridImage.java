@@ -40,8 +40,10 @@ class GridImage extends JLabel {
         }
         boolean hidden = true;
         for (String s : tags) {
-            if (s.equals(thisID.tag()))
+            if (s.equals(thisID.tag())) {
                 hidden = false;
+                break;
+            }
         }
         if (hidden) {
             tempImgBuffer.add(this);

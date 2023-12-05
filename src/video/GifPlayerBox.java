@@ -16,9 +16,8 @@ public class GifPlayerBox {
     public GifPlayerBox (String path) {
         GifDecoder d = new GifDecoder();
         d.read(path);
-        //d.read("C:\\Users\\Administrator\\Desktop\\pcar.gif");
-        int num = d.getFrameCount();
-        System.out.println(num);
+        int frameCount = d.getFrameCount();
+        System.out.println(frameCount);
 
         JLabel label = new JLabel();
         JFrame window = new javax.swing.JFrame();
@@ -39,7 +38,7 @@ public class GifPlayerBox {
 
         new Thread(() -> {
             while (!bflag.get()) {
-                for (int i = 0; i < num && !bflag.get(); i++) {
+                for (int i = 0; i < frameCount && !bflag.get(); i++) {
                     BufferedImage frame = d.getFrame(i);
                     Image im2 = frame.getScaledInstance (label.getWidth(), label.getHeight(),
                                     Image.SCALE_DEFAULT);

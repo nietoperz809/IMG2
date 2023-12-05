@@ -128,7 +128,7 @@ public class ImgTools {
     }
 
     public static BufferedImage loadImage(String name) throws IOException {
-        if (hasExtension(name, ".gif")) {
+        if (Tools.isGIF (name)) {
             Tools.Error ("Please put gifs in video app");
             return null;
 //            FileInputStream fin = new FileInputStream(name);

@@ -30,6 +30,10 @@ public class Tools {
         return false;
     }
 
+    public static boolean isGIF (String filename) {
+        return hasExtension (filename, ".gif");
+    }
+
     public static void Error (String msg) {
         JOptionPane.showMessageDialog(null, msg, "Error",
                 JOptionPane.ERROR_MESSAGE);

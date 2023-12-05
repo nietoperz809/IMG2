@@ -34,58 +34,16 @@ public class Denoise {
      * @param img
      * @param inpath
      */
-//    public Denoise(BufferedImage img, String inpath) {
-//        // TODO constructor that takes in image and path --> performs the blur
-//        if (img != null) {
-//            image.setImage(img);
-//            image.setPath(inpath);
-//            perform_denoise();
-//        }
-//    }
 
     /**
      * Constructor with file path
      * @param inpath
      */
-//    public Denoise(String inpath) {
-//        // TODO constructor that takes in a path and loads an image --> performs
-//        // the blur
-//        Pattern p=Pattern.compile("(?mi)(\\.jpg|\\.jpeg|\\.gif|\\.bmp)");
-//        Matcher m=p.matcher(inpath);
-//
-//        if(m.find()){
-//            image.setPath(inpath);
-//            try {
-//                image.setImage(ImageIO.read(new File(image.getPath())));
-//            } catch (IOException e) {
-//                // TODO Auto-generated catch block
-//                e.printStackTrace();
-//            }
-//        }
-//
-//    }
 
     /**
      * Set an image from a file path
      * @param inpath
      */
-//    @Override
-//    public void setImage(String inpath) {
-//        // TODO sets a patha and attempts to create an image
-//        Pattern p=Pattern.compile("(?mi)(\\.jpg|\\.jpeg|\\.gif|\\.bmp)");
-//        Matcher m=p.matcher(inpath);
-//
-//        if(m.find()){
-//            image.setPath(inpath);
-//            try {
-//                image.setImage(ImageIO.read(new File(image.getPath())));
-//            } catch (IOException e) {
-//                // TODO Auto-generated catch block
-//                e.printStackTrace();
-//            }
-//        }
-//
-//    }
 
     /**
      * Set an image from a buffered image
@@ -98,19 +56,11 @@ public class Denoise {
     /**
      * Set the image path
      */
-//    public void setPath(String inpath){
-//        //TODO set the image path
-//        image.setPath(inpath);
-//    }
 
 
     /**
      * Get the Image path
      */
-//    @Override
-//    public String getPath(){
-//        return image.getPath();
-//    }
 
     /**
      * Get a buffered Image
@@ -149,14 +99,6 @@ public class Denoise {
         }
     }
 
-//    /**
-//     * Save an image
-//     * @param filetype
-//     */
-//    public void save(String filetype) {
-//        image.save();
-//    }
-
     /**
      * Perform an average denoise
      */
@@ -176,8 +118,8 @@ public class Denoise {
         BufferedImage image2 = new BufferedImage(proxyimage.getWidth(),proxyimage.getHeight(), BufferedImage.TYPE_INT_RGB);
 
         // the current position properties
-        int x = 0;
-        int y = 0;
+        int x;
+        int y;
 
         // a neighbor pixel to add to the map
 
@@ -248,9 +190,9 @@ public class Denoise {
 
         BufferedImage proxyimage=image;
 
-        int ri = 0;
-        int gi = 0;
-        int bi = 0;
+        int ri;
+        int gi;
+        int bi;
 
         for (int x = 0; x < proxyimage.getWidth(); x++) {
             for (int y = 0; y < proxyimage.getHeight(); y++) {
@@ -319,8 +261,8 @@ public class Denoise {
 
         // gives ultimate control can also use image libraries
         // the current position properties
-        int x = 0;
-        int y = 0;
+        int x;
+        int y;
 
         // the image width and height properties
         int width = proxyimage.getWidth();
@@ -359,19 +301,19 @@ public class Denoise {
                 // to check, try using gauss jordan
 
                 // apply the transformation for r
-                int r = -c00.getRed() - c01.getRed() - c02.getRed()
-                        + -c10.getRed() + 8 * c11.getRed() - c12.getRed()
-                        + -c20.getRed() - c21.getRed() - c22.getRed();
+                int r = (-c00.getRed() - c01.getRed() - c02.getRed()
+                        - c10.getRed() + 8 * c11.getRed() - c12.getRed()
+                        - c20.getRed()) - c21.getRed() - c22.getRed();
 
                 // apply the transformation for g
-                int g = -c00.getGreen() - c01.getGreen() - c02.getGreen()
-                        + -c10.getGreen() + 8 * c11.getGreen() - c12.getGreen()
-                        + -c20.getGreen() - c21.getGreen() - c22.getGreen();
+                int g = (-c00.getGreen() - c01.getGreen() - c02.getGreen()
+                        - c10.getGreen() + 8 * c11.getGreen() - c12.getGreen()
+                        - c20.getGreen()) - c21.getGreen() - c22.getGreen();
 
                 // apply the transformation for b
-                int b = -c00.getBlue() - c01.getBlue() - c02.getBlue()
-                        + -c10.getBlue() + 8 * c11.getBlue() - c12.getBlue()
-                        + -c20.getBlue() - c21.getBlue() - c22.getBlue();
+                int b = (-c00.getBlue() - c01.getBlue() - c02.getBlue()
+                        - c10.getBlue() + 8 * c11.getBlue() - c12.getBlue()
+                        - c20.getBlue()) - c21.getBlue() - c22.getBlue();
 
                 // set the new rgb values
                 r = Math.min(255, Math.max(0, r));
@@ -392,19 +334,10 @@ public class Denoise {
     /**
      * Save the image
      */
-//    @Override
-//    public void save() {
-//        // TODO save the image
-//        image.save();
-//    }
 
     /**
      * Delete the image
      */
-//    @Override
-//    public void delete(){
-//        image.delete();
-//    }
 
 }
 
