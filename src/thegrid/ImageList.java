@@ -10,7 +10,7 @@ public class ImageList {
         // prevent instantiation
     }
     
-    private static java.util.List<DBHandler.NameID> allFiles
+    public static java.util.List<DBHandler.NameID> allFiles
             = requireNonNull(DBHandler.getInst()).getAllImageInfos();
 
     public static void refresh() {

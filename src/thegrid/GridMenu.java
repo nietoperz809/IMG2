@@ -13,6 +13,8 @@ import java.awt.event.ActionEvent;
 import java.io.File;
 import java.util.Arrays;
 
+import static thegrid.ImageList.allFiles;
+
 
 public class GridMenu extends JMenuBar {
     public GridMenu(TheGrid theGrid) {
@@ -67,8 +69,8 @@ public class GridMenu extends JMenuBar {
             }
         });
 
-        JMenuItem m3 = searchDupes(0, theGrid, "Search for double Items");
-        JMenuItem m31 = searchDupes(1, theGrid, "Delete double Items");
+        JMenuItem m3 = searchDupes(false, theGrid, "Search for double Items");
+        JMenuItem m31 = searchDupes(true, theGrid, "Delete double Items");
 
         JMenuItem m4 = new JMenuItem("video App");
         m4.addActionListener(new AbstractAction() {
@@ -130,31 +132,41 @@ public class GridMenu extends JMenuBar {
         theGrid.setJMenuBar(this);
     }
 
-    private JMenuItem searchDupes(int mode, TheGrid theGrid, String text) {
+    private JMenuItem searchDupes(boolean searchOnly, TheGrid theGrid, String text) {
         JMenuItem m3 = new JMenuItem(text);
         m3.addActionListener(new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 StringBuilder sb = new StringBuilder();
                 Component[] components = theGrid.rootPane.getComponents();
+                if (components.length != allFiles.size()) {
+                    String mess = "Please restart and wait until all " + allFiles.size() + " tiles are loaded!";
+                    int res = JOptionPane.showConfirmDialog (theGrid, mess, "Warn!", JOptionPane.WARNING_MESSAGE);
+                    if (res == 0) /*OK*/ {
+                        System.exit(-1);
+                    }
+                    return;
+                }
+                GridImage g1,g2;
                 for (int i = 0; i < components.length; i++) {
                     for (int j = i + 1; j < components.length; j++) {
-                        GridImage g1 = (GridImage) components[i];
-                        GridImage g2 = (GridImage) components[j];
-                        if (Arrays.equals(g1.getHash(), g2.getHash())) {
+                        g1 = (GridImage) components[i];
+                        g2 = (GridImage) components[j];
+                        byte[] h1 = g1.getHash();
+                        byte[] h2 = g2.getHash();
+                        if (Arrays.equals(h1, h2)) {
                             sb.append(g1.getRowID()).append(" and ")
                                     .append(g2.getRowID()).append(" are identical\n");
-                            if (mode == 1) {
+                            if (!searchOnly) {
                                 if (DBHandler.getInst().deleteImage(g2.getRowID())) {
                                     theGrid.rootPane.remove(g2);
-                                    theGrid.rootPane.doLayout();
-                                    theGrid.rootPane.repaint();
                                 }
                             }
-
                         }
                     }
                 }
+                theGrid.rootPane.doLayout();
+                theGrid.rootPane.repaint();
                 String msg;
                 if (sb.isEmpty()) {
                     msg = "No duplicates!";

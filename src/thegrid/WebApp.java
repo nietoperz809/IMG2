@@ -22,6 +22,15 @@ public class WebApp extends NanoHTTPD {
     private final UniqueRng ring;
     int firstimg = -1;
 
+
+    int findIndex (int rowid) {
+        for (int i=0; i<allFiles.size(); i++) {
+            if (allFiles.get(i).rowid() == rowid)
+                return i;
+        }
+        System.out.println("not found");
+        return 0;
+    }
     /**
      * Constructor,
      * start http server and initialisation
@@ -29,7 +38,7 @@ public class WebApp extends NanoHTTPD {
     public WebApp() {
         super(80);
         allFiles = DBHandler.getInst().getAllImageInfos();
-        ring = new UniqueRng(allFiles.size());
+        ring = new UniqueRng(allFiles.size(), false);
         //ring.reset();
 
         try {
@@ -143,6 +152,7 @@ public class WebApp extends NanoHTTPD {
         try {
             nude = uri.substring(1, uri.length() - 4);
             rowid = Integer.parseInt(nude);
+            //System.out.println("rowid: "+rowid);
         } catch (Exception e) {
             //throw new RuntimeException(e);
         }
@@ -152,9 +162,17 @@ public class WebApp extends NanoHTTPD {
             byte[] bytes = DBHandler.getInst().loadThumbnail(rowid);
             return sendImageBytes(bytes);
         } else if (uri.endsWith(".lnk")) {
+            System.out.println("send linkpage: "+rowid);
             return sendImagePage(session, rowid);
         } else if (uri.endsWith(".jpg")) {
             byte[] bytes = DBHandler.getInst().loadImage(rowid);
+
+            /////////////////
+            System.out.println("send img2: "+rowid);
+            int i = findIndex(rowid);
+            ring.setIndex(i);
+            /////////////////
+
             return sendImageBytes(bytes);
         } else if (uri.endsWith(".ico")) {
             return sendIcon(uri);

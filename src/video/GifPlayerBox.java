@@ -1,5 +1,6 @@
 package video;
 
+import common.ImgTools;
 import common.Tools;
 import thegrid.ImageScaler;
 
@@ -23,7 +24,7 @@ public class GifPlayerBox {
 
     private final AtomicBoolean waitFlag = new AtomicBoolean(false);
 
-    private final AtomicReference<BufferedImage> currentFrame = new AtomicReference<>();
+    private final AtomicReference<Image> currentFrame = new AtomicReference<>();
 
     private boolean reverse = false;
 
@@ -66,8 +67,8 @@ public class GifPlayerBox {
                         break;
                     case 'p':
                         try {
-                            BufferedImage scaled = ImageScaler.scaleExact(currentFrame.get(), new Dimension(800, 800));
-                            ImageIO.write(scaled, "png",
+                            //BufferedImage scaled = ImageScaler.scaleExact(currentFrame.get(), new Dimension(800, 800));
+                            ImageIO.write(ImgTools.toBufferedImage(currentFrame.get()), "png",
                                     new File(parent.snapDir + File.separator + System.currentTimeMillis() + ".png"));
                         } catch (IOException e) {
                             throw new RuntimeException(e);
@@ -92,6 +93,7 @@ public class GifPlayerBox {
                         currentFrame.set(d.getFrame(reverse ? frameCount - 1 - i : i));
                         Image im2 = currentFrame.get().getScaledInstance(label.getWidth(), label.getHeight(),
                                 Image.SCALE_DEFAULT);
+                        currentFrame.set(im2);
                         label.setIcon(new ImageIcon(im2));
                         Tools.delay(sleepTime.get());
                     }

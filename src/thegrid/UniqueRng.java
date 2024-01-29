@@ -11,26 +11,18 @@ class UniqueRng {
      * Constructor
      * @param n number of elements
      */
-    public UniqueRng(int n) {
+    public UniqueRng (int n, boolean shuffle) {
         for (int s = 0; s < n; s++) {
             _list.add(s);
         }
-        Collections.shuffle(_list);
+        if (shuffle)
+            Collections.shuffle(_list);
     }
 
-    public void reset() {
-        int n = _list.size();
-        _list.clear();
-        for (int s = 0; s < n; s++) {
-            _list.add(s);
-        }
-        idx = 0;
+    public UniqueRng (int n) {
+        this (n, true);
     }
 
-//    public void setPointer (int n) {
-//        idx = n % _list.size();
-//    }
-//
 //    public int findElement (int e) {
 //        for (int n=0; n<_list.size(); n++) {
 //            if (_list.get(n) == e) {
@@ -39,6 +31,12 @@ class UniqueRng {
 //        }
 //        return -1; // not found
 //    }
+
+    public void setIndex (int i) {
+        //int ni = findElement(i);
+        //System.out.println("new index: " + ni);
+        idx = i;
+    }
 
     /**
      * Get next element
