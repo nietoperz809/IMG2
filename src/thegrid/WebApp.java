@@ -175,7 +175,7 @@ public class WebApp extends NanoHTTPD {
             /////////////////
             System.out.println("send img2: "+rowid);
             int i = findIndex(rowid);
-            ring.setIndex(i);
+            ring.set(i);
             /////////////////
 
             return sendImageBytes(bytes);

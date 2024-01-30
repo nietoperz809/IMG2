@@ -23,7 +23,7 @@ class UniqueRng {
         this (n, true);
     }
 
-    public void setIndex (int i) {
+    public void set(int i) {
         idx = i;
     }
 
@@ -44,8 +44,12 @@ class UniqueRng {
      */
     int getPrev() {
         idx--;
-        if (idx <= -1)
+        if (idx < 0)
             idx = _list.size()-1;
+        return _list.get(idx);
+    }
+
+    int get() {
         return _list.get(idx);
     }
 }

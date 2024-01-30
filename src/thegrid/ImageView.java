@@ -1,21 +1,23 @@
 package thegrid;
 
 import Catalano.Imaging.FastBitmap;
-import Catalano.Imaging.Filters.*;
 import Catalano.Imaging.Filters.Artistic.HeatMap;
 import Catalano.Imaging.Filters.Artistic.OilPainting;
-import Catalano.Imaging.Filters.Artistic.PencilSketch;
 import Catalano.Imaging.Filters.Artistic.SpecularBloom;
+import Catalano.Imaging.Filters.Dilatation;
+import Catalano.Imaging.Filters.Erosion;
+import Catalano.Imaging.Filters.FastVariance;
+import Catalano.Imaging.Filters.HistogramEqualization;
 import Catalano.Imaging.IApplyInPlace;
 import common.*;
 import database.DBHandler;
-import common.Denoise;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-import java.awt.image.*;
+import java.awt.image.BufferedImage;
+import java.awt.image.RescaleOp;
 import java.io.File;
 import java.io.IOException;
 import java.util.Objects;
@@ -26,8 +28,9 @@ import static thegrid.ImageList.IndexByRowID;
 
 public class ImageView extends JFrame implements MouseWheelListener {
     private final ImgPanel imgPanel;
+    private final UniqueRng ring2;
     private final UniqueRng ring;
-    private int currentIdx;
+    //private int currentIdx;
 
     private Timer timer = null;
 
@@ -93,7 +96,7 @@ public class ImageView extends JFrame implements MouseWheelListener {
                 }
 
                 case KeyEvent.VK_T -> {
-                    currentIdx = ring.getNext();
+                    ring2.set(ring.getNext());
                     setImg();
                     imgPanel.clearOffset();
                     showByIdx();
@@ -104,7 +107,7 @@ public class ImageView extends JFrame implements MouseWheelListener {
                         imgPanel.undo();
                         return;
                     }
-                    currentIdx = ring.getPrev();
+                    ring2.set(ring.getPrev());
                     setImg();
                     imgPanel.clearOffset();
                     showByIdx();
@@ -113,7 +116,7 @@ public class ImageView extends JFrame implements MouseWheelListener {
                 case KeyEvent.VK_S -> {
                     if (timer == null) {
                         timer = new Timer(10000, e1 -> {
-                            currentIdx = ring.getNext();
+                            ring2.set(ring.getNext());
                             setTitle("Slideshow: " + this);
                             adjustOn('h');
                         });
@@ -141,7 +144,7 @@ public class ImageView extends JFrame implements MouseWheelListener {
 
                 case KeyEvent.VK_D -> {
                     if (Tools.Question("Delete image from DB?")) {
-                        Objects.requireNonNull(DBHandler.getInst()).deleteImage(ImageList.get(currentIdx).rowid());
+                        Objects.requireNonNull(DBHandler.getInst()).deleteImage(ImageList.get(ring2.get()).rowid());
                     }
                 }
 
@@ -164,7 +167,7 @@ public class ImageView extends JFrame implements MouseWheelListener {
                 case KeyEvent.VK_ESCAPE -> dispose();
 
                 case KeyEvent.VK_A -> {
-                    int rowid = ImageList.get(currentIdx).rowid();
+                    int rowid = ImageList.get(ring2.get()).rowid();
                     String tag = LineInput.xmain(
                                     Objects.requireNonNull(DBHandler.getInst()).getTag(rowid), "Tag:", Color.YELLOW)
                             .trim().toLowerCase();
@@ -201,7 +204,7 @@ public class ImageView extends JFrame implements MouseWheelListener {
                         BufferedImage img = getIconImg();
                         ImgTools.imageToClipboard(img);
                     } else {
-                        int id = ImageList.get(currentIdx).rowid();
+                        int id = ImageList.get(ring2.get()).rowid();
                         if (Tools.Question("Replace image #" + id)) {
                             BufferedImage img = getIconImg();
                             Objects.requireNonNull(DBHandler.getInst()).changeBigImg(img, id);
@@ -230,8 +233,9 @@ public class ImageView extends JFrame implements MouseWheelListener {
 
     public ImageView (int idx) {
         ring = new UniqueRng (ImageList.size());
+        ring2 = new UniqueRng (ImageList.size(), false);
         //allFiles = files;
-        currentIdx = idx;
+        ring2.set (idx);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         addKeyListener(new KA());
         addMouseWheelListener(this);
@@ -295,19 +299,13 @@ public class ImageView extends JFrame implements MouseWheelListener {
     }
 
     private void setNextImage() {
-        if (currentIdx < (ImageList.size() - 1))
-            currentIdx++;
-        else
-            currentIdx = 0;
+        ring2.getNext();
         imgPanel.clearOffset();
         setImg();
     }
 
     private void setBeforeImage() {
-        if (currentIdx > 0)
-            currentIdx--;
-        else
-            currentIdx = ImageList.size() - 1;
+        ring2.getPrev();
         imgPanel.clearOffset();
         setImg();
     }
@@ -347,7 +345,7 @@ public class ImageView extends JFrame implements MouseWheelListener {
                 if (n == -1)
                     return;
         }
-        currentIdx = n;
+        ring2.set(n);
         showByIdx();
     }
 
@@ -360,9 +358,9 @@ public class ImageView extends JFrame implements MouseWheelListener {
     }
 
     public String toString() {
-        var v = ImageList.get(currentIdx);
-        return v.name() + " - " + currentIdx+ " - " +
-                v.rowid() + " - " + v.tag();
+        var v = ImageList.get(ring2.get());
+        return "IDX:" + ring2.get() + " ROWID:" +
+                v.rowid() + " TAG:" + v.tag();
     }
 
     private void showByIdx() {
@@ -399,7 +397,7 @@ public class ImageView extends JFrame implements MouseWheelListener {
 
     private BufferedImage loadImgFromStore() {
         try {
-            byte[] b = Objects.requireNonNull(DBHandler.getInst()).loadImage(ImageList.get(currentIdx).rowid());
+            byte[] b = Objects.requireNonNull(DBHandler.getInst()).loadImage(ImageList.get(ring2.get()).rowid());
             if (b == null) {
                 System.out.println("loadImgFromStore-1 fail!!!");
                 return TheGrid.failImg;
