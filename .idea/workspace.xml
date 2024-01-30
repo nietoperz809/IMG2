@@ -14,19 +14,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ddb69741-e020-4d21-a32f-f00e79c6818a" name="Changes" comment="GifPlayerBox extended">
-      <change afterPath="$PROJECT_DIR$/src/common/ImageWarper.java" afterDir="false" />
+    <list default="true" id="ddb69741-e020-4d21-a32f-f00e79c6818a" name="Changes" comment="introduced ring2">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/IMG2_jar/IMG2.jar" beforeDir="false" afterPath="$PROJECT_DIR$/IMG2_jar/IMG2.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/buildinfo/BuildInfo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/buildinfo/BuildInfo.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/buildinfo/build.number" beforeDir="false" afterPath="$PROJECT_DIR$/src/buildinfo/build.number" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/common/ImgTools.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/common/ImgTools.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/database/VideoFiller.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/database/VideoFiller.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/thegrid/GridMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/thegrid/GridMenu.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/thegrid/ImageList.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/thegrid/ImageList.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/thegrid/UniqueRng.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/thegrid/UniqueRng.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/thegrid/WebApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/thegrid/WebApp.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/video/GifPlayerBox.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/video/GifPlayerBox.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -582,7 +572,7 @@
       <option name="project" value="LOCAL" />
       <updated>1683976691765</updated>
     </task>
-    <option name="localTasksCounter" value="109" />
+    <option name="localTasksCounter" value="112" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -600,8 +590,6 @@
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_NEW_TODO" value="false" />
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="better scaling for ImageView" />
-    <MESSAGE value="2nd copy&amp;paste menu item" />
     <MESSAGE value="tag handling (first version)" />
     <MESSAGE value="added logger window" />
     <MESSAGE value="some bugfixes" />
@@ -625,7 +613,9 @@
     <MESSAGE value="+ exporting GIF files" />
     <MESSAGE value="some little changes" />
     <MESSAGE value="GifPlayerBox extended" />
-    <option name="LAST_COMMIT_MESSAGE" value="GifPlayerBox extended" />
+    <MESSAGE value="some little improvements" />
+    <MESSAGE value="introduced ring2" />
+    <option name="LAST_COMMIT_MESSAGE" value="introduced ring2" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -654,18 +644,13 @@
           <option name="timeStamp" value="5" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/thegrid/ImageView.java</url>
-          <line>401</line>
-          <option name="timeStamp" value="7" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/video/VideoPlayerBox.java</url>
           <line>65</line>
           <option name="timeStamp" value="18" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/thegrid/WebApp.java</url>
-          <line>134</line>
+          <line>139</line>
           <option name="timeStamp" value="25" />
         </line-breakpoint>
       </breakpoints>
