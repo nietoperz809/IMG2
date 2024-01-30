@@ -29,8 +29,7 @@ import static thegrid.ImageList.IndexByRowID;
 public class ImageView extends JFrame implements MouseWheelListener {
     private final ImgPanel imgPanel;
     private final UniqueRng ring2;
-    private final UniqueRng ring;
-    //private int currentIdx;
+    private final UniqueRng shuffledRing;
 
     private Timer timer = null;
 
@@ -96,7 +95,7 @@ public class ImageView extends JFrame implements MouseWheelListener {
                 }
 
                 case KeyEvent.VK_T -> {
-                    ring2.set(ring.getNext());
+                    ring2.set(shuffledRing.getNext());
                     setImg();
                     imgPanel.clearOffset();
                     showByIdx();
@@ -107,7 +106,7 @@ public class ImageView extends JFrame implements MouseWheelListener {
                         imgPanel.undo();
                         return;
                     }
-                    ring2.set(ring.getPrev());
+                    ring2.set(shuffledRing.getPrev());
                     setImg();
                     imgPanel.clearOffset();
                     showByIdx();
@@ -116,9 +115,12 @@ public class ImageView extends JFrame implements MouseWheelListener {
                 case KeyEvent.VK_S -> {
                     if (timer == null) {
                         timer = new Timer(10000, e1 -> {
-                            ring2.set(ring.getNext());
-                            setTitle("Slideshow: " + this);
-                            adjustOn('h');
+                            ring2.set(shuffledRing.getNext());
+                            setImg();
+                            imgPanel.clearOffset();
+                            showByIdx();
+                            //setTitle("Slideshow: " + ImageView.this);
+                            //adjustOn('h');
                         });
                         timer.setRepeats(true);
                         timer.setInitialDelay(0);
@@ -126,7 +128,7 @@ public class ImageView extends JFrame implements MouseWheelListener {
                     } else {
                         timer.stop();
                         timer = null;
-                        setTitle("Slideshow STOPPED "+ this);
+                        setTitle("Slideshow STOPPED "+ ImageView.this);
                     }
                 }
 
@@ -232,7 +234,7 @@ public class ImageView extends JFrame implements MouseWheelListener {
 
 
     public ImageView (int idx) {
-        ring = new UniqueRng (ImageList.size());
+        shuffledRing = new UniqueRng (ImageList.size());
         ring2 = new UniqueRng (ImageList.size(), false);
         //allFiles = files;
         ring2.set (idx);
@@ -364,9 +366,8 @@ public class ImageView extends JFrame implements MouseWheelListener {
     }
 
     private void showByIdx() {
-        setImg();
         adjustOn('h');
-        setTitle (toString());
+        setImg();
     }
 
     private void adjustOn(char which) {
@@ -390,7 +391,6 @@ public class ImageView extends JFrame implements MouseWheelListener {
     }
 
     private void setImg() {
-        //DBHandler.NameID dbh = ImageList.get(currentIdx);
         imgPanel.setImage(loadImgFromStore());
         setTitle(toString());
     }
