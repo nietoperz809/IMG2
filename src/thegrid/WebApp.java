@@ -20,9 +20,14 @@ import static common.Tools.extractResource;
 public class WebApp extends NanoHTTPD {
     private final java.util.List<DBHandler.NameID> allFiles;
     private final UniqueRng ring;
-    int firstimg = -1;
+    //int firstimg = -1;
 
 
+    /**
+     * Get indec from RowID
+     * @param rowid
+     * @return
+     */
     int findIndex (int rowid) {
         for (int i=0; i<allFiles.size(); i++) {
             if (allFiles.get(i).rowid() == rowid)
@@ -73,8 +78,8 @@ public class WebApp extends NanoHTTPD {
      * @return response object
      */
     private Response sendImagePage(IHTTPSession session, int rowid) {
-        if (firstimg == -1)
-            firstimg = rowid;
+//        if (firstimg == -1)
+//            firstimg = rowid;
         try {
             String str = new String(extractResource("imgpage0.html"));
             str = str.replace("@@THEIMG", rowid + ".jpg");
@@ -132,7 +137,7 @@ public class WebApp extends NanoHTTPD {
         } else if (parm.equals("@@NXT")) {
             rowid = allFiles.get(ring.getNext()).rowid();
         } else /* @@RES */ {
-            rowid = firstimg;
+            rowid = 0;
         }
         return sendImagePage(null, rowid);
     }
