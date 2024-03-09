@@ -23,7 +23,7 @@ import java.io.IOException;
 import java.util.Objects;
 import java.util.UUID;
 
-import static thegrid.ImageList.IndexByRowID;
+//import static thegrid.ImageList.IndexByRowID;
 
 
 public class ImageView extends JFrame implements MouseWheelListener {
@@ -98,7 +98,7 @@ public class ImageView extends JFrame implements MouseWheelListener {
                     ring2.set(shuffledRing.getNext());
                     setImg();
                     imgPanel.clearOffset();
-                    showByIdx();
+                    adjustOn('h');
                 }
 
                 case KeyEvent.VK_Z -> {
@@ -109,7 +109,7 @@ public class ImageView extends JFrame implements MouseWheelListener {
                     ring2.set(shuffledRing.getPrev());
                     setImg();
                     imgPanel.clearOffset();
-                    showByIdx();
+                    adjustOn('h');
                 }
 
                 case KeyEvent.VK_S -> {
@@ -118,9 +118,7 @@ public class ImageView extends JFrame implements MouseWheelListener {
                             ring2.set(shuffledRing.getNext());
                             setImg();
                             imgPanel.clearOffset();
-                            showByIdx();
-                            //setTitle("Slideshow: " + ImageView.this);
-                            //adjustOn('h');
+                            adjustOn('h');
                         });
                         timer.setRepeats(true);
                         timer.setInitialDelay(0);
@@ -236,7 +234,6 @@ public class ImageView extends JFrame implements MouseWheelListener {
     public ImageView (int idx) {
         shuffledRing = new UniqueRng (ImageList.size());
         ring2 = new UniqueRng (ImageList.size(), false);
-        //allFiles = files;
         ring2.set (idx);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         addKeyListener(new KA());
@@ -302,14 +299,16 @@ public class ImageView extends JFrame implements MouseWheelListener {
 
     private void setNextImage() {
         ring2.getNext();
-        imgPanel.clearOffset();
         setImg();
+        imgPanel.clearOffset();
+        adjustOn('h');
     }
 
     private void setBeforeImage() {
         ring2.getPrev();
-        imgPanel.clearOffset();
         setImg();
+        imgPanel.clearOffset();
+        adjustOn('h');
     }
 
     private FastBitmap IconToFastBitmap() {
@@ -334,7 +333,7 @@ public class ImageView extends JFrame implements MouseWheelListener {
                 n = 0;
                 break;
             case "last":
-                n = IndexByRowID(-1);
+                n = thegrid.ImageList.IndexByRowID(-1);
                 break;
             default:
                 int rowid;
@@ -343,7 +342,7 @@ public class ImageView extends JFrame implements MouseWheelListener {
                 } catch (NumberFormatException ex) {
                     return;
                 }
-                n = IndexByRowID(rowid);
+                n = thegrid.ImageList.IndexByRowID(rowid);
                 if (n == -1)
                     return;
         }

@@ -58,13 +58,13 @@ public class VideoPlayerBox {
         });
     }
 
-    public void start (String name) {
+    public void start (DBHandler.NameID nid) {
         if (playerFrame != null)
             return;
         lock.lock();
         try {
             sbar.setValue(0);
-            File tempFile = DBHandler.getInst().transferVideoIntoFile(name);
+            File tempFile = DBHandler.getInst().transferVideoIntoFile(nid);
             System.out.println(tempFile);
             mpc = new EmbeddedMediaPlayerComponent();
             playerFrame = new JFrame();

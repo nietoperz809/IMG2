@@ -99,9 +99,9 @@ public class VideoApp extends JDialog {
                         File f = fileChooser.getSelectedFile();
                         SoftReference<byte[]> bt;
                         if (Tools.isGIF(nameid.name())) {
-                            bt = DBHandler.getInst().loadGifBytes(nameid.name());
+                            bt = DBHandler.getInst().loadGifBytes(nameid);
                         } else {
-                            bt = DBHandler.getInst().loadVideoBytes(nameid.name());
+                            bt = DBHandler.getInst().loadVideoBytes(nameid);
                         }
                         Files.write(f.toPath(), bt.get());
                     }
@@ -139,16 +139,17 @@ public class VideoApp extends JDialog {
     // GifPlayerBox gifPlayer = new GifPlayerBox();
 
     private void onOK() {
-        String name = listControl.getSelectedValue().name();
-        if (Tools.isGIF(name)) {
+        DBHandler.NameID nid = listControl.getSelectedValue();
+        int id = listControl.getSelectedValue().rowid();
+        if (Tools.isGIF(nid.name())) {
             try {
-                File f = DBHandler.getInst().transferGifIntoFile(name);
+                File f = DBHandler.getInst().transferGifIntoFile(nid);
                 new GifPlayerBox(f, this);
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
         } else {
-            vidPlayerBox.start (name);
+            vidPlayerBox.start (nid);
         }
     }
 

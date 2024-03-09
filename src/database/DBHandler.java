@@ -435,8 +435,8 @@ public class DBHandler {
         }
     }
 
-    public SoftReference<byte[]> loadBytes (String filename, String sql) throws Exception {
-        filename = filename.replace("'", "''");
+    public SoftReference<byte[]> loadBytes (DBHandler.NameID nid, String sql) throws Exception {
+        String filename = nid.name.replace("'", "''");
         ResultSet res = DBHandler.getInst()
                 .query(sql);
         if (res == null)
@@ -450,12 +450,12 @@ public class DBHandler {
     }
 
 
-    public SoftReference<byte[]> loadVideoBytes (String filename) throws Exception {
-        return loadBytes(filename, "select VID from VIDEOS where name='" + filename + "'");
+    public SoftReference<byte[]> loadVideoBytes (DBHandler.NameID nid) throws Exception {
+        return loadBytes (nid, "select VID from VIDEOS where _ROWID_='" + nid.rowid + "'");
     }
 
-    public SoftReference<byte[]> loadGifBytes (String filename) throws Exception {
-        return loadBytes(filename, "select GIFDATA from GIFS where name='"+filename+"'");
+    public SoftReference<byte[]> loadGifBytes (DBHandler.NameID nid) throws Exception {
+        return loadBytes(nid,"select GIFDATA from GIFS where _ROWID_='"+nid.rowid +"'");
     }
 
     /**
@@ -464,9 +464,9 @@ public class DBHandler {
      * @return file name of file on disk
      * @throws Exception if smth gone wrong
      */
-    public File transferIntoFile (String fileName, boolean gif) throws Exception {
-        SoftReference<byte[]> bt = gif ? loadGifBytes(fileName) : loadVideoBytes(fileName);
-        File fi = new File(System.getProperty("java.io.tmpdir")+File.separator+fileName+"myra.dat");
+    public File transferIntoFile (DBHandler.NameID nid, boolean gif) throws Exception {
+        SoftReference<byte[]> bt = gif ? loadGifBytes(nid) : loadVideoBytes(nid);
+        File fi = new File(System.getProperty("java.io.tmpdir")+File.separator+nid.name+"myra.dat");
         try (RandomAccessFile rafile = new RandomAccessFile(fi, "rw")) {
             MappedByteBuffer out = rafile.getChannel()
                     .map(FileChannel.MapMode.READ_WRITE, 0, bt.get().length);
@@ -477,13 +477,13 @@ public class DBHandler {
     }
 
 
-    public File transferGifIntoFile (String fileName) throws Exception {
-        return transferIntoFile (fileName, true);
+    public File transferGifIntoFile (DBHandler.NameID nid) throws Exception {
+        return transferIntoFile (nid, true);
     }
 
 
-    public File transferVideoIntoFile (String fileName) throws Exception {
-        return transferIntoFile(fileName, false);
+    public File transferVideoIntoFile (DBHandler.NameID nid) throws Exception {
+        return transferIntoFile(nid,false);
     }
 
     public void changeVideoName (String name, int rowid) {
