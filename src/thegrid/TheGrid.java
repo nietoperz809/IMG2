@@ -19,6 +19,8 @@ import static java.util.Objects.*;
 
 
 public class TheGrid extends MyFrame {
+    public static TheGrid instance;
+    public final ImageViewController controller = new ImageViewController();
     public final JPanel rootPane;
     public final JScrollPane scrollPane;
     //private java.util.List<DBHandler.NameID> allFiles;
@@ -46,7 +48,8 @@ public class TheGrid extends MyFrame {
 //    }
 
     public TheGrid (int max) {
-        //refresh();
+        System.out.println("TheGrid constructor called");
+        instance = this;
         DBHandler.getInst().log("Images in DB: "+ImageList.size());
         progress = new ProgressBox(this, ImageList.size());
         rootPane = new JPanel();

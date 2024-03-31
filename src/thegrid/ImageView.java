@@ -21,7 +21,6 @@ import java.awt.image.RescaleOp;
 import java.io.File;
 import java.io.IOException;
 import java.util.Objects;
-import java.util.UUID;
 
 //import static thegrid.ImageList.IndexByRowID;
 
@@ -32,6 +31,12 @@ public class ImageView extends JFrame implements MouseWheelListener {
     private final UniqueRng shuffledRing;
 
     private Timer timer = null;
+
+    @Override
+    public void dispose() {
+        super.dispose();
+        TheGrid.instance.controller.remove (this);
+    }
 
     class KA extends KeyAdapter {
         private long keyTime;
@@ -283,7 +288,9 @@ public class ImageView extends JFrame implements MouseWheelListener {
                 img = loadImgFromStore();
             else
                 img = ImgTools.removeAlpha(getIconImg());
-            outPath = outPath+File.separator + UUID.randomUUID() + ".jpg";
+            outPath = outPath+File.separator +
+                    Tools.toHex8(img.hashCode()) +
+                    ".jpg";
             System.out.println(outPath);
             try {
                 assert img != null;

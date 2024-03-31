@@ -6,12 +6,7 @@ import javax.sound.sampled.Line;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
-import java.awt.geom.AffineTransform;
-import java.awt.image.AffineTransformOp;
-import java.awt.image.BufferedImage;
 import java.io.*;
-
-import static javax.swing.JOptionPane.YES_NO_OPTION;
 
 public class Tools {
     /**
@@ -149,6 +144,14 @@ public class Tools {
             System.out.println("intExc");
         }
     }
+
+    public static String toHex8(int n) {
+        String ret = Long.toString(n & 0xffffffffL, 16);
+        while (ret.length() < 8)
+            ret = "0"+ret;
+        return ret;
+    }
+
 
 //    public static File readAsFileList(Clipboard clipboard) {
 //        try {

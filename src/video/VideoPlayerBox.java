@@ -10,6 +10,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.File;
+import java.util.Objects;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
@@ -64,7 +65,7 @@ public class VideoPlayerBox {
         lock.lock();
         try {
             sbar.setValue(0);
-            File tempFile = DBHandler.getInst().transferVideoIntoFile(nid);
+            File tempFile = Objects.requireNonNull(DBHandler.getInst()).transferVideoIntoFile(nid);
             System.out.println(tempFile);
             mpc = new EmbeddedMediaPlayerComponent();
             playerFrame = new JFrame();

@@ -20,6 +20,15 @@ public class GridMenu extends JMenuBar {
     public GridMenu(TheGrid theGrid) {
         JMenu jm = new JMenu("Menu");
 
+        JMenuItem m0 = new JMenuItem ("Dispose all open views ...");
+        m0.addActionListener(new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                theGrid.controller.killAll();
+            }
+        });
+
+
         JMenuItem m1 = new JMenuItem("Add more pictures ...");
         m1.addActionListener(new AbstractAction() {
             @Override
@@ -119,6 +128,7 @@ public class GridMenu extends JMenuBar {
             }
         });
 
+        jm.add(m0);
         jm.add(m1);
         jm.add(m1_1);
         jm.add(m2);
@@ -155,8 +165,8 @@ public class GridMenu extends JMenuBar {
                         byte[] h1 = g1.getHash();
                         byte[] h2 = g2.getHash();
                         if (Arrays.equals(h1, h2)) {
-                            sb.append(g1.getRowID()).append(" and ")
-                                    .append(g2.getRowID()).append(" are identical\n");
+                            sb.append(g1.getRowID()).append(":")
+                                    .append(g2.getRowID()).append(" * ");
                             if (!searchOnly) {
                                 if (DBHandler.getInst().deleteImage(g2.getRowID())) {
                                     theGrid.rootPane.remove(g2);

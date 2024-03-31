@@ -70,6 +70,8 @@ public class GridListeners implements KeyListener {
 
             case KeyEvent.VK_N:
                 ImageView iv = new ImageView(0);
+                TheGrid.instance.controller.add(iv);
+                //theGrid.controller.add(iv);
                 iv.selectAnotherImage();
                 break;
         }

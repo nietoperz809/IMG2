@@ -72,7 +72,8 @@ class GridImage extends JLabel {
                     }
                     return;
                 }
-                new ImageView (index); // left click
+                ImageView iv = new ImageView (index); // left click
+                TheGrid.instance.controller.add (iv);
             }
         });
     }
