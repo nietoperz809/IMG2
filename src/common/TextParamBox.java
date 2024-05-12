@@ -16,6 +16,7 @@ public class TextParamBox extends JDialog {
     private JButton showButton;
     private JTextField a2020TextField;
     private JTextField a05TextField;
+    private JCheckBox fillGroundCheckBox;
     private JButton buttonOK;
 
     private static final TextParamBox instance = new TextParamBox();
@@ -40,6 +41,7 @@ public class TextParamBox extends JDialog {
         showButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                watermark.fillground = fillGroundCheckBox.isSelected();
                 watermark.text = textField1.getText();
                 watermark.alpha = Float.parseFloat(a05TextField.getText());
                 String pt[] = a2020TextField.getText().split(",");

@@ -76,6 +76,12 @@
         <properties/>
         <border type="none"/>
         <children>
+          <component id="6e707" class="javax.swing.JCheckBox" binding="fillGroundCheckBox" default-binding="true">
+            <constraints/>
+            <properties>
+              <text value="fillGround"/>
+            </properties>
+          </component>
           <component id="aa0a0" class="javax.swing.JLabel">
             <constraints/>
             <properties>

@@ -3,6 +3,7 @@ package common;
 import java.awt.*;
 
 public class Watermark {
+    public boolean fillground;
     public float alpha = 1.0f;
     public Point pos = new Point(20, 40);
     public String text = "hello";

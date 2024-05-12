@@ -9,6 +9,8 @@ import common.Watermark;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.font.FontRenderContext;
+import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import javax.swing.*;
 
@@ -108,7 +110,17 @@ public class ImgPanel extends JPanel {
         SwingUtilities.invokeLater(this::repaint);
     }
 
-    public static void paintText(Graphics2D g, Point pos, Font fnt, String txt, Color col, float alpha) {
+    public static void paintText(Graphics2D g, Point pos, Font fnt, String txt, Color col, float alpha,
+                                 boolean ground) {
+        if (ground) {
+            FontRenderContext frc = g.getFontRenderContext();
+            Rectangle2D textBound = fnt.getStringBounds(txt, frc);
+            System.out.println(textBound);
+            g.setPaint(Color.DARK_GRAY);
+            g.fillRect((int) textBound.getX() + pos.x, (int) textBound.getY() + pos.y,
+                    (int) textBound.getWidth(), (int) textBound.getHeight());
+        }
+        // ------------------
         Composite c = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, alpha);
         g.setComposite(c);
         g.setPaint(col);
@@ -155,7 +167,7 @@ public class ImgPanel extends JPanel {
         if (image != null) {
             stack.push (ImgTools.deepCopy(image));
             paintText(image.createGraphics(), watermark.pos, watermark.font,
-                    watermark.text, watermark.col, watermark.alpha);
+                    watermark.text, watermark.col, watermark.alpha, watermark.fillground);
             SwingUtilities.invokeLater(this::repaint);
         }
     }
