@@ -22,7 +22,7 @@ import java.util.Objects;
 import java.util.UUID;
 
 public class DBHandler {
-    private static final String ROOT_DIR = "C:\\Databases\\";
+    private String ROOT_DIR = "C:\\Databases\\";
     private static final String NO_PASS = "NoPass";
     private static final String DB_FILE = "mydb";
     private static final String DB_FILE_FULL = DB_FILE + ".mv.db";
@@ -33,6 +33,12 @@ public class DBHandler {
     /*
         jdbc:h2:C:\peter.home\java\IMG2\datastore\mydb;CIPHER=AES
      */
+
+    public void setDBRoot (String s) {
+        ROOT_DIR = s;
+        log ("DBROOT set to:"+s);
+    }
+
 
     /**
      * Private constructor like Singletons should have

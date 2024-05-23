@@ -76,17 +76,19 @@ public class TheGrid extends MyFrame {
     public static void main(String... input) {
         try {
             //UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
-            int m = -1;
+            //int m = -1;
             if (input.length != 0) {
-                if (input[0].startsWith("max")) {
-                    m = Integer.parseInt(input[0].substring(3));
+                if (input[0].startsWith("dbdir:")) {
+                    String dir = input[0].substring(6);
+                    DBHandler.getInst().setDBRoot(dir);
+                    System.out.println(dir);
                 }
             }
             Thread hook = new Thread(() ->
                     DBHandler.getInst().log ("SHUTDOWN"));
             Runtime.getRuntime().addShutdownHook(hook);
             DBHandler.getInst().log("+++ TheGrid started");
-            new TheGrid(m);
+            new TheGrid(-1);
         } catch (Exception e) {
             DBHandler.getInst().log ("FAIL: "+e.toString());
         }

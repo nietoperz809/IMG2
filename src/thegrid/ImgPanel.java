@@ -1,10 +1,7 @@
 package thegrid;
 
 import Catalano.Imaging.FastBitmap;
-import common.ImgTools;
-import common.UndoStack;
-import common.TextParamBox;
-import common.Watermark;
+import common.*;
 
 import java.awt.*;
 import java.awt.event.MouseAdapter;
@@ -115,10 +112,10 @@ public class ImgPanel extends JPanel {
         if (ground) {
             FontRenderContext frc = g.getFontRenderContext();
             Rectangle2D textBound = fnt.getStringBounds(txt, frc);
-            System.out.println(textBound);
-            g.setPaint(Color.DARK_GRAY);
-            g.fillRect((int) textBound.getX() + pos.x, (int) textBound.getY() + pos.y,
-                    (int) textBound.getWidth(), (int) textBound.getHeight());
+            //System.out.println(textBound);
+            g.setPaint (Tools.getComplementaryColor(col));
+            g.fillRect((int) textBound.getX() + pos.x-2, (int) textBound.getY() + pos.y-2,
+                    (int) textBound.getWidth()+2, (int) textBound.getHeight());
         }
         // ------------------
         Composite c = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, alpha);

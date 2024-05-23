@@ -25,6 +25,18 @@ public class Tools {
         return false;
     }
 
+    public static Color getComplementaryColor( Color color) {
+        int R = color.getRed();
+        int G = color.getGreen();
+        int B = color.getBlue();
+        int A = color.getAlpha();
+        R = 255 - R;
+        G = 255 - G;
+        B = 255 - B;
+        return new Color (R,G,B,A);
+        //return R + (G << 8) + ( B << 16) + ( A << 24);
+    }
+
     public static boolean isGIF (String filename) {
         return hasExtension (filename, ".gif");
     }
