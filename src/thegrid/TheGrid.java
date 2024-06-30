@@ -10,8 +10,10 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.IOException;
 import java.time.Duration;
 import java.time.Instant;
+import java.util.ArrayList;
 
 import static common.ImgTools.byteArrayToImg;
 import static common.Tools.extractResource;
@@ -85,13 +87,45 @@ public class TheGrid extends MyFrame {
                 }
             }
             Thread hook = new Thread(() ->
-                    DBHandler.getInst().log ("SHUTDOWN"));
+                    DBHandler.getInst().log("SHUTDOWN"));
             Runtime.getRuntime().addShutdownHook(hook);
+
+//            Thread hook2 = new Thread(() -> {
+//                System.out.println("hook2");
+//                try {
+//                    restartApplication();
+//                } catch (Exception e) {
+//                    throw new RuntimeException(e);
+//                }
+//                //main(new String[]{"dbdir:C:\\Databases\\", "--"});
+//            });
+//            Runtime.getRuntime().addShutdownHook(hook2);
+
             DBHandler.getInst().log("+++ TheGrid started");
             new TheGrid(-1);
         } catch (Exception e) {
-            DBHandler.getInst().log ("FAIL: "+e.toString());
+            DBHandler.getInst().log("FAIL: " + e.toString());
         }
+    }
+
+    public static void restartApplication() throws Exception {
+        final String javaBin = System.getProperty("java.home") + File.separator + "bin" + File.separator + "java";
+        final File currentJar = new File(TheGrid.class.getProtectionDomain().getCodeSource().getLocation().toURI());
+
+        /* is it a jar file? */
+        //if(!currentJar.getName().endsWith(".jar"))
+        //    return;
+
+        /* Build command: java -jar application.jar */
+        final ArrayList<String> command = new ArrayList<String>();
+        command.add(javaBin);
+        command.add("-jar");
+        command.add(currentJar.getPath());
+        command.add ("dbdir:C:\\Databases\\");
+
+        final ProcessBuilder builder = new ProcessBuilder(command);
+        builder.start();
+        System.exit(0);
     }
 
     public void addImageFilesToDatabase(File[] files) throws Exception {
@@ -135,6 +169,13 @@ public class TheGrid extends MyFrame {
         if (imageCount >= ImageList.size()) {
             stopThumbViewFill(info);
         }
+    }
+
+    @Override
+    public void dispose() {
+        System.out.println("window dispose");
+        DBHandler.getInst().close();
+        super.dispose();
     }
 }
 

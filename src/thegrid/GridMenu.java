@@ -20,6 +20,22 @@ public class GridMenu extends JMenuBar {
     public GridMenu(TheGrid theGrid) {
         JMenu jm = new JMenu("Menu");
 
+        JMenuItem m8 = new JMenuItem ("Restart the app ...");
+        m8.addActionListener(new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                DBHandler.getInst().log("--- TheGrid ended");
+                DBHandler.getInst().close();
+                try {
+                    Thread.sleep(600);
+                    TheGrid.restartApplication();
+                } catch (Exception ex) {
+                    throw new RuntimeException(ex);
+                }
+            }
+        });
+
+
         JMenuItem m0 = new JMenuItem ("Dispose all open views ...");
         m0.addActionListener(new AbstractAction() {
             @Override
@@ -138,6 +154,7 @@ public class GridMenu extends JMenuBar {
         jm.add(m5);
         jm.add(m6);
         jm.add(m7);
+        jm.add(m8);
         this.add(jm);
         theGrid.setJMenuBar(this);
     }

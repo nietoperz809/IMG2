@@ -23,7 +23,13 @@ public class GridListeners implements KeyListener {
             public void windowClosing(WindowEvent e) {
                 DBHandler.getInst().log("--- TheGrid ended");
                 super.windowClosing(e);
-                //DBHandler.getInst().close();
+                DBHandler.getInst().close();
+//                try {
+//                    Thread.sleep(600);
+//                    TheGrid.restartApplication();
+//                } catch (Exception ex) {
+//                    throw new RuntimeException(ex);
+//                }
                 System.exit(1);
             }
         });
