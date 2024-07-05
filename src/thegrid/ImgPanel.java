@@ -103,15 +103,19 @@ public class ImgPanel extends JPanel {
         setImage(bimg);
     }
 
+    private void autoSaveImage() {
+        String hp = TheGrid.instance.getHistoryPath();
+        if (hp != null) {
+            SwingUtilities.invokeLater(() -> theView.saveImageAsFile (false, hp));
+        }
+    }
+
     public void setImage (BufferedImage img) {
         if (image != null)
             stack.push (ImgTools.deepCopy(image));
         image = img;
         String hp = TheGrid.instance.getHistoryPath();
-        if (hp != null) {
-            SwingUtilities.invokeLater(() -> theView.saveImageAsFile (false, hp));
-        }
-
+        autoSaveImage();
         SwingUtilities.invokeLater(this::repaint);
     }
 
@@ -173,6 +177,7 @@ public class ImgPanel extends JPanel {
             stack.push (ImgTools.deepCopy(image));
             paintText(image.createGraphics(), watermark.pos, watermark.font,
                     watermark.text, watermark.col, watermark.alpha, watermark.fillground);
+            autoSaveImage();
             SwingUtilities.invokeLater(this::repaint);
         }
     }
