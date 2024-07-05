@@ -286,19 +286,26 @@ public class ImageView extends JFrame implements MouseWheelListener {
     }
 
 
+    private long imgSavetime;
+
     public void saveImageAsFile (boolean orig, String outPath) {
         if (outPath != null) {
             int rowid = thegrid.ImageList.get(ring2.get()).rowid();
             BufferedImage img;
+
             if (orig)
                 img = loadImgFromStore();
             else
                 img = ImgTools.removeAlpha(getIconImg());
 
+            long milli = System.currentTimeMillis(); // prevent dupes
+            if (milli - imgSavetime < 500)
+                return;
+            imgSavetime = milli;
+
             outPath = outPath+File.separator +
-                    rowid + "-" + System.currentTimeMillis()
+                    rowid + "-" + milli
                     + ".jpg";
-            //System.out.println(outPath);
             try {
                 assert img != null;
                 boolean success = ImageIO.write(img, "jpg", new File(outPath));
@@ -405,10 +412,6 @@ public class ImageView extends JFrame implements MouseWheelListener {
 
     private void setImg() {
         BufferedImage bimg = loadImgFromStore();
-//        String hp = TheGrid.instance.getHistoryPath();
-//        if (hp != null) {
-//              saveImageAsFile (false, hp);
-//        }
         imgPanel.setImage(bimg);
         setTitle(toString());
     }
