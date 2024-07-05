@@ -144,6 +144,19 @@ public class GridMenu extends JMenuBar {
             }
         });
 
+        JCheckBoxMenuItem mHist = new JCheckBoxMenuItem("save image history");
+        mHist.addActionListener(new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (!mHist.isSelected()) {
+                    theGrid.setHistoryPath(null);
+                    return;
+                }
+                String dir = Tools.chooseDir(theGrid);
+                theGrid.setHistoryPath(dir);
+            }
+        });
+
         jm.add(m0);
         jm.add(m1);
         jm.add(m1_1);
@@ -155,6 +168,7 @@ public class GridMenu extends JMenuBar {
         jm.add(m6);
         jm.add(m7);
         jm.add(m8);
+        jm.add (mHist);
         this.add(jm);
         theGrid.setJMenuBar(this);
     }

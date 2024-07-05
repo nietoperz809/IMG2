@@ -31,6 +31,17 @@ public class TheGrid extends MyFrame {
     private int imageCount;
     private boolean stopFill = false;
 
+    private String historyPath = null;
+
+    public String getHistoryPath() {
+        return historyPath;
+    }
+
+    public void setHistoryPath(String historyPath) {
+        System.out.println("histPath: "+historyPath);
+        this.historyPath = historyPath;
+    }
+
     public final static BufferedImage failImg;
 
     static {

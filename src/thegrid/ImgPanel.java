@@ -17,12 +17,13 @@ public class ImgPanel extends JPanel {
     public Point offset = new Point();
 
     JToolTip thisJT;
+    ImageView theView;
 
     public static final int SCROLLAMOUNT = 10;
 
     private final UndoStack<BufferedImage> stack = new UndoStack<>(10);
 
-    public ImgPanel (BufferedImage img) {
+    public ImgPanel (BufferedImage img, ImageView parent) {
         super();
         addMouseListener(new MouseAdapter() {
             @Override
@@ -33,6 +34,7 @@ public class ImgPanel extends JPanel {
             }
         });
         image = img;
+        theView = parent;
         setSize(img.getWidth(), img.getHeight());
 
         setToolTipText
@@ -97,13 +99,19 @@ public class ImgPanel extends JPanel {
     }
 
     public void setImage (FastBitmap fb) {
-        setImage(fb.toBufferedImage());
+        BufferedImage bimg = fb.toBufferedImage();
+        setImage(bimg);
     }
 
     public void setImage (BufferedImage img) {
         if (image != null)
             stack.push (ImgTools.deepCopy(image));
         image = img;
+        String hp = TheGrid.instance.getHistoryPath();
+        if (hp != null) {
+            SwingUtilities.invokeLater(() -> theView.saveImageAsFile (false, hp));
+        }
+
         SwingUtilities.invokeLater(this::repaint);
     }
 

@@ -109,6 +109,23 @@ public class Tools {
         Runtime.getRuntime().runFinalization();
     }
 
+    /*
+                      JFileChooser chooser;
+                chooser = new JFileChooser();
+                chooser.setAcceptAllFileFilterUsed(false);
+                chooser.setCurrentDirectory(new java.io.File("."));
+                chooser.setDialogTitle("dir for image history");
+                chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+                if (chooser.showOpenDialog(theGrid) == JFileChooser.APPROVE_OPTION) {
+                    theGrid.setHistoryPath(chooser.getSelectedFile().getAbsolutePath());
+                }
+                else {
+                    theGrid.setHistoryPath(null);
+                }
+
+    */
+     
+
     public static String chooseDir (Component parent) {
         JFileChooser f = new JFileChooser();
         PersistString ps = new PersistString("Common.lastDirectory", System.getProperty("user.home"));
@@ -157,12 +174,12 @@ public class Tools {
         }
     }
 
-    public static String toHex8(int n) {
-        String ret = Long.toString(n & 0xffffffffL, 16);
-        while (ret.length() < 8)
-            ret = "0"+ret;
-        return ret;
-    }
+//    public static String toHex8(int n) {
+//        String ret = Long.toString(n & 0xffffffffL, 16);
+//        while (ret.length() < 8)
+//            ret = "0"+ret;
+//        return ret;
+//    }
 
 
 //    public static File readAsFileList(Clipboard clipboard) {

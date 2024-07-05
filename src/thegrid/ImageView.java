@@ -79,7 +79,7 @@ public class ImageView extends JFrame implements MouseWheelListener {
             switch (ev) {
                 case KeyEvent.VK_PAGE_DOWN -> setNextImage();
                 case KeyEvent.VK_PAGE_UP -> setBeforeImage();
-                case KeyEvent.VK_PLUS -> scaleIconImg(1.1f);
+                case KeyEvent.VK_PLUS -> scaleIconImg(1.5f);
                 case KeyEvent.VK_MINUS -> scaleIconImg(0.9f);
 
                 case KeyEvent.VK_R -> {
@@ -245,7 +245,7 @@ public class ImageView extends JFrame implements MouseWheelListener {
         addMouseWheelListener(this);
         BufferedImage img = loadImgFromStore();
         assert img != null;
-        imgPanel = new ImgPanel(img);
+        imgPanel = new ImgPanel(img, this);
         setTitle(toString());
         new RegionSelectorListener(img, imgPanel, this);
         setContentPane(imgPanel);
@@ -282,16 +282,23 @@ public class ImageView extends JFrame implements MouseWheelListener {
 
     private void saveAsFile (boolean orig) {
         String outPath = Tools.chooseDir(this);
+        saveImageAsFile (orig, outPath);
+    }
+
+
+    public void saveImageAsFile (boolean orig, String outPath) {
         if (outPath != null) {
+            int rowid = thegrid.ImageList.get(ring2.get()).rowid();
             BufferedImage img;
             if (orig)
                 img = loadImgFromStore();
             else
                 img = ImgTools.removeAlpha(getIconImg());
+
             outPath = outPath+File.separator +
-                    Tools.toHex8(img.hashCode()) +
-                    ".jpg";
-            System.out.println(outPath);
+                    rowid + "-" + System.currentTimeMillis()
+                    + ".jpg";
+            //System.out.println(outPath);
             try {
                 assert img != null;
                 boolean success = ImageIO.write(img, "jpg", new File(outPath));
@@ -397,7 +404,12 @@ public class ImageView extends JFrame implements MouseWheelListener {
     }
 
     private void setImg() {
-        imgPanel.setImage(loadImgFromStore());
+        BufferedImage bimg = loadImgFromStore();
+//        String hp = TheGrid.instance.getHistoryPath();
+//        if (hp != null) {
+//              saveImageAsFile (false, hp);
+//        }
+        imgPanel.setImage(bimg);
         setTitle(toString());
     }
 
