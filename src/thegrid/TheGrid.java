@@ -104,8 +104,14 @@ public class TheGrid extends MyFrame {
 
             /**************************************************/
 //            DBHandler db = DBHandler.getInst();
-//            db.incAccCounter(1);
-//            int a1 = db.getAccCounter(1);
+//            int rid = 2;
+//            db.incAccCounter(rid);
+//            int a1 = db.getAccCounter(rid);
+//            if (a1 == 0)
+//            {
+//                db.setAccCounter (rid, 1);
+//                a1 = db.getAccCounter(rid);
+//            }
 //            System.out.println(a1);
 //            System.exit(0);
             /**************************************************/

@@ -517,21 +517,40 @@ public class DBHandler {
     }
 
     public void incAccCounter (int rowid) {
-        String acc = "update IMAGES set ACCNUM = (ACCNUM + 1) where _rowid_ =" + rowid;
+        String sql = "update IMAGES set ACCNUM = (ACCNUM + 1) where _rowid_ =" + rowid;
         try {
-            statement.execute (acc);
-            System.out.println("incACC: "+rowid);
+            statement.execute (sql);
+            connection.commit();
+            System.out.println("incACC: "+sql);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
+
+    public void setAccCounter (int rowid, int val) {
+        String sql = "update IMAGES set ACCNUM = "+ val + " where _rowid_ =" + rowid;
+        try {
+            statement.execute (sql);
+            connection.commit();
+            System.out.println("incACC: "+sql);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 
     public int getAccCounter (int rowid) {
         String q = "select ACCNUM from IMAGES where _rowid_ =" + rowid;
         try (ResultSet res = query(q)) {
             if (res.next()) {
                 System.out.println("readACC: "+rowid);
-                return res.getInt(1);
+                int ret = res.getInt(1);
+                // init with 1 on first use
+                if (ret == 0) {
+                    setAccCounter (rowid, 1);
+                    return 1;
+                }
+                return ret;
             }
         } catch (SQLException e) {
             System.out.println(e);
