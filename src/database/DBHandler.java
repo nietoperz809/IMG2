@@ -75,6 +75,8 @@ public class DBHandler {
             statement.execute(sql);
             sql = "alter table IMAGES add if not exists TAG varchar(128)";
             statement.execute(sql);
+            sql = "alter table IMAGES add if not exists ACCNUM integer";
+            statement.execute(sql);
             sql = "alter table VIDEOS add if not exists TAG varchar(128)";
             statement.execute(sql);
         } catch (SQLException e) {
@@ -172,7 +174,7 @@ public class DBHandler {
 
 
     public List<NameID> getAllImageInfos() {
-        String sql = "select name,_ROWID_,tag from IMAGES order by _ROWID_ asc";
+        String sql = "select name,_ROWID_,tag,accnum from IMAGES order by _ROWID_ asc";
         return getNames(sql);
     }
 
@@ -514,6 +516,30 @@ public class DBHandler {
         return null;
     }
 
+    public void incAccCounter (int rowid) {
+        String acc = "update IMAGES set ACCNUM = (ACCNUM + 1) where _rowid_ =" + rowid;
+        try {
+            statement.execute (acc);
+            System.out.println("incACC: "+rowid);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public int getAccCounter (int rowid) {
+        String q = "select ACCNUM from IMAGES where _rowid_ =" + rowid;
+        try (ResultSet res = query(q)) {
+            if (res.next()) {
+                System.out.println("readACC: "+rowid);
+                return res.getInt(1);
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+            throw new RuntimeException(e);
+        }
+        return -1;
+    }
+
     public byte[] loadImage (int rowid) {
         String q = "select image from IMAGES where _rowid_ =" + rowid;
         try (ResultSet res = query(q)) {
@@ -543,7 +569,7 @@ public class DBHandler {
     public record NameID(String name, int rowid, String tag) {
         @Override
             public String toString() {
-                return name + " : (" + rowid + ")";
+                return name + " : (" + rowid + ") ";
             }
         }
 

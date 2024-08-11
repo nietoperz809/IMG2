@@ -22,8 +22,6 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Objects;
 
-//import static thegrid.ImageList.IndexByRowID;
-
 
 public class ImageView extends JFrame implements MouseWheelListener {
     private final ImgPanel imgPanel;
@@ -382,7 +380,8 @@ public class ImageView extends JFrame implements MouseWheelListener {
     public String toString() {
         var v = ImageList.get(ring2.get());
         return "IDX:" + ring2.get() + " ROWID:" +
-                v.rowid() + " TAG:" + v.tag();
+                v.rowid() + " TAG:" + v.tag() +
+                " -- ACC: "+DBHandler.getInst().getAccCounter(v.rowid());
     }
 
     private void showByIdx() {
@@ -418,7 +417,11 @@ public class ImageView extends JFrame implements MouseWheelListener {
 
     private BufferedImage loadImgFromStore() {
         try {
-            byte[] b = Objects.requireNonNull(DBHandler.getInst()).loadImage(ImageList.get(ring2.get()).rowid());
+            var v = DBHandler.getInst();
+            int id = ImageList.get(ring2.get()).rowid();
+            v.incAccCounter(id);
+            System.out.println("accC:"+v.getAccCounter(id));
+            byte[] b = Objects.requireNonNull(v).loadImage(id);
             if (b == null) {
                 System.out.println("loadImgFromStore-1 fail!!!");
                 return TheGrid.failImg;

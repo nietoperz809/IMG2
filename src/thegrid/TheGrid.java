@@ -1,6 +1,7 @@
 package thegrid;
 
 import buildinfo.BuildInfo;
+import com.sun.jna.platform.win32.DBT;
 import common.ProgressBox;
 import common.Sam;
 import common.Tools;
@@ -101,16 +102,13 @@ public class TheGrid extends MyFrame {
                     DBHandler.getInst().log("SHUTDOWN"));
             Runtime.getRuntime().addShutdownHook(hook);
 
-//            Thread hook2 = new Thread(() -> {
-//                System.out.println("hook2");
-//                try {
-//                    restartApplication();
-//                } catch (Exception e) {
-//                    throw new RuntimeException(e);
-//                }
-//                //main(new String[]{"dbdir:C:\\Databases\\", "--"});
-//            });
-//            Runtime.getRuntime().addShutdownHook(hook2);
+            /**************************************************/
+//            DBHandler db = DBHandler.getInst();
+//            db.incAccCounter(1);
+//            int a1 = db.getAccCounter(1);
+//            System.out.println(a1);
+//            System.exit(0);
+            /**************************************************/
 
             DBHandler.getInst().log("+++ TheGrid started");
             new TheGrid(-1);
