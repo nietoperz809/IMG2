@@ -174,7 +174,8 @@ public class DBHandler {
 
 
     public List<NameID> getAllImageInfos() {
-        String sql = "select name,_ROWID_,tag,accnum from IMAGES order by _ROWID_ asc";
+        //String sql = "select name,_ROWID_,tag,accnum from IMAGES order by _ROWID_ asc";
+        String sql = "select name,_ROWID_,tag,accnum from IMAGES order by accnum desc";
         return getNames(sql);
     }
 
@@ -468,7 +469,6 @@ public class DBHandler {
 
     /**
      * Load DB record into mapped file
-     * @param fileName name of video record in database
      * @return file name of file on disk
      * @throws Exception if smth gone wrong
      */

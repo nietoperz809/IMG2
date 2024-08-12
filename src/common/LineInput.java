@@ -35,4 +35,17 @@ public class LineInput extends JDialog {
         return dialog.textField1.getText();
     }
 
+    public static int onlyPosNumber (String init, String lab, Color col) {
+        String res = xmain (init, lab, col, null);
+        try {
+            int i = Integer.parseInt(res);
+            if (i < 0)
+                throw new RuntimeException("no neg number");
+            return i;
+        } catch (NumberFormatException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
 }

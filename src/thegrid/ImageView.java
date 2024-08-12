@@ -80,6 +80,14 @@ public class ImageView extends JFrame implements MouseWheelListener {
                 case KeyEvent.VK_PLUS -> scaleIconImg(1.5f);
                 case KeyEvent.VK_MINUS -> scaleIconImg(0.9f);
 
+                case KeyEvent.VK_J -> {
+                    int id = ImageList.get(ring2.get()).rowid();
+                    String init = ""+DBHandler.getInst().getAccCounter(id);
+                    int res = LineInput.onlyPosNumber(init, "new acc counter for: "+id,
+                    Color.orange);
+                    DBHandler.getInst().setAccCounter(id, res);
+                }
+
                 case KeyEvent.VK_R -> {
                     BufferedImage img = getIconImg();
                     img = ImgTools.rotateClockwise90(img);
