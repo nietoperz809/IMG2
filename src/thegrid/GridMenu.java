@@ -130,6 +130,17 @@ public class GridMenu extends JMenuBar {
             }
         });
 
+        JMenuItem msql = new JMenuItem("set Main SQL");
+        msql.addActionListener(new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                DBHandler db = DBHandler.getInst();
+                String newSql = LineInput.xmain(db.getMainSQL(), "newSQL", Color.BLUE);
+                db.setMainSQL(newSql);
+            }
+        });
+
+
         JCheckBoxMenuItem m7 = new JCheckBoxMenuItem("WebServer");
         m7.addActionListener(new AbstractAction() {
             static WebApp wapp;
@@ -169,6 +180,7 @@ public class GridMenu extends JMenuBar {
         jm.add(m7);
         jm.add(m8);
         jm.add (mHist);
+        jm.add (msql);
         this.add(jm);
         theGrid.setJMenuBar(this);
     }

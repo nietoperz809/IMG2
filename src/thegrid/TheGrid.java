@@ -68,7 +68,7 @@ public class TheGrid extends MyFrame {
         progress = new ProgressBox(this, ImageList.size());
         rootPane = new JPanel();
         scrollPane = new JScrollPane(rootPane);
-        rootPane.setLayout(new GridLayout(0, 10, 2, 2));
+        rootPane.setLayout(new GridLayout(0, 10, 1, 1));
         add(scrollPane);
         setSize(1050, 800);
         setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
@@ -80,6 +80,10 @@ public class TheGrid extends MyFrame {
         imageCount = 0;
         startTime = Instant.now();
 
+        if (ImageList.size() == 0) {
+            stopThumbViewFill("sql error");
+            return;
+        }
         for (int s = 0; s < ImageList.size(); s++) {
             if (stopFill)
                 break;

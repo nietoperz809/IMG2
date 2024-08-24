@@ -27,4 +27,8 @@ public class PersistString {
         return Preferences.userNodeForPackage(PersistString.class)
                 .get(entry, defaultStr);
     }
+    public String getDefault() {
+        return defaultStr;
+    }
+
 }

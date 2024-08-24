@@ -22,6 +22,9 @@ import java.util.Objects;
 import java.util.UUID;
 
 public class DBHandler {
+    private PersistString mainSQL =
+            new PersistString("mainSQL",
+                    "select name,_ROWID_,tag,accnum from IMAGES order by accnum desc");
     private String ROOT_DIR = "C:\\Databases\\";
     private static final String NO_PASS = "NoPass";
     private static final String DB_FILE = "mydb";
@@ -33,6 +36,13 @@ public class DBHandler {
     /*
         jdbc:h2:C:\peter.home\java\IMG2\datastore\mydb;CIPHER=AES
      */
+
+    public void setMainSQL (String newSQL) {
+        mainSQL.set(newSQL);
+    }
+    public String getMainSQL () {
+        return mainSQL.get();
+    }
 
     public void setDBRoot (String s) {
         ROOT_DIR = s;
@@ -135,7 +145,7 @@ public class DBHandler {
         try {
             return statement.executeQuery(txt);
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            return null; //throw new RuntimeException(e);
         }
     }
 
@@ -174,8 +184,9 @@ public class DBHandler {
 
 
     public List<NameID> getAllImageInfos() {
-        //String sql = "select name,_ROWID_,tag,accnum from IMAGES order by _ROWID_ asc";
-        String sql = "select name,_ROWID_,tag,accnum from IMAGES order by accnum desc";
+        String sql = null;
+        //mainSQL.reset();
+        sql = mainSQL.get();
         return getNames(sql);
     }
 
@@ -196,6 +207,8 @@ public class DBHandler {
     private synchronized List<NameID> getNames(String sql) {
         ArrayList<NameID> al = new ArrayList<>();
         try (ResultSet res = query(sql)) {
+            if (res == null)
+                return al;
             while (res.next()) {
                 al.add(new NameID(res.getString(1),
                         res.getInt(2),
