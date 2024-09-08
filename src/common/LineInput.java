@@ -26,9 +26,10 @@ public class LineInput extends JDialog {
 
     public static String xmain (String init, String lab, Color col, String tooltip) {
         LineInput dialog = new LineInput(col);
-        int len = init == null ? 100 : init.length()*20;
-        dialog.textField1.setPreferredSize(
-                new Dimension(len, -1)
+        int len = Integer.max (600, init == null ? 100 : init.length()*20);
+
+        dialog./*textField1.*/setPreferredSize(
+                new Dimension(len, 50)
         );
         dialog.textField1.setText(init);
         dialog.textField1.setToolTipText(tooltip);

@@ -6,35 +6,40 @@ import static java.util.Objects.requireNonNull;
 
 public class ImageList {
 
-    private ImageList() {
-        // prevent instantiation
+//    private ImageList() {
+//        // prevent instantiation
+//    }
+
+    private String sql;
+    public void setSQL (String sql) {
+        this.sql = sql;
     }
     
-    public static java.util.List<DBHandler.NameID> allFiles
-            = requireNonNull(DBHandler.getInst()).getAllImageInfos();
+    public java.util.List<DBHandler.NameID> allFiles
+            = requireNonNull(DBHandler.getInst()).getSelectedImageInfos(sql);
 
-    public static void refresh() {
-        allFiles = requireNonNull(DBHandler.getInst()).getAllImageInfos();
+    public void refresh() {
+        allFiles = requireNonNull(DBHandler.getInst()).getSelectedImageInfos(sql);
     }
 
-    public static DBHandler.NameID get (int n) {
+    public DBHandler.NameID get (int n) {
         return allFiles.get(n);
     }
 
-    public static int size() {
+    public int size() {
         return allFiles.size();
     }
 
-    public static void add (DBHandler.NameID nid) {
+    public void add (DBHandler.NameID nid) {
         allFiles.add(nid);
     }
 
-    public static int getLastRowid() {
+    public int getLastRowid() {
         refresh();
         return allFiles.get (allFiles.size()-1).rowid();
     }
 
-    public static int IndexByRowID(int rowid) {
+    public int IndexByRowID(int rowid) {
         refresh();
         if (rowid == -1) {  // last rowid
             return size()-1;

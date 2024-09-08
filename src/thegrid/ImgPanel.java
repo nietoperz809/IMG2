@@ -13,6 +13,7 @@ import javax.swing.*;
 
 public class ImgPanel extends JPanel {
 
+    private final TheGrid grid;
     private BufferedImage image;
     public Point offset = new Point();
 
@@ -23,8 +24,9 @@ public class ImgPanel extends JPanel {
 
     private final UndoStack<BufferedImage> stack = new UndoStack<>(10);
 
-    public ImgPanel (BufferedImage img, ImageView parent) {
+    public ImgPanel (TheGrid grid, BufferedImage img, ImageView parent) {
         super();
+        this.grid = grid;
         addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -104,7 +106,7 @@ public class ImgPanel extends JPanel {
     }
 
     private void autoSaveImage() {
-        String hp = TheGrid.instance.getHistoryPath();
+        String hp = grid.getHistoryPath();
         if (hp != null) {
             SwingUtilities.invokeLater(() -> theView.saveImageAsFile (false, hp));
         }
@@ -114,7 +116,7 @@ public class ImgPanel extends JPanel {
         if (image != null)
             stack.push (ImgTools.deepCopy(image));
         image = img;
-        String hp = TheGrid.instance.getHistoryPath();
+        String hp = grid.getHistoryPath();
         autoSaveImage();
         SwingUtilities.invokeLater(this::repaint);
     }

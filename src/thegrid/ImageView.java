@@ -27,13 +27,14 @@ public class ImageView extends JFrame implements MouseWheelListener {
     private final ImgPanel imgPanel;
     private final UniqueRng ring2;
     private final UniqueRng shuffledRing;
+    private final TheGrid grid;
 
     private Timer timer = null;
 
     @Override
     public void dispose() {
         super.dispose();
-        TheGrid.instance.controller.remove (this);
+        grid.controller.remove (this);
     }
 
     class KA extends KeyAdapter {
@@ -81,7 +82,7 @@ public class ImageView extends JFrame implements MouseWheelListener {
                 case KeyEvent.VK_MINUS -> scaleIconImg(0.9f);
 
                 case KeyEvent.VK_J -> {
-                    int id = ImageList.get(ring2.get()).rowid();
+                    int id = grid.imageL.get(ring2.get()).rowid();
                     String init = ""+DBHandler.getInst().getAccCounter(id);
                     int res = LineInput.onlyPosNumber(init, "new acc counter for: "+id,
                     Color.orange);
@@ -155,7 +156,7 @@ public class ImageView extends JFrame implements MouseWheelListener {
 
                 case KeyEvent.VK_D -> {
                     if (Tools.Question("Delete image from DB?")) {
-                        Objects.requireNonNull(DBHandler.getInst()).deleteImage(ImageList.get(ring2.get()).rowid());
+                        Objects.requireNonNull(DBHandler.getInst()).deleteImage(grid.imageL.get(ring2.get()).rowid());
                     }
                 }
 
@@ -178,7 +179,7 @@ public class ImageView extends JFrame implements MouseWheelListener {
                 case KeyEvent.VK_ESCAPE -> dispose();
 
                 case KeyEvent.VK_A -> {
-                    int rowid = ImageList.get(ring2.get()).rowid();
+                    int rowid = grid.imageL.get(ring2.get()).rowid();
                     String tag = LineInput.xmain(
                                     Objects.requireNonNull(DBHandler.getInst()).getTag(rowid), "Tag:", Color.YELLOW)
                             .trim().toLowerCase();
@@ -215,7 +216,7 @@ public class ImageView extends JFrame implements MouseWheelListener {
                         BufferedImage img = getIconImg();
                         ImgTools.imageToClipboard(img);
                     } else {
-                        int id = ImageList.get(ring2.get()).rowid();
+                        int id = grid.imageL.get(ring2.get()).rowid();
                         if (Tools.Question("Replace image #" + id)) {
                             BufferedImage img = getIconImg();
                             Objects.requireNonNull(DBHandler.getInst()).changeBigImg(img, id);
@@ -242,16 +243,17 @@ public class ImageView extends JFrame implements MouseWheelListener {
     }
 
 
-    public ImageView (int idx) {
-        shuffledRing = new UniqueRng (ImageList.size());
-        ring2 = new UniqueRng (ImageList.size(), false);
+    public ImageView (TheGrid grid, int idx) {
+        this.grid = grid;
+        shuffledRing = new UniqueRng (grid.imageL.size());
+        ring2 = new UniqueRng (grid.imageL.size(), false);
         ring2.set (idx);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         addKeyListener(new KA());
         addMouseWheelListener(this);
         BufferedImage img = loadImgFromStore();
         assert img != null;
-        imgPanel = new ImgPanel(img, this);
+        imgPanel = new ImgPanel(grid,img, this);
         setTitle(toString());
         new RegionSelectorListener(img, imgPanel, this);
         setContentPane(imgPanel);
@@ -296,7 +298,7 @@ public class ImageView extends JFrame implements MouseWheelListener {
 
     public void saveImageAsFile (boolean orig, String outPath) {
         if (outPath != null) {
-            int rowid = thegrid.ImageList.get(ring2.get()).rowid();
+            int rowid = grid.imageL.get(ring2.get()).rowid();
             BufferedImage img;
 
             if (orig)
@@ -360,7 +362,7 @@ public class ImageView extends JFrame implements MouseWheelListener {
                 n = 0;
                 break;
             case "last":
-                n = thegrid.ImageList.IndexByRowID(-1);
+                n = grid.imageL.IndexByRowID(-1);
                 break;
             default:
                 int rowid;
@@ -369,7 +371,7 @@ public class ImageView extends JFrame implements MouseWheelListener {
                 } catch (NumberFormatException ex) {
                     return;
                 }
-                n = thegrid.ImageList.IndexByRowID(rowid);
+                n = grid.imageL.IndexByRowID(rowid);
                 if (n == -1)
                     return;
         }
@@ -386,7 +388,7 @@ public class ImageView extends JFrame implements MouseWheelListener {
     }
 
     public String toString() {
-        var v = ImageList.get(ring2.get());
+        var v = grid.imageL.get(ring2.get());
         return "IDX:" + ring2.get() + " ROWID:" +
                 v.rowid() + " TAG:" + v.tag() +
                 " -- ACC: "+DBHandler.getInst().getAccCounter(v.rowid());
@@ -426,7 +428,7 @@ public class ImageView extends JFrame implements MouseWheelListener {
     private BufferedImage loadImgFromStore() {
         try {
             var v = DBHandler.getInst();
-            int id = ImageList.get(ring2.get()).rowid();
+            int id = grid.imageL.get(ring2.get()).rowid();
             v.incAccCounter(id);
             System.out.println("accC:"+v.getAccCounter(id));
             byte[] b = Objects.requireNonNull(v).loadImage(id);

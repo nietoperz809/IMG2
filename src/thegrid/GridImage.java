@@ -51,9 +51,9 @@ class GridImage extends JLabel {
         }
     }
 
-    private void init (int index, JPanel jp) {
+    private void init (TheGrid grid, int index, JPanel jp) {
         rootPane = jp;
-        thisID = ImageList.get(index);
+        thisID = grid.imageL.get(index);
         setToolTipText (thisID.name()+" -- right mouse button to delete");
         setVerticalTextPosition(JLabel.BOTTOM);
         setHorizontalTextPosition(JLabel.CENTER);
@@ -72,8 +72,8 @@ class GridImage extends JLabel {
                     }
                     return;
                 }
-                ImageView iv = new ImageView (index); // left click
-                TheGrid.instance.controller.add (iv);
+                ImageView iv = new ImageView (grid,index); // left click
+                grid.controller.add (iv);
             }
         });
     }
@@ -84,12 +84,12 @@ class GridImage extends JLabel {
      * @param rootPane the Imagegrid itself
      * @param ImageName name of the new Image
      */
-    GridImage(Image iconImage, JPanel rootPane, String ImageName) throws Exception {
+    GridImage(TheGrid grid, Image iconImage, JPanel rootPane, String ImageName) throws Exception {
         super(new ImageIcon(iconImage));
-        ImageList.add (new DBHandler.NameID(ImageName, ImageList.getLastRowid(), null)); //(ImageName);
-        int index = ImageList.size()-1;
+        grid.imageL.add (new DBHandler.NameID(ImageName, grid.imageL.getLastRowid(), null)); //(ImageName);
+        int index = grid.imageL.size()-1;
         imgHash = ImgTools.imgHash((BufferedImage)iconImage);
-        init (index, rootPane);
+        init (grid, index, rootPane);
     }
 
     /**
@@ -97,9 +97,9 @@ class GridImage extends JLabel {
      * @param currentIndex index of current image file
      * @param rootPane the Imagegrid itself
      */
-    GridImage(DBHandler.ThumbHash tbh, int currentIndex, JPanel rootPane) {
+    GridImage(TheGrid grid, DBHandler.ThumbHash tbh, int currentIndex, JPanel rootPane) {
         super(new ImageIcon(tbh.img));
         imgHash = tbh.hash;
-        init (currentIndex, rootPane);
+        init (grid, currentIndex, rootPane);
     }
 }

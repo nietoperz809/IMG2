@@ -67,6 +67,10 @@ public class DBHandler {
             String url = "jdbc:h2:" + ROOT_DIR + DB_FILE + ";CIPHER=AES";
             String user = "LALA";
             String pwd = aes_pwd + " dumm";
+            System.out.println("-------------------------");
+            System.out.println(url);
+            System.out.println(user + " -- " +pwd);
+            System.out.println("-------------------------");
             connection = DriverManager.getConnection(url, user, pwd);
             statement = connection.createStatement();
             Sam.speak("deta base is on line.");
@@ -183,11 +187,11 @@ public class DBHandler {
     }
 
 
-    public List<NameID> getAllImageInfos() {
-        String sql = null;
-        //mainSQL.reset();
-        sql = mainSQL.get();
-        return getNames(sql);
+    public List<NameID> getSelectedImageInfos(String alternateSQL) {
+        if (alternateSQL == null)
+            return getNames(mainSQL.get());
+        else
+            return getNames (alternateSQL);
     }
 
     public List<NameID> getFileNames (String dbname, boolean sort_by_id) {
@@ -255,13 +259,31 @@ public class DBHandler {
         }
     }
 
-    public void setTag (int rowid, String tag) {
+//    public void setTag (int rowid, String tag) {
+//        try {
+//            statement.execute("update IMAGES set tag = '"+tag+"' where _ROWID_ = " + rowid);
+//        } catch (SQLException e) {
+//            throw new RuntimeException(e);
+//        }
+//    }
+
+    public void setTag (int rowid, String... tag) {
+        if (tag.length == 0)
+            return;
+        StringBuilder sb = new StringBuilder();
+        for (int s=0; s<tag.length; s++)
+        {
+            sb.append(tag[s]);
+            if ((tag.length > 1) && (s != tag.length-1))
+                sb.append(',');
+        }
         try {
-            statement.execute("update IMAGES set tag = '"+tag+"' where _ROWID_ = " + rowid);
+            statement.execute("update IMAGES set tag = '"+sb.toString()+"' where _ROWID_ = " + rowid);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
+
 
     public String getTag (int rowid) {
         String strres = null;

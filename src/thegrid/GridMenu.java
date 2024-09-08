@@ -13,8 +13,6 @@ import java.awt.event.ActionEvent;
 import java.io.File;
 import java.util.Arrays;
 
-import static thegrid.ImageList.allFiles;
-
 
 public class GridMenu extends JMenuBar {
     public GridMenu(TheGrid theGrid) {
@@ -35,6 +33,17 @@ public class GridMenu extends JMenuBar {
             }
         });
 
+
+        JMenuItem m00 = new JMenuItem ("Open another Grid ...");
+        m00.addActionListener(new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                (new Thread(new Runnable(){
+                    public void run(){
+                        new TheGrid(null);
+                    }
+                })).start();                                }
+        });
 
         JMenuItem m0 = new JMenuItem ("Dispose all open views ...");
         m0.addActionListener(new AbstractAction() {
@@ -168,6 +177,7 @@ public class GridMenu extends JMenuBar {
             }
         });
 
+        jm.add(m00);
         jm.add(m0);
         jm.add(m1);
         jm.add(m1_1);
@@ -192,8 +202,8 @@ public class GridMenu extends JMenuBar {
             public void actionPerformed(ActionEvent e) {
                 StringBuilder sb = new StringBuilder();
                 Component[] components = theGrid.rootPane.getComponents();
-                if (components.length != allFiles.size()) {
-                    String mess = "Please restart and wait until all " + allFiles.size() + " tiles are loaded!";
+                if (components.length != theGrid.imageL.allFiles.size()) {
+                    String mess = "Please restart and wait until all " + theGrid.imageL.allFiles.size() + " tiles are loaded!";
                     int res = JOptionPane.showConfirmDialog (theGrid, mess, "Warn!", JOptionPane.WARNING_MESSAGE);
                     if (res == 0) /*OK*/ {
                         System.exit(-1);

@@ -42,7 +42,7 @@ public class WebApp extends NanoHTTPD {
      */
     public WebApp() {
         super(80);
-        allFiles = DBHandler.getInst().getAllImageInfos();
+        allFiles = DBHandler.getInst().getSelectedImageInfos(null);
         ring = new UniqueRng(allFiles.size(), false);
         //ring.reset();
 
