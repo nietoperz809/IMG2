@@ -1,25 +1,25 @@
 package thegrid;
 
+import common.PersistString;
 import database.DBHandler;
 
 import static java.util.Objects.requireNonNull;
 
 public class ImageList {
 
-//    private ImageList() {
-//        // prevent instantiation
-//    }
-
+    private String currentSQL;
     private String sql;
-    public void setSQL (String sql) {
-        this.sql = sql;
+
+    public ImageList() {
     }
-    
-    public java.util.List<DBHandler.NameID> allFiles
-            = requireNonNull(DBHandler.getInst()).getSelectedImageInfos(sql);
+
+    // select name,_ROWID_,tag,accnum from IMAGES where tag = 'samen'
+
+    public java.util.List<DBHandler.NameID> allFiles;
 
     public void refresh() {
-        allFiles = requireNonNull(DBHandler.getInst()).getSelectedImageInfos(sql);
+        allFiles = requireNonNull(DBHandler.getInst())
+                .loadSelectedImageInfos(this.sql);
     }
 
     public DBHandler.NameID get (int n) {
@@ -52,4 +52,8 @@ public class ImageList {
         return -1;
     }
 
+    public void setSQL(String sql) {
+        this.sql = sql;
+        refresh();
+    }
 }

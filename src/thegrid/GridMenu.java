@@ -40,7 +40,8 @@ public class GridMenu extends JMenuBar {
             public void actionPerformed(ActionEvent e) {
                 (new Thread(new Runnable(){
                     public void run(){
-                        new TheGrid(null);
+                        String sql = LineInput.xmain ("hello", "SQL", Color.BLUE);
+                        TheGrid gr = new TheGrid(sql, false);
                     }
                 })).start();                                }
         });
@@ -144,8 +145,8 @@ public class GridMenu extends JMenuBar {
             @Override
             public void actionPerformed(ActionEvent e) {
                 DBHandler db = DBHandler.getInst();
-                String newSql = LineInput.xmain(db.getMainSQL(), "newSQL", Color.BLUE);
-                db.setMainSQL(newSql);
+                String newSql = LineInput.xmain(TheGrid.mainSQL.get(), "newSQL", Color.BLUE);
+                TheGrid.mainSQL.set (newSql);
             }
         });
 

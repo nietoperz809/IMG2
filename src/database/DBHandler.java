@@ -22,9 +22,6 @@ import java.util.Objects;
 import java.util.UUID;
 
 public class DBHandler {
-    private PersistString mainSQL =
-            new PersistString("mainSQL",
-                    "select name,_ROWID_,tag,accnum from IMAGES order by accnum desc");
     private String ROOT_DIR = "C:\\Databases\\";
     private static final String NO_PASS = "NoPass";
     private static final String DB_FILE = "mydb";
@@ -36,13 +33,6 @@ public class DBHandler {
     /*
         jdbc:h2:C:\peter.home\java\IMG2\datastore\mydb;CIPHER=AES
      */
-
-    public void setMainSQL (String newSQL) {
-        mainSQL.set(newSQL);
-    }
-    public String getMainSQL () {
-        return mainSQL.get();
-    }
 
     public void setDBRoot (String s) {
         ROOT_DIR = s;
@@ -187,11 +177,8 @@ public class DBHandler {
     }
 
 
-    public List<NameID> getSelectedImageInfos(String alternateSQL) {
-        if (alternateSQL == null)
-            return getNames(mainSQL.get());
-        else
-            return getNames (alternateSQL);
+    public List<NameID> loadSelectedImageInfos(String eSQL) {
+        return getNames (eSQL);
     }
 
     public List<NameID> getFileNames (String dbname, boolean sort_by_id) {

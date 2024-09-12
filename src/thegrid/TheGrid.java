@@ -1,6 +1,7 @@
 package thegrid;
 
 import buildinfo.BuildInfo;
+import common.PersistString;
 import common.ProgressBox;
 import common.Sam;
 import common.Tools;
@@ -20,6 +21,10 @@ import static java.util.Objects.*;
 
 
 public class TheGrid extends MyFrame {
+    private boolean disp = true;
+    public static PersistString mainSQL =
+            new PersistString("mainSQL",
+                    "select name,_ROWID_,tag,accnum from IMAGES order by accnum desc");
     public ImageList imageL = new ImageList();
     //public static TheGrid instance;
     public final ImageViewController controller = new ImageViewController();
@@ -30,9 +35,7 @@ public class TheGrid extends MyFrame {
     private final Instant startTime;
     private int imageCount;
     private boolean stopFill = false;
-
     private String historyPath = null;
-    private String altSQL = null;
 
     public String getHistoryPath() {
         return historyPath;
@@ -57,9 +60,13 @@ public class TheGrid extends MyFrame {
         stopThumbViewFill ("-- prematurely stopped --");
     }
 
+    public TheGrid (String sql, boolean dispose) {
+        this(sql);
+        this.disp = dispose;
+    }
 
-    public TheGrid (String alternateSQL) {
-        altSQL = alternateSQL;
+    public TheGrid (String sql) {
+        imageL.setSQL(sql);
         System.out.println("TheGrid constructor called");
         //instance = this;
         DBHandler.getInst().log("Images in DB: "+this.imageL.size());
@@ -106,9 +113,9 @@ public class TheGrid extends MyFrame {
 
 
             DBHandler.getInst().log("+++ TheGrid started");
-            new TheGrid(null);
-            //new TheGrid(-1);
+            new TheGrid (mainSQL.get());
         } catch (Exception e) {
+            System.out.println("FAIL: " + e.toString());
             DBHandler.getInst().log("FAIL: " + e.toString());
         }
     }
@@ -178,6 +185,8 @@ public class TheGrid extends MyFrame {
 
     @Override
     public void dispose() {
+        if (!disp)
+            return;
         System.out.println("window dispose");
         DBHandler.getInst().close();
         super.dispose();
