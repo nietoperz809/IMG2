@@ -131,11 +131,6 @@ public class ImgTools {
         if (Tools.isGIF (name)) {
             Tools.Error ("Please put gifs in video app");
             return null;
-//            FileInputStream fin = new FileInputStream(name);
-//            AnimatedGIFReader reader = new AnimatedGIFReader();
-//            BufferedImage img = reader.read(fin);
-//            fin.close();
-//            return img;
         } else if (hasExtension(name, ".webp")) {
             // Obtain a WebP ImageReader instance
             ImageReader reader = ImageIO.getImageReadersByMIMEType("image/webp").next();

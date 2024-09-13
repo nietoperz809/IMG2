@@ -135,12 +135,12 @@ public class VideoApp extends JDialog {
         listControl.setCellRenderer(new MyCellRenderer());
     }
 
-    VideoPlayerBox vidPlayerBox = new VideoPlayerBox(this);
+    final VideoPlayerBox vidPlayerBox = new VideoPlayerBox(this);
     // GifPlayerBox gifPlayer = new GifPlayerBox();
 
     private void onOK() {
         DBHandler.NameID nid = listControl.getSelectedValue();
-        int id = listControl.getSelectedValue().rowid();
+        listControl.getSelectedValue();
         if (Tools.isGIF(nid.name())) {
             try {
                 File f = DBHandler.getInst().transferGifIntoFile(nid);

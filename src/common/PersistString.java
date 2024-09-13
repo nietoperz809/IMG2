@@ -4,8 +4,8 @@ import java.util.prefs.Preferences;
 
 public class PersistString {
 
-    String defaultStr;
-    String entry;
+    final String defaultStr;
+    final String entry;
 
 
     public PersistString(String entry, String defaultStr) {

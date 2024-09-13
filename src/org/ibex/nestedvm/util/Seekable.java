@@ -45,7 +45,7 @@ public abstract class Seekable {
     }
     
     public static class ByteArray extends Seekable {
-        protected byte[] data;
+        protected final byte[] data;
         protected int pos;
         private final boolean writable;
         
@@ -115,7 +115,7 @@ public abstract class Seekable {
         private int bytesRead = 0;
         private boolean eof = false;
         private int pos;
-        private java.io.InputStream is;
+        private final java.io.InputStream is;
         
         public InputStream(java.io.InputStream is) { this.is = is; }
         

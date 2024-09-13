@@ -1488,7 +1488,7 @@ public abstract class Runtime implements UsermodeConstants,Registers,Cloneable
     }
     
     protected static class ErrnoException extends Exception {
-        public int errno;
+        public final int errno;
         public ErrnoException(int errno) { super("Errno: " + errno); this.errno = errno; }
     }
     
@@ -1496,9 +1496,9 @@ public abstract class Runtime implements UsermodeConstants,Registers,Cloneable
     public static class CPUState {
         public CPUState() { /* noop */ }
         /* GPRs */
-        public int[] r = new int[32];
+        public final int[] r = new int[32];
         /* Floating point regs */
-        public int[] f = new int[32];
+        public final int[] f = new int[32];
         public int hi, lo;
         public int fcsr;
         public int pc;

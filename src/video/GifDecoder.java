@@ -77,7 +77,7 @@ public class GifDecoder {
     protected BufferedImage image; // current frame
     protected BufferedImage lastImage; // previous frame
 
-    protected byte[] block = new byte[256]; // current data block
+    protected final byte[] block = new byte[256]; // current data block
     protected int blockSize = 0; // block size
 
     // last graphic control extension info
@@ -105,8 +105,8 @@ public class GifDecoder {
             image = im;
             delay = del;
         }
-        public BufferedImage image;
-        public int delay;
+        public final BufferedImage image;
+        public final int delay;
     }
 
     /**
@@ -325,9 +325,8 @@ public class GifDecoder {
      * (URL assumed if name contains ":/" or "file:")
      *
      * @param name String containing source
-     * @return read status code (0 = no errors)
      */
-    public int read(String name) {
+    public void read(String name) {
         status = STATUS_OK;
         try {
             name = name.trim().toLowerCase();
@@ -343,7 +342,6 @@ public class GifDecoder {
             status = STATUS_OPEN_ERROR;
         }
 
-        return status;
     }
 
     /**
@@ -592,11 +590,11 @@ public class GifDecoder {
 
                         case 0xff : // application extension
                             readBlock();
-                            String app = "";
+                            StringBuilder app = new StringBuilder();
                             for (int i = 0; i < 11; i++) {
-                                app += (char) block[i];
+                                app.append((char) block[i]);
                             }
-                            if (app.equals("NETSCAPE2.0")) {
+                            if (app.toString().equals("NETSCAPE2.0")) {
                                 readNetscapeExt();
                             }
                             else
@@ -641,11 +639,11 @@ public class GifDecoder {
      * Reads GIF file header information.
      */
     protected void readHeader() {
-        String id = "";
+        StringBuilder id = new StringBuilder();
         for (int i = 0; i < 6; i++) {
-            id += (char) read();
+            id.append((char) read());
         }
-        if (!id.startsWith("GIF")) {
+        if (!id.toString().startsWith("GIF")) {
             status = STATUS_FORMAT_ERROR;
             return;
         }

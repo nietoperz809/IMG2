@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class ImageViewController {
 
-    private ArrayList<ImageView> _list = new ArrayList<>();
+    private final ArrayList<ImageView> _list = new ArrayList<>();
 
     public void add(ImageView iv) {
         System.out.println("ivm add: "+iv);

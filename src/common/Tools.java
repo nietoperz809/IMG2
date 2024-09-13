@@ -174,35 +174,5 @@ public class Tools {
         }
     }
 
-//    public static String toHex8(int n) {
-//        String ret = Long.toString(n & 0xffffffffL, 16);
-//        while (ret.length() < 8)
-//            ret = "0"+ret;
-//        return ret;
-//    }
 
-
-//    public static File readAsFileList(Clipboard clipboard) {
-//        try {
-//            java.util.List<File> paths = (java.util.List<File>)clipboard.getData(DataFlavor.javaFileListFlavor);
-//            return paths.isEmpty() ? null : paths.iterator().next();
-//        } catch(Exception e) {
-//            System.err.println(e);
-//            return null;
-//        }
-//    }
-//
-//    public static File readAsString(Clipboard clipboard) {
-//        try {
-//            return (File)clipboard.getData(DataFlavor.stringFlavor);
-//        } catch(Exception e) {
-//            System.err.println(e);
-//            return null;
-//        }
-//    }
-
-
-//    public static void main(String[] args) {
-//        chooseDir(null);
-//    }
 }

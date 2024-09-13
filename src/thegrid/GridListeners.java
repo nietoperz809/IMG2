@@ -21,7 +21,7 @@ public class GridListeners implements KeyListener {
         g.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
-                if (!g.disp)
+                if (g.thisInstCount > 1)  // not the last grid?
                 {
                     g.dispose();
                     return;

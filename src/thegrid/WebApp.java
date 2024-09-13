@@ -78,8 +78,6 @@ public class WebApp extends NanoHTTPD {
      * @return response object
      */
     private Response sendImagePage(IHTTPSession session, int rowid) {
-//        if (firstimg == -1)
-//            firstimg = rowid;
         try {
             String str = new String(extractResource("imgpage0.html"));
             str = str.replace("@@THEIMG", rowid + ".jpg");

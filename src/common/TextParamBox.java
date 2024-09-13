@@ -21,7 +21,7 @@ public class TextParamBox extends JDialog {
 
     private static final TextParamBox instance = new TextParamBox();
 
-    Watermark watermark = new Watermark();
+    final Watermark watermark = new Watermark();
     private ImgPanel imgPanel;
 
     public TextParamBox () {
@@ -44,7 +44,7 @@ public class TextParamBox extends JDialog {
                 watermark.fillground = fillGroundCheckBox.isSelected();
                 watermark.text = textField1.getText();
                 watermark.alpha = Float.parseFloat(a05TextField.getText());
-                String pt[] = a2020TextField.getText().split(",");
+                String[] pt = a2020TextField.getText().split(",");
                 watermark.pos = new Point (Integer.parseInt(pt[0]), Integer.parseInt(pt[1]));
                 imgPanel.setWatermark(watermark);
                 //System.out.println(watermark);

@@ -177,21 +177,18 @@ public class FontChooser2 extends JDialog
             attrs |= Font.ITALIC;
         }
         resultFont = new Font(resultName, attrs, resultSize);
-        // System.out.println("resultName = " + resultName + "; " +
-        //     "resultFont = " + resultFont);
         previewArea.setFont(resultFont);
         pack(); // ensure Dialog is big enough.
     }
 
-    private static int findAndSelect(java.awt.List li, String s) {
+    private static void findAndSelect(List li, String s) {
         for (int i = 0; i < li.getItemCount(); i++) {
             String item = li.getItem(i);
             if (item.equals(s)) {
                 li.select(i);
-                return i;
+                return;
             }
         }
-        return -1;
     }
 
     public void adjustDisplay (Font f)

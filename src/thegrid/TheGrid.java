@@ -21,11 +21,12 @@ import static java.util.Objects.*;
 
 
 public class TheGrid extends MyFrame {
-    public boolean disp = true;
-    public static PersistString mainSQL =
+    private static int instCount = 0;
+    public int thisInstCount;
+    public static final PersistString mainSQL =
             new PersistString("mainSQL",
                     "select name,_ROWID_,tag,accnum from IMAGES order by accnum desc");
-    public ImageList imageL = new ImageList();
+    public final ImageList imageL = new ImageList();
     //public static TheGrid instance;
     public final ImageViewController controller = new ImageViewController();
     public final JPanel rootPane;
@@ -60,12 +61,10 @@ public class TheGrid extends MyFrame {
         stopThumbViewFill ("-- prematurely stopped --");
     }
 
-    public TheGrid (String sql, boolean dispose) {
-        this(sql);
-        this.disp = dispose;
-    }
 
     public TheGrid (String sql) {
+        instCount++;
+        thisInstCount = instCount;
         imageL.setSQL(sql);
         System.out.println("TheGrid constructor called");
         //instance = this;
@@ -98,8 +97,6 @@ public class TheGrid extends MyFrame {
 
     public static void main(String... input) {
         try {
-            //UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
-            //int m = -1;
             if (input.length != 0) {
                 if (input[0].startsWith("dbdir:")) {
                     String dir = input[0].substring(6);
@@ -118,7 +115,7 @@ public class TheGrid extends MyFrame {
             System.out.println("end main");
         } catch (Exception e) {
             System.out.println("FAIL: " + e);
-            DBHandler.getInst().log("FAIL: " + e.toString());
+            DBHandler.getInst().log("FAIL: " + e);
         }
     }
 
@@ -127,8 +124,6 @@ public class TheGrid extends MyFrame {
         final File currentJar = new File(TheGrid.class.getProtectionDomain().getCodeSource().getLocation().toURI());
 
         /* is it a jar file? */
-        //if(!currentJar.getName().endsWith(".jar"))
-        //    return;
 
         /* Build command: java -jar application.jar */
         final ArrayList<String> command = new ArrayList<>();
@@ -158,7 +153,10 @@ public class TheGrid extends MyFrame {
         progress.dispose();
         rootPane.doLayout();
         scrollPane.getViewport().setView(rootPane);
-        setTitle (BuildInfo.buildInfo + " -- " + info);
+        if (this.thisInstCount == 1)
+            setTitle (BuildInfo.buildInfo + " -- " + info);
+        else
+            setTitle (imageL.getSql());
         setVisible(true);
         Tools.gc_now();
     }

@@ -18,7 +18,7 @@ public class ImgPanel extends JPanel {
     public Point offset = new Point();
 
     JToolTip thisJT;
-    ImageView theView;
+    final ImageView theView;
 
     public static final int SCROLLAMOUNT = 10;
 

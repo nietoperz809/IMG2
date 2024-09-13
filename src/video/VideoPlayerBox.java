@@ -20,7 +20,7 @@ public class VideoPlayerBox {
     private volatile JFrame playerFrame;
     private EmbeddedMediaPlayerComponent mpc;
     private boolean paused = false;
-    private VideoApp parent;
+    private final VideoApp parent;
 
 
     public VideoPlayerBox(VideoApp parent) {

@@ -54,4 +54,8 @@ public class ImageList {
         this.sql = sql;
         refresh();
     }
+
+    public String getSql() {
+        return this.sql;
+    }
 }

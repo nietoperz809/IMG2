@@ -42,7 +42,7 @@ public class GridMenu extends JMenuBar {
                     String sql = LineInput.xmain (TheGrid.mainSQL.get().substring(0,42),
                             "SQL", Color.BLUE);
                     if (!sql.isEmpty())
-                        new TheGrid(sql, false);
+                        new TheGrid(sql);
                 })).start();                                }
         });
 

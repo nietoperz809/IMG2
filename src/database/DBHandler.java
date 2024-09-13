@@ -131,10 +131,6 @@ public class DBHandler {
         ) != 0;
     }
 
-//    public Connection getConn() {
-//        return connection;
-//    }
-
     public synchronized ResultSet query(String txt) {
         try {
             return statement.executeQuery(txt);
@@ -224,12 +220,12 @@ public class DBHandler {
         }
     }
 
-    public boolean deleteVideo (int rowid) {
-        return deleteGifOrVideo ("VIDEOS", rowid);
+    public void deleteVideo (int rowid) {
+        deleteGifOrVideo("VIDEOS", rowid);
     }
 
-    public boolean deleteGif (int rowid) {
-        return deleteGifOrVideo ("GIFS", rowid);
+    public void deleteGif (int rowid) {
+        deleteGifOrVideo("GIFS", rowid);
     }
 
 
@@ -246,14 +242,6 @@ public class DBHandler {
         }
     }
 
-//    public void setTag (int rowid, String tag) {
-//        try {
-//            statement.execute("update IMAGES set tag = '"+tag+"' where _ROWID_ = " + rowid);
-//        } catch (SQLException e) {
-//            throw new RuntimeException(e);
-//        }
-//    }
-
     public void setTag (int rowid, String... tag) {
         if (tag.length == 0)
             return;
@@ -265,7 +253,7 @@ public class DBHandler {
                 sb.append(',');
         }
         try {
-            statement.execute("update IMAGES set tag = '"+sb.toString()+"' where _ROWID_ = " + rowid);
+            statement.execute("update IMAGES set tag = '"+ sb +"' where _ROWID_ = " + rowid);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
