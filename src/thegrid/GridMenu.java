@@ -38,11 +38,11 @@ public class GridMenu extends JMenuBar {
         m00.addActionListener(new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                (new Thread(new Runnable(){
-                    public void run(){
-                        String sql = LineInput.xmain ("hello", "SQL", Color.BLUE);
-                        TheGrid gr = new TheGrid(sql, false);
-                    }
+                (new Thread(() -> {
+                    String sql = LineInput.xmain (TheGrid.mainSQL.get().substring(0,42),
+                            "SQL", Color.BLUE);
+                    if (!sql.isEmpty())
+                        new TheGrid(sql, false);
                 })).start();                                }
         });
 
@@ -128,7 +128,6 @@ public class GridMenu extends JMenuBar {
                 }
                 theGrid.rootPane.doLayout();
                 theGrid.rootPane.repaint();
-                //theGrid.refresh();
             }
         });
 
@@ -144,9 +143,10 @@ public class GridMenu extends JMenuBar {
         msql.addActionListener(new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                DBHandler db = DBHandler.getInst();
-                String newSql = LineInput.xmain(TheGrid.mainSQL.get(), "newSQL", Color.BLUE);
-                TheGrid.mainSQL.set (newSql);
+                String newSql = LineInput.xmain(TheGrid.mainSQL.get(),
+                        "newSQL", Color.BLUE);
+                if (!newSql.isEmpty())
+                    TheGrid.mainSQL.set (newSql);
             }
         });
 
@@ -205,7 +205,7 @@ public class GridMenu extends JMenuBar {
                 Component[] components = theGrid.rootPane.getComponents();
                 if (components.length != theGrid.imageL.allFiles.size()) {
                     String mess = "Please restart and wait until all " + theGrid.imageL.allFiles.size() + " tiles are loaded!";
-                    int res = JOptionPane.showConfirmDialog (theGrid, mess, "Warn!", JOptionPane.WARNING_MESSAGE);
+                    int res = JOptionPane.showConfirmDialog (theGrid, mess, "Warn!", JOptionPane.YES_NO_OPTION);
                     if (res == 0) /*OK*/ {
                         System.exit(-1);
                     }

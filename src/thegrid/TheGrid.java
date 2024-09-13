@@ -21,7 +21,7 @@ import static java.util.Objects.*;
 
 
 public class TheGrid extends MyFrame {
-    private boolean disp = true;
+    public boolean disp = true;
     public static PersistString mainSQL =
             new PersistString("mainSQL",
                     "select name,_ROWID_,tag,accnum from IMAGES order by accnum desc");
@@ -107,15 +107,17 @@ public class TheGrid extends MyFrame {
                     System.out.println(dir);
                 }
             }
-            Thread hook = new Thread(() ->
-                    DBHandler.getInst().log("SHUTDOWN"));
-            Runtime.getRuntime().addShutdownHook(hook);
+//            Thread hook = new Thread(() ->
+//                    DBHandler.getInst().log("SHUTDOWN"));
+//            Runtime.getRuntime().addShutdownHook(hook);
 
 
             DBHandler.getInst().log("+++ TheGrid started");
             new TheGrid (mainSQL.get());
+            Thread.sleep(100000);
+            System.out.println("end main");
         } catch (Exception e) {
-            System.out.println("FAIL: " + e.toString());
+            System.out.println("FAIL: " + e);
             DBHandler.getInst().log("FAIL: " + e.toString());
         }
     }
@@ -181,15 +183,6 @@ public class TheGrid extends MyFrame {
         if (imageCount >= imageL.size()) {
             stopThumbViewFill(info);
         }
-    }
-
-    @Override
-    public void dispose() {
-        if (!disp)
-            return;
-        System.out.println("window dispose");
-        DBHandler.getInst().close();
-        super.dispose();
     }
 }
 

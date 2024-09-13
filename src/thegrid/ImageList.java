@@ -1,13 +1,11 @@
 package thegrid;
 
-import common.PersistString;
 import database.DBHandler;
 
 import static java.util.Objects.requireNonNull;
 
 public class ImageList {
 
-    private String currentSQL;
     private String sql;
 
     public ImageList() {

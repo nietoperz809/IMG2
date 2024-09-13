@@ -10,6 +10,7 @@ public class LineInput extends JDialog {
     private JPanel contentPane;
     private JTextField textField1;
     private JLabel label;
+    private JButton xButton;
 
     public LineInput (Color col) {
         setContentPane(contentPane);
@@ -18,6 +19,10 @@ public class LineInput extends JDialog {
         LineBorder border = new LineBorder(col,4,false);
         contentPane.setBorder(border);
         textField1.addActionListener(actionEvent -> dispose());
+        xButton.addActionListener(e -> {
+            textField1.setText(null);
+            dispose();
+        });
     }
 
     public static String xmain (String init, String lab, Color col) {
