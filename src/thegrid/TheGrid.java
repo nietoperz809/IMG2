@@ -111,7 +111,7 @@ public class TheGrid extends MyFrame {
 
             DBHandler.getInst().log("+++ TheGrid started");
             new TheGrid (mainSQL.get());
-            Thread.sleep(100000);
+//            Thread.sleep(100000);
             System.out.println("end main");
         } catch (Exception e) {
             System.out.println("FAIL: " + e);

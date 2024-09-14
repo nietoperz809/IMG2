@@ -5,7 +5,9 @@ import database.DBHandler;
 import javax.swing.*;
 import java.awt.event.*;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.TreeSet;
 
 public class TagSelectorDlg extends JDialog {
     private JPanel contentPane;
@@ -23,7 +25,6 @@ public class TagSelectorDlg extends JDialog {
                 onOK();
             }
         });
-
     }
 
     private void onOK() {
@@ -43,7 +44,7 @@ public class TagSelectorDlg extends JDialog {
     }
 
     private void createUIComponents() {
-        ArrayList<String> tags = DBHandler.getInst().getTagList();
+        TreeSet<String> tags = DBHandler.getInst().getImageTagList();
         list1 = new JList<>(tags.toArray(new String[0]));
     }
 }

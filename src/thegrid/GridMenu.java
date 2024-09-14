@@ -120,15 +120,16 @@ public class GridMenu extends JMenuBar {
             @Override
             public void actionPerformed(ActionEvent e) {
                 java.util.List<String> list = TagSelectorDlg.xmain(null);
-                //System.out.println(list.toString());
-                Component[] comps = theGrid.rootPane.getComponents();
-                for (Component gi : comps) {
-                    GridImage g = (GridImage)gi;
-                    g.hide(list);
-                }
-                theGrid.rootPane.doLayout();
-                theGrid.rootPane.repaint();
-            }
+                (new Thread(() -> {
+                    String sql = "select name,_ROWID_,tag,accnum from IMAGES where";
+                    for (int s=0; s<list.size(); s++) {
+                        if (s>0)
+                            sql += " or ";
+                        sql += " tag like "+"'%"+list.get(s)+"%'";
+                    }
+                    System.out.println(sql);
+                    new TheGrid(sql);
+                })).start();            }
         });
 
         JMenuItem m6 = new JMenuItem("view Log");

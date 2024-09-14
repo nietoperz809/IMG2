@@ -183,7 +183,8 @@ public class ImageView extends JFrame implements MouseWheelListener {
                     String tag = LineInput.xmain(
                                     Objects.requireNonNull(DBHandler.getInst()).getTag(rowid), "Tag:", Color.YELLOW)
                             .trim().toLowerCase();
-                    DBHandler.getInst().setTag(rowid, tag);
+                    if (!tag.isEmpty())
+                        DBHandler.getInst().setTag(rowid, tag);
                 }
 
                 case KeyEvent.VK_5 -> { // denoise

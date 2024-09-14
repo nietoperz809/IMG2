@@ -16,10 +16,8 @@ import java.sql.*;
 import java.text.SimpleDateFormat;
 import java.time.Duration;
 import java.time.Instant;
-import java.util.ArrayList;
+import java.util.*;
 import java.util.List;
-import java.util.Objects;
-import java.util.UUID;
 
 public class DBHandler {
     private String ROOT_DIR = "C:\\Databases\\";
@@ -274,20 +272,23 @@ public class DBHandler {
         return strres;
     }
 
-    public ArrayList<String> getTagList() {
-        ArrayList<String> list = new ArrayList<>();
+    public TreeSet<String> getImageTagList() {
+        HashSet<String> list = new HashSet<>();
         try {
             try (ResultSet res = query("select distinct tag from IMAGES")) {
                 while (res.next()) {
                     String s = res.getString(1);
-                    if (s != null)
-                        list.add(s);
+                    if (s != null) {
+                        String[] mult = s.split(",");
+                            for (String t: mult)
+                                list.add (t.trim());
+                    }
                 }
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        return list;
+        return new TreeSet<String>(list);
     }
 
     public void backup() {
