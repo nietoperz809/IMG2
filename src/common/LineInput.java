@@ -5,6 +5,7 @@ import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 
 public class LineInput extends JDialog {
     private JPanel contentPane;
@@ -12,17 +13,22 @@ public class LineInput extends JDialog {
     private JLabel label;
     private JButton xButton;
 
+    private void onCancel() {
+        textField1.setText(null);
+        dispose();
+    }
+
     public LineInput (Color col) {
         setContentPane(contentPane);
+        contentPane.registerKeyboardAction(e -> onCancel(),
+                KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
+
         setModal(true);
         setUndecorated(true);
         LineBorder border = new LineBorder(col,4,false);
         contentPane.setBorder(border);
         textField1.addActionListener(actionEvent -> dispose());
-        xButton.addActionListener(e -> {
-            textField1.setText(null);
-            dispose();
-        });
+        xButton.addActionListener(e -> onCancel());
     }
 
     public static String xmain (String init, String lab, Color col) {

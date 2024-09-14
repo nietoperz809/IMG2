@@ -172,7 +172,7 @@ public class DBHandler {
 
 
     public List<NameID> loadSelectedImageInfos(String eSQL) {
-        return getNames (eSQL);
+        return getNames (Objects.requireNonNull(eSQL));
     }
 
     public List<NameID> getFileNames (String dbname, boolean sort_by_id) {

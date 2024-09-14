@@ -31,9 +31,9 @@ public class TagSelectorDlg extends JDialog {
         dispose();
     }
 
-    private void onCancel() {
-        dispose();
-    }
+//    private void onCancel() {
+//        dispose();
+//    }
 
     public static List<String> xmain(String[] args) {
         TagSelectorDlg dialog = new TagSelectorDlg();
