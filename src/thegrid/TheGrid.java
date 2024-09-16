@@ -71,7 +71,7 @@ public class TheGrid extends MyFrame {
         progress = new ProgressBox(this, this.imageL.size());
         rootPane = new JPanel();
         scrollPane = new JScrollPane(rootPane);
-        rootPane.setLayout(new GridLayout(0, 10, 1, 1));
+        rootPane.setLayout(new GridLayout(0, 8, 1, 1));
         add(scrollPane);
         setSize(1050, 800);
         setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);

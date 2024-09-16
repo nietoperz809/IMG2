@@ -574,7 +574,6 @@ public class DBHandler {
         try {
             statement.execute (sql);
             connection.commit();
-            System.out.println("incACC: "+sql);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -585,7 +584,6 @@ public class DBHandler {
         try {
             statement.execute (sql);
             connection.commit();
-            System.out.println("incACC: "+sql);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -606,7 +604,6 @@ public class DBHandler {
                 return ret;
             }
         } catch (SQLException e) {
-            System.out.println(e);
             throw new RuntimeException(e);
         }
         return -1;
