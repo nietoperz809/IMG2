@@ -67,7 +67,6 @@ public class TheGrid extends MyFrame {
         thisInstCount = instCount;
         imageL.setSQL(sql);
         System.out.println("TheGrid constructor called");
-        //instance = this;
         DBHandler.getInst().log("Images in DB: "+this.imageL.size());
         progress = new ProgressBox(this, this.imageL.size());
         rootPane = new JPanel();
@@ -165,12 +164,15 @@ public class TheGrid extends MyFrame {
      * Add one single image to the frame
      */
     public void addImageLabel(int s) {
-        String fileName = imageL.get(s).name();
+        int rowid = imageL.get(s).rowid();
         DBHandler.ThumbHash tbh = null;
         try {
-            tbh = DBHandler.getInst().loadThumbnail(fileName);
+            tbh = DBHandler.getInst().loadThumbnail(rowid);
         } catch (Exception e) {
-            System.err.println("thumb read fail: " + fileName);
+            System.err.println("thumb read fail: " + rowid);
+//            int id = imageL.get(s).rowid();
+//            DBHandler.getInst().createNewThumb(id);
+//            tbh = DBHandler.getInst().loadThumbnail(rowid);
         }
         GridImage lab = new GridImage(this, tbh, s, rootPane);
 

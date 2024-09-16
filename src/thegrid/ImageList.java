@@ -18,6 +18,7 @@ public class ImageList {
     public void refresh() {
         allFiles = requireNonNull(DBHandler.getInst())
                 .loadSelectedImageInfos(this.sql);
+        //recoverThumbs();
     }
 
     public DBHandler.NameID get (int n) {
@@ -57,5 +58,17 @@ public class ImageList {
 
     public String getSql() {
         return this.sql;
+    }
+
+    private boolean rec = false;
+
+    public void recoverThumbs() {
+        if (rec) return;
+        rec = true;
+        System.out.println("StartThumbRecovery!");
+        for (DBHandler.NameID elem : allFiles) {
+            System.out.println(elem.rowid());
+            DBHandler.getInst().createNewThumb(elem.rowid());
+        }
     }
 }

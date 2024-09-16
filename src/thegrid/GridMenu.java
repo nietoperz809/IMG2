@@ -11,6 +11,7 @@ import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.event.ActionEvent;
 import java.io.File;
+import java.sql.SQLException;
 import java.util.Arrays;
 
 
@@ -33,6 +34,18 @@ public class GridMenu extends JMenuBar {
             }
         });
 
+        JMenuItem mDSQL = new JMenuItem ("direct sql command");
+        mDSQL.addActionListener(new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String sql = LineInput.xmain(TheGrid.mainSQL.get().substring(0, 42),
+                        "direct SQL", Color.BLUE);
+                if (!sql.isEmpty()) {
+                    boolean b = DBHandler.getInst().execSQL(sql);
+                    System.out.println(b);
+                }
+            }
+        });
 
         JMenuItem m00 = new JMenuItem ("Open another Grid ...");
         m00.addActionListener(new AbstractAction() {
@@ -179,6 +192,7 @@ public class GridMenu extends JMenuBar {
             }
         });
 
+        jm.add (mDSQL);
         jm.add(m00);
         jm.add(m0);
         jm.add(m1);

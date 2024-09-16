@@ -19,6 +19,9 @@ import java.time.Instant;
 import java.util.*;
 import java.util.List;
 
+import static common.ImgTools.byteArrayToImg;
+import static common.Tools.extractResource;
+
 public class DBHandler {
     private String ROOT_DIR = "C:\\Databases\\";
     private static final String NO_PASS = "NoPass";
@@ -31,6 +34,14 @@ public class DBHandler {
     /*
         jdbc:h2:C:\peter.home\java\IMG2\datastore\mydb;CIPHER=AES
      */
+
+    public boolean execSQL (String sql) {
+        try {
+            return statement.execute(sql);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
     public void setDBRoot (String s) {
         ROOT_DIR = s;
@@ -376,6 +387,31 @@ public class DBHandler {
         insertImageRecord(buff, buff2, name);
     }
 
+    public void createNewThumb (int id) {
+        try {
+            byte[] bigbytes = loadImage(id);
+            BufferedImage bigImg = ImgTools.byteArrayToImg(bigbytes);
+            if (bigImg == null)
+            {
+                System.out.println("bigimg load fail: "+id);
+                bigImg = byteArrayToImg (extractResource ("fail.png"));
+            }
+            BufferedImage thumbnailImage = ImageScaler.scaleExact(bigImg,
+                    new Dimension(100, 100));
+            byte[] buff = ImgTools.imgToByteArray(thumbnailImage);
+            PreparedStatement prep;
+            prep = connection.prepareStatement(
+                    "update IMAGES set thumb=? where _rowid_ = "+id);
+            // "update IMAGES set thumb=? where thumb = null and _rowid_ = "+id);
+
+            prep.setBytes(1, buff);
+            prep.execute();
+            //connection.commit();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     public void changeBigImg (BufferedImage img, int id) {
         try {
             img = ImgTools.removeAlpha(img);
@@ -515,13 +551,19 @@ public class DBHandler {
 
     }
 
-    public byte[] loadThumbnail (int rowid) {
+    public ThumbHash loadThumbnail (int rowid) {
         String q = "select thumb from IMAGES where _rowid_ =" + rowid;
         try (ResultSet res = query(q)) {
             if (res.next()) {
-                return res.getBytes(1);
+                byte[] bt = res.getBytes(1);
+                if (bt == null) {
+                    createNewThumb(rowid);
+                    System.out.println("recreate thumb: "+rowid);
+                    return loadThumbnail(rowid);
+                }
+                return new ThumbHash(bt);
             }
-        } catch (SQLException e) {
+        } catch (Exception e) {
             throw new RuntimeException(e);
         }
         return null;
@@ -583,17 +625,17 @@ public class DBHandler {
         return null;
     }
 
-    public ThumbHash loadThumbnail(String filename) {
-        String q = "select thumb from IMAGES where name = '" + filename + "'";
-        try (ResultSet res = query(q)) {
-            if (res.next()) {
-                return new ThumbHash(res.getBytes(1));
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-        return null;
-    }
+//    public ThumbHash loadThumbnail(String filename) {
+//        String q = "select thumb from IMAGES where name = '" + filename + "'";
+//        try (ResultSet res = query(q)) {
+//            if (res.next()) {
+//                return new ThumbHash(res.getBytes(1));
+//            }
+//        } catch (Exception e) {
+//            throw new RuntimeException(e);
+//        }
+//        return null;
+//    }
 
 
     public record NameID(String name, int rowid, String tag) {
@@ -613,8 +655,18 @@ public class DBHandler {
     public static class ThumbHash {
         public final BufferedImage img;
         public final byte[] hash;
+        public final byte[] bt;
+
+//        public ThumbHash(byte[] bytes, int rowid) {
+//            if (bytes == null)
+//            {
+//
+//            }
+//            this (bytes);
+//        }
 
         public ThumbHash(byte[] bytes) {
+            bt = bytes;
             try {
                 img = ImgTools.byteArrayToImg(bytes);
                 MessageDigest md = MessageDigest.getInstance("MD5");
