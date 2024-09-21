@@ -19,6 +19,7 @@ public class LineInput extends JDialog {
     private JList list1;
     private JScrollPane scroller;
     private JButton setTags;
+    private JButton addButton;
 
     private void onCancel() {
         textField1.setText(null);
@@ -26,20 +27,19 @@ public class LineInput extends JDialog {
     }
 
     public LineInput (Color col) {
-        setTags.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                List<String> ll = list1.getSelectedValuesList();
-                StringBuilder sb = new StringBuilder();
-                for (String s: ll) {
-                    sb.append(s).append(", ");
-                }
-                String s2 = sb.toString();
-                if (s2.endsWith(", ")) {
-                    s2 = s2.substring(0, s2.length()-2);
-                }
-                textField1.setText(s2);
-                dispose();
-            }
+        setTags.addActionListener(e -> {
+            List<String> ll = list1.getSelectedValuesList();
+            String s2 = Tools.CsvFromList(ll);
+            textField1.setText(s2);
+            dispose();
+        });
+
+        addButton.addActionListener(e -> {
+            List<String> ll = list1.getSelectedValuesList();
+            String s2 = Tools.CsvFromList(ll);
+            s2 = textField1.getText()+", "+s2;
+            textField1.setText (s2);
+            dispose();
         });
 
         setContentPane(contentPane);
@@ -65,6 +65,7 @@ public class LineInput extends JDialog {
             dialog.list1.setVisible(false); // no Listbox
             dialog.scroller.setVisible(false);
             dialog.setTags.setVisible(false);
+            dialog.addButton.setVisible(false);
         }
         dialog.setSize(
                 new Dimension(len, 50)

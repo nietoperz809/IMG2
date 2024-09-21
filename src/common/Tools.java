@@ -25,6 +25,18 @@ public class Tools {
         return false;
     }
 
+    public static String CsvFromList (java.util.List<String> ll) {
+        StringBuilder sb = new StringBuilder();
+        for (String s: ll) {
+            sb.append(s).append(", ");
+        }
+        String s2 = sb.toString();
+        if (s2.endsWith(", ")) {
+            s2 = s2.substring(0, s2.length()-2);
+        }
+        return s2;
+    }
+
     public static Color getComplementaryColor( Color color) {
         int R = color.getRed();
         int G = color.getGreen();
@@ -109,22 +121,6 @@ public class Tools {
         Runtime.getRuntime().runFinalization();
     }
 
-    /*
-                      JFileChooser chooser;
-                chooser = new JFileChooser();
-                chooser.setAcceptAllFileFilterUsed(false);
-                chooser.setCurrentDirectory(new java.io.File("."));
-                chooser.setDialogTitle("dir for image history");
-                chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-                if (chooser.showOpenDialog(theGrid) == JFileChooser.APPROVE_OPTION) {
-                    theGrid.setHistoryPath(chooser.getSelectedFile().getAbsolutePath());
-                }
-                else {
-                    theGrid.setHistoryPath(null);
-                }
-
-    */
-     
 
     public static String chooseDir (Component parent) {
         JFileChooser f = new JFileChooser();
