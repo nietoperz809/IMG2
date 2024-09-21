@@ -17,7 +17,7 @@ public class ImageList {
 
     public void refresh() {
         allFiles = requireNonNull(DBHandler.getInst())
-                .loadSelectedImageInfos(this.sql);
+                .loadImageInfosTopDown(this.sql);
         //recoverThumbs();
     }
 

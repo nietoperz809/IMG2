@@ -92,6 +92,7 @@ public class TheGrid extends MyFrame {
                 break;
             addImageLabel(s);
         }
+        this.pack();
     }
 
     public static void main(String... input) {

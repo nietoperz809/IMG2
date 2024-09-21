@@ -180,7 +180,7 @@ public class ImageView extends JFrame implements MouseWheelListener {
 
                 case KeyEvent.VK_A -> {
                     int rowid = grid.imageL.get(ring2.get()).rowid();
-                    String tag = LineInput.xmain(
+                    String tag = LineInput.lmain(
                                     Objects.requireNonNull(DBHandler.getInst()).getTag(rowid), "Tag:", Color.YELLOW)
                             .trim().toLowerCase();
                     if (!tag.isEmpty())
@@ -353,7 +353,7 @@ public class ImageView extends JFrame implements MouseWheelListener {
 
     public void selectAnotherImage() {
         String str = LineInput.xmain("?", "Goto:", Color.GREEN,
-                "rowid or 'last/first' keyword");
+                "rowid or 'last/first' keyword",false);
         if (str.startsWith("?")) {
             str = str.substring(1);
         }

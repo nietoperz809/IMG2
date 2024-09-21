@@ -178,12 +178,18 @@ public class DBHandler {
             throw new RuntimeException(e);
         }
         return al;
-
     }
 
+    /**
+     * rowid reverse comparator
+     */
+    static final Comparator<NameID> comp = Comparator.comparing(NameID::rowid).reversed();
 
-    public List<NameID> loadSelectedImageInfos(String eSQL) {
-        return getNames (Objects.requireNonNull(eSQL));
+
+    public List<NameID> loadImageInfosTopDown(String eSQL) {
+        List<NameID> res = getNames (Objects.requireNonNull(eSQL));
+        res.sort(comp);
+        return res;
     }
 
     public List<NameID> getFileNames (String dbname, boolean sort_by_id) {
@@ -213,6 +219,7 @@ public class DBHandler {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+
         return al;
     }
 
