@@ -5,8 +5,7 @@ import database.DBHandler;
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.ComponentAdapter;
 import java.awt.event.KeyEvent;
 import java.util.List;
 import java.util.TreeSet;
@@ -19,7 +18,9 @@ public class LineInput extends JDialog {
     private JList list1;
     private JScrollPane scroller;
     private JButton setTags;
-    private JButton addButton;
+    private JButton addTags;
+    private JButton buttonOK;
+    private JPanel innerPanel;
 
     private void onCancel() {
         textField1.setText(null);
@@ -27,19 +28,23 @@ public class LineInput extends JDialog {
     }
 
     public LineInput (Color col) {
+
+        buttonOK.addActionListener(e -> {
+            dispose();
+        });
+
+
         setTags.addActionListener(e -> {
             List<String> ll = list1.getSelectedValuesList();
             String s2 = Tools.CsvFromList(ll);
             textField1.setText(s2);
-            dispose();
         });
 
-        addButton.addActionListener(e -> {
+        addTags.addActionListener(e -> {
             List<String> ll = list1.getSelectedValuesList();
             String s2 = Tools.CsvFromList(ll);
             s2 = textField1.getText()+", "+s2;
             textField1.setText (s2);
-            dispose();
         });
 
         setContentPane(contentPane);
@@ -62,10 +67,7 @@ public class LineInput extends JDialog {
         LineInput dialog = new LineInput(col);
         int len = Integer.max (600, init == null ? 100 : init.length()*20);
         if (!list) {
-            dialog.list1.setVisible(false); // no Listbox
-            dialog.scroller.setVisible(false);
-            dialog.setTags.setVisible(false);
-            dialog.addButton.setVisible(false);
+            dialog.innerPanel.setVisible(false);
         }
         dialog.setSize(
                 new Dimension(len, 50)
@@ -102,5 +104,6 @@ public class LineInput extends JDialog {
     private void createUIComponents() {
         TreeSet<String> tags = DBHandler.getInst().getImageTagList();
         list1 = new JList<>(tags.toArray(new String[0]));
+        innerPanel = new JPanel();
     }
 }
