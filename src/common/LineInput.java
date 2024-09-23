@@ -5,7 +5,6 @@ import database.DBHandler;
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 import java.awt.*;
-import java.awt.event.ComponentAdapter;
 import java.awt.event.KeyEvent;
 import java.util.List;
 import java.util.TreeSet;
@@ -17,34 +16,25 @@ public class LineInput extends JDialog {
     private JButton xButton;
     private JList list1;
     private JScrollPane scroller;
-    private JButton setTags;
     private JButton addTags;
     private JButton buttonOK;
     private JPanel innerPanel;
+    private JPanel upperPanel;
 
-    private void onCancel() {
-        textField1.setText(null);
-        dispose();
-    }
-
-    public LineInput (Color col) {
+    public LineInput(Color col) {
 
         buttonOK.addActionListener(e -> {
             dispose();
         });
 
 
-        setTags.addActionListener(e -> {
-            List<String> ll = list1.getSelectedValuesList();
-            String s2 = Tools.CsvFromList(ll);
-            textField1.setText(s2);
-        });
-
         addTags.addActionListener(e -> {
             List<String> ll = list1.getSelectedValuesList();
             String s2 = Tools.CsvFromList(ll);
-            s2 = textField1.getText()+", "+s2;
-            textField1.setText (s2);
+            String s1 = textField1.getText();
+            if (!s1.isEmpty())
+                s2 = s1 + ", " + s2;
+            textField1.setText(s2);
         });
 
         setContentPane(contentPane);
@@ -53,19 +43,19 @@ public class LineInput extends JDialog {
 
         setModal(true);
         setUndecorated(true);
-        LineBorder border = new LineBorder(col,4,false);
+        LineBorder border = new LineBorder(col, 4, false);
         contentPane.setBorder(border);
         textField1.addActionListener(actionEvent -> dispose());
         xButton.addActionListener(e -> onCancel());
     }
 
-    public static String xmain (String init, String lab, Color col) {
-        return xmain (init, lab, col, null, false);
+    public static String xmain(String init, String lab, Color col) {
+        return xmain(init, lab, col, null, false);
     }
 
-    public static String xmain (String init, String lab, Color col, String tooltip, boolean list) {
+    public static String xmain(String init, String lab, Color col, String tooltip, boolean list) {
         LineInput dialog = new LineInput(col);
-        int len = Integer.max (600, init == null ? 100 : init.length()*20);
+        int len = Integer.max(600, init == null ? 100 : init.length() * 20);
         if (!list) {
             dialog.innerPanel.setVisible(false);
         }
@@ -77,20 +67,19 @@ public class LineInput extends JDialog {
         dialog.label.setText(lab);
         //dialog.pack();
         if (list)
-            dialog.setSize(len+50, 300);
+            dialog.setSize(len + 50, 300);
         dialog.setLocationRelativeTo(null);
         dialog.setVisible(true);
         return dialog.textField1.getText();
     }
 
-    public static String lmain (String init, String lab, Color col) {
-        String ret = xmain (init, lab, col, null, true);
+    public static String lmain(String init, String lab, Color col) {
+        String ret = xmain(init, lab, col, null, true);
         return ret;
     }
 
-
-    public static int onlyPosNumber (String init, String lab, Color col) {
-        String res = xmain (init, lab, col, null, false);
+    public static int onlyPosNumber(String init, String lab, Color col) {
+        String res = xmain(init, lab, col, null, false);
         try {
             int i = Integer.parseInt(res);
             if (i < 0)
@@ -99,6 +88,11 @@ public class LineInput extends JDialog {
         } catch (NumberFormatException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    private void onCancel() {
+        textField1.setText(null);
+        dispose();
     }
 
     private void createUIComponents() {
