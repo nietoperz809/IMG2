@@ -11,7 +11,6 @@ import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.event.ActionEvent;
 import java.io.File;
-import java.sql.SQLException;
 import java.util.Arrays;
 
 
@@ -128,21 +127,35 @@ public class GridMenu extends JMenuBar {
             }
         });
 
-        JMenuItem m5 = new JMenuItem("Tag List");
-        m5.addActionListener(new AbstractAction() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                java.util.List<String> list = TagSelectorDlg.xmain(null);
+        class worker_for_5x {
+            worker_for_5x(String conn) {
+                java.util.List<String> list = TagSelectorDlg.open();
                 (new Thread(() -> {
                     String sql = "select name,_ROWID_,tag,accnum from IMAGES where";
                     for (int s=0; s<list.size(); s++) {
                         if (s>0)
-                            sql += " or ";
+                            sql += conn;
                         sql += " tag like "+"'%"+list.get(s)+"%'";
                     }
                     System.out.println(sql);
                     new TheGrid(sql);
                 })).start();            }
+        }
+
+        JMenuItem m5 = new JMenuItem("Tag List (or)");
+        m5.addActionListener(new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new worker_for_5x(" or ");
+            }
+        });
+
+        JMenuItem m51 = new JMenuItem("Tag List (and)");
+        m51.addActionListener(new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new worker_for_5x(" and ");
+            }
         });
 
         JMenuItem m6 = new JMenuItem("view Log");
@@ -202,6 +215,7 @@ public class GridMenu extends JMenuBar {
         jm.add(m31);
         jm.add(m4);
         jm.add(m5);
+        jm.add(m51);
         jm.add(m6);
         jm.add(m7);
         jm.add(m8);

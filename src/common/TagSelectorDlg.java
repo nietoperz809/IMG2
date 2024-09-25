@@ -4,8 +4,6 @@ import database.DBHandler;
 
 import javax.swing.*;
 import java.awt.event.*;
-import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.TreeSet;
 
@@ -35,7 +33,7 @@ public class TagSelectorDlg extends JDialog {
 //        dispose();
 //    }
 
-    public static List<String> xmain(String[] args) {
+    public static List<String> open() {
         TagSelectorDlg dialog = new TagSelectorDlg();
         dialog.pack();
         dialog.setLocationRelativeTo(null);

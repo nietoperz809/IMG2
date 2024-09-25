@@ -31,7 +31,8 @@ public class LineInput extends JDialog {
         addTags.addActionListener(e -> {
             List<String> ll = list1.getSelectedValuesList();
             String s2 = Tools.CsvFromList(ll);
-            String s1 = textField1.getText();
+            String s1 = Tools.trimCSVRight(textField1.getText());
+            textField1.setText(s1);
             if (!s1.isEmpty())
                 s2 = s1 + ", " + s2;
             textField1.setText(s2);

@@ -37,6 +37,13 @@ public class Tools {
         return s2;
     }
 
+    public static String trimCSVRight(String in) {
+        if (in.endsWith(" ") || in.endsWith(",")) {
+            return trimCSVRight(in.substring(0, in.length()-1));
+        }
+        return in;
+    }
+
     public static Color getComplementaryColor( Color color) {
         int R = color.getRed();
         int G = color.getGreen();
