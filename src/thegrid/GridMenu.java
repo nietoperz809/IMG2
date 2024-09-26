@@ -17,9 +17,10 @@ import java.util.Arrays;
 public class GridMenu extends JMenuBar {
     public GridMenu(TheGrid theGrid) {
         JMenu jm = new JMenu("Menu");
+        JMenuItem jmi;
 
-        JMenuItem m8 = new JMenuItem ("Restart the app ...");
-        m8.addActionListener(new AbstractAction() {
+        jmi = new JMenuItem ("Restart the app ...");
+        jmi.addActionListener(new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 DBHandler.getInst().log("--- TheGrid ended");
@@ -32,9 +33,10 @@ public class GridMenu extends JMenuBar {
                 }
             }
         });
+        jm.add (jmi);
 
-        JMenuItem mDSQL = new JMenuItem ("direct sql command");
-        mDSQL.addActionListener(new AbstractAction() {
+        jmi = new JMenuItem ("direct sql command");
+        jmi.addActionListener(new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String sql = LineInput.xmain(TheGrid.mainSQL.get().substring(0, 42),
@@ -45,9 +47,10 @@ public class GridMenu extends JMenuBar {
                 }
             }
         });
+        jm.add (jmi);
 
-        JMenuItem m00 = new JMenuItem ("Open another Grid ...");
-        m00.addActionListener(new AbstractAction() {
+        jmi = new JMenuItem ("Open another Grid ...");
+        jmi.addActionListener(new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 (new Thread(() -> {
@@ -57,18 +60,20 @@ public class GridMenu extends JMenuBar {
                         new TheGrid(sql);
                 })).start();                                }
         });
+        jm.add (jmi);
 
-        JMenuItem m0 = new JMenuItem ("Dispose all open views ...");
-        m0.addActionListener(new AbstractAction() {
+        jmi = new JMenuItem ("Dispose all open views ...");
+        jmi.addActionListener(new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 theGrid.controller.killAll();
             }
         });
+        jm.add (jmi);
 
 
-        JMenuItem m1 = new JMenuItem("Add more pictures ...");
-        m1.addActionListener(new AbstractAction() {
+        jmi = new JMenuItem("Add more pictures ...");
+        jmi.addActionListener(new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 PersistString ps = new PersistString("Images.lastDirectory", System.getProperty("user.home"));
@@ -92,9 +97,10 @@ public class GridMenu extends JMenuBar {
                 }
             }
         });
+        jm.add (jmi);
 
-        JMenuItem m1_1 = new JMenuItem("Paste more pictures ...");
-        m1_1.addActionListener(new AbstractAction() {
+        jmi = new JMenuItem("Paste more pictures ...");
+        jmi.addActionListener(new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
@@ -107,25 +113,30 @@ public class GridMenu extends JMenuBar {
                 }
             }
         });
+        jm.add (jmi);
 
-        JMenuItem m2 = new JMenuItem("Backup DB ...");
-        m2.addActionListener(new AbstractAction() {
+        jmi = new JMenuItem("Backup DB ...");
+        jmi.addActionListener(new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 DBHandler.getInst().backup();
             }
         });
+        jm.add (jmi);
 
-        JMenuItem m3 = searchDupes(false, theGrid, "Search for double Items");
-        JMenuItem m31 = searchDupes(true, theGrid, "Delete double Items");
+        jmi = searchDupes(false, theGrid, "Search for double Items");
+        jm.add (jmi);
+        jmi = searchDupes(true, theGrid, "Delete double Items");
+        jm.add (jmi);
 
-        JMenuItem m4 = new JMenuItem("video App");
-        m4.addActionListener(new AbstractAction() {
+        jmi = new JMenuItem("video App");
+        jmi.addActionListener(new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 VideoApp.open(theGrid);
             }
         });
+        jm.add (jmi);
 
         class worker_for_5x {
             worker_for_5x(String conn) {
@@ -142,32 +153,35 @@ public class GridMenu extends JMenuBar {
                 })).start();            }
         }
 
-        JMenuItem m5 = new JMenuItem("Tag List (or)");
-        m5.addActionListener(new AbstractAction() {
+        jmi = new JMenuItem("Tag List (or)");
+        jmi.addActionListener(new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 new worker_for_5x(" or ");
             }
         });
+        jm.add (jmi);
 
-        JMenuItem m51 = new JMenuItem("Tag List (and)");
-        m51.addActionListener(new AbstractAction() {
+        jmi = new JMenuItem("Tag List (and)");
+        jmi.addActionListener(new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 new worker_for_5x(" and ");
             }
         });
+        jm.add (jmi);
 
-        JMenuItem m6 = new JMenuItem("view Log");
-        m6.addActionListener(new AbstractAction() {
+        jmi = new JMenuItem("view Log");
+        jmi.addActionListener(new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 LogBox.xmain();
             }
         });
+        jm.add (jmi);
 
-        JMenuItem msql = new JMenuItem("set Main SQL");
-        msql.addActionListener(new AbstractAction() {
+        jmi = new JMenuItem("set Main SQL");
+        jmi.addActionListener(new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String newSql = LineInput.xmain(TheGrid.mainSQL.get(),
@@ -176,7 +190,7 @@ public class GridMenu extends JMenuBar {
                     TheGrid.mainSQL.set (newSql);
             }
         });
-
+        jm.add (jmi);
 
         JCheckBoxMenuItem m7 = new JCheckBoxMenuItem("WebServer");
         m7.addActionListener(new AbstractAction() {
@@ -191,12 +205,13 @@ public class GridMenu extends JMenuBar {
                 m7.setState(true);
             }
         });
+        jm.add (m7);
 
-        JCheckBoxMenuItem mHist = new JCheckBoxMenuItem("save image history");
-        mHist.addActionListener(new AbstractAction() {
+        JCheckBoxMenuItem m8 = new JCheckBoxMenuItem("save image history");
+        m8.addActionListener(new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (!mHist.isSelected()) {
+                if (!m8.isSelected()) {
                     theGrid.setHistoryPath(null);
                     return;
                 }
@@ -204,23 +219,8 @@ public class GridMenu extends JMenuBar {
                 theGrid.setHistoryPath(dir);
             }
         });
+        jm.add (m8);
 
-        jm.add (mDSQL);
-        jm.add(m00);
-        jm.add(m0);
-        jm.add(m1);
-        jm.add(m1_1);
-        jm.add(m2);
-        jm.add(m3);
-        jm.add(m31);
-        jm.add(m4);
-        jm.add(m5);
-        jm.add(m51);
-        jm.add(m6);
-        jm.add(m7);
-        jm.add(m8);
-        jm.add (mHist);
-        jm.add (msql);
         this.add(jm);
         theGrid.setJMenuBar(this);
     }
