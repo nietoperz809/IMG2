@@ -65,7 +65,7 @@ public class VideoApp extends JDialog {
         addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e) {
                 if (owner != null)
-                    owner.setEnabled(true);
+                    owner.setVisible(true);
                 onCancel();
             }
         });
@@ -231,7 +231,7 @@ public class VideoApp extends JDialog {
         VideoApp dialog = new VideoApp();
         dialog.owner = owner;
         if (owner != null)
-            owner.setEnabled(false);
+            owner.setVisible(false);
         dialog.setSize(600,600);
         dialog.setLocationRelativeTo(null);
         dialog.setVisible(true);
