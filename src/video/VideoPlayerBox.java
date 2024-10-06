@@ -1,6 +1,7 @@
 package video;
 
 import common.Tools;
+import common.UpDown;
 import database.DBHandler;
 import uk.co.caprica.vlcj.player.base.MediaPlayer;
 import uk.co.caprica.vlcj.player.base.MediaPlayerEventAdapter;
@@ -21,7 +22,7 @@ public class VideoPlayerBox {
     private EmbeddedMediaPlayerComponent mpc;
     private boolean paused = false;
     private final VideoApp parent;
-
+    private UpDown speed;
 
     public VideoPlayerBox(VideoApp parent) {
         this.parent = parent;
@@ -64,13 +65,14 @@ public class VideoPlayerBox {
             return;
         lock.lock();
         try {
+            speed = new UpDown(new float[]{0.01f, 0.1f, 0.3f, 1.0f, 2.0f, 3.0f, 5.0f}, 3);
             sbar.setValue(0);
             File tempFile = Objects.requireNonNull(DBHandler.getInst()).transferVideoIntoFile(nid);
             System.out.println(tempFile);
             mpc = new EmbeddedMediaPlayerComponent();
             playerFrame = new JFrame();
             playerFrame.requestFocus();
-            playerFrame.setTitle("Player Box, hit 's' to start and stop, 'p' to take shapshot");
+            playerFrame.setTitle("Hit 's' to start and stop, 'p' to take shapshot, +/- for speed");
             playerFrame.setBounds(100, 100, 600, 400);
             playerFrame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
             /*
@@ -101,20 +103,36 @@ public class VideoPlayerBox {
                 @Override
                 public void keyTyped(KeyEvent keyEvent) {
                     char c = keyEvent.getKeyChar();
-                    if (c == 's') {
-                        var mp = mpc.mediaPlayer().controls();
-                        lock.lock();
-                        if (paused)
-                            mp.play();
-                        else
-                            mp.pause();
-                        paused = !paused;
-                        lock.unlock();
-                    } else if (c == 'p') {
-                        mpc.mediaPlayer().snapshots()
+                    var controls = mpc.mediaPlayer().controls();
+                    switch (c) {
+                        case 's' -> {
+                            lock.lock();
+                            if (paused) {
+                                controls.setRate(speed.current());
+                                controls.play();
+                            }
+                            else
+                                controls.pause();
+                            paused = !paused;
+                            lock.unlock();
+                        }
+                        case 'r' -> {
+                            controls.skipTime(-1000);
+                        }
+                        case 'f' -> {
+                            controls.skipTime(1000);
+                        }
+                        case '+' -> {
+                            controls.setRate(speed.up());
+                            playerFrame.setTitle (Float.toString(speed.current()));
+                        }
+                        case '-' -> {
+                            controls.setRate(speed.down());
+                            playerFrame.setTitle (Float.toString(speed.current()));
+                        }
+                        case 'p' -> mpc.mediaPlayer().snapshots()
                                 .save(new File(parent.snapDir + File.separator + System.currentTimeMillis() + ".png"));
                     }
-                    //lock.unlock();
                 }
             });
             playerFrame.setLayout(new BorderLayout());

@@ -1,12 +1,10 @@
 package common;
 
-import java.awt.Point;
-import java.awt.Rectangle;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 
 /////////////////////////////////////////////////////////////////////////
-public class ImageWarper
-{
+public class ImageWarper {
     private final Point mFromPoint;
     private final Point mToPoint;
     private final int[] mFromPixels;
@@ -14,8 +12,7 @@ public class ImageWarper
     private final int mWidth;
     private final int mHeight; // width & height of warp image
 
-    public ImageWarper (BufferedImage img, Point fromPoint, Point toPoint)
-    {
+    public ImageWarper(BufferedImage img, Point fromPoint, Point toPoint) {
         mFromPoint = fromPoint;
         mToPoint = toPoint;
         mWidth = img.getWidth(null);
@@ -27,9 +24,14 @@ public class ImageWarper
         System.arraycopy(mFromPixels, 0, mToPixels, 0, mWidth * mHeight);
     }
 
+    private static BufferedImage createImageFromArray(int[] pixels, int width, int height) {
+        BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+        image.setRGB(0, 0, width, height, pixels, 0, width);
+        return image;
+    }
+
     // warp mFromPixels into mToPixels
-    public BufferedImage warpPixels ()
-    {
+    public BufferedImage warpPixels() {
         int dx = mToPoint.x - mFromPoint.x;
         int dy = mToPoint.y - mFromPoint.y;
         int dist = (int) Math.sqrt(dx * dx + dy * dy) * 2;
@@ -39,8 +41,7 @@ public class ImageWarper
         Point se = new Point(0, 0);
         Point sw = new Point(0, 0);
         // copy mFromPixels to mToPixels, so the non-warped parts will be identical
-        if (dist == 0)
-        {
+        if (dist == 0) {
             return null;
         }
         // warp northeast quadrant
@@ -75,25 +76,16 @@ public class ImageWarper
         SetPt(se, r.x, r.y + r.height);
         SetPt(sw, r.x + r.width, r.y + r.height);
         WarpRegion(r, nw, ne, sw, se);
-        return createImageFromArray (mToPixels, mWidth, mHeight);
-    }
-
-    private static BufferedImage createImageFromArray (int[] pixels, int width, int height)
-    {
-        BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
-        image.setRGB(0, 0, width, height, pixels, 0, width);
-        return image;
+        return createImageFromArray(mToPixels, mWidth, mHeight);
     }
 
     // warp a quadrilateral into a rectangle (magic!)
-    private void WarpRegion(Rectangle fromRect, Point nw, Point ne, Point sw, Point se)
-    {
+    private void WarpRegion(Rectangle fromRect, Point nw, Point ne, Point sw, Point se) {
         int dx = fromRect.width;
         int dy = fromRect.height;
         double invDX = 1.0 / dx;
         double invDY = 1.0 / dy;
-        for (int a = 0; a < dx; a++)
-        {
+        for (int a = 0; a < dx; a++) {
             double aa = a * invDX;
             double x1 = ne.x + (nw.x - ne.x) * aa;
             double y1 = ne.y + (nw.y - ne.y) * aa;
@@ -104,22 +96,17 @@ public class ImageWarper
             double dxin = (x2 - x1) * invDY;
             double dyin = (y2 - y1) * invDY;
             int toPixel = fromRect.x + a + fromRect.y * mWidth;
-            for (int b = 0; b < dy; b++)
-            {
-                if (xin < 0)
-                {
+            for (int b = 0; b < dy; b++) {
+                if (xin < 0) {
                     xin = 0;
                 }
-                if (xin >= mWidth)
-                {
+                if (xin >= mWidth) {
                     xin = mWidth - 1;
                 }
-                if (yin < 0)
-                {
+                if (yin < 0) {
                     yin = 0;
                 }
-                if (yin >= mHeight)
-                {
+                if (yin >= mHeight) {
                     yin = mHeight - 1;
                 }
                 int pixelValue = mFromPixels[(int) xin + (int) yin * mWidth];
@@ -131,40 +118,33 @@ public class ImageWarper
         }
     }
 
-    private void ClipRect (Rectangle r, int w, int h)
-    {
-        if (r.x < 0)
-        {
+    private void ClipRect(Rectangle r, int w, int h) {
+        if (r.x < 0) {
             r.width += r.x;
             r.x = 0;
         }
-        if (r.y < 0)
-        {
+        if (r.y < 0) {
             r.height += r.y;
             r.y = 0;
         }
-        if (r.x + r.width >= w)
-        {
+        if (r.x + r.width >= w) {
             r.width = w - r.x - 1;
         }
-        if (r.y + r.height >= h)
-        {
+        if (r.y + r.height >= h) {
             r.height = h - r.y - 1;
         }
     }
 
     // SetRect and SetPt are Mac OS functions. I wrote my own versions here
     // so I didn't have to rewrite too much of the code.
-    private void SetRect (Rectangle r, int left, int top, int right, int bottom)
-    {
+    private void SetRect(Rectangle r, int left, int top, int right, int bottom) {
         r.x = left;
         r.y = top;
         r.width = right - left;
         r.height = bottom - top;
     }
 
-    private void SetPt (Point pt, int x, int y)
-    {
+    private void SetPt(Point pt, int x, int y) {
         pt.x = x;
         pt.y = y;
     }
