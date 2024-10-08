@@ -62,9 +62,10 @@ public class TheGrid extends MyFrame {
     }
 
 
-    public TheGrid (String sql) {
+    public TheGrid (String sql, String dbRoot) {
         instCount++;
         thisInstCount = instCount;
+        setTitle(dbRoot);
         imageL.setSQL(sql);
         System.out.println("TheGrid constructor called");
         DBHandler.getInst().log("Images in DB: "+this.imageL.size());
@@ -96,12 +97,13 @@ public class TheGrid extends MyFrame {
     }
 
     public static void main(String... input) {
+        String dbRoot = null;
         try {
             if (input.length != 0) {
                 if (input[0].startsWith("dbdir:")) {
-                    String dir = input[0].substring(6);
-                    DBHandler.getInst().setDBRoot(dir);
-                    System.out.println(dir);
+                    dbRoot = input[0].substring(6);
+                    DBHandler.setDBRoot(dbRoot);
+                    System.out.println(dbRoot);
                 }
             }
 //            Thread hook = new Thread(() ->
@@ -110,7 +112,7 @@ public class TheGrid extends MyFrame {
 
 
             DBHandler.getInst().log("+++ TheGrid started");
-            new TheGrid (mainSQL.get());
+            new TheGrid (mainSQL.get(), dbRoot);
 //            Thread.sleep(100000);
             System.out.println("end main");
         } catch (Exception e) {
@@ -154,7 +156,7 @@ public class TheGrid extends MyFrame {
         rootPane.doLayout();
         scrollPane.getViewport().setView(rootPane);
         if (this.thisInstCount == 1)
-            setTitle (BuildInfo.buildInfo + " -- " + info);
+            setTitle (getTitle()+ " " + BuildInfo.buildInfo + " -- " + info);
         else
             setTitle (imageL.getSql());
         setVisible(true);

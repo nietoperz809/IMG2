@@ -23,7 +23,7 @@ import static common.ImgTools.byteArrayToImg;
 import static common.Tools.extractResource;
 
 public class DBHandler {
-    private String ROOT_DIR = "C:\\Databases\\";
+    private static String ROOT_DIR = null; // ""C:\\Databases\\";
     private static final String NO_PASS = "NoPass";
     private static final String DB_FILE = "mydb";
     private static final String DB_FILE_FULL = DB_FILE + ".mv.db";
@@ -43,9 +43,9 @@ public class DBHandler {
         }
     }
 
-    public void setDBRoot (String s) {
+    public static void setDBRoot(String s) {
         ROOT_DIR = s;
-        log ("DBROOT set to:"+s);
+        getInst().log ("DBROOT set to:"+s);
     }
 
 

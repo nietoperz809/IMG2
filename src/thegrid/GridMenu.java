@@ -57,7 +57,7 @@ public class GridMenu extends JMenuBar {
                     String sql = LineInput.xmain (TheGrid.mainSQL.get().substring(0,42),
                             "SQL", Color.BLUE);
                     if (!sql.isEmpty())
-                        new TheGrid(sql);
+                        new TheGrid(sql, "child ");
                 })).start();                                }
         });
         jm.add (jmi);
@@ -149,7 +149,7 @@ public class GridMenu extends JMenuBar {
                         sql += " tag like "+"'%"+list.get(s)+"%'";
                     }
                     System.out.println(sql);
-                    new TheGrid(sql);
+                    new TheGrid(sql, "WORKER");
                 })).start();            }
         }
 
