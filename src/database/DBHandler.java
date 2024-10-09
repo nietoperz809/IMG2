@@ -43,6 +43,10 @@ public class DBHandler {
         }
     }
 
+    public static String getDBRoot() {
+        return ROOT_DIR;
+    }
+
     public static void setDBRoot(String s) {
         ROOT_DIR = s;
         getInst().log ("DBROOT set to:"+s);

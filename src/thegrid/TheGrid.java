@@ -132,7 +132,7 @@ public class TheGrid extends MyFrame {
         command.add(javaBin);
         command.add("-jar");
         command.add(currentJar.getPath());
-        command.add ("dbdir:C:\\Databases\\");
+        command.add ("dbdir:" + DBHandler.getDBRoot());
 
         final ProcessBuilder builder = new ProcessBuilder(command);
         builder.start();

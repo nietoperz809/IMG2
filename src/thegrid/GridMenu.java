@@ -19,7 +19,7 @@ public class GridMenu extends JMenuBar {
         JMenu jm = new JMenu("Menu");
         JMenuItem jmi;
 
-        jmi = new JMenuItem ("Restart the app ...");
+        jmi = new JMenuItem("Restart the app ...");
         jmi.addActionListener(new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -33,9 +33,9 @@ public class GridMenu extends JMenuBar {
                 }
             }
         });
-        jm.add (jmi);
+        jm.add(jmi);
 
-        jmi = new JMenuItem ("direct sql command");
+        jmi = new JMenuItem("direct sql command");
         jmi.addActionListener(new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -47,29 +47,30 @@ public class GridMenu extends JMenuBar {
                 }
             }
         });
-        jm.add (jmi);
+        jm.add(jmi);
 
-        jmi = new JMenuItem ("Open another Grid ...");
+        jmi = new JMenuItem("Open another Grid ...");
         jmi.addActionListener(new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 (new Thread(() -> {
-                    String sql = LineInput.xmain (TheGrid.mainSQL.get().substring(0,42),
+                    String sql = LineInput.xmain(TheGrid.mainSQL.get().substring(0, 42),
                             "SQL", Color.BLUE);
                     if (!sql.isEmpty())
                         new TheGrid(sql, "child ");
-                })).start();                                }
+                })).start();
+            }
         });
-        jm.add (jmi);
+        jm.add(jmi);
 
-        jmi = new JMenuItem ("Dispose all open views ...");
+        jmi = new JMenuItem("Dispose all open views ...");
         jmi.addActionListener(new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 theGrid.controller.killAll();
             }
         });
-        jm.add (jmi);
+        jm.add(jmi);
 
 
         jmi = new JMenuItem("Add more pictures ...");
@@ -97,7 +98,7 @@ public class GridMenu extends JMenuBar {
                 }
             }
         });
-        jm.add (jmi);
+        jm.add(jmi);
 
         jmi = new JMenuItem("Paste more pictures ...");
         jmi.addActionListener(new AbstractAction() {
@@ -105,15 +106,15 @@ public class GridMenu extends JMenuBar {
             public void actionPerformed(ActionEvent e) {
                 Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
                 try {
-                    java.util.List<File> list  = (java.util.List<File>)clipboard.getData(DataFlavor.javaFileListFlavor);
+                    java.util.List<File> list = (java.util.List<File>) clipboard.getData(DataFlavor.javaFileListFlavor);
                     File[] arr = list.toArray(new File[0]);
-                    theGrid.addImageFilesToDatabase (arr);
+                    theGrid.addImageFilesToDatabase(arr);
                 } catch (Exception ex) {
                     throw new RuntimeException(ex);
                 }
             }
         });
-        jm.add (jmi);
+        jm.add(jmi);
 
         jmi = new JMenuItem("Backup DB ...");
         jmi.addActionListener(new AbstractAction() {
@@ -122,12 +123,12 @@ public class GridMenu extends JMenuBar {
                 DBHandler.getInst().backup();
             }
         });
-        jm.add (jmi);
+        jm.add(jmi);
 
         jmi = searchDupes(false, theGrid, "Search for double Items");
-        jm.add (jmi);
+        jm.add(jmi);
         jmi = searchDupes(true, theGrid, "Delete double Items");
-        jm.add (jmi);
+        jm.add(jmi);
 
         jmi = new JMenuItem("video App");
         jmi.addActionListener(new AbstractAction() {
@@ -136,36 +137,16 @@ public class GridMenu extends JMenuBar {
                 VideoApp.open(theGrid);
             }
         });
-        jm.add (jmi);
-
-        class worker_for_5x {
-            worker_for_5x() {
-                JList<String> jlist = TagSelectorDlg.open();
-                if (jlist == null) // cancelled
-                    return;
-                var list = jlist.getSelectedValuesList();
-                boolean andMode = jlist.isOpaque();
-                (new Thread(() -> {
-                    String sql = "select name,_ROWID_,tag,accnum from IMAGES where";
-                    for (int s=0; s<list.size(); s++) {
-                        if (s>0)
-                            sql += andMode ? " and" : " or";
-                        sql += " tag like "+"'%"+list.get(s)+"%'";
-                    }
-                    System.out.println(sql);
-                    new TheGrid(sql, "WORKER");
-                })).start();
-            }
-        }
+        jm.add(jmi);
 
         jmi = new JMenuItem("Tag List");
         jmi.addActionListener(new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                new worker_for_5x();
+                worker_for_5x();
             }
         });
-        jm.add (jmi);
+        jm.add(jmi);
 
         jmi = new JMenuItem("view Log");
         jmi.addActionListener(new AbstractAction() {
@@ -174,7 +155,7 @@ public class GridMenu extends JMenuBar {
                 LogBox.xmain();
             }
         });
-        jm.add (jmi);
+        jm.add(jmi);
 
         jmi = new JMenuItem("set Main SQL");
         jmi.addActionListener(new AbstractAction() {
@@ -183,14 +164,15 @@ public class GridMenu extends JMenuBar {
                 String newSql = LineInput.xmain(TheGrid.mainSQL.get(),
                         "newSQL", Color.BLUE);
                 if (!newSql.isEmpty())
-                    TheGrid.mainSQL.set (newSql);
+                    TheGrid.mainSQL.set(newSql);
             }
         });
-        jm.add (jmi);
+        jm.add(jmi);
 
         JCheckBoxMenuItem m7 = new JCheckBoxMenuItem("WebServer");
         m7.addActionListener(new AbstractAction() {
             static WebApp wapp;
+
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (wapp != null) {
@@ -201,7 +183,7 @@ public class GridMenu extends JMenuBar {
                 m7.setState(true);
             }
         });
-        jm.add (m7);
+        jm.add(m7);
 
         final JMenuItem jmi2 = new JCheckBoxMenuItem("save image history");
         jmi2.addActionListener(new AbstractAction() {
@@ -215,7 +197,7 @@ public class GridMenu extends JMenuBar {
                 theGrid.setHistoryPath(dir);
             }
         });
-        jm.add (jmi2);
+        jm.add(jmi2);
 
         this.add(jm);
         theGrid.setJMenuBar(this);
@@ -230,13 +212,13 @@ public class GridMenu extends JMenuBar {
                 Component[] components = theGrid.rootPane.getComponents();
                 if (components.length != theGrid.imageL.allFiles.size()) {
                     String mess = "Please restart and wait until all " + theGrid.imageL.allFiles.size() + " tiles are loaded!";
-                    int res = JOptionPane.showConfirmDialog (theGrid, mess, "Warn!", JOptionPane.YES_NO_OPTION);
+                    int res = JOptionPane.showConfirmDialog(theGrid, mess, "Warn!", JOptionPane.YES_NO_OPTION);
                     if (res == 0) /*OK*/ {
                         System.exit(-1);
                     }
                     return;
                 }
-                GridImage g1,g2;
+                GridImage g1, g2;
                 for (int i = 0; i < components.length; i++) {
                     for (int j = i + 1; j < components.length; j++) {
                         g1 = (GridImage) components[i];
@@ -266,5 +248,23 @@ public class GridMenu extends JMenuBar {
             }
         });
         return m3;
+    }
+
+    private void worker_for_5x() {
+        JList<String> jlist = TagSelectorDlg.open();
+        if (jlist == null) // cancelled
+            return;
+        var list = jlist.getSelectedValuesList();
+        boolean andMode = jlist.isOpaque();
+        (new Thread(() -> {
+            String sql = "select name,_ROWID_,tag,accnum from IMAGES where";
+            for (int s = 0; s < list.size(); s++) {
+                if (s > 0)
+                    sql += andMode ? " and" : " or";
+                sql += " tag like " + "'%" + list.get(s) + "%'";
+            }
+            System.out.println(sql);
+            new TheGrid(sql, "WORKER");
+        })).start();
     }
 }
