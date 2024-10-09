@@ -29,7 +29,9 @@
             <children>
               <component id="4481a" class="javax.swing.JList" binding="list1" custom-create="true" default-binding="true">
                 <constraints/>
-                <properties/>
+                <properties>
+                  <layoutOrientation value="2"/>
+                </properties>
               </component>
             </children>
           </scrollpane>
