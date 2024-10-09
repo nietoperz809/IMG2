@@ -139,34 +139,30 @@ public class GridMenu extends JMenuBar {
         jm.add (jmi);
 
         class worker_for_5x {
-            worker_for_5x(String conn) {
-                java.util.List<String> list = TagSelectorDlg.open();
+            worker_for_5x() {
+                JList<String> jlist = TagSelectorDlg.open();
+                if (jlist == null) // cancelled
+                    return;
+                var list = jlist.getSelectedValuesList();
+                boolean andMode = jlist.isOpaque();
                 (new Thread(() -> {
                     String sql = "select name,_ROWID_,tag,accnum from IMAGES where";
                     for (int s=0; s<list.size(); s++) {
                         if (s>0)
-                            sql += conn;
+                            sql += andMode ? " and" : " or";
                         sql += " tag like "+"'%"+list.get(s)+"%'";
                     }
                     System.out.println(sql);
                     new TheGrid(sql, "WORKER");
-                })).start();            }
+                })).start();
+            }
         }
 
-        jmi = new JMenuItem("Tag List (or)");
+        jmi = new JMenuItem("Tag List");
         jmi.addActionListener(new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                new worker_for_5x(" or ");
-            }
-        });
-        jm.add (jmi);
-
-        jmi = new JMenuItem("Tag List (and)");
-        jmi.addActionListener(new AbstractAction() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                new worker_for_5x(" and ");
+                new worker_for_5x();
             }
         });
         jm.add (jmi);

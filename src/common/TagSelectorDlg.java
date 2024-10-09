@@ -11,6 +11,11 @@ public class TagSelectorDlg extends JDialog {
     private JPanel contentPane;
     private JButton buttonOK;
     private JList<String> list1;
+    private JRadioButton radioAND;
+    private JRadioButton radioOR;
+    private JButton cancelButton;
+    private boolean cancelled = false;
+    private boolean andMode = true;
 
     public TagSelectorDlg() {
         setUndecorated(true);
@@ -23,22 +28,43 @@ public class TagSelectorDlg extends JDialog {
                 onOK();
             }
         });
+        cancelButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                onCancel();
+            }
+        });
+        radioAND.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                andMode = true;
+            }
+        });
+        radioOR.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                andMode = false;
+            }
+        });
     }
 
     private void onOK() {
         dispose();
     }
 
-//    private void onCancel() {
-//        dispose();
-//    }
+    private void onCancel() {
+        cancelled = true;
+        dispose();
+    }
 
-    public static List<String> open() {
+    public static JList<String> open() {
         TagSelectorDlg dialog = new TagSelectorDlg();
         dialog.pack();
         dialog.setLocationRelativeTo(null);
         dialog.setVisible(true);
-        return dialog.list1.getSelectedValuesList();
+        if (dialog.cancelled)
+            return null;
+        dialog.list1.setOpaque(dialog.andMode);
+        return dialog.list1;
     }
 
     private void createUIComponents() {
