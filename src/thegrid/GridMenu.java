@@ -2,6 +2,10 @@ package thegrid;
 
 import common.*;
 import database.DBHandler;
+import dialogs.LineInput;
+import dialogs.LogBox;
+import dialogs.MonitorFrame;
+import dialogs.TagSelectorDlg;
 import video.VideoApp;
 
 import javax.swing.*;
@@ -18,6 +22,15 @@ public class GridMenu extends JMenuBar {
     public GridMenu(TheGrid theGrid) {
         JMenu jm = new JMenu("Menu");
         JMenuItem jmi;
+
+        jmi = new JMenuItem("Memory Monitor ...");
+        jmi.addActionListener(new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new MonitorFrame();
+            }
+        });
+        jm.add(jmi);
 
         jmi = new JMenuItem("Restart the app ...");
         jmi.addActionListener(new AbstractAction() {
@@ -257,14 +270,14 @@ public class GridMenu extends JMenuBar {
         var list = jlist.getSelectedValuesList();
         boolean andMode = jlist.isOpaque();
         (new Thread(() -> {
-            String sql = "select name,_ROWID_,tag,accnum from IMAGES where";
+            StringBuilder sql = new StringBuilder("select name,_ROWID_,tag,accnum from IMAGES where");
             for (int s = 0; s < list.size(); s++) {
                 if (s > 0)
-                    sql += andMode ? " and" : " or";
-                sql += " tag like " + "'%" + list.get(s) + "%'";
+                    sql.append(andMode ? " and" : " or");
+                sql.append(" tag like " + "'%").append(list.get(s)).append("%'");
             }
             System.out.println(sql);
-            new TheGrid(sql, "WORKER");
+            new TheGrid(sql.toString(), "WORKER");
         })).start();
     }
 }

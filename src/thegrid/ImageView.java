@@ -11,6 +11,7 @@ import Catalano.Imaging.Filters.HistogramEqualization;
 import Catalano.Imaging.IApplyInPlace;
 import common.*;
 import database.DBHandler;
+import dialogs.LineInput;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;

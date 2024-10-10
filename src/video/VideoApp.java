@@ -1,6 +1,6 @@
 package video;
 
-import common.LineInput;
+import dialogs.LineInput;
 import common.Tools;
 import database.DBHandler;
 

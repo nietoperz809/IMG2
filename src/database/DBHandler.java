@@ -1,6 +1,7 @@
 package database;
 
 import common.*;
+import dialogs.UnlockDBDialog;
 import thegrid.ImageScaler;
 
 import javax.swing.*;
@@ -295,22 +296,22 @@ public class DBHandler {
     }
 
     public TreeSet<String> getImageTagList() {
-        HashSet<String> list = new HashSet<>();
+        //HashSet<String> list = new HashSet<>();
+        TreeSet<String> ll = new TreeSet<>();
         try {
-            try (ResultSet res = query("select distinct tag from IMAGES")) {
+            try (ResultSet res = query("select tag from IMAGES")) {
                 while (res.next()) {
                     String s = res.getString(1);
                     if (s != null) {
-                        String[] mult = s.split(",");
-                            for (String t: mult)
-                                list.add (t.trim());
+                        TreeSet<String> l2 = Tools.SetFromCSVString(s);
+                        ll.addAll(l2);
                     }
                 }
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        return new TreeSet<String>(list);
+        return ll;
     }
 
     public void backup() {

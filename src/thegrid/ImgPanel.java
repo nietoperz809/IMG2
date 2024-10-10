@@ -2,6 +2,7 @@ package thegrid;
 
 import Catalano.Imaging.FastBitmap;
 import common.*;
+import dialogs.TextParamBox;
 
 import java.awt.*;
 import java.awt.event.MouseAdapter;

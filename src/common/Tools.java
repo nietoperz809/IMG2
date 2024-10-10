@@ -7,8 +7,19 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.io.*;
+import java.util.*;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.FutureTask;
 
 public class Tools {
+
+    private static final ExecutorService globalExecutor = Executors.newCachedThreadPool(); //Executors.newFixedThreadPool(20);
+
+    public static FutureTask<?> execute(Runnable r) {
+        return (FutureTask<?>) globalExecutor.submit(r);
+    }
+
     /**
      * Checks if a filename has one of n extensions
      * @param fileName the filename
@@ -25,7 +36,23 @@ public class Tools {
         return false;
     }
 
-    public static String CsvFromList (java.util.List<String> ll) {
+    public static java.util.List removeDuplicates (java.util.List in) {
+        Set<String> set = new HashSet<>(in);
+        in.clear();
+        in.addAll(set);
+        return in;
+    }
+
+    public static java.util.TreeSet<String> SetFromCSVString (String csv) {
+        String[] arr = csv.split(",");
+        TreeSet<String> ll = new TreeSet<>();
+        for (int n=0; n<arr.length; n++) {
+            ll.add(arr[n].trim());
+        }
+        return ll;
+    }
+
+    public static String CsvStringFromSet (TreeSet<String> ll) {
         StringBuilder sb = new StringBuilder();
         for (String s: ll) {
             sb.append(s).append(", ");
