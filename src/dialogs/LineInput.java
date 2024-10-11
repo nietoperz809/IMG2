@@ -1,20 +1,14 @@
 package dialogs;
 
-import com.sun.source.tree.Tree;
-import common.Tools;
 import database.DBHandler;
 
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.awt.event.KeyEvent;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
 import java.util.TreeSet;
 
-import static common.Tools.CsvStringFromSet;
-import static common.Tools.SetFromCSVString;
+import static common.Tools.*;
 
 public class LineInput extends JDialog {
     private JPanel contentPane;
@@ -31,9 +25,9 @@ public class LineInput extends JDialog {
     public LineInput(Color col) {
 
         buttonOK.addActionListener(e -> {
+            textField1.setText(adjustCSVString(textField1.getText()));
             dispose();
         });
-
 
         addTags.addActionListener(e -> {
             //TreeSet<String> set = new TreeSet<>(list1.getSelectedValuesList());
@@ -59,27 +53,28 @@ public class LineInput extends JDialog {
         return xmain(init, lab, col, null, false);
     }
 
-    public static String xmain(String init, String lab, Color col, String tooltip, boolean list) {
+    public static String xmain(String init, String lab, Color col, String tooltip, boolean hasTagList) {
         LineInput dialog = new LineInput(col);
         int len = Integer.max(600, init == null ? 100 : init.length() * 20);
-        if (!list) {
+        if (!hasTagList) {
             dialog.innerPanel.setVisible(false);
         }
-        dialog.setSize(
-                new Dimension(len, 50)
-        );
+        dialog.setSize(new Dimension(len, 50));
         dialog.textField1.setText(init);
         dialog.textField1.setToolTipText(tooltip);
         dialog.label.setText(lab);
         //dialog.pack();
-        if (list)
+        if (hasTagList) {
+            dialog.setUndecorated(false);
             dialog.setSize(len + 50, 300);
+            dialog.repaint();
+        }
         dialog.setLocationRelativeTo(null);
         dialog.setVisible(true);
         return dialog.textField1.getText();
     }
 
-    public static String lmain(String init, String lab, Color col) {
+    public static String tagList(String init, String lab, Color col) {
         String ret = xmain(init, lab, col, null, true);
         return ret;
     }

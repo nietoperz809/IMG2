@@ -17,7 +17,7 @@ public class TagSelectorDlg extends JDialog {
     private boolean andMode = true;
 
     public TagSelectorDlg() {
-        setUndecorated(true);
+        //setUndecorated(true);
         setContentPane(contentPane);
         setModal(true);
         getRootPane().setDefaultButton(buttonOK);

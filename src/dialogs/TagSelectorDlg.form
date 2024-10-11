@@ -6,7 +6,7 @@
     <rowspec value="center:max(d;4px):noGrow"/>
     <colspec value="fill:d:grow"/>
     <constraints>
-      <xy x="48" y="54" width="436" height="297"/>
+      <xy x="48" y="54" width="652" height="297"/>
     </constraints>
     <properties>
       <background color="-4520421"/>
@@ -98,7 +98,8 @@
                 <constraints/>
                 <properties>
                   <layoutOrientation value="2"/>
-                  <preferredSize width="0" height="300"/>
+                  <preferredSize width="300" height="300"/>
+                  <visibleRowCount value="8"/>
                 </properties>
               </component>
             </children>

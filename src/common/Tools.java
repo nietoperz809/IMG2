@@ -36,18 +36,30 @@ public class Tools {
         return false;
     }
 
-    public static java.util.List removeDuplicates (java.util.List in) {
-        Set<String> set = new HashSet<>(in);
-        in.clear();
-        in.addAll(set);
-        return in;
+    public static String adjustCSVString (String in) {
+//        String[] arr = in.split(",");
+//        TreeSet<String> ll = new TreeSet<>();
+//        for (int n=0; n<arr.length; n++) {
+//            arr[n] = arr[n].trim();
+//            if (arr[n] > 1)
+        TreeSet<String> set = SetFromCSVString(in);
+        return CsvStringFromSet(set);
     }
+
+//    public static java.util.List removeDuplicates (java.util.List in) {
+//        Set<String> set = new HashSet<>(in);
+//        in.clear();
+//        in.addAll(set);
+//        return in;
+//    }
 
     public static java.util.TreeSet<String> SetFromCSVString (String csv) {
         String[] arr = csv.split(",");
         TreeSet<String> ll = new TreeSet<>();
         for (int n=0; n<arr.length; n++) {
-            ll.add(arr[n].trim());
+            arr[n] = arr[n].trim();
+            if (arr[n].length() > 1) // ignore single-char strings
+                ll.add(arr[n]);
         }
         return ll;
     }

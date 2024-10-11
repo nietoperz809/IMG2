@@ -296,7 +296,6 @@ public class DBHandler {
     }
 
     public TreeSet<String> getImageTagList() {
-        //HashSet<String> list = new HashSet<>();
         TreeSet<String> ll = new TreeSet<>();
         try {
             try (ResultSet res = query("select tag from IMAGES")) {
@@ -304,6 +303,9 @@ public class DBHandler {
                     String s = res.getString(1);
                     if (s != null) {
                         TreeSet<String> l2 = Tools.SetFromCSVString(s);
+//                        if (l2.contains("a")) {
+//                            System.out.println(l2);
+//                        }
                         ll.addAll(l2);
                     }
                 }
