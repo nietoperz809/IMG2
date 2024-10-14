@@ -48,17 +48,9 @@ public class VideoApp extends JDialog {
         //setModal(true);
         getRootPane().setDefaultButton(buttonPlay);
 
-        buttonPlay.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                onOK();
-            }
-        });
+        buttonPlay.addActionListener(e -> onOK());
 
-        buttonCancel.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                onCancel();
-            }
-        });
+        buttonCancel.addActionListener(e -> onCancel());
 
         // call onCancel() when cross is clicked
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);                                    
@@ -73,55 +65,46 @@ public class VideoApp extends JDialog {
         setListContent(false);
 
         enableDrop();
-        deleteButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                int id = listControl.getSelectedValue().rowid();
-                String name = listControl.getSelectedValue().name();
-                if (Tools.isGIF(name)) {
-                    DBHandler.getInst().deleteGif(id);
-                } else {
-                    DBHandler.getInst().deleteVideo(id);
-                }
-                setListContent(false);
-                repaint();
+        deleteButton.addActionListener(e -> {
+            int id = listControl.getSelectedValue().rowid();
+            String name = listControl.getSelectedValue().name();
+            if (Tools.isGIF(name)) {
+                DBHandler.getInst().deleteGif(id);
+            } else {
+                DBHandler.getInst().deleteVideo(id);
             }
+            setListContent(false);
+            repaint();
         });
-        exportButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent actionEvent) {
-                DBHandler.NameID nameid = listControl.getSelectedValue();
-                try {
-                    JFileChooser fileChooser = new JFileChooser();
-                    fileChooser.setSelectedFile(new File(nameid.name()));
-                    int option = fileChooser.showSaveDialog(VideoApp.this);
-                    if(option == JFileChooser.APPROVE_OPTION){
-                        File f = fileChooser.getSelectedFile();
-                        SoftReference<byte[]> bt;
-                        if (Tools.isGIF(nameid.name())) {
-                            bt = DBHandler.getInst().loadGifBytes(nameid);
-                        } else {
-                            bt = DBHandler.getInst().loadVideoBytes(nameid);
-                        }
-                        Files.write(f.toPath(), bt.get());
+        exportButton.addActionListener(actionEvent -> {
+            DBHandler.NameID nameid = listControl.getSelectedValue();
+            try {
+                JFileChooser fileChooser = new JFileChooser();
+                fileChooser.setSelectedFile(new File(nameid.name()));
+                int option = fileChooser.showSaveDialog(VideoApp.this);
+                if(option == JFileChooser.APPROVE_OPTION){
+                    File f = fileChooser.getSelectedFile();
+                    SoftReference<byte[]> bt;
+                    if (Tools.isGIF(nameid.name())) {
+                        bt = DBHandler.getInst().loadGifBytes(nameid);
+                    } else {
+                        bt = DBHandler.getInst().loadVideoBytes(nameid);
                     }
-                } catch (Exception e) {
-                    throw new RuntimeException(e);
+                    Files.write(f.toPath(), bt.get());
                 }
+            } catch (Exception e) {
+                throw new RuntimeException(e);
             }
         });
-        renameButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent actionEvent) {
-                DBHandler.NameID nameid = listControl.getSelectedValue();
-                if (Tools.isGIF(nameid.name())) {
-                    Tools.Error ("GIF renaming currently not allowed");
-                    return;
-                }
-                String res = LineInput.xmain(nameid.name(), "NewName", Color.orange);
-                DBHandler.getInst().changeVideoName(res, nameid.rowid());
-                setListContent(false);
+        renameButton.addActionListener(actionEvent -> {
+            DBHandler.NameID nameid = listControl.getSelectedValue();
+            if (Tools.isGIF(nameid.name())) {
+                Tools.Error ("GIF renaming currently not allowed");
+                return;
             }
+            String res = LineInput.xmain(nameid.name(), "NewName", Color.orange);
+            DBHandler.getInst().changeVideoName(res, nameid.rowid());
+            setListContent(false);
         });
         listControl.addMouseListener(new MouseAdapter() {
             @Override

@@ -34,23 +34,18 @@ public class TextParamBox extends JDialog {
             watermark.font = fc.getSelectedFont();
         });
 
-        colorButton.addActionListener(e -> {
-            watermark.col = JColorChooser.showDialog(null,
-                    "Text Color", null);
-        });
+        colorButton.addActionListener(e -> watermark.col = JColorChooser.showDialog(null,
+                "Text Color", null));
 
-        showButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                watermark.fillground = fillGroundCheckBox.isSelected();
-                watermark.text = textField1.getText();
-                watermark.alpha = Float.parseFloat(a05TextField.getText());
-                String[] pt = a2020TextField.getText().split(",");
-                watermark.pos = new Point (Integer.parseInt(pt[0]), Integer.parseInt(pt[1]));
-                imgPanel.setWatermark(watermark);
-                //System.out.println(watermark);
-                dispose();
-            }
+        showButton.addActionListener(e -> {
+            watermark.fillground = fillGroundCheckBox.isSelected();
+            watermark.text = textField1.getText();
+            watermark.alpha = Float.parseFloat(a05TextField.getText());
+            String[] pt = a2020TextField.getText().split(",");
+            watermark.pos = new Point (Integer.parseInt(pt[0]), Integer.parseInt(pt[1]));
+            imgPanel.setWatermark(watermark);
+            //System.out.println(watermark);
+            dispose();
         });
     }
 

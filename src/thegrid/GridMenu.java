@@ -39,7 +39,7 @@ public class GridMenu extends JMenuBar {
                 DBHandler.getInst().log("--- TheGrid ended");
                 DBHandler.getInst().close();
                 try {
-                    Thread.sleep(600);
+                    Tools.delay(600);
                     TheGrid.restartApplication();
                 } catch (Exception ex) {
                     throw new RuntimeException(ex);

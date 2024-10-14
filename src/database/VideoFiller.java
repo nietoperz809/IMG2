@@ -7,29 +7,10 @@ import javax.swing.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 
 public class VideoFiller {
 
     // fill video table
-//    public static void main(String[] args) throws Exception {
-//        File[] files = new File("C:\\Users\\Administrator\\Desktop\\porn").listFiles();
-//        DBHandler db = DBHandler.getInst();
-//        for (File file : files) {
-//            if (file.isFile()) {
-//                System.out.println(file.getName());
-//                byte[] fileContent = Files.readAllBytes(file.toPath());
-//
-//                PreparedStatement prep = db.getConn().prepareStatement(
-//                        "insert into VIDEOS (vid,name) values (?,?)");
-//                prep.setBytes(1, fileContent);
-//                prep.setString(2, file.getName());
-//                prep.execute();
-//
-//                System.out.println(fileContent.length);
-//            }
-//        }
-//    }
 
     public static void main(String[] args) throws Exception {
         ResultSet res = DBHandler.getInst()

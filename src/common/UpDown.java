@@ -1,7 +1,7 @@
 package common;
 
 public class UpDown {
-    private float[] vals;
+    private final float[] vals;
     private int pos;
 
     public UpDown (float[] vals, int init) {

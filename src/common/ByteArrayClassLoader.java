@@ -14,8 +14,7 @@ public class ByteArrayClassLoader extends ClassLoader
     }
 
     @Override
-    public Class<?> loadClass(String name) throws ClassNotFoundException
-    {
+    public Class<?> loadClass(String name) {
         try
         {
             return super.loadClass(name);

@@ -10,7 +10,7 @@ import static java.awt.BorderLayout.CENTER;
 
 public class MonitorFrame extends javax.swing.JDialog {
 
-    private MemoryMonitor memo = new MemoryMonitor();
+    private final MemoryMonitor memo = new MemoryMonitor();
 
 
     public MonitorFrame() {

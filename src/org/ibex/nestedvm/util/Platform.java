@@ -185,7 +185,7 @@ public abstract class Platform {
             if(!f.isAbsolute()) f = new File(f.getAbsolutePath());
             String p;
             while((p = f.getParent()) != null) f = new File(p);
-            if(f.getPath().length() == 0) f = new File("/"); // work around a classpath bug
+            if(f.getPath().isEmpty()) f = new File("/"); // work around a classpath bug
             return f;
         }
     }

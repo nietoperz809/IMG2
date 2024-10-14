@@ -3,7 +3,10 @@ package dialogs;
 import database.DBHandler;
 
 import javax.swing.*;
-import java.awt.event.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.TreeSet;
 
 public class TagSelectorDlg extends JDialog {
@@ -17,42 +20,22 @@ public class TagSelectorDlg extends JDialog {
     private boolean andMode = true;
 
     public TagSelectorDlg() {
-        //setUndecorated(true);
         setContentPane(contentPane);
         setModal(true);
         getRootPane().setDefaultButton(buttonOK);
 
-        buttonOK.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                onOK();
-            }
-        });
-        cancelButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                onCancel();
-            }
-        });
-        radioAND.addActionListener(new ActionListener() {
+        addWindowListener(new WindowAdapter() {
             @Override
-            public void actionPerformed(ActionEvent e) {
-                andMode = true;
+            public void windowClosing(WindowEvent e) {
+                cancelled = true;
+                super.windowClosing(e);
             }
         });
-        radioOR.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                andMode = false;
-            }
-        });
-    }
 
-    private void onOK() {
-        dispose();
-    }
-
-    private void onCancel() {
-        cancelled = true;
-        dispose();
+        buttonOK.addActionListener(e -> onOK());
+        cancelButton.addActionListener(e -> onCancel());
+        radioAND.addActionListener(e -> andMode = true);
+        radioOR.addActionListener(e -> andMode = false);
     }
 
     public static JList<String> open() {
@@ -64,6 +47,15 @@ public class TagSelectorDlg extends JDialog {
             return null;
         dialog.list1.setOpaque(dialog.andMode);
         return dialog.list1;
+    }
+
+    private void onOK() {
+        dispose();
+    }
+
+    private void onCancel() {
+        cancelled = true;
+        dispose();
     }
 
     private void createUIComponents() {

@@ -132,7 +132,7 @@ public class MemoryMonitor extends JPanel
         private final Font font = new Font("Times New Roman", PLAIN, 11);
         private final Runtime runtime = getRuntime();
         private int columnInc;
-        private int pts[];
+        private int[] pts;
         private int ptNum;
         private int ascent, descent;
         private final Rectangle graphOutlineRect = new Rectangle();
@@ -258,7 +258,7 @@ public class MemoryMonitor extends JPanel
             }
             else if (pts.length != graphW)
             {
-                int tmp[];
+                int[] tmp;
                 if (ptNum < graphW)
                 {
                     tmp = new int[ptNum];

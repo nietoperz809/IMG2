@@ -13,6 +13,7 @@ import org.ibex.nestedvm.util.Seekable;
 //import org.ibex.nestedvm.util.*;
 
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 
 public abstract class Runtime implements UsermodeConstants,Registers,Cloneable
 {
@@ -79,7 +80,7 @@ public abstract class Runtime implements UsermodeConstants,Registers,Cloneable
     
     /** Table containing all open file descriptors. (Entries are null if the fd is not in use */
     FD[] fds; // package-private for UnixRuntime
-    boolean closeOnExec[];
+    boolean[] closeOnExec;
     
     /** Pointer to a SecurityManager for this process */
     SecurityManager sm;
@@ -977,7 +978,7 @@ public abstract class Runtime implements UsermodeConstants,Registers,Cloneable
     private int sys_getpid() { return getPid(); }
     int getPid() { return 1; }
     
-    public static interface CallJavaCB { public int call(int a, int b, int c, int d); }
+    public interface CallJavaCB { public int call(int a, int b, int c, int d); }
     
     private int sys_calljava(int a, int b, int c, int d) {
         if(state != RUNNING) throw new IllegalStateException("wound up calling sys_calljava while not in RUNNING");
@@ -1194,11 +1195,7 @@ public abstract class Runtime implements UsermodeConstants,Registers,Cloneable
         byte[] bytes = new byte[i-addr];
         copyin(addr, bytes, bytes.length);
 
-        try {
-            return new String(bytes, "UTF-8");
-        } catch (UnsupportedEncodingException e) {
-            throw new RuntimeException(e); // should never happen with UTF-8
-        }
+        return new String(bytes, StandardCharsets.UTF_8);
     }
 
     /** Helper function to read a cstring from main memory */
@@ -1556,11 +1553,7 @@ public abstract class Runtime implements UsermodeConstants,Registers,Cloneable
     }
     
     static byte[] getBytes(String s) {
-        try {
-            return s.getBytes("UTF-8");
-        } catch(UnsupportedEncodingException e) {
-            return null; // should never happen
-        }
+        return s.getBytes(StandardCharsets.UTF_8);
     }
     
     static byte[] getNullTerminatedBytes(String s) {

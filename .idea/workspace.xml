@@ -2,7 +2,6 @@
 <project version="4">
   <component name="AnalysisUIOptions">
     <option name="ANALYZE_INJECTED_CODE" value="false" />
-    <option name="SCOPE_TYPE" value="3" />
     <option name="CUSTOM_SCOPE_NAME" value="Selected directory" />
   </component>
   <component name="ArtifactsWorkspaceSettings">
@@ -14,19 +13,33 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ddb69741-e020-4d21-a32f-f00e79c6818a" name="Changes" comment="new release, little improvements">
-      <change afterPath="$PROJECT_DIR$/IMG2_jar/runC.bat" afterDir="false" />
+    <list default="true" id="ddb69741-e020-4d21-a32f-f00e79c6818a" name="Changes" comment="made csv input more stable">
+      <change afterPath="$PROJECT_DIR$/lib/forms-1.2.1-javadoc.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/forms-1.2.1.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/IMG2_jar/IMG2.jar" beforeDir="false" afterPath="$PROJECT_DIR$/IMG2_jar/IMG2.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/IMG2_jar/run.bat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/IMG2_jar/runD.bat" beforeDir="false" afterPath="$PROJECT_DIR$/IMG2_jar/runD.bat" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/buildinfo/BuildInfo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/buildinfo/BuildInfo.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/buildinfo/build.number" beforeDir="false" afterPath="$PROJECT_DIR$/src/buildinfo/build.number" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/common/ByteArrayClassLoader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/common/ByteArrayClassLoader.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/common/MemoryMonitor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/common/MemoryMonitor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/common/ProgressBox.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/common/ProgressBox.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/common/Tools.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/common/Tools.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/database/DBHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/database/DBHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/common/UpDown.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/common/UpDown.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/database/VideoFiller.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/database/VideoFiller.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/dialogs/LineInput.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/dialogs/LineInput.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dialogs/MonitorFrame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/dialogs/MonitorFrame.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/dialogs/TagSelectorDlg.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/dialogs/TagSelectorDlg.form" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/dialogs/TagSelectorDlg.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/dialogs/TagSelectorDlg.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/thegrid/ImageView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/thegrid/ImageView.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dialogs/TextParamBox.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/dialogs/TextParamBox.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/org/ibex/nestedvm/Registers.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/org/ibex/nestedvm/Registers.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/org/ibex/nestedvm/Runtime.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/org/ibex/nestedvm/Runtime.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/org/ibex/nestedvm/util/Platform.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/org/ibex/nestedvm/util/Platform.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/thegrid/GridListeners.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/thegrid/GridListeners.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/thegrid/GridMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/thegrid/GridMenu.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/video/GifPlayerBox.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/video/GifPlayerBox.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/video/VideoApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/video/VideoApp.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -50,14 +63,12 @@
     &quot;state&quot;: &quot;OPEN&quot;
   }
 }</component>
-  <component name="GithubPullRequestsUISettings">
-    <option name="selectedUrlAndAccountId">
-      <UrlAndAccount>
-        <option name="accountId" value="8a0fcd97-d93e-4716-a413-e082f42b9365" />
-        <option name="url" value="https://github.com/nietoperz809/IMG2.git" />
-      </UrlAndAccount>
-    </option>
-  </component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/nietoperz809/IMG2&quot;,
+    &quot;accountId&quot;: &quot;8a0fcd97-d93e-4716-a413-e082f42b9365&quot;
+  }
+}</component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
@@ -83,23 +94,32 @@
     &quot;Application.Main.executor&quot;: &quot;Run&quot;,
     &quot;Application.MonitorFrame.executor&quot;: &quot;Run&quot;,
     &quot;Downloaded.Files.Path.Enabled&quot;: &quot;true&quot;,
+    &quot;JAR Application.IMG2.jar.executor&quot;: &quot;Run&quot;,
     &quot;Repository.Attach.Annotations&quot;: &quot;false&quot;,
     &quot;Repository.Attach.JavaDocs&quot;: &quot;true&quot;,
     &quot;Repository.Attach.Sources&quot;: &quot;false&quot;,
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
     &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
     &quot;UI_DESIGNER_EDITOR_MODE.PaletteManager.SHOW&quot;: &quot;true&quot;,
     &quot;UI_DESIGNER_EDITOR_MODE.PaletteManager.WIDTH&quot;: &quot;187&quot;,
     &quot;UI_DESIGNER_EDITOR_MODE.UIDesignerToolWindowManager.SHOW&quot;: &quot;true&quot;,
     &quot;UI_DESIGNER_EDITOR_MODE.UIDesignerToolWindowManager.WIDTH&quot;: &quot;334&quot;,
     &quot;full.screen.before.presentation.mode&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
     &quot;last_opened_file_path&quot;: &quot;C:/peter.home/java/IMG2/src/dialogs&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Artifacts&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
     &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
     &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
     &quot;run.code.analysis.last.selected.profile&quot;: &quot;aDefault&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
   <component name="RecentsManager">
@@ -194,19 +214,6 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="VideoFiller" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="database.VideoFiller" />
-      <module name="IMG2" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="database.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <configuration name="web" type="Application" factoryName="Application">
       <option name="MAIN_CLASS_NAME" value="thegrid.TheGrid" />
       <module name="IMG2" />
@@ -215,6 +222,10 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="IMG2.jar" type="JarApplication" temporary="true">
+      <option name="JAR_PATH" value="$PROJECT_DIR$/IMG2_jar/IMG2.jar" />
+      <method v="2" />
+    </configuration>
     <list>
       <item itemvalue="Application.web" />
       <item itemvalue="Application.Main" />
@@ -222,15 +233,15 @@
       <item itemvalue="Application.Imaging.Main" />
       <item itemvalue="Application.TextParamBox" />
       <item itemvalue="Application.VideoApp" />
-      <item itemvalue="Application.VideoFiller" />
+      <item itemvalue="JAR Application.IMG2.jar" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="JAR Application.IMG2.jar" />
         <item itemvalue="Application.MonitorFrame" />
         <item itemvalue="Application.VideoApp" />
         <item itemvalue="Application.Imaging.Main" />
         <item itemvalue="Application.TextParamBox" />
-        <item itemvalue="Application.VideoFiller" />
       </list>
     </recent_temporary>
   </component>
@@ -242,6 +253,8 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1666905269701</updated>
+      <workItem from="1728841155616" duration="537000" />
+      <workItem from="1728904671649" duration="736000" />
     </task>
     <task id="LOCAL-00010" summary="added img save feature">
       <created>1667225420959</created>
@@ -586,8 +599,11 @@
       <option name="project" value="LOCAL" />
       <updated>1683976691765</updated>
     </task>
-    <option name="localTasksCounter" value="140" />
+    <option name="localTasksCounter" value="141" />
     <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
@@ -604,7 +620,6 @@
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_NEW_TODO" value="false" />
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="gif player fixed" />
     <MESSAGE value="+ exporting GIF files" />
     <MESSAGE value="some little changes" />
     <MESSAGE value="GifPlayerBox extended" />
@@ -629,7 +644,8 @@
     <MESSAGE value="horz wrap layout of the jlist" />
     <MESSAGE value="new release" />
     <MESSAGE value="new release, little improvements" />
-    <option name="LAST_COMMIT_MESSAGE" value="new release, little improvements" />
+    <MESSAGE value="made csv input more stable" />
+    <option name="LAST_COMMIT_MESSAGE" value="made csv input more stable" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

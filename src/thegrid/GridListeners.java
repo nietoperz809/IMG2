@@ -68,17 +68,13 @@ public class GridListeners implements KeyListener {
     @Override
     public void keyPressed(KeyEvent e) {
         int kc = e.getKeyCode();
-        switch (kc) {
-            default:
-                Tools.fastScroll(kc,theGrid.scrollPane.getViewport(), true);
-            break;
-
-            case KeyEvent.VK_N:
-                ImageView iv = new ImageView(theGrid, 0);
-                theGrid.controller.add(iv);
-                //theGrid.controller.add(iv);
-                iv.selectAnotherImage();
-                break;
+        if (kc == KeyEvent.VK_N) {
+            ImageView iv = new ImageView(theGrid, 0);
+            theGrid.controller.add(iv);
+            //theGrid.controller.add(iv);
+            iv.selectAnotherImage();
+        } else {
+            Tools.fastScroll(kc, theGrid.scrollPane.getViewport(), true);
         }
     }
 

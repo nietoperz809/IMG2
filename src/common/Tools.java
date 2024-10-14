@@ -37,21 +37,9 @@ public class Tools {
     }
 
     public static String adjustCSVString (String in) {
-//        String[] arr = in.split(",");
-//        TreeSet<String> ll = new TreeSet<>();
-//        for (int n=0; n<arr.length; n++) {
-//            arr[n] = arr[n].trim();
-//            if (arr[n] > 1)
         TreeSet<String> set = SetFromCSVString(in);
         return CsvStringFromSet(set);
     }
-
-//    public static java.util.List removeDuplicates (java.util.List in) {
-//        Set<String> set = new HashSet<>(in);
-//        in.clear();
-//        in.addAll(set);
-//        return in;
-//    }
 
     public static java.util.TreeSet<String> SetFromCSVString (String csv) {
         String[] arr = csv.split(",");
@@ -74,13 +62,6 @@ public class Tools {
             s2 = s2.substring(0, s2.length()-2);
         }
         return s2;
-    }
-
-    public static String trimCSVRight(String in) {
-        if (in.endsWith(" ") || in.endsWith(",")) {
-            return trimCSVRight(in.substring(0, in.length()-1));
-        }
-        return in;
     }
 
     public static Color getComplementaryColor( Color color) {
@@ -164,7 +145,7 @@ public class Tools {
     public static void gc_now() {
         System.gc();
         Runtime.getRuntime().gc();
-        Runtime.getRuntime().runFinalization();
+        //Runtime.getRuntime().runFinalization();
     }
 
 
@@ -189,7 +170,7 @@ public class Tools {
         byte[] buffer = new byte[1024];
         while (true)
         {
-            int r = is.read (buffer);
+            int r = Objects.requireNonNull(is).read (buffer);
             if (r == -1)
             {
                 break;

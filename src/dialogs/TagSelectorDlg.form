@@ -11,8 +11,9 @@
     <properties>
       <background color="-4520421"/>
       <foreground color="-16579837"/>
-      <minimumSize width="300" height="95"/>
-      <preferredSize width="300" height="203"/>
+      <minimumSize width="600" height="120"/>
+      <preferredSize width="600" height="203"/>
+      <verifyInputWhenFocusTarget value="true"/>
     </properties>
     <border type="bevel-raised" title="Select Tags"/>
     <children>

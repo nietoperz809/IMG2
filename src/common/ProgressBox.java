@@ -25,12 +25,7 @@ public class ProgressBox extends JDialog {
         ((JPanel)this.getContentPane()).setBorder(border);
         setLayout(new BorderLayout());
         JButton jb = new JButton("X");
-        jb.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                owner.notifyClick();
-            }
-        });
+        jb.addActionListener(e -> owner.notifyClick());
         add (new JLabel ("Please wait: "), BorderLayout.WEST);
         add(progressBar, BorderLayout.CENTER);
         add (jb, BorderLayout.EAST);

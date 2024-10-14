@@ -15,38 +15,47 @@ public class LineInput extends JDialog {
     private JTextField textField1;
     private JLabel label;
     private JButton xButton;
-    private JList list1;
+    private JList<String> list1;
     private JScrollPane scroller;
     private JButton addTags;
     private JButton buttonOK;
     private JPanel innerPanel;
     private JPanel upperPanel;
 
+    private void listToText() {
+        TreeSet<String> set2 = SetFromCSVString(textField1.getText());
+        set2.addAll(list1.getSelectedValuesList());
+        list1.clearSelection();
+        set2.remove("");
+        textField1.setText(CsvStringFromSet(set2));
+    }
+
     public LineInput(Color col) {
 
         buttonOK.addActionListener(e -> {
             textField1.setText(adjustCSVString(textField1.getText()));
+            if (!list1.getSelectedValuesList().isEmpty()) {
+                listToText();
+            }
             dispose();
         });
 
         addTags.addActionListener(e -> {
-            //TreeSet<String> set = new TreeSet<>(list1.getSelectedValuesList());
-            TreeSet<String> set2 = SetFromCSVString (textField1.getText());
-            set2.addAll(list1.getSelectedValuesList());
-            set2.remove("");
-            textField1.setText(CsvStringFromSet(set2));
+            listToText();
         });
 
         setContentPane(contentPane);
         contentPane.registerKeyboardAction(e -> onCancel(),
                 KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
 
+        textField1.addActionListener(actionEvent -> dispose());
+
+        xButton.addActionListener(e -> onCancel());
+
         setModal(true);
         setUndecorated(true);
         LineBorder border = new LineBorder(col, 4, false);
         contentPane.setBorder(border);
-        textField1.addActionListener(actionEvent -> dispose());
-        xButton.addActionListener(e -> onCancel());
     }
 
     public static String xmain(String init, String lab, Color col) {
