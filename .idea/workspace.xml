@@ -13,33 +13,17 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ddb69741-e020-4d21-a32f-f00e79c6818a" name="Changes" comment="made csv input more stable">
-      <change afterPath="$PROJECT_DIR$/lib/forms-1.2.1-javadoc.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/forms-1.2.1.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+    <list default="true" id="ddb69741-e020-4d21-a32f-f00e79c6818a" name="Changes" comment="some improvements regarding LineInput">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IMG2.iml" beforeDir="false" afterPath="$PROJECT_DIR$/IMG2.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/IMG2_jar/IMG2.jar" beforeDir="false" afterPath="$PROJECT_DIR$/IMG2_jar/IMG2.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IMG2_jar/hs_err_pid15956.log" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/IMG2_jar/runD.bat" beforeDir="false" afterPath="$PROJECT_DIR$/IMG2_jar/runD.bat" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/buildinfo/BuildInfo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/buildinfo/BuildInfo.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/buildinfo/build.number" beforeDir="false" afterPath="$PROJECT_DIR$/src/buildinfo/build.number" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/common/ByteArrayClassLoader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/common/ByteArrayClassLoader.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/common/MemoryMonitor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/common/MemoryMonitor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/common/ProgressBox.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/common/ProgressBox.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/common/Tools.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/common/Tools.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/common/UpDown.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/common/UpDown.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/database/VideoFiller.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/database/VideoFiller.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/dialogs/LineInput.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/dialogs/LineInput.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/dialogs/MonitorFrame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/dialogs/MonitorFrame.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/dialogs/TagSelectorDlg.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/dialogs/TagSelectorDlg.form" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/dialogs/TagSelectorDlg.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/dialogs/TagSelectorDlg.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/dialogs/TextParamBox.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/dialogs/TextParamBox.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/org/ibex/nestedvm/Registers.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/org/ibex/nestedvm/Registers.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/org/ibex/nestedvm/Runtime.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/org/ibex/nestedvm/Runtime.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/org/ibex/nestedvm/util/Platform.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/org/ibex/nestedvm/util/Platform.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/thegrid/GridListeners.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/thegrid/GridListeners.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/thegrid/GridMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/thegrid/GridMenu.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/video/GifPlayerBox.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/video/GifPlayerBox.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/video/VideoApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/video/VideoApp.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/thegrid/TheGrid.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/thegrid/TheGrid.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -93,6 +77,7 @@
     &quot;ASKED_SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
     &quot;Application.Main.executor&quot;: &quot;Run&quot;,
     &quot;Application.MonitorFrame.executor&quot;: &quot;Run&quot;,
+    &quot;Application.web.executor&quot;: &quot;Run&quot;,
     &quot;Downloaded.Files.Path.Enabled&quot;: &quot;true&quot;,
     &quot;JAR Application.IMG2.jar.executor&quot;: &quot;Run&quot;,
     &quot;Repository.Attach.Annotations&quot;: &quot;false&quot;,
@@ -114,7 +99,7 @@
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
     &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Artifacts&quot;,
     &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
     &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
     &quot;run.code.analysis.last.selected.profile&quot;: &quot;aDefault&quot;,
@@ -217,7 +202,6 @@
     <configuration name="web" type="Application" factoryName="Application">
       <option name="MAIN_CLASS_NAME" value="thegrid.TheGrid" />
       <module name="IMG2" />
-      <option name="PROGRAM_PARAMETERS" value="web" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -599,7 +583,7 @@
       <option name="project" value="LOCAL" />
       <updated>1683976691765</updated>
     </task>
-    <option name="localTasksCounter" value="141" />
+    <option name="localTasksCounter" value="142" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -620,7 +604,6 @@
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_NEW_TODO" value="false" />
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="+ exporting GIF files" />
     <MESSAGE value="some little changes" />
     <MESSAGE value="GifPlayerBox extended" />
     <MESSAGE value="some little improvements" />
@@ -645,7 +628,8 @@
     <MESSAGE value="new release" />
     <MESSAGE value="new release, little improvements" />
     <MESSAGE value="made csv input more stable" />
-    <option name="LAST_COMMIT_MESSAGE" value="made csv input more stable" />
+    <MESSAGE value="some improvements regarding LineInput" />
+    <option name="LAST_COMMIT_MESSAGE" value="some improvements regarding LineInput" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -672,11 +656,6 @@
           <url>file://$PROJECT_DIR$/src/thegrid/WebApp.java</url>
           <line>137</line>
           <option name="timeStamp" value="25" />
-        </line-breakpoint>
-        <line-breakpoint type="java-line">
-          <url>file://$PROJECT_DIR$/src/thegrid/TheGrid.java</url>
-          <line>177</line>
-          <option name="timeStamp" value="71" />
         </line-breakpoint>
         <breakpoint type="java-exception">
           <properties class="java.lang.NullPointerException" package="java.lang" />

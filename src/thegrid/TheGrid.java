@@ -1,6 +1,13 @@
 package thegrid;
 
 import buildinfo.BuildInfo;
+import com.sun.jna.Library;
+import com.sun.jna.Native;
+import com.sun.jna.Platform;
+import com.sun.jna.platform.win32.Kernel32;
+import com.sun.jna.platform.win32.User32;
+import com.sun.jna.platform.win32.WinDef;
+import com.sun.jna.platform.win32.Wincon;
 import common.PersistString;
 import common.ProgressBox;
 import common.Sam;
@@ -63,6 +70,7 @@ public class TheGrid extends MyFrame {
 
 
     public TheGrid (String sql, String dbRoot) {
+
         instCount++;
         thisInstCount = instCount;
         setTitle(dbRoot);
@@ -96,7 +104,10 @@ public class TheGrid extends MyFrame {
         this.pack();
     }
 
+
     public static void main(String... input) {
+        Tools.hideConsoleWindow();
+
         String dbRoot = null;
         try {
             if (input.length != 0) {

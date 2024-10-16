@@ -16,5 +16,6 @@
     <orderEntry type="library" name="nanohttpd" level="project" />
     <orderEntry type="library" name="Catalano.Image" level="project" />
     <orderEntry type="library" name="jgoodies.forms" level="project" />
+    <orderEntry type="library" name="net.java.dev.jna.platform" level="project" />
   </component>
 </module>
