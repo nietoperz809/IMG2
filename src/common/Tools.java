@@ -25,12 +25,14 @@ public class Tools {
         return (FutureTask<?>) globalExecutor.submit(r);
     }
 
+    /**
+     * Only works under MS Windoze
+     */
     public static void hideConsoleWindow() {
         if (System.getProperty("os.name").startsWith("Windows")) {
 
             WinDef.HWND hw = Kernel32.INSTANCE.GetConsoleWindow();
             System.out.println("console: " + hw);
-            System.out.println("ConsoleWnd = " + hw);
             if (hw != null) {
                 User32.INSTANCE.ShowWindow(hw, 0);
             }
@@ -84,13 +86,10 @@ public class Tools {
     }
 
     public static Color getComplementaryColor(Color color) {
-        int R = color.getRed();
-        int G = color.getGreen();
-        int B = color.getBlue();
+        int R = 255 - color.getRed();
+        int G = 255 - color.getGreen();
+        int B = 255 - color.getBlue();
         int A = color.getAlpha();
-        R = 255 - R;
-        G = 255 - G;
-        B = 255 - B;
         return new Color(R, G, B, A);
         //return R + (G << 8) + ( B << 16) + ( A << 24);
     }
