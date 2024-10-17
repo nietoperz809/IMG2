@@ -46,28 +46,33 @@ public class RegionSelectorListener extends MouseAdapter {
     @Override
     public void mouseReleased(MouseEvent e) {
         super.mouseReleased(e);
+        Point offset = imgPanel.getOffset();
         if (pressed == null)
             return;
         if (useWarper) {
-            ImageWarper warp = new ImageWarper(imgPanel.getImage(),pressed, e.getPoint());
+            pressed.x -= offset.x;
+            pressed.y -= offset.y;
+            Point released = e.getPoint();
+            released.x -= offset.x;
+            released.y -= offset.y;
+            ImageWarper warp = new ImageWarper(imgPanel.getImage(),pressed, released);
             BufferedImage bi2 = warp.warpPixels();
             imgPanel.setImage(bi2);
-            return;
         }
-        //System.out.println("released "+ e.getPoint());
-        calcBox(box,e);
-        if (box.width > 10 && box.height > 10) {
-            g2d = (Graphics2D) imgPanel.getGraphics();
-            g2d.setStroke(new BasicStroke(4));
-            g2d.setPaintMode();
-            g2d.setColor(Color.RED);
-            g2d.drawRect(box.x, box.y, box.width, box.height);
+        else {
+            calcBox(box, e);
+            if (box.width > 10 && box.height > 10) {
+                g2d = (Graphics2D) imgPanel.getGraphics();
+                g2d.setStroke(new BasicStroke(4));
+                g2d.setPaintMode();
+                g2d.setColor(Color.RED);
+                g2d.drawRect(box.x, box.y, box.width, box.height);
 
-            Rectangle r2 = new Rectangle(box);
-            Point p = imgPanel.getOffset();
-            r2.x -= p.x;
-            r2.y -= p.y;
-            parent.zoomIn(r2);
+                Rectangle r2 = new Rectangle(box);
+                r2.x -= offset.x;
+                r2.y -= offset.y;
+                parent.zoomIn(r2);
+            }
         }
         pressed = null;
         before= null;
