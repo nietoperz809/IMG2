@@ -17,7 +17,7 @@ public class RegionSelectorListener extends MouseAdapter {
     Point pressed  = null;
     Rectangle before = null;
     final ImageView parent;
-    boolean useWarper = false;
+    boolean shouldWarp = false;
 
     public RegionSelectorListener(BufferedImage img, ImgPanel thePanel, ImageView p) {
         theView = p;
@@ -34,10 +34,10 @@ public class RegionSelectorListener extends MouseAdapter {
         super.mousePressed(e);
         pressed = e.getPoint();
         if (e.isControlDown()) {
-            useWarper = true;
+            shouldWarp = true;
             return;
         }
-        useWarper = false;
+        shouldWarp = false;
         box = new Rectangle();
         box.x = e.getX();
         box.y = e.getY();
@@ -49,13 +49,11 @@ public class RegionSelectorListener extends MouseAdapter {
         Point offset = imgPanel.getOffset();
         if (pressed == null)
             return;
-        if (useWarper) {
-            pressed.x -= offset.x;
-            pressed.y -= offset.y;
+        if (shouldWarp) {
+            pressed.translate(-offset.x, -offset.y);
             Point released = e.getPoint();
-            released.x -= offset.x;
-            released.y -= offset.y;
-            ImageWarper warp = new ImageWarper(imgPanel.getImage(),pressed, released);
+            released.translate(-offset.x, -offset.y);
+            ImageWarper warp = new ImageWarper(imgPanel.getImage(),released,  pressed);
             BufferedImage bi2 = warp.warpPixels();
             imgPanel.setImage(bi2);
         }
@@ -81,7 +79,7 @@ public class RegionSelectorListener extends MouseAdapter {
     @Override
     public void mouseDragged(MouseEvent e) {
         super.mouseDragged(e);
-        if (pressed == null || useWarper)
+        if (pressed == null || shouldWarp)
             return;
         Rectangle rect = new Rectangle(pressed);
         calcBox(rect, e);
