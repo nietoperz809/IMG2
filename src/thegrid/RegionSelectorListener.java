@@ -1,11 +1,14 @@
 package thegrid;
 
+import common.ImageWarper;
+
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 
 public class RegionSelectorListener extends MouseAdapter {
+    final ImageView theView;
     final ImgPanel imgPanel;
     private final float A;
     private final float B;
@@ -14,8 +17,10 @@ public class RegionSelectorListener extends MouseAdapter {
     Point pressed  = null;
     Rectangle before = null;
     final ImageView parent;
+    boolean useWarper = false;
 
     public RegionSelectorListener(BufferedImage img, ImgPanel thePanel, ImageView p) {
+        theView = p;
         A = img.getHeight();
         B = img.getWidth();
         this.imgPanel = thePanel;
@@ -28,6 +33,11 @@ public class RegionSelectorListener extends MouseAdapter {
     public void mousePressed(MouseEvent e) {
         super.mousePressed(e);
         pressed = e.getPoint();
+        if (e.isControlDown()) {
+            useWarper = true;
+            return;
+        }
+        useWarper = false;
         box = new Rectangle();
         box.x = e.getX();
         box.y = e.getY();
@@ -38,6 +48,12 @@ public class RegionSelectorListener extends MouseAdapter {
         super.mouseReleased(e);
         if (pressed == null)
             return;
+        if (useWarper) {
+            ImageWarper warp = new ImageWarper(imgPanel.getImage(),pressed, e.getPoint());
+            BufferedImage bi2 = warp.warpPixels();
+            imgPanel.setImage(bi2);
+            return;
+        }
         //System.out.println("released "+ e.getPoint());
         calcBox(box,e);
         if (box.width > 10 && box.height > 10) {
@@ -60,7 +76,7 @@ public class RegionSelectorListener extends MouseAdapter {
     @Override
     public void mouseDragged(MouseEvent e) {
         super.mouseDragged(e);
-        if (pressed == null)
+        if (pressed == null || useWarper)
             return;
         Rectangle rect = new Rectangle(pressed);
         calcBox(rect, e);
@@ -80,10 +96,5 @@ public class RegionSelectorListener extends MouseAdapter {
         r.height = Math.abs(e.getY() - r.y);
         r.x = Math.min(r.x, e.getX());
         r.y = Math.min(r.y, e.getY());
-
-//        float C = r.height;
-//        float D = r.width;
-//
-//        r.width = (int)(C/(A/B));
     }
 }
