@@ -25,6 +25,17 @@ public class GridMenu extends JMenuBar {
         JMenu jm = new JMenu("Menu");
         JMenuItem jmi;
 
+        jmi = new JMenuItem("Speak Number");
+        jmi.addActionListener(new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int num = LineInput.onlyPosNumber("","Num", Color.WHITE);
+                String s = NumToText.convert(num);
+                Sam.speak(s);
+            }
+        });
+        jm.add(jmi);
+
         jmi = new JMenuItem("Memory Monitor ...");
         jmi.addActionListener(new AbstractAction() {
             @Override

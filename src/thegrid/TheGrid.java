@@ -24,6 +24,7 @@ import java.time.Instant;
 import java.util.ArrayList;
 
 import static common.ImgTools.byteArrayToImg;
+import static common.NumToText.*;
 import static common.Tools.extractResource;
 import static java.util.Objects.*;
 
@@ -159,7 +160,7 @@ public class TheGrid extends MyFrame {
             rootPane.add(lab);
         });
         rootPane.doLayout();
-        Sam.speak(NumToText.convertLessThanOneThousand(numadd)+" new files added");
+        Sam.speak(convertLessThanOneThousand(numadd)+" new files added");
     }
 
     public void stopThumbViewFill(String info) {
@@ -182,7 +183,7 @@ public class TheGrid extends MyFrame {
         int rowid = imageL.get(s).rowid();
         DBHandler.ThumbHash tbh = null;
         try {
-            tbh = DBHandler.getInst().loadThumbnail(rowid);
+            tbh = requireNonNull(DBHandler.getInst()).loadThumbnail(rowid);
         } catch (Exception e) {
             System.err.println("thumb read fail: " + rowid);
 //            int id = imageL.get(s).rowid();

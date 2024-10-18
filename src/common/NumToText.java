@@ -10,12 +10,12 @@ public class NumToText {
             " ten",
             " twenty",
             " thirty",
-            " forty",
-            " fifty",
-            " sixty",
-            " seventy",
-            " eighty",
-            " ninety"
+            " for tea",
+            " fif tea",
+            " six tea",
+            " seven tea",
+            " eight tea",
+            " nine tea"
     };
 
     private static final String[] numNames = {
@@ -38,7 +38,7 @@ public class NumToText {
             " sixteen",
             " seventeen",
             " eighteen",
-            " nineteen"
+            " nine teen"
     };
 
     private NumToText() {
