@@ -25,11 +25,11 @@ public class GridMenu extends JMenuBar {
         JMenu jm = new JMenu("Menu");
         JMenuItem jmi;
 
-        jmi = new JMenuItem("Speak Number");
+        jmi = new JMenuItem("Speak Integer");
         jmi.addActionListener(new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                int num = LineInput.onlyPosNumber("","Num", Color.WHITE);
+                int num = LineInput.onlyPosNumber("","Num", Color.MAGENTA);
                 String s = NumToText.convert(num);
                 Sam.speak(s);
             }

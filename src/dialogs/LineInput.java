@@ -33,9 +33,11 @@ public class LineInput extends JDialog {
     public LineInput(Color col) {
 
         buttonOK.addActionListener(e -> {
-            textField1.setText(adjustCSVString(textField1.getText()));
-            if (!list1.getSelectedValuesList().isEmpty()) {
-                listToText();
+            if (innerPanel.isVisible()) {
+                textField1.setText(adjustCSVString(textField1.getText()));
+                if (!list1.getSelectedValuesList().isEmpty()) {
+                    listToText();
+                }
             }
             dispose();
         });
