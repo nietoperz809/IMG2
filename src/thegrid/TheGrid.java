@@ -10,6 +10,7 @@ import com.sun.jna.platform.win32.WinDef;
 import com.sun.jna.platform.win32.Wincon;
 import common.PersistString;
 import common.ProgressBox;
+import common.NumToText;
 import common.Sam;
 import common.Tools;
 import database.DBHandler;
@@ -158,7 +159,7 @@ public class TheGrid extends MyFrame {
             rootPane.add(lab);
         });
         rootPane.doLayout();
-        Sam.speak(numadd+"New files added");
+        Sam.speak(NumToText.convertLessThanOneThousand(numadd)+" new files added");
     }
 
     public void stopThumbViewFill(String info) {
