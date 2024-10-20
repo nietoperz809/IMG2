@@ -198,6 +198,7 @@ public class VideoApp extends JDialog {
                             } else {
                                 DBHandler.getInst().addVideoFile(f);
                             }
+                            f.delete();
                             setListContent(false);
                             repaint();
                         } catch (Exception e) {

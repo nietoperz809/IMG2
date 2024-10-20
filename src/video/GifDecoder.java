@@ -1,5 +1,6 @@
 package video;
 
+import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferInt;
@@ -7,31 +8,6 @@ import java.io.*;
 import java.net.URL;
 import java.util.ArrayList;
 
-/**
- * Class GifDecoder - Decodes a GIF file into one or more frames.
- *
- * Example:
- *
- * <pre>
- * {@code
- *    GifDecoder d = new GifDecoder();
- *    d.read("sample.gif");
- *    int n = d.getFrameCount();
- *    for (int i = 0; i < n; i++) {
- *       BufferedImage frame = d.getFrame(i);  // frame i
- *       int t = d.getDelay(i);  // display duration of frame in milliseconds
- *       // do something with frame
- *    }
- * }
- * </pre>
- * No copyright asserted on the source code of this class.  May be used for
- * any purpose, however, refer to the Unisys LZW patent for any additional
- * restrictions.  Please forward any corrections to questions at fmsware.com.
- *
- * @author Kevin Weiner, FM Software; LZW decoder adapted from John Cristy's ImageMagick.
- * @version 1.03 November 2003
- *
- */
 
 public class GifDecoder {
 
@@ -97,10 +73,10 @@ public class GifDecoder {
     protected byte[] pixelStack;
     protected byte[] pixels;
 
-    protected ArrayList frames; // frames read from current file
+    protected ArrayList<GifFrame> frames; // frames read from current file
     protected int frameCount;
 
-    static class GifFrame {
+    static public class GifFrame {
         public GifFrame(BufferedImage im, int del) {
             image = im;
             delay = del;
@@ -109,20 +85,20 @@ public class GifDecoder {
         public final int delay;
     }
 
-    /**
-     * Gets display duration for specified frame.
-     *
-     * @param n int index of frame
-     * @return delay in milliseconds
-     */
-    public int getDelay(int n) {
-        //
-        delay = -1;
-        if ((n >= 0) && (n < frameCount)) {
-            delay = ((GifFrame) frames.get(n)).delay;
-        }
-        return delay;
-    }
+//    /**
+//     * Gets display duration for specified frame.
+//     *
+//     * @param n int index of frame
+//     * @return delay in milliseconds
+//     */
+//    public int getDelay(int n) {
+//        //
+//        delay = -1;
+//        if ((n >= 0) && (n < frameCount)) {
+//            delay =  frames.get(n).delay;
+//        }
+//        return delay;
+//    }
 
     /**
      * Gets the number of frames read from file.
@@ -141,15 +117,15 @@ public class GifDecoder {
         return getFrame(0);
     }
 
-    /**
-     * Gets the "Netscape" iteration count, if any.
-     * A count of 0 means repeat indefinitiely.
-     *
-     * @return iteration count if one was specified, else 1.
-     */
-    public int getLoopCount() {
-        return loopCount;
-    }
+//    /**
+//     * Gets the "Netscape" iteration count, if any.
+//     * A count of 0 means repeat indefinitiely.
+//     *
+//     * @return iteration count if one was specified, else 1.
+//     */
+//    public int getLoopCount() {
+//        return loopCount;
+//    }
 
     /**
      * Creates new frame image from current data (and previous
@@ -181,7 +157,7 @@ public class GifDecoder {
                 if (lastDispose == 2) {
                     // fill last image rect area with background color
                     Graphics2D g = image.createGraphics();
-                    Color c = null;
+                    Color c;
                     if (transparency) {
                         c = new Color(0, 0, 0, 0); 	// assume background is transparent
                     } else {
@@ -250,10 +226,23 @@ public class GifDecoder {
     public BufferedImage getFrame(int n) {
         BufferedImage im = null;
         if ((n >= 0) && (n < frameCount)) {
-            im = ((GifFrame) frames.get(n)).image;
+            im = frames.get(n).image;
         }
         return im;
     }
+
+    public void saveFrames (String dir, int from, int to) {
+        for (int s = from; s<=to; s++) {
+            BufferedImage img = getFrame(s);
+            try {
+                ImageIO.write(img, "png",
+                        new File(dir + File.separator + (from+s) + ".png"));
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }
+
 
     /**
      * Gets image size.

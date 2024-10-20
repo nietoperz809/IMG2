@@ -3,7 +3,6 @@ package video;
 import common.ImgTools;
 import common.Tools;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyAdapter;
@@ -11,7 +10,6 @@ import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;
-import java.io.IOException;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
@@ -19,19 +17,19 @@ import java.util.concurrent.atomic.AtomicReference;
 public class GifPlayerBox {
 
     private final AtomicBoolean stopFlag = new AtomicBoolean(false);
-
     private final AtomicBoolean waitFlag = new AtomicBoolean(false);
-
     private final AtomicReference<Image> currentFrame = new AtomicReference<>();
+    //private final AtomicReference<Integer> currentIdx = new AtomicReference<>();
 
     private boolean reverse = false;
 
     private final AtomicInteger sleepTime = new AtomicInteger(150);
+    private boolean saveFlag;
 
     public GifPlayerBox(File file, VideoApp parent) {
-        GifDecoder d = new GifDecoder();
-        d.read(file.getAbsolutePath());
-        int frameCount = d.getFrameCount();
+        GifDecoder gifDecoder = new GifDecoder();
+        gifDecoder.read(file.getAbsolutePath());
+        int frameCount = gifDecoder.getFrameCount();
         System.out.println(frameCount);
 
         JLabel label = new JLabel();
@@ -64,13 +62,10 @@ public class GifPlayerBox {
                         waitFlag.set(!waitFlag.get());
                         break;
                     case 'p':
-                        try {
-                            //BufferedImage scaled = ImageScaler.scaleExact(currentFrame.get(), new Dimension(800, 800));
-                            ImageIO.write(ImgTools.toBufferedImage(currentFrame.get()), "png",
-                                    new File(parent.snapDir + File.separator + System.currentTimeMillis() + ".png"));
-                        } catch (IOException e) {
-                            throw new RuntimeException(e);
-                        }
+                        saveFlag = !saveFlag;
+//                        int idx = currentIdx.get();
+//                        gifDecoder.saveFrames("C:\\Users\\Administrator\\Desktop\\snaps",
+//                                idx-10, idx+10);
                         break;
                     case '+':
                         sleepTime.getAndAdd(-100);
@@ -86,12 +81,21 @@ public class GifPlayerBox {
 
         new Thread(() -> {
             while (!stopFlag.get()) {
-                for (int i = 0; i < frameCount && !stopFlag.get(); i++) {
+                for (int frameNum = 0; frameNum < frameCount && !stopFlag.get(); frameNum++) {
+                    //currentIdx.set(i);
                     if (!waitFlag.get()) {
-                        currentFrame.set(d.getFrame(reverse ? frameCount - 1 - i : i));
+                        currentFrame.set(gifDecoder.getFrame(reverse ? frameCount - 1 - frameNum : frameNum));
                         Image im2 = currentFrame.get().getScaledInstance(label.getWidth(), label.getHeight(),
                                 Image.SCALE_DEFAULT);
                         currentFrame.set(im2);
+                        ///------------
+                        if (saveFlag) {
+
+                            //BufferedImage scaled = ImageScaler.scaleExact(currentFrame.get(), new Dimension(800, 800));
+                            ImgTools.writeToFile(im2, "jpg", parent.snapDir,""+frameNum);
+                        }
+
+                        ///------------
                         label.setIcon(new ImageIcon(im2));
                         Tools.delay(sleepTime.get());
                     }

@@ -53,6 +53,16 @@ public class ImgTools {
         }
     }
 
+    public static void writeToFile(Image im2, String format, String dir, String name) {
+        try {
+            ImageIO.write(ImgTools.toBufferedImage(im2), format,
+                    new File(dir + File.separator + name + "."+format));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+
     public static void imageToClipboard(Image bi)
     {
         TransferableImage trans = new TransferableImage( bi );
