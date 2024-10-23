@@ -49,7 +49,7 @@ import java.util.logging.Logger;
  *
  * @author tduva
  */
-public class WebPDecoder implements Decoder {
+public class WebPDecoder implements AnimDecoder {
 
     private static final Logger LOGGER = Logger.getLogger(WebPDecoder.class.getName());
 
@@ -332,6 +332,8 @@ public class WebPDecoder implements Decoder {
         return null;
     }
 
+    /* START Decoder Interface */
+
     @Override
     public BufferedImage getFrame(int n) {
         return __image.frames.get(n).img;
@@ -353,6 +355,8 @@ public class WebPDecoder implements Decoder {
             throw new RuntimeException(e);
         }
     }
+
+    /* END Decoder Interface */
 
     public static class WebPDecoderException extends IOException {
 

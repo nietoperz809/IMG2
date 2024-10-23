@@ -25,7 +25,7 @@ public class AnimPlayerBox {
     private final AtomicInteger sleepTime = new AtomicInteger(150);
     private boolean saveFlag;
 
-    public AnimPlayerBox(File file, VideoApp parent, Decoder decoder) {
+    public AnimPlayerBox(File file, VideoApp parent, AnimDecoder decoder) {
         decoder.read(file.getAbsolutePath());
         int frameCount = decoder.getFrameCount();
         System.out.println(frameCount);

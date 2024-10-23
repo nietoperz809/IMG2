@@ -9,7 +9,7 @@ import java.net.URL;
 import java.util.ArrayList;
 
 
-public class GifDecoder implements Decoder {
+public class GifDecoder implements AnimDecoder {
 
     /**
      * File read status: No errors.

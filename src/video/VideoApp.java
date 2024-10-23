@@ -166,7 +166,7 @@ public class VideoApp extends JDialog {
             if (s.contains(".gif :")) {
                 setForeground(Color.RED);
             } else if (s.contains(".webp :")) {
-                setForeground(Color.GREEN);
+                setForeground(Color.BLUE);
             } else {
                 setForeground(Color.BLACK);
             }
