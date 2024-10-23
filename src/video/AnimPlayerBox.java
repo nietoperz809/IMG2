@@ -14,24 +14,25 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
 
-public class AnimPlayerBox {
+public class AnimPlayerBox implements PlayerBox {
 
     private final AtomicBoolean stopFlag = new AtomicBoolean(false);
     private final AtomicBoolean waitFlag = new AtomicBoolean(false);
     private final AtomicReference<Image> currentFrame = new AtomicReference<>();
-
     private boolean reverse = false;
-
-    private final AtomicInteger sleepTime = new AtomicInteger(150);
+    private final AtomicInteger sleepTime = new AtomicInteger(100);
     private boolean saveFlag;
+    private JFrame window;
+    private File file;
 
-    public AnimPlayerBox(File file, VideoApp parent, AnimDecoder decoder) {
+    public AnimPlayerBox (File file, VideoApp parent, AnimDecoder decoder) {
+        this.file = file;
         decoder.read(file.getAbsolutePath());
         int frameCount = decoder.getFrameCount();
         System.out.println(frameCount);
 
         JLabel label = new JLabel();
-        JFrame window = new javax.swing.JFrame();
+        window = new javax.swing.JFrame();
         window.setBackground(Color.orange);
         window.setLayout(new BorderLayout());
         window.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
@@ -43,9 +44,7 @@ public class AnimPlayerBox {
             @Override
             public void windowClosing(WindowEvent e) {
                 System.out.println("shouldClose");
-                stopFlag.set(true);
-                window.dispose();
-                file.delete();
+                stop();
             }
         });
 
@@ -74,29 +73,35 @@ public class AnimPlayerBox {
             }
         });
 
-        new Thread(() -> {
+        Tools.runTask(() -> {
             while (!stopFlag.get()) {
                 for (int frameNum = 0; frameNum < frameCount && !stopFlag.get(); frameNum++) {
-                    //currentIdx.set(i);
                     if (!waitFlag.get()) {
                         currentFrame.set(decoder.getFrame(reverse ? frameCount - 1 - frameNum : frameNum));
                         Image im2 = currentFrame.get().getScaledInstance(label.getWidth(), label.getHeight(),
                                 Image.SCALE_DEFAULT);
                         currentFrame.set(im2);
-                        ///------------
                         if (saveFlag) {
-
                             //BufferedImage scaled = ImageScaler.scaleExact(currentFrame.get(), new Dimension(800, 800));
                             ImgTools.writeToFile(im2, "jpg", parent.snapDir,""+frameNum);
                         }
-
-                        ///------------
                         label.setIcon(new ImageIcon(im2));
                         Tools.delay(sleepTime.get());
                     }
                 }
             }
             System.out.println("end thread");
-        }).start();
+        });
+    }
+
+    @Override
+    public void start() {
+
+    }
+
+    public void stop() {
+        stopFlag.set(true);
+        window.dispose();
+        file.delete();
     }
 }

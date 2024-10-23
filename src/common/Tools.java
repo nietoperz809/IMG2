@@ -21,7 +21,7 @@ public class Tools {
 
     private static final ExecutorService globalExecutor = Executors.newCachedThreadPool(); //Executors.newFixedThreadPool(20);
 
-    public static FutureTask<?> execute(Runnable r) {
+    public static FutureTask<?> runTask(Runnable r) {
         return (FutureTask<?>) globalExecutor.submit(r);
     }
 

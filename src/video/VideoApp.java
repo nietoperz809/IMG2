@@ -101,16 +101,22 @@ public class VideoApp extends JDialog {
                 throw new RuntimeException(e);
             }
         });
+
         renameButton.addActionListener(actionEvent -> {
             DBHandler.NameID nameid = listControl.getSelectedValue();
-            if (Tools.isGIF(nameid.name())) {
-                Tools.Error ("GIF renaming currently not allowed");
-                return;
-            }
             String res = LineInput.xmain(nameid.name(), "NewName", Color.orange);
-            DBHandler.getInst().changeVideoName(res, nameid.rowid());
+            if (res.length() == 0)
+                return;
+            if (Tools.isGIF(nameid.name())) {
+                DBHandler.getInst().changeGifName(res, nameid.rowid());
+            } else if (Tools.isWEBP(nameid.name())) {
+                DBHandler.getInst().changeWebpName(res, nameid.rowid());
+            } else {
+                DBHandler.getInst().changeVideoName(res, nameid.rowid());
+            }
             setListContent(false);
         });
+
         listControl.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -120,11 +126,11 @@ public class VideoApp extends JDialog {
                 }
             }
         });
+
         listControl.setCellRenderer(new MyCellRenderer());
     }
 
-    final VideoPlayerBox vidPlayerBox = new VideoPlayerBox(this);
-    // GifPlayerBox gifPlayer = new GifPlayerBox();
+    private PlayerBox playerBox; // = new VideoPlayerBox(this);
 
     private void onOK() {
         DBHandler.NameID nid = listControl.getSelectedValue();
@@ -132,29 +138,32 @@ public class VideoApp extends JDialog {
         if (Tools.isGIF(nid.name())) {
             try {
                 File f = DBHandler.getInst().transferGifIntoFile(nid);
-                new AnimPlayerBox(f, this, new GifDecoder());
+                playerBox = new AnimPlayerBox(f, this, new GifDecoder());
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
         } else if (Tools.isWEBP(nid.name())) {
             try {
                 File f = DBHandler.getInst().transferwEBPIntoFile(nid);
-                new AnimPlayerBox(f, this, new WebPDecoder());
+                playerBox = new AnimPlayerBox(f, this, new WebPDecoder());
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
 
         }
         else {
-            vidPlayerBox.start (nid);
+            playerBox = new VideoPlayerBox(this, nid);
         }
+        playerBox.start();
     }
 
     private void onCancel() {
-        vidPlayerBox.stop();
+        if (playerBox == null)
+            return;
+        playerBox.stop();
     }
 
-    class MyCellRenderer extends JLabel implements ListCellRenderer<Object> {
+    static class MyCellRenderer extends JLabel implements ListCellRenderer<Object> {
         public Component getListCellRendererComponent(
                 JList<?> list,           // the list
                 Object value,            // value to display

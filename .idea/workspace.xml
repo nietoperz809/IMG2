@@ -14,12 +14,18 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ddb69741-e020-4d21-a32f-f00e79c6818a" name="Changes" comment="integrated webpdecoder, not yet tested">
+    <list default="true" id="ddb69741-e020-4d21-a32f-f00e79c6818a" name="Changes" comment="some minor changes">
+      <change afterPath="$PROJECT_DIR$/src/video/PlayerBox.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IMG2_jar/IMG2.jar" beforeDir="false" afterPath="$PROJECT_DIR$/IMG2_jar/IMG2.jar" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/buildinfo/BuildInfo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/buildinfo/BuildInfo.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/buildinfo/build.number" beforeDir="false" afterPath="$PROJECT_DIR$/src/buildinfo/build.number" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/common/MemoryMonitor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/common/MemoryMonitor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/common/Tools.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/common/Tools.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/database/DBHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/database/DBHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/video/AnimPlayerBox.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/video/AnimPlayerBox.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/video/VideoApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/video/VideoApp.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/video/VideoPlayerBox.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/video/VideoPlayerBox.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -71,7 +77,7 @@
   "keyToString": {
     "ASKED_ADD_EXTERNAL_FILES": "true",
     "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "Application.Main.executor": "Debug",
+    "Application.Main.executor": "Run",
     "Application.MonitorFrame.executor": "Run",
     "Application.WebPDecoder.executor": "Run",
     "Application.web.executor": "Run",
@@ -581,7 +587,7 @@
       <option name="project" value="LOCAL" />
       <updated>1683976691765</updated>
     </task>
-    <option name="localTasksCounter" value="153" />
+    <option name="localTasksCounter" value="155" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -613,8 +619,6 @@
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_NEW_TODO" value="false" />
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="better tag handling" />
-    <MESSAGE value="backup" />
     <MESSAGE value="with thumb recreation" />
     <MESSAGE value="save" />
     <MESSAGE value="BACKUP" />
@@ -638,7 +642,9 @@
     <MESSAGE value="lineinput: bugfix" />
     <MESSAGE value="better gifplayer frame save" />
     <MESSAGE value="integrated webpdecoder, not yet tested" />
-    <option name="LAST_COMMIT_MESSAGE" value="integrated webpdecoder, not yet tested" />
+    <MESSAGE value="webp decoder is working" />
+    <MESSAGE value="some minor changes" />
+    <option name="LAST_COMMIT_MESSAGE" value="some minor changes" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -670,11 +676,6 @@
           <url>file://$PROJECT_DIR$/src/common/NumToText.java</url>
           <line>65</line>
           <option name="timeStamp" value="73" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/video/VideoApp.java</url>
-          <line>159</line>
-          <option name="timeStamp" value="75" />
         </line-breakpoint>
         <breakpoint type="java-exception">
           <properties class="java.lang.NullPointerException" package="java.lang" />

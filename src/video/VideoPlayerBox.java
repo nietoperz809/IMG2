@@ -15,16 +15,18 @@ import java.util.Objects;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
-public class VideoPlayerBox {
+public class VideoPlayerBox implements PlayerBox {
     private static final Lock lock = new ReentrantLock();
     private final JScrollBar sbar;
+    private final DBHandler.NameID nid;
     private volatile JFrame playerFrame;
     private EmbeddedMediaPlayerComponent mpc;
     private boolean paused = false;
     private final VideoApp parent;
     private UpDown speed;
 
-    public VideoPlayerBox(VideoApp parent) {
+    public VideoPlayerBox (VideoApp parent, DBHandler.NameID nid) {
+        this.nid = nid;
         this.parent = parent;
         sbar = new JScrollBar(Adjustable.HORIZONTAL);
         sbar.setBackground(Color.YELLOW);
@@ -60,7 +62,7 @@ public class VideoPlayerBox {
         });
     }
 
-    public void start (DBHandler.NameID nid) {
+    public void start () {
         if (playerFrame != null)
             return;
         lock.lock();

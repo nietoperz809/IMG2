@@ -610,7 +610,19 @@ public class DBHandler {
     }
 
     public void changeVideoName (String name, int rowid) {
-        String sql = "update VIDEOS set name ='"+name+"' where _rowid_ ="+rowid;
+        changeName("VIDEOS", name, rowid);
+    }
+
+    public void changeGifName (String name, int rowid) {
+        changeName("GIFS", name, rowid);
+    }
+
+    public void changeWebpName (String name, int rowid) {
+        changeName("WEBP", name, rowid);
+    }
+
+    public void changeName (String table, String name, int rowid) {
+        String sql = "update "+table+" set name ='"+name+"' where _rowid_ ="+rowid;
         try {
             statement.execute(sql);
         } catch (SQLException e) {
@@ -618,6 +630,7 @@ public class DBHandler {
         }
 
     }
+
 
     public ThumbHash loadThumbnail (int rowid) {
         String q = "select thumb from IMAGES where _rowid_ =" + rowid;
