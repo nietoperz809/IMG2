@@ -207,6 +207,7 @@ public class DBHandler {
     }
 
     public List<NameID> getVideoFileNames(boolean sort_by_id) {
+
         return getFileNames("VIDEOS", sort_by_id);
     }
 
@@ -468,6 +469,16 @@ public class DBHandler {
             throw new RuntimeException(e);
         }
     }
+
+    public void addWebPFile (File file) {
+        try {
+            byte[] fileContent = Files.readAllBytes(file.toPath());
+            insertWEBPRecord(fileContent, file.getName());
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 
     /**
      * Put raw data into IMAGES table

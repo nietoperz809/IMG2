@@ -165,9 +165,12 @@ public class VideoApp extends JDialog {
             String s = value.toString();
             if (s.contains(".gif :")) {
                 setForeground(Color.RED);
+            } else if (s.contains(".webp :")) {
+                setForeground(Color.GREEN);
             } else {
                 setForeground(Color.BLACK);
             }
+
             if (isSelected) {
                 setBackground(Color.YELLOW);
             } else {
@@ -184,9 +187,11 @@ public class VideoApp extends JDialog {
     private void setListContent(boolean sort_by_id) {
         List<DBHandler.NameID> list = DBHandler.getInst().getVideoFileNames(sort_by_id);
         List<DBHandler.NameID> list2 = DBHandler.getInst().getGifFileNames(sort_by_id);
+        List<DBHandler.NameID> list3 = DBHandler.getInst().getWebPFileNames(sort_by_id);
         DefaultListModel<DBHandler.NameID> model = new DefaultListModel<>();
         model.addAll (list);
         model.addAll (list2);
+        model.addAll (list3);
         listControl.setModel(model);
     }
 
@@ -209,6 +214,8 @@ public class VideoApp extends JDialog {
                             File f = array[0];
                             if (Tools.isGIF(f.getPath())) {
                                 DBHandler.getInst().addGifFile(f);
+                            } else if (Tools.isWEBP(f.getPath())) {
+                                DBHandler.getInst().addWebPFile(f);
                             } else {
                                 DBHandler.getInst().addVideoFile(f);
                             }
