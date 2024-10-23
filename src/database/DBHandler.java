@@ -90,6 +90,9 @@ public class DBHandler {
             sql = "create table if not exists GIFS " +
                     "(GIFDATA blob, NAME varchar(200), HASHVAL blob(16), TAG varchar(128))";
             statement.execute(sql);
+            sql = "create table if not exists WEBP " +
+                    "(WEBPDATA blob, NAME varchar(200), HASHVAL blob(16), TAG varchar(128))";
+            statement.execute(sql);
             sql = "alter table IMAGES add if not exists TAG varchar(128)";
             statement.execute(sql);
             sql = "alter table IMAGES add if not exists ACCNUM integer";
@@ -211,6 +214,10 @@ public class DBHandler {
         return getFileNames("GIFS", sort_by_id);
     }
 
+    public List<NameID> getWebPFileNames(boolean sort_by_id) {
+        return getFileNames("WEBP", sort_by_id);
+    }
+
     private synchronized List<NameID> getNames(String sql) {
         ArrayList<NameID> al = new ArrayList<>();
         try (ResultSet res = query(sql)) {
@@ -249,13 +256,16 @@ public class DBHandler {
         deleteGifOrVideo("GIFS", rowid);
     }
 
+    public void deleteWEBP (int rowid) {
+        deleteGifOrVideo("WEBP", rowid);
+    }
 
-    public boolean deleteGifOrVideo (String dbname, int rowid) {
+    public boolean deleteGifOrVideo (String tablename, int rowid) {
         if (askForDel(String.valueOf(rowid))) {
             return false;
         }
         try {
-            statement.execute("delete from "+dbname+" where _ROWID_ = " + rowid);
+            statement.execute("delete from "+tablename+" where _ROWID_ = " + rowid);
             return true;
         } catch (SQLException e) {
             //throw new RuntimeException(e);
@@ -505,6 +515,19 @@ public class DBHandler {
         }
     }
 
+    private void insertWEBPRecord (byte[] webp, String name) {
+        PreparedStatement prep;
+        try {
+            prep = connection.prepareStatement(
+                    "insert into WEBP (webpdata,name) values (?,?)");
+            prep.setBytes(1, webp);
+            prep.setString(2, name);
+            prep.execute();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     public SoftReference<byte[]> loadBytes (DBHandler.NameID nid, String sql) throws Exception {
         String filename = nid.name.replace("'", "''");
         ResultSet res = DBHandler.getInst()
@@ -528,31 +551,51 @@ public class DBHandler {
         return loadBytes(nid,"select GIFDATA from GIFS where _ROWID_='"+nid.rowid +"'");
     }
 
+    public SoftReference<byte[]> loadWEBPBytes (DBHandler.NameID nid) throws Exception {
+        return loadBytes(nid,"select WEBPDATA from WEBP where _ROWID_='"+nid.rowid +"'");
+    }
+
+
     /**
      * Load DB record into mapped file
      * @return file name of file on disk
      * @throws Exception if smth gone wrong
      */
-    public File transferIntoFile (DBHandler.NameID nid, boolean gif) throws Exception {
-        SoftReference<byte[]> bt = gif ? loadGifBytes(nid) : loadVideoBytes(nid);
-        File fi = new File(System.getProperty("java.io.tmpdir")+File.separator+nid.name+"myra.dat");
+    public File transferIntoFile (DBHandler.NameID nid, String type) throws Exception {
+        SoftReference<byte[]> bt;
+        switch (type) {
+            case "GIF":
+                bt = loadGifBytes(nid);
+                break;
+            case "WEBP":
+                bt = loadWEBPBytes(nid);
+                break;
+            default:
+                bt = loadVideoBytes(nid);
+                break;
+        }
+        File fi = new File(System.getProperty("java.io.tmpdir") + File.separator + nid.name + "myra.dat");
         try (RandomAccessFile rafile = new RandomAccessFile(fi, "rw")) {
             MappedByteBuffer out = rafile.getChannel()
                     .map(FileChannel.MapMode.READ_WRITE, 0, bt.get().length);
-            out.put (bt.get());
+            out.put(bt.get());
             out.load();
         }
-        return fi; //fi.getAbsolutePath();
+        return fi;
     }
 
 
     public File transferGifIntoFile (DBHandler.NameID nid) throws Exception {
-        return transferIntoFile (nid, true);
+        return transferIntoFile (nid, "GIF");
+    }
+
+    public File transferwEBPIntoFile (DBHandler.NameID nid) throws Exception {
+        return transferIntoFile (nid, "WEBP");
     }
 
 
     public File transferVideoIntoFile (DBHandler.NameID nid) throws Exception {
-        return transferIntoFile(nid,false);
+        return transferIntoFile(nid,"VID");
     }
 
     public void changeVideoName (String name, int rowid) {

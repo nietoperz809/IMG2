@@ -14,22 +14,20 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
 
-public class GifPlayerBox {
+public class AnimPlayerBox {
 
     private final AtomicBoolean stopFlag = new AtomicBoolean(false);
     private final AtomicBoolean waitFlag = new AtomicBoolean(false);
     private final AtomicReference<Image> currentFrame = new AtomicReference<>();
-    //private final AtomicReference<Integer> currentIdx = new AtomicReference<>();
 
     private boolean reverse = false;
 
     private final AtomicInteger sleepTime = new AtomicInteger(150);
     private boolean saveFlag;
 
-    public GifPlayerBox(File file, VideoApp parent) {
-        GifDecoder gifDecoder = new GifDecoder();
-        gifDecoder.read(file.getAbsolutePath());
-        int frameCount = gifDecoder.getFrameCount();
+    public AnimPlayerBox(File file, VideoApp parent, Decoder decoder) {
+        decoder.read(file.getAbsolutePath());
+        int frameCount = decoder.getFrameCount();
         System.out.println(frameCount);
 
         JLabel label = new JLabel();
@@ -63,9 +61,6 @@ public class GifPlayerBox {
                         break;
                     case 'p':
                         saveFlag = !saveFlag;
-//                        int idx = currentIdx.get();
-//                        gifDecoder.saveFrames("C:\\Users\\Administrator\\Desktop\\snaps",
-//                                idx-10, idx+10);
                         break;
                     case '+':
                         sleepTime.getAndAdd(-100);
@@ -84,7 +79,7 @@ public class GifPlayerBox {
                 for (int frameNum = 0; frameNum < frameCount && !stopFlag.get(); frameNum++) {
                     //currentIdx.set(i);
                     if (!waitFlag.get()) {
-                        currentFrame.set(gifDecoder.getFrame(reverse ? frameCount - 1 - frameNum : frameNum));
+                        currentFrame.set(decoder.getFrame(reverse ? frameCount - 1 - frameNum : frameNum));
                         Image im2 = currentFrame.get().getScaledInstance(label.getWidth(), label.getHeight(),
                                 Image.SCALE_DEFAULT);
                         currentFrame.set(im2);

@@ -70,6 +70,8 @@ public class VideoApp extends JDialog {
             String name = listControl.getSelectedValue().name();
             if (Tools.isGIF(name)) {
                 DBHandler.getInst().deleteGif(id);
+            } else if (Tools.isWEBP(name)) {
+                DBHandler.getInst().deleteWEBP(id);
             } else {
                 DBHandler.getInst().deleteVideo(id);
             }
@@ -87,7 +89,10 @@ public class VideoApp extends JDialog {
                     SoftReference<byte[]> bt;
                     if (Tools.isGIF(nameid.name())) {
                         bt = DBHandler.getInst().loadGifBytes(nameid);
-                    } else {
+                    } else if (Tools.isWEBP(nameid.name())) {
+                        bt = DBHandler.getInst().loadWEBPBytes(nameid);
+                    }
+                    else {
                         bt = DBHandler.getInst().loadVideoBytes(nameid);
                     }
                     Files.write(f.toPath(), bt.get());
@@ -127,11 +132,20 @@ public class VideoApp extends JDialog {
         if (Tools.isGIF(nid.name())) {
             try {
                 File f = DBHandler.getInst().transferGifIntoFile(nid);
-                new GifPlayerBox(f, this);
+                new AnimPlayerBox(f, this, new GifDecoder());
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
-        } else {
+        } else if (Tools.isWEBP(nid.name())) {
+            try {
+                File f = DBHandler.getInst().transferwEBPIntoFile(nid);
+                new AnimPlayerBox(f, this, new WebPDecoder());
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+
+        }
+        else {
             vidPlayerBox.start (nid);
         }
     }

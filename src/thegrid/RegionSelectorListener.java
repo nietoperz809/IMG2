@@ -5,6 +5,7 @@ import common.ImageWarper;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
 
 public class RegionSelectorListener extends MouseAdapter {
@@ -46,13 +47,13 @@ public class RegionSelectorListener extends MouseAdapter {
     @Override
     public void mouseReleased(MouseEvent e) {
         super.mouseReleased(e);
-        Point offset = imgPanel.getOffset();
+        Point2D.Float offset = imgPanel.getOffset();
         if (pressed == null)
             return;
         if (shouldWarp) {
-            pressed.translate(-offset.x, -offset.y);
+            pressed.translate((int)-offset.x, (int)-offset.y);
             Point released = e.getPoint();
-            released.translate(-offset.x, -offset.y);
+            released.translate((int)-offset.x, (int)-offset.y);
             ImageWarper warp = new ImageWarper(imgPanel.getImage(),released,  pressed);
             BufferedImage bi2 = warp.warpPixels();
             imgPanel.setImage(bi2);

@@ -79,8 +79,16 @@ public class ImageView extends JFrame implements MouseWheelListener {
             switch (ev) {
                 case KeyEvent.VK_PAGE_DOWN -> setNextImage();
                 case KeyEvent.VK_PAGE_UP -> setBeforeImage();
-                case KeyEvent.VK_PLUS -> scaleIconImg(1.5f);
-                case KeyEvent.VK_MINUS -> scaleIconImg(0.9f);
+                case KeyEvent.VK_PLUS -> {
+                    float factor = 1.5f;
+                    //imgPanel.scaleUp (factor);
+                    scaleIconImg(factor);
+                }
+                case KeyEvent.VK_MINUS -> {
+                    float factor = 0.9f;
+                    //imgPanel.scaleDown(factor);
+                    scaleIconImg(factor);
+                }
 
                 case KeyEvent.VK_J -> {
                     int id = grid.imageL.get(ring2.get()).rowid();

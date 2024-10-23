@@ -50,8 +50,8 @@ public class TextParamBox extends JDialog {
     }
 
     public static void xmain (ImgPanel imgp, MouseEvent e) {
-        int x = e.getX()-imgp.offset.x;
-        int y = e.getY()-imgp.offset.y;
+        int x = e.getX()-(int)imgp.offset.x;
+        int y = e.getY()-(int)imgp.offset.y;
         instance.a2020TextField.setText(x+","+y);
         instance.imgPanel = imgp;
         instance.pack();

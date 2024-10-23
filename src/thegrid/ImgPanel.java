@@ -8,6 +8,7 @@ import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.font.FontRenderContext;
+import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import javax.swing.*;
@@ -16,7 +17,7 @@ public class ImgPanel extends JPanel {
 
     private final TheGrid grid;
     private BufferedImage image;
-    public Point offset = new Point();
+    public Point2D.Float offset = new Point2D.Float();
 
     JToolTip thisJT;
     final ImageView theView;
@@ -117,7 +118,7 @@ public class ImgPanel extends JPanel {
         if (image != null)
             stack.push (ImgTools.deepCopy(image));
         image = img;
-        String hp = grid.getHistoryPath();
+        //String hp = grid.getHistoryPath();
         autoSaveImage();
         SwingUtilities.invokeLater(this::repaint);
     }
@@ -142,16 +143,16 @@ public class ImgPanel extends JPanel {
 
 
     public void clearOffset() {
-        offset = new Point();
+        offset = new Point2D.Float();
     }
 
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        g.drawImage(image, offset.x, offset.y, this);
+        g.drawImage(image, (int)offset.x, (int)offset.y, this);
     }
 
-    public Point getOffset() {
+    public Point2D.Float getOffset() {
         return offset;
     }
 
@@ -184,4 +185,15 @@ public class ImgPanel extends JPanel {
             SwingUtilities.invokeLater(this::repaint);
         }
     }
+
+    public void scaleUp (float factor) {
+        offset.x /= factor;
+        offset.y /= factor;
+    }
+
+    public void scaleDown (float factor) {
+        offset.x *= factor;
+        offset.y *= factor;
+    }
+
 }

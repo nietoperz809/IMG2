@@ -98,6 +98,10 @@ public class Tools {
         return hasExtension(filename, ".gif");
     }
 
+    public static boolean isWEBP(String filename) {
+        return hasExtension(filename, ".webp");
+    }
+
     public static void Error(String msg) {
         JOptionPane.showMessageDialog(null, msg, "Error",
                 JOptionPane.ERROR_MESSAGE);
