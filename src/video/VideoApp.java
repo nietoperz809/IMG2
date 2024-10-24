@@ -29,6 +29,11 @@ public class VideoApp extends JDialog {
     private JButton renameButton;
     private JLabel outputDirLabel;
     public String snapDir = "C:\\Users\\Administrator\\Desktop\\snaps";
+    private PlayerBox playerBox;
+    private List<DBHandler.NameID> videoList;
+    private List<DBHandler.NameID> gifList;
+    private List<DBHandler.NameID> webpList;
+
 
     public VideoApp () {
         outputDirLabel.setText (snapDir);
@@ -45,7 +50,6 @@ public class VideoApp extends JDialog {
             }
         });
         setContentPane(contentPane);
-        //setModal(true);
         getRootPane().setDefaultButton(buttonPlay);
 
         buttonPlay.addActionListener(e -> onOK());
@@ -62,22 +66,24 @@ public class VideoApp extends JDialog {
             }
         });
 
-        setListContent(false);
+        setJListContent(false);
 
         enableDrop();
+
         deleteButton.addActionListener(e -> {
-            int id = listControl.getSelectedValue().rowid();
+            DBHandler.NameID nameid = listControl.getSelectedValue();
             String name = listControl.getSelectedValue().name();
-            if (Tools.isGIF(name)) {
-                DBHandler.getInst().deleteGif(id);
-            } else if (Tools.isWEBP(name)) {
-                DBHandler.getInst().deleteWEBP(id);
+            if (gifList.contains(nameid)) {
+                DBHandler.getInst().deleteGif(nameid.rowid());
+            } else if (webpList.contains(nameid)) {
+                DBHandler.getInst().deleteWEBP(nameid.rowid());
             } else {
-                DBHandler.getInst().deleteVideo(id);
+                DBHandler.getInst().deleteVideo(nameid.rowid());
             }
-            setListContent(false);
+            setJListContent(false);
             repaint();
         });
+
         exportButton.addActionListener(actionEvent -> {
             DBHandler.NameID nameid = listControl.getSelectedValue();
             try {
@@ -87,9 +93,9 @@ public class VideoApp extends JDialog {
                 if(option == JFileChooser.APPROVE_OPTION){
                     File f = fileChooser.getSelectedFile();
                     SoftReference<byte[]> bt;
-                    if (Tools.isGIF(nameid.name())) {
+                    if (gifList.contains(nameid)) {
                         bt = DBHandler.getInst().loadGifBytes(nameid);
-                    } else if (Tools.isWEBP(nameid.name())) {
+                    } else if (webpList.contains(nameid)) {
                         bt = DBHandler.getInst().loadWEBPBytes(nameid);
                     }
                     else {
@@ -105,23 +111,23 @@ public class VideoApp extends JDialog {
         renameButton.addActionListener(actionEvent -> {
             DBHandler.NameID nameid = listControl.getSelectedValue();
             String res = LineInput.xmain(nameid.name(), "NewName", Color.orange);
-            if (res.length() == 0)
+            if (res.isEmpty())
                 return;
-            if (Tools.isGIF(nameid.name())) {
+            if (gifList.contains(nameid)) {
                 DBHandler.getInst().changeGifName(res, nameid.rowid());
-            } else if (Tools.isWEBP(nameid.name())) {
+            } else if (webpList.contains(nameid)) {
                 DBHandler.getInst().changeWebpName(res, nameid.rowid());
             } else {
                 DBHandler.getInst().changeVideoName(res, nameid.rowid());
             }
-            setListContent(false);
+            setJListContent(false);
         });
 
         listControl.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 if (e.getButton() == MouseEvent.BUTTON3) {
-                    setListContent(true);
+                    setJListContent(true);
                     repaint();
                 }
             }
@@ -130,26 +136,22 @@ public class VideoApp extends JDialog {
         listControl.setCellRenderer(new MyCellRenderer());
     }
 
-    private PlayerBox playerBox; // = new VideoPlayerBox(this);
-
     private void onOK() {
         DBHandler.NameID nid = listControl.getSelectedValue();
-        listControl.getSelectedValue();
-        if (Tools.isGIF(nid.name())) {
+        if (gifList.contains(nid)) {
             try {
                 File f = DBHandler.getInst().transferGifIntoFile(nid);
                 playerBox = new AnimPlayerBox(f, this, new GifDecoder());
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
-        } else if (Tools.isWEBP(nid.name())) {
+        } else if (webpList.contains(nid)) {
             try {
                 File f = DBHandler.getInst().transferwEBPIntoFile(nid);
                 playerBox = new AnimPlayerBox(f, this, new WebPDecoder());
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
-
         }
         else {
             playerBox = new VideoPlayerBox(this, nid);
@@ -193,14 +195,14 @@ public class VideoApp extends JDialog {
         }
     }
 
-    private void setListContent(boolean sort_by_id) {
-        List<DBHandler.NameID> list = DBHandler.getInst().getVideoFileNames(sort_by_id);
-        List<DBHandler.NameID> list2 = DBHandler.getInst().getGifFileNames(sort_by_id);
-        List<DBHandler.NameID> list3 = DBHandler.getInst().getWebPFileNames(sort_by_id);
+    private void setJListContent(boolean sort_by_id) {
+        videoList = DBHandler.getInst().getVideoFileNames(sort_by_id);
+        gifList = DBHandler.getInst().getGifFileNames(sort_by_id);
+        webpList = DBHandler.getInst().getWebPFileNames(sort_by_id);
         DefaultListModel<DBHandler.NameID> model = new DefaultListModel<>();
-        model.addAll (list);
-        model.addAll (list2);
-        model.addAll (list3);
+        model.addAll (videoList);
+        model.addAll (gifList);
+        model.addAll (webpList);
         listControl.setModel(model);
     }
 
@@ -229,7 +231,7 @@ public class VideoApp extends JDialog {
                                 DBHandler.getInst().addVideoFile(f);
                             }
                             f.delete();
-                            setListContent(false);
+                            setJListContent(false);
                             repaint();
                         } catch (Exception e) {
                             throw new RuntimeException(e);
@@ -251,10 +253,10 @@ public class VideoApp extends JDialog {
         dialog.setVisible(true);
     }
 
-    public static void main(String[] args) {
-        VideoApp dialog = new VideoApp();
-        dialog.setSize(400,400);
-        dialog.setLocationRelativeTo(null);
-        dialog.setVisible(true);
-    }
+//    public static void main(String[] args) {
+//        VideoApp dialog = new VideoApp();
+//        dialog.setSize(400,400);
+//        dialog.setLocationRelativeTo(null);
+//        dialog.setVisible(true);
+//    }
 }
