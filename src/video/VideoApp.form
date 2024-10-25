@@ -53,6 +53,12 @@
               <text value="Stop"/>
             </properties>
           </component>
+          <component id="ede6a" class="javax.swing.JButton" binding="buttonMix">
+            <constraints/>
+            <properties>
+              <text value="Mix"/>
+            </properties>
+          </component>
           <component id="c790a" class="javax.swing.JButton" binding="deleteButton" default-binding="true">
             <constraints/>
             <properties>
@@ -62,7 +68,7 @@
           <component id="f5d7a" class="javax.swing.JButton" binding="exportButton" default-binding="true">
             <constraints/>
             <properties>
-              <text value="Export"/>
+              <text value="Save"/>
             </properties>
           </component>
           <component id="8bbd4" class="javax.swing.JButton" binding="renameButton" default-binding="true">

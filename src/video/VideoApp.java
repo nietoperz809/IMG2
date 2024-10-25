@@ -1,6 +1,5 @@
 package video;
 
-import common.Sam;
 import dialogs.LineInput;
 import common.Tools;
 import database.DBHandler;
@@ -17,6 +16,8 @@ import java.awt.event.*;
 import java.io.File;
 import java.lang.ref.SoftReference;
 import java.nio.file.Files;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import static common.Sam.speak;
@@ -31,6 +32,7 @@ public class VideoApp extends JDialog {
     private JButton exportButton;
     private JButton renameButton;
     private JLabel outputDirLabel;
+    private JButton buttonMix;
     public String snapDir = "C:\\Users\\Administrator\\Desktop\\snaps";
     private PlayerBox playerBox;
     private List<DBHandler.NameID> videoList;
@@ -69,7 +71,7 @@ public class VideoApp extends JDialog {
             }
         });
 
-        setJListContent(false);
+        setAndSortJListContent(false);
 
         enableDrop();
 
@@ -83,7 +85,7 @@ public class VideoApp extends JDialog {
             } else {
                 DBHandler.getInst().deleteVideo(nameid.rowid());
             }
-            setJListContent(false);
+            setAndSortJListContent(false);
             repaint();
         });
 
@@ -123,20 +125,21 @@ public class VideoApp extends JDialog {
             } else {
                 DBHandler.getInst().changeVideoName(res, nameid.rowid());
             }
-            setJListContent(false);
+            setAndSortJListContent(false);
         });
 
         listControl.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 if (e.getButton() == MouseEvent.BUTTON3) {
-                    setJListContent(true);
+                    setAndSortJListContent(true);
                     repaint();
                 }
             }
         });
 
         listControl.setCellRenderer(new MyCellRenderer());
+        buttonMix.addActionListener(e -> mix());
     }
 
     private void onOK() {
@@ -198,7 +201,7 @@ public class VideoApp extends JDialog {
         }
     }
 
-    private void setJListContent(boolean sort_by_id) {
+    private void setAndSortJListContent(boolean sort_by_id) {
         videoList = DBHandler.getInst().getVideoFileNames(sort_by_id);
         gifList = DBHandler.getInst().getGifFileNames(sort_by_id);
         webpList = DBHandler.getInst().getWebPFileNames(sort_by_id);
@@ -206,6 +209,17 @@ public class VideoApp extends JDialog {
         model.addAll (videoList);
         model.addAll (gifList);
         model.addAll (webpList);
+        listControl.setModel(model);
+    }
+
+    private void mix() {
+        List<DBHandler.NameID> lm = new ArrayList<>();
+        lm.addAll(videoList);
+        lm.addAll(gifList);
+        lm.addAll(webpList);
+        Collections.shuffle(lm);
+        DefaultListModel<DBHandler.NameID> model = new DefaultListModel<>();
+        model.addAll(lm);
         listControl.setModel(model);
     }
 
@@ -234,9 +248,11 @@ public class VideoApp extends JDialog {
                                     DBHandler.getInst().addVideoFile(f);
                                     speak("Regular video added");
                                 }
-                                f.delete();
+                                if (!f.delete()) {
+                                    speak ("could not delete");
+                                }
                             }
-                            setJListContent(false);
+                            setAndSortJListContent(false);
                             repaint();
                         } catch (Exception e) {
                             throw new RuntimeException(e);
