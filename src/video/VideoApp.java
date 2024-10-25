@@ -1,5 +1,6 @@
 package video;
 
+import common.Sam;
 import dialogs.LineInput;
 import common.Tools;
 import database.DBHandler;
@@ -17,6 +18,8 @@ import java.io.File;
 import java.lang.ref.SoftReference;
 import java.nio.file.Files;
 import java.util.List;
+
+import static common.Sam.speak;
 
 public class VideoApp extends JDialog {
     private Frame owner;
@@ -207,7 +210,7 @@ public class VideoApp extends JDialog {
     }
 
     /**
-     * DragDrop, only one vid
+     * DragDrop,
      */
     private void enableDrop() {
         new DropTarget(this, new DropTargetAdapter() {
@@ -218,25 +221,26 @@ public class VideoApp extends JDialog {
                 DataFlavor[] flavors = transferable.getTransferDataFlavors();
                 for (DataFlavor flavor : flavors) {
                     if (flavor.isFlavorJavaFileListType()) {
-                        java.util.List<File> files;
                         try {
-                            files = (java.util.List<File>) transferable.getTransferData(flavor);
-                            File[] array = files.toArray(new File[0]);
-                            File f = array[0];
-                            if (Tools.isGIF(f.getPath())) {
-                                DBHandler.getInst().addGifFile(f);
-                            } else if (Tools.isWEBP(f.getPath())) {
-                                DBHandler.getInst().addWebPFile(f);
-                            } else {
-                                DBHandler.getInst().addVideoFile(f);
+                            java.util.List<File> files = (java.util.List<File>) transferable.getTransferData(flavor);
+                            for(File f : files) {
+                                if (Tools.isGIF(f.getPath())) {
+                                    DBHandler.getInst().addGifFile(f);
+                                    speak("GIF file added");
+                                } else if (Tools.isWEBP(f.getPath())) {
+                                    DBHandler.getInst().addWebPFile(f);
+                                    speak("WEBP file added");
+                                } else {
+                                    DBHandler.getInst().addVideoFile(f);
+                                    speak("Regular video added");
+                                }
+                                f.delete();
                             }
-                            f.delete();
                             setJListContent(false);
                             repaint();
                         } catch (Exception e) {
                             throw new RuntimeException(e);
                         }
-                        return; // only one file
                     }
                 }
             }

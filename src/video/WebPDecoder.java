@@ -646,15 +646,8 @@ public class WebPDecoder implements AnimDecoder {
 
     ///////////////////////////////////////////////////////////////////////
 
-    private static class ImageResult {
+    private record ImageResult(WebPImage image, long loadTime) {
 
-        public final WebPImage image;
-        public final long loadTime;
-
-        public ImageResult(WebPImage image, long loadTime) {
-            this.image = image;
-            this.loadTime = loadTime;
-        }
     }
 
     private static byte[] getBytesFromLine(String line) throws IOException {
