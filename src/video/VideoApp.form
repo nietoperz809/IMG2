@@ -9,7 +9,7 @@
     </properties>
     <border type="none"/>
     <children>
-      <scrollpane id="a992a">
+      <scrollpane id="a992a" binding="listscroll">
         <constraints border-constraint="Center"/>
         <properties/>
         <border type="none"/>
@@ -47,6 +47,12 @@
               <text value="Play"/>
             </properties>
           </component>
+          <component id="2743b" class="javax.swing.JButton" binding="playRnd">
+            <constraints/>
+            <properties>
+              <text value="PlayRnd"/>
+            </properties>
+          </component>
           <component id="5723f" class="javax.swing.JButton" binding="buttonCancel">
             <constraints/>
             <properties>
@@ -79,12 +85,26 @@
           </component>
         </children>
       </grid>
-      <component id="36ce7" class="javax.swing.JLabel" binding="outputDirLabel">
+      <grid id="7d0d" layout-manager="BorderLayout" hgap="0" vgap="0">
         <constraints border-constraint="North"/>
-        <properties>
-          <text value="Label"/>
-        </properties>
-      </component>
+        <properties/>
+        <border type="none"/>
+        <children>
+          <component id="36ce7" class="javax.swing.JLabel" binding="outputDirLabel">
+            <constraints border-constraint="Center"/>
+            <properties>
+              <text value="Label"/>
+            </properties>
+          </component>
+          <component id="23bcd" class="javax.swing.JCheckBox" binding="checkBoxAC">
+            <constraints border-constraint="East"/>
+            <properties>
+              <selected value="true"/>
+              <text value="Autoclose"/>
+            </properties>
+          </component>
+        </children>
+      </grid>
     </children>
   </grid>
 </form>

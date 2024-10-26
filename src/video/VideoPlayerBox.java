@@ -19,13 +19,15 @@ public class VideoPlayerBox implements PlayerBox {
     private static final Lock lock = new ReentrantLock();
     private final JScrollBar sbar;
     private final DBHandler.NameID nid;
+    private final boolean autoclose;
     private volatile JFrame playerFrame;
     private EmbeddedMediaPlayerComponent mpc;
     private boolean paused = false;
     private final VideoApp parent;
     private UpDown speed;
 
-    public VideoPlayerBox (VideoApp parent, DBHandler.NameID nid) {
+    public VideoPlayerBox (VideoApp parent, DBHandler.NameID nid, boolean autoclose) {
+        this.autoclose = autoclose;
         this.nid = nid;
         this.parent = parent;
         sbar = new JScrollBar(Adjustable.HORIZONTAL);
@@ -148,6 +150,25 @@ public class VideoPlayerBox implements PlayerBox {
                 @Override
                 public void positionChanged(MediaPlayer mediaPlayer, float v) {
                     sbar.setValue((int) (v * 1000));
+                }
+            });
+            mpc.mediaPlayer().events().addMediaPlayerEventListener(new MediaPlayerEventAdapter() {
+                @Override
+                public void finished(MediaPlayer mediaPlayer) {
+                    super.finished(mediaPlayer);
+                    if (autoclose) {
+                        Tools.runTask(new Runnable() {
+                            @Override
+                            public void run() {
+                                try {
+                                    Thread.sleep(1000);
+                                } catch (InterruptedException e) {
+                                    throw new RuntimeException(e);
+                                }
+                                stop();
+                            }
+                        });
+                    }
                 }
             });
             mpc.mediaPlayer().videoSurface().attachVideoSurface();

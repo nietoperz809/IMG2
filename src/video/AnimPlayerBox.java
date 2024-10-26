@@ -19,13 +19,16 @@ public class AnimPlayerBox implements PlayerBox {
     private final AtomicBoolean stopFlag = new AtomicBoolean(false);
     private final AtomicBoolean waitFlag = new AtomicBoolean(false);
     private final AtomicReference<Image> currentFrame = new AtomicReference<>();
+    private final boolean autoclose;
     private boolean reverse = false;
     private final AtomicInteger sleepTime = new AtomicInteger(100);
     private boolean saveFlag;
     private JFrame window;
     private File file;
 
-    public AnimPlayerBox (File file, VideoApp parent, AnimDecoder decoder) {
+    public AnimPlayerBox (File file, VideoApp parent, AnimDecoder decoder,
+                          boolean close_when_finished) {
+        autoclose = close_when_finished;
         this.file = file;
         decoder.read(file.getAbsolutePath());
         int frameCount = decoder.getFrameCount();
@@ -89,6 +92,8 @@ public class AnimPlayerBox implements PlayerBox {
                         Tools.delay(sleepTime.get());
                     }
                 }
+                if (autoclose)
+                    stop();
             }
             System.out.println("end thread");
         });

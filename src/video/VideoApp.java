@@ -19,6 +19,7 @@ import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Random;
 
 import static common.Sam.speak;
 
@@ -33,6 +34,9 @@ public class VideoApp extends JDialog {
     private JButton renameButton;
     private JLabel outputDirLabel;
     private JButton buttonMix;
+    private JButton playRnd;
+    private JScrollPane listscroll;
+    private JCheckBox checkBoxAC;
     public String snapDir = "C:\\Users\\Administrator\\Desktop\\snaps";
     private PlayerBox playerBox;
     private List<DBHandler.NameID> videoList;
@@ -139,28 +143,42 @@ public class VideoApp extends JDialog {
         });
 
         listControl.setCellRenderer(new MyCellRenderer());
+
         buttonMix.addActionListener(e -> mix());
+
+        playRnd.addActionListener(e -> {
+           int max = listControl.getModel().getSize()-1;
+           int rnd = new Random().nextInt(max);
+           listControl.setSelectedIndex(rnd);
+           onOK();
+//           Rectangle rect = listControl.getCellBounds(rnd, rnd);
+//           listscroll.scrollRectToVisible(rect);
+//           repaint();
+        });
     }
 
     private void onOK() {
+        onCancel();
         DBHandler.NameID nid = listControl.getSelectedValue();
         if (gifList.contains(nid)) {
             try {
                 File f = DBHandler.getInst().transferGifIntoFile(nid);
-                playerBox = new AnimPlayerBox(f, this, new GifDecoder());
+                playerBox = new AnimPlayerBox(f, this,
+                        new GifDecoder(), checkBoxAC.isSelected());
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
         } else if (webpList.contains(nid)) {
             try {
                 File f = DBHandler.getInst().transferwEBPIntoFile(nid);
-                playerBox = new AnimPlayerBox(f, this, new WebPDecoder());
+                playerBox = new AnimPlayerBox(f, this,
+                        new WebPDecoder(), checkBoxAC.isSelected());
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
         }
         else {
-            playerBox = new VideoPlayerBox(this, nid);
+            playerBox = new VideoPlayerBox(this, nid, checkBoxAC.isSelected());
         }
         playerBox.start();
     }
