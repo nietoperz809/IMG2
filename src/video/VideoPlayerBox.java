@@ -77,7 +77,8 @@ public class VideoPlayerBox implements PlayerBox {
             playerFrame = new JFrame();
             playerFrame.requestFocus();
             playerFrame.setTitle("Hit 's' to start and stop, 'p' to take shapshot, +/- for speed");
-            playerFrame.setBounds(100, 100, 600, 400);
+            Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+            playerFrame.setBounds(0, 0, screenSize.width-20, screenSize.height-20);
             playerFrame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
             /*
              * cleanup on window close
@@ -152,22 +153,21 @@ public class VideoPlayerBox implements PlayerBox {
                     sbar.setValue((int) (v * 1000));
                 }
             });
+            /*
+             * videao finished
+             */
             mpc.mediaPlayer().events().addMediaPlayerEventListener(new MediaPlayerEventAdapter() {
+                private void run() {
+                    mpc.mediaPlayer().media().play(tempFile.getAbsolutePath());
+                }
+
                 @Override
                 public void finished(MediaPlayer mediaPlayer) {
                     super.finished(mediaPlayer);
                     if (autoclose) {
-                        Tools.runTask(new Runnable() {
-                            @Override
-                            public void run() {
-                                try {
-                                    Thread.sleep(1000);
-                                } catch (InterruptedException e) {
-                                    throw new RuntimeException(e);
-                                }
-                                stop();
-                            }
-                        });
+                        SwingUtilities.invokeLater(() -> stop());
+                    } else {
+                        SwingUtilities.invokeLater(this::run); /* Restart */
                     }
                 }
             });
