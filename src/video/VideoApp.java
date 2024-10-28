@@ -33,8 +33,6 @@ public class VideoApp extends JDialog {
     private JButton renameButton;
     private JLabel outputDirLabel;
     private JButton buttonMix;
-    private JButton playRnd;
-    private JScrollPane listscroll;
     private JCheckBox checkBoxAC;
     private JCheckBox checkBoxautoNew;
     public String snapDir = "C:\\Users\\Administrator\\Desktop\\snaps";
@@ -42,6 +40,7 @@ public class VideoApp extends JDialog {
     private List<DBHandler.NameID> videoList;
     private List<DBHandler.NameID> gifList;
     private List<DBHandler.NameID> webpList;
+    private JScrollPane listscroll;
 
     public VideoApp () {
         outputDirLabel.setText (snapDir);
@@ -49,21 +48,18 @@ public class VideoApp extends JDialog {
         outputDirLabel.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                String dir = Tools.chooseDir(VideoApp.this)+File.separator;
-                if (dir != null) {
-                    snapDir = dir;
-                    outputDirLabel.setText(snapDir);
-                    repaint();
-                }
+                snapDir = Tools.chooseDir(VideoApp.this)+File.separator;
+                outputDirLabel.setText(snapDir);
+                repaint();
             }
         });
         setContentPane(contentPane);
         getRootPane().setDefaultButton(buttonPlay);
 
-        buttonPlay.addActionListener(e -> CancelAndOk());
+        buttonPlay.addActionListener(e -> CancelOldAndPlayNew());
 
         buttonCancel.addActionListener(e -> {
-            checkBoxautoNew.setSelected(false);
+            checkBoxautoNew.setSelected(false);  // stop video show
             onCancel();
         });
 
@@ -83,7 +79,6 @@ public class VideoApp extends JDialog {
 
         deleteButton.addActionListener(e -> {
             DBHandler.NameID nameid = listControl.getSelectedValue();
-            String name = listControl.getSelectedValue().name();
             if (gifList.contains(nameid)) {
                 DBHandler.getInst().deleteGif(nameid.rowid());
             } else if (webpList.contains(nameid)) {
@@ -147,15 +142,12 @@ public class VideoApp extends JDialog {
         listControl.setCellRenderer(new MyCellRenderer());
 
         buttonMix.addActionListener(e -> mix());
-
-        playRnd.addActionListener(e -> playRandomVid());
     }
 
-    private void playRandomVid() {
-        selectNextVid();
-        CancelAndOk();
-    }
 
+    /**
+     * select next vid in list
+     */
     private void selectNextVid() {
         int idx = listControl.getSelectedIndex()+1;
         if (idx >= listControl.getModel().getSize())
@@ -163,11 +155,17 @@ public class VideoApp extends JDialog {
         listControl.setSelectedIndex(idx);
     }
 
-    private void CancelAndOk() {
+    /**
+     * Play new vid, dismiss the old one
+     */
+    private void CancelOldAndPlayNew() {
         onCancel();
         onOK();
     }
 
+    /**
+     * Start playing
+     */
     private void onOK() {
         DBHandler.NameID nid = listControl.getSelectedValue();
         if (gifList.contains(nid)) {
@@ -215,6 +213,9 @@ public class VideoApp extends JDialog {
         playerBox.stop();
     }
 
+    /**
+     *
+     */
     static class MyCellRenderer extends JLabel implements ListCellRenderer<Object> {
         public Component getListCellRendererComponent(
                 JList<?> list,           // the list
@@ -245,6 +246,10 @@ public class VideoApp extends JDialog {
         }
     }
 
+    /**
+     * Initial filling the JList
+     * @param sort_by_id otherwise sort by name
+     */
     private void setAndSortJListContent(boolean sort_by_id) {
         videoList = DBHandler.getInst().getVideoFileNames(sort_by_id);
         gifList = DBHandler.getInst().getGifFileNames(sort_by_id);
@@ -256,6 +261,9 @@ public class VideoApp extends JDialog {
         listControl.setModel(model);
     }
 
+    /**
+     * Random shuffle the list of available vids/anims
+     */
     private void mix() {
         List<DBHandler.NameID> mixedList = new ArrayList<>();
         mixedList.addAll(videoList);
@@ -268,7 +276,7 @@ public class VideoApp extends JDialog {
     }
 
     /**
-     * DragDrop,
+     * DragDrop on Jlist,
      */
     private void enableDrop() {
         new DropTarget(this, new DropTargetAdapter() {
@@ -307,6 +315,10 @@ public class VideoApp extends JDialog {
         });
     }
 
+    /**
+     * Start video app
+     * @param owner The caller window
+     */
     public static void open(Frame owner) {
         VideoApp dialog = new VideoApp();
         dialog.owner = owner;

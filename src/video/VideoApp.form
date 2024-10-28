@@ -47,12 +47,6 @@
               <text value="Play"/>
             </properties>
           </component>
-          <component id="2743b" class="javax.swing.JButton" binding="playRnd">
-            <constraints/>
-            <properties>
-              <text value="PlayNext"/>
-            </properties>
-          </component>
           <component id="5723f" class="javax.swing.JButton" binding="buttonCancel">
             <constraints/>
             <properties>
@@ -111,7 +105,7 @@
               <component id="b560d" class="javax.swing.JCheckBox" binding="checkBoxautoNew">
                 <constraints/>
                 <properties>
-                  <text value="RndNext"/>
+                  <text value="AutoplayNext"/>
                 </properties>
               </component>
             </children>
