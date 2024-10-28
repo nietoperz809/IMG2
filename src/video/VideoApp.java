@@ -19,7 +19,6 @@ import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Random;
 
 import static common.Sam.speak;
 
@@ -37,12 +36,12 @@ public class VideoApp extends JDialog {
     private JButton playRnd;
     private JScrollPane listscroll;
     private JCheckBox checkBoxAC;
+    private JCheckBox checkBoxautoNew;
     public String snapDir = "C:\\Users\\Administrator\\Desktop\\snaps";
     private PlayerBox playerBox;
     private List<DBHandler.NameID> videoList;
     private List<DBHandler.NameID> gifList;
     private List<DBHandler.NameID> webpList;
-
 
     public VideoApp () {
         outputDirLabel.setText (snapDir);
@@ -61,9 +60,12 @@ public class VideoApp extends JDialog {
         setContentPane(contentPane);
         getRootPane().setDefaultButton(buttonPlay);
 
-        buttonPlay.addActionListener(e -> onOK());
+        buttonPlay.addActionListener(e -> CancelAndOk());
 
-        buttonCancel.addActionListener(e -> onCancel());
+        buttonCancel.addActionListener(e -> {
+            checkBoxautoNew.setSelected(false);
+            onCancel();
+        });
 
         // call onCancel() when cross is clicked
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);                                    
@@ -146,19 +148,27 @@ public class VideoApp extends JDialog {
 
         buttonMix.addActionListener(e -> mix());
 
-        playRnd.addActionListener(e -> {
-           int max = listControl.getModel().getSize()-1;
-           int rnd = new Random().nextInt(max);
-           listControl.setSelectedIndex(rnd);
-           onOK();
-//           Rectangle rect = listControl.getCellBounds(rnd, rnd);
-//           listscroll.scrollRectToVisible(rect);
-//           repaint();
-        });
+        playRnd.addActionListener(e -> playRandomVid());
+    }
+
+    private void playRandomVid() {
+        selectNextVid();
+        CancelAndOk();
+    }
+
+    private void selectNextVid() {
+        int idx = listControl.getSelectedIndex()+1;
+        if (idx >= listControl.getModel().getSize())
+            idx = 0;
+        listControl.setSelectedIndex(idx);
+    }
+
+    private void CancelAndOk() {
+        onCancel();
+        onOK();
     }
 
     private void onOK() {
-        onCancel();
         DBHandler.NameID nid = listControl.getSelectedValue();
         if (gifList.contains(nid)) {
             try {
@@ -182,6 +192,22 @@ public class VideoApp extends JDialog {
         }
         playerBox.start();
     }
+
+    /**
+     * if client closed
+     */
+    public void clientDisposed() {
+        if (checkBoxautoNew.isSelected()) {
+            try {
+                Thread.sleep(2000);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+            selectNextVid();
+            onOK();
+        }
+    }
+
 
     private void onCancel() {
         if (playerBox == null)
@@ -231,13 +257,13 @@ public class VideoApp extends JDialog {
     }
 
     private void mix() {
-        List<DBHandler.NameID> lm = new ArrayList<>();
-        lm.addAll(videoList);
-        lm.addAll(gifList);
-        lm.addAll(webpList);
-        Collections.shuffle(lm);
+        List<DBHandler.NameID> mixedList = new ArrayList<>();
+        mixedList.addAll(videoList);
+        mixedList.addAll(gifList);
+        mixedList.addAll(webpList);
+        Collections.shuffle(mixedList);
         DefaultListModel<DBHandler.NameID> model = new DefaultListModel<>();
-        model.addAll(lm);
+        model.addAll(mixedList);
         listControl.setModel(model);
     }
 

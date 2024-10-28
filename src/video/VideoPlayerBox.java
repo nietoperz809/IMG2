@@ -88,6 +88,11 @@ public class VideoPlayerBox implements PlayerBox {
                 public void windowClosing(WindowEvent e) {
                     stop();
                 }
+                @Override
+                public void windowClosed(WindowEvent e) {
+                    parent.clientDisposed();
+                }
+
             });
             /*
              * Keep focus on playerframe
@@ -157,7 +162,7 @@ public class VideoPlayerBox implements PlayerBox {
              * videao finished
              */
             mpc.mediaPlayer().events().addMediaPlayerEventListener(new MediaPlayerEventAdapter() {
-                private void run() {
+                private void restart() {
                     mpc.mediaPlayer().media().play(tempFile.getAbsolutePath());
                 }
 
@@ -167,7 +172,7 @@ public class VideoPlayerBox implements PlayerBox {
                     if (autoclose) {
                         SwingUtilities.invokeLater(() -> stop());
                     } else {
-                        SwingUtilities.invokeLater(this::run); /* Restart */
+                        SwingUtilities.invokeLater(this::restart); /* Restart */
                     }
                 }
             });

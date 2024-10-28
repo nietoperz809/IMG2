@@ -14,7 +14,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ddb69741-e020-4d21-a32f-f00e79c6818a" name="Changes" comment="VideoApp dragdrop extended for multiple files">
+    <list default="true" id="ddb69741-e020-4d21-a32f-f00e79c6818a" name="Changes" comment="some enhancements regarding vid player">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/IMG2_jar/IMG2.jar" beforeDir="false" afterPath="$PROJECT_DIR$/IMG2_jar/IMG2.jar" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/buildinfo/BuildInfo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/buildinfo/BuildInfo.java" afterDir="false" />
@@ -99,7 +99,7 @@
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
     &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Artifacts&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;SDKs&quot;,
     &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
     &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
     &quot;run.code.analysis.last.selected.profile&quot;: &quot;aDefault&quot;,
@@ -587,7 +587,7 @@
       <option name="project" value="LOCAL" />
       <updated>1683976691765</updated>
     </task>
-    <option name="localTasksCounter" value="160" />
+    <option name="localTasksCounter" value="162" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -619,8 +619,6 @@
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_NEW_TODO" value="false" />
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="save" />
-    <MESSAGE value="BACKUP" />
     <MESSAGE value="layout fixed" />
     <MESSAGE value="release 10-2024" />
     <MESSAGE value="added updown class" />
@@ -644,7 +642,9 @@
     <MESSAGE value="some minor changes" />
     <MESSAGE value="new release" />
     <MESSAGE value="VideoApp dragdrop extended for multiple files" />
-    <option name="LAST_COMMIT_MESSAGE" value="VideoApp dragdrop extended for multiple files" />
+    <MESSAGE value="some enhancements" />
+    <MESSAGE value="some enhancements regarding vid player" />
+    <option name="LAST_COMMIT_MESSAGE" value="some enhancements regarding vid player" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

@@ -50,7 +50,7 @@
           <component id="2743b" class="javax.swing.JButton" binding="playRnd">
             <constraints/>
             <properties>
-              <text value="PlayRnd"/>
+              <text value="PlayNext"/>
             </properties>
           </component>
           <component id="5723f" class="javax.swing.JButton" binding="buttonCancel">
@@ -96,13 +96,26 @@
               <text value="Label"/>
             </properties>
           </component>
-          <component id="23bcd" class="javax.swing.JCheckBox" binding="checkBoxAC">
+          <grid id="917c9" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="1">
             <constraints border-constraint="East"/>
-            <properties>
-              <selected value="true"/>
-              <text value="Autoclose"/>
-            </properties>
-          </component>
+            <properties/>
+            <border type="none"/>
+            <children>
+              <component id="23bcd" class="javax.swing.JCheckBox" binding="checkBoxAC">
+                <constraints/>
+                <properties>
+                  <selected value="true"/>
+                  <text value="Autoclose"/>
+                </properties>
+              </component>
+              <component id="b560d" class="javax.swing.JCheckBox" binding="checkBoxautoNew">
+                <constraints/>
+                <properties>
+                  <text value="RndNext"/>
+                </properties>
+              </component>
+            </children>
+          </grid>
         </children>
       </grid>
     </children>

@@ -20,6 +20,7 @@ public class AnimPlayerBox implements PlayerBox {
     private final AtomicBoolean waitFlag = new AtomicBoolean(false);
     private final AtomicReference<Image> currentFrame = new AtomicReference<>();
     private final boolean autoclose;
+    private final VideoApp parent;
     private boolean reverse = false;
     private final AtomicInteger sleepTime = new AtomicInteger(100);
     private boolean saveFlag;
@@ -30,6 +31,7 @@ public class AnimPlayerBox implements PlayerBox {
                           boolean close_when_finished) {
         autoclose = close_when_finished;
         this.file = file;
+        this.parent = parent;
         decoder.read(file.getAbsolutePath());
         int frameCount = decoder.getFrameCount();
         System.out.println(frameCount);
@@ -43,12 +45,17 @@ public class AnimPlayerBox implements PlayerBox {
         window.setSize(600, 600);
         window.setVisible(true);
         window.setTitle("(p)photo (r)reverse, (+/-)faster/slower (s)wait");
+
         window.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
-                System.out.println("shouldClose");
                 stop();
             }
+            @Override
+            public void windowClosed(WindowEvent e) {
+                parent.clientDisposed();
+            }
+
         });
 
         window.addKeyListener(new KeyAdapter() {
@@ -106,7 +113,12 @@ public class AnimPlayerBox implements PlayerBox {
 
     public void stop() {
         stopFlag.set(true);
-        window.dispose();
-        file.delete();
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                window.dispose();
+                file.delete();
+            }
+        });
     }
 }
