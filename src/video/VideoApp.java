@@ -40,7 +40,10 @@ public class VideoApp extends JDialog {
     private List<DBHandler.NameID> videoList;
     private List<DBHandler.NameID> gifList;
     private List<DBHandler.NameID> webpList;
+    ListModel<DBHandler.NameID> oldModel;
     private JScrollPane listscroll;
+    private JButton filterButton;
+    private JButton restoreButton;
 
     public VideoApp () {
         outputDirLabel.setText (snapDir);
@@ -76,9 +79,14 @@ public class VideoApp extends JDialog {
         setAndSortJListContent(false);
 
         enableDrop();
+//        setResizable(false);
+//        setSize(800, 600);
 
         deleteButton.addActionListener(e -> {
             DBHandler.NameID nameid = listControl.getSelectedValue();
+            if (!Tools.Question("Really delete "+nameid.name()+"?")) {
+                return;
+            }
             if (gifList.contains(nameid)) {
                 DBHandler.getInst().deleteGif(nameid.rowid());
             } else if (webpList.contains(nameid)) {
@@ -142,6 +150,29 @@ public class VideoApp extends JDialog {
         listControl.setCellRenderer(new MyCellRenderer());
 
         buttonMix.addActionListener(e -> mix());
+
+        filterButton.addActionListener(e -> {
+            String input = Tools.getInput("search for ...");
+            if (input == null || input.isEmpty())
+                return;
+            oldModel = listControl.getModel();
+            DefaultListModel<DBHandler.NameID> filteredModel = new DefaultListModel<>();
+            for (int s=0; s<oldModel.getSize(); s++) {
+                DBHandler.NameID nid = oldModel.getElementAt(s);
+                if (nid.name().contains(input)) {
+                    filteredModel.addElement(nid);
+                }
+            }
+            listControl.setModel(filteredModel);
+            repaint();
+        });
+
+        restoreButton.addActionListener(e -> {
+            if (oldModel != null) {
+                listControl.setModel(oldModel);
+                repaint();
+            }
+        });
     }
 
 
@@ -162,6 +193,10 @@ public class VideoApp extends JDialog {
         onCancel();
         onOK();
     }
+
+//    private void onOKLoom() {
+//        Tools.loomThread(() -> onOK());
+//    }
 
     /**
      * Start playing

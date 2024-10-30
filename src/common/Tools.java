@@ -21,6 +21,10 @@ public class Tools {
 
     private static final ExecutorService globalExecutor = Executors.newCachedThreadPool(); //Executors.newFixedThreadPool(20);
 
+    public static Thread loomThread(Runnable r) {
+        return Thread.ofVirtual ().start (r);
+    }
+
     public static FutureTask<?> runTask(Runnable r) {
         return (FutureTask<?>) globalExecutor.submit(r);
     }
@@ -122,6 +126,14 @@ public class Tools {
         if (response == null)
             return false;
         return response.equals("Yes");
+    }
+
+    public static String getInput(String msg) {
+        Object response = JOptionPane.showInputDialog(null,
+                msg,
+                "Please select", JOptionPane.QUESTION_MESSAGE,
+                null, null, "");
+        return (String) response;
     }
 
     /**
