@@ -3,6 +3,7 @@ package video;
 import dialogs.LineInput;
 import common.Tools;
 import database.DBHandler;
+import dialogs.MonitorFrame;
 
 import javax.swing.*;
 import java.awt.*;
@@ -46,6 +47,18 @@ public class VideoApp extends JDialog {
     private JButton restoreButton;
 
     public VideoApp () {
+        /* define menu bar */
+        JMenuBar mb = new JMenuBar();
+        JMenu menu = new JMenu("Options");
+        JMenuItem mi1 = new JMenuItem("MemMonitor");
+        JMenuItem mi2 = new JMenuItem("End Process");
+        mi1.addActionListener(e -> new MonitorFrame());
+        mi2.addActionListener(e -> System.exit(0));
+        menu.add(mi1);
+        menu.add(mi2);
+        mb.add(menu);
+        setJMenuBar(mb);
+        
         outputDirLabel.setText (snapDir);
         outputDirLabel.setToolTipText("Output Dir, klick to change ...");
         outputDirLabel.addMouseListener(new MouseAdapter() {
@@ -194,15 +207,19 @@ public class VideoApp extends JDialog {
         onOK();
     }
 
-//    private void onOKLoom() {
-//        Tools.loomThread(() -> onOK());
-//    }
-
-    /**
-     * Start playing
-     */
     private void onOK() {
+        SwingUtilities.invokeLater(() -> onOK2());
+    }
+
+        /**
+         * Start playing
+         */
+    private void onOK2() {
         DBHandler.NameID nid = listControl.getSelectedValue();
+        if (nid == null) {
+            listControl.setSelectedIndex(0);
+            nid = listControl.getSelectedValue();
+        }
         if (gifList.contains(nid)) {
             try {
                 File f = DBHandler.getInst().transferGifIntoFile(nid);

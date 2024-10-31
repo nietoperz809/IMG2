@@ -14,15 +14,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ddb69741-e020-4d21-a32f-f00e79c6818a" name="Changes" comment="best vid player until now">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+    <list default="true" id="ddb69741-e020-4d21-a32f-f00e79c6818a" name="Changes" comment="VideoApp improved">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/IMG2_jar/IMG2.jar" beforeDir="false" afterPath="$PROJECT_DIR$/IMG2_jar/IMG2.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/IMG2_jar/runD.bat" beforeDir="false" afterPath="$PROJECT_DIR$/IMG2_jar/runD.bat" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/buildinfo/BuildInfo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/buildinfo/BuildInfo.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/buildinfo/build.number" beforeDir="false" afterPath="$PROJECT_DIR$/src/buildinfo/build.number" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/common/Tools.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/common/Tools.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/video/VideoApp.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/video/VideoApp.form" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/video/VideoApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/video/VideoApp.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -589,7 +585,7 @@
       <option name="project" value="LOCAL" />
       <updated>1683976691765</updated>
     </task>
-    <option name="localTasksCounter" value="164" />
+    <option name="localTasksCounter" value="165" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -621,7 +617,6 @@
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_NEW_TODO" value="false" />
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="release 10-2024" />
     <MESSAGE value="added updown class" />
     <MESSAGE value="bugfix" />
     <MESSAGE value="new tag selector" />
@@ -646,7 +641,8 @@
     <MESSAGE value="some enhancements" />
     <MESSAGE value="some enhancements regarding vid player" />
     <MESSAGE value="best vid player until now" />
-    <option name="LAST_COMMIT_MESSAGE" value="best vid player until now" />
+    <MESSAGE value="VideoApp improved" />
+    <option name="LAST_COMMIT_MESSAGE" value="VideoApp improved" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
