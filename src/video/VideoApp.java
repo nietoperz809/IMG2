@@ -89,7 +89,7 @@ public class VideoApp extends JDialog {
             }
         });
 
-        setAndSortJListContent(false);
+        setAndSortJListContent(true);
 
         enableDrop();
 //        setResizable(false);
@@ -107,7 +107,7 @@ public class VideoApp extends JDialog {
             } else {
                 DBHandler.getInst().deleteVideo(nameid.rowid());
             }
-            setAndSortJListContent(false);
+            setAndSortJListContent(true);
             repaint();
         });
 
@@ -147,17 +147,7 @@ public class VideoApp extends JDialog {
             } else {
                 DBHandler.getInst().changeVideoName(res, nameid.rowid());
             }
-            setAndSortJListContent(false);
-        });
-
-        listControl.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                if (e.getButton() == MouseEvent.BUTTON3) {
-                    setAndSortJListContent(true);
-                    repaint();
-                }
-            }
+            setAndSortJListContent(true);
         });
 
         listControl.setCellRenderer(new MyCellRenderer());
@@ -306,6 +296,9 @@ public class VideoApp extends JDialog {
     private void setAndSortJListContent(boolean sort_by_id) {
         entireList.clear();
         videoList = DBHandler.getInst().getVideoFileNames(sort_by_id);
+        //------------------
+        //String test = DBHandler.getInst().getVideoBlobLen(videoList.get(0));
+        //------------------
         gifList = DBHandler.getInst().getGifFileNames(sort_by_id);
         webpList = DBHandler.getInst().getWebPFileNames(sort_by_id);
         entireList.addAll (videoList);
@@ -355,7 +348,7 @@ public class VideoApp extends JDialog {
                                     speak ("could not delete");
                                 }
                             }
-                            setAndSortJListContent(false);
+                            setAndSortJListContent(true);
                             repaint();
                         } catch (Exception e) {
                             throw new RuntimeException(e);

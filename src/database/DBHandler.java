@@ -539,6 +539,24 @@ public class DBHandler {
         }
     }
 
+    public String loadLen (DBHandler.NameID nid, String sql) {
+        String filename = nid.name.replace("'", "''");
+        ResultSet res = DBHandler.getInst()
+                .query(sql);
+        if (res == null)
+            throw new RuntimeException("no query results");
+        try {
+            if (res.next()) {
+                String len = res.getString(1);
+                res.close();
+                return len;
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        throw new RuntimeException("no query results");
+    }
+
     public SoftReference<byte[]> loadBytes (DBHandler.NameID nid, String sql) throws Exception {
         String filename = nid.name.replace("'", "''");
         ResultSet res = DBHandler.getInst()
@@ -558,6 +576,18 @@ public class DBHandler {
         return loadBytes (nid, "select VID from VIDEOS where _ROWID_='" + nid.rowid + "'");
     }
 
+    public String getVideoBlobLen(DBHandler.NameID nid) {
+        return loadLen (nid, "select LENGTH(VID) from VIDEOS where _ROWID_='" + nid.rowid + "'");
+    }
+
+    public String getGifBlobLen(DBHandler.NameID nid) {
+        return loadLen (nid, "select LENGTH(GIFDATA) from VIDEOS where _ROWID_='" + nid.rowid + "'");
+    }
+
+    public String getWEBPBlobLen(DBHandler.NameID nid){
+        return loadLen (nid, "select LENGTH(WEBPDATA) from VIDEOS where _ROWID_='" + nid.rowid + "'");
+    }
+
     public SoftReference<byte[]> loadGifBytes (DBHandler.NameID nid) throws Exception {
         return loadBytes(nid,"select GIFDATA from GIFS where _ROWID_='"+nid.rowid +"'");
     }
@@ -565,7 +595,6 @@ public class DBHandler {
     public SoftReference<byte[]> loadWEBPBytes (DBHandler.NameID nid) throws Exception {
         return loadBytes(nid,"select WEBPDATA from WEBP where _ROWID_='"+nid.rowid +"'");
     }
-
 
     /**
      * Load DB record into mapped file
@@ -703,19 +732,6 @@ public class DBHandler {
         return null;
     }
 
-//    public ThumbHash loadThumbnail(String filename) {
-//        String q = "select thumb from IMAGES where name = '" + filename + "'";
-//        try (ResultSet res = query(q)) {
-//            if (res.next()) {
-//                return new ThumbHash(res.getBytes(1));
-//            }
-//        } catch (Exception e) {
-//            throw new RuntimeException(e);
-//        }
-//        return null;
-//    }
-
-
     public record NameID(String name, int rowid, String tag) {
         @Override
             public String toString() {
@@ -734,14 +750,6 @@ public class DBHandler {
         public final BufferedImage img;
         public final byte[] hash;
         public final byte[] bt;
-
-//        public ThumbHash(byte[] bytes, int rowid) {
-//            if (bytes == null)
-//            {
-//
-//            }
-//            this (bytes);
-//        }
 
         public ThumbHash(byte[] bytes) {
             bt = bytes;
