@@ -41,7 +41,7 @@ public class VideoApp extends JDialog {
     private List<DBHandler.NameID> videoList;
     private List<DBHandler.NameID> gifList;
     private List<DBHandler.NameID> webpList;
-    ListModel<DBHandler.NameID> oldModel;
+    private final List<DBHandler.NameID> entireList = new ArrayList<>();
     private JScrollPane listscroll;
     private JButton filterButton;
     private JButton restoreButton;
@@ -168,24 +168,18 @@ public class VideoApp extends JDialog {
             String input = Tools.getInput("search for ...");
             if (input == null || input.isEmpty())
                 return;
-            oldModel = listControl.getModel();
-            DefaultListModel<DBHandler.NameID> filteredModel = new DefaultListModel<>();
-            for (int s=0; s<oldModel.getSize(); s++) {
-                DBHandler.NameID nid = oldModel.getElementAt(s);
-                if (nid.name().contains(input)) {
-                    filteredModel.addElement(nid);
+            input = input.toLowerCase();
+            ArrayList<DBHandler.NameID> filteredList = new ArrayList<>();
+            for (int s=0; s<entireList.size(); s++) {
+                DBHandler.NameID nid = entireList.get(s);
+                if (nid.name().toLowerCase().contains(input)) {
+                    filteredList.add(nid);
                 }
             }
-            listControl.setModel(filteredModel);
-            repaint();
+            listToListControl(filteredList);
         });
 
-        restoreButton.addActionListener(e -> {
-            if (oldModel != null) {
-                listControl.setModel(oldModel);
-                repaint();
-            }
-        });
+        restoreButton.addActionListener(e -> listToListControl(entireList));
     }
 
 
@@ -208,7 +202,7 @@ public class VideoApp extends JDialog {
     }
 
     private void onOK() {
-        SwingUtilities.invokeLater(() -> onOK2());
+        SwingUtilities.invokeLater(this::onOK2);
     }
 
         /**
@@ -298,19 +292,26 @@ public class VideoApp extends JDialog {
         }
     }
 
+    private void listToListControl(List<DBHandler.NameID> list) {
+        DefaultListModel lm = new DefaultListModel<>();
+        lm.addAll(list);
+        listControl.setModel(lm);
+        listControl.repaint();
+    }
+
     /**
      * Initial filling the JList
      * @param sort_by_id otherwise sort by name
      */
     private void setAndSortJListContent(boolean sort_by_id) {
+        entireList.clear();
         videoList = DBHandler.getInst().getVideoFileNames(sort_by_id);
         gifList = DBHandler.getInst().getGifFileNames(sort_by_id);
         webpList = DBHandler.getInst().getWebPFileNames(sort_by_id);
-        DefaultListModel<DBHandler.NameID> model = new DefaultListModel<>();
-        model.addAll (videoList);
-        model.addAll (gifList);
-        model.addAll (webpList);
-        listControl.setModel(model);
+        entireList.addAll (videoList);
+        entireList.addAll (gifList);
+        entireList.addAll (webpList);
+        listToListControl (entireList);
     }
 
     /**
@@ -322,9 +323,7 @@ public class VideoApp extends JDialog {
         mixedList.addAll(gifList);
         mixedList.addAll(webpList);
         Collections.shuffle(mixedList);
-        DefaultListModel<DBHandler.NameID> model = new DefaultListModel<>();
-        model.addAll(mixedList);
-        listControl.setModel(model);
+        listToListControl(mixedList);
     }
 
     /**

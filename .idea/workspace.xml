@@ -19,6 +19,8 @@
       <change beforePath="$PROJECT_DIR$/IMG2_jar/IMG2.jar" beforeDir="false" afterPath="$PROJECT_DIR$/IMG2_jar/IMG2.jar" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/buildinfo/BuildInfo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/buildinfo/BuildInfo.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/buildinfo/build.number" beforeDir="false" afterPath="$PROJECT_DIR$/src/buildinfo/build.number" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/common/MemoryMonitor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/common/MemoryMonitor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/video/AnimPlayerBox.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/video/AnimPlayerBox.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/video/VideoApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/video/VideoApp.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -585,7 +587,7 @@
       <option name="project" value="LOCAL" />
       <updated>1683976691765</updated>
     </task>
-    <option name="localTasksCounter" value="165" />
+    <option name="localTasksCounter" value="166" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

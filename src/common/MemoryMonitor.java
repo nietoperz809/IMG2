@@ -170,9 +170,18 @@ public class MemoryMonitor extends JPanel
         }
 
         @Override
+        protected void paintComponent(Graphics g) {
+            //super.paintComponent(g);
+        }
+
+        @Override
+        public void update(Graphics g) {
+            //
+        }
+
+        @Override
         public void paint(Graphics g)
         {
-
             if (big == null)
             {
                 return;

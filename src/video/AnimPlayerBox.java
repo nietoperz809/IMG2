@@ -18,14 +18,14 @@ public class AnimPlayerBox implements PlayerBox {
 
     private final AtomicBoolean stopFlag = new AtomicBoolean(false);
     private final AtomicBoolean waitFlag = new AtomicBoolean(false);
-    private final AtomicReference<Image> currentFrame = new AtomicReference<>();
+    //private final AtomicReference<Image> currentFrame = new AtomicReference<>();
     private final boolean autoclose;
     private final VideoApp parent;
     private boolean reverse = false;
     private final AtomicInteger sleepTime = new AtomicInteger(100);
     private boolean saveFlag;
-    private JFrame window;
-    private File file;
+    private final JFrame window;
+    private final File file;
 
     public AnimPlayerBox (File file, VideoApp parent, AnimDecoder decoder,
                           boolean close_when_finished) {
@@ -45,6 +45,7 @@ public class AnimPlayerBox implements PlayerBox {
         window.setSize(600, 600);
         window.setVisible(true);
         window.setTitle("(p)photo (r)reverse, (+/-)faster/slower (s)wait");
+        window.setLocationRelativeTo(null); // center on screen
 
         window.addWindowListener(new WindowAdapter() {
             @Override
@@ -84,18 +85,19 @@ public class AnimPlayerBox implements PlayerBox {
         });
 
         Tools.runTask(() -> {
+            ImageIcon iic = new ImageIcon();
+            label.setIcon(iic);
             while (!stopFlag.get()) {
                 for (int frameNum = 0; frameNum < frameCount && !stopFlag.get(); frameNum++) {
                     if (!waitFlag.get()) {
-                        currentFrame.set(decoder.getFrame(reverse ? frameCount - 1 - frameNum : frameNum));
-                        Image im2 = currentFrame.get().getScaledInstance(label.getWidth(), label.getHeight(),
-                                Image.SCALE_DEFAULT);
-                        currentFrame.set(im2);
+                        Image im2 = decoder.getFrame(reverse ? frameCount - 1 - frameNum : frameNum)
+                            .getScaledInstance(label.getWidth(), label.getHeight(),Image.SCALE_DEFAULT);
                         if (saveFlag) {
-                            //BufferedImage scaled = ImageScaler.scaleExact(currentFrame.get(), new Dimension(800, 800));
                             ImgTools.writeToFile(im2, "jpg", parent.snapDir,""+frameNum);
                         }
-                        label.setIcon(new ImageIcon(im2));
+                        iic.setImage(im2);
+                        label.repaint();
+                        //label.setIcon(new ImageIcon(im2));
                         Tools.delay(sleepTime.get());
                     }
                 }
