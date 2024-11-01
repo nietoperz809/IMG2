@@ -41,9 +41,9 @@ public class VideoApp extends JDialog {
     private JCheckBox checkBoxautoNew;
     public String snapDir = "C:\\Users\\Administrator\\Desktop\\snaps";
     private PlayerBox playerBox;
-    private List<DBHandler.NameID> videoList;
-    private List<DBHandler.NameID> gifList;
-    private List<DBHandler.NameID> webpList;
+    public List<DBHandler.NameID> videoList;
+    public List<DBHandler.NameID> gifList;
+    public List<DBHandler.NameID> webpList;
     private final List<DBHandler.NameID> entireList = new ArrayList<>();
     private JScrollPane listscroll;
     private JButton filterButton;
@@ -97,6 +97,8 @@ public class VideoApp extends JDialog {
         enableDrop();
 //        setResizable(false);
 //        setSize(800, 600);
+
+        listControl.ensureIndexIsVisible(listControl.getSelectedIndex());
 
         deleteButton.addActionListener(e -> {
             DBHandler.NameID nameid = listControl.getSelectedValue();
@@ -153,7 +155,7 @@ public class VideoApp extends JDialog {
             setAndSortJListContent(true);
         });
 
-        listControl.setCellRenderer(new MyCellRenderer());
+        listControl.setCellRenderer(new MyCellRenderer(this));
 
         buttonMix.addActionListener(e -> mix());
 
@@ -280,6 +282,12 @@ public class VideoApp extends JDialog {
      *
      */
     static class MyCellRenderer extends JLabel implements ListCellRenderer<Object> {
+
+        VideoApp m_va;
+        MyCellRenderer (VideoApp va) {
+            m_va = va;
+        }
+
         public Component getListCellRendererComponent(
                 JList<?> list,           // the list
                 Object value,            // value to display
@@ -288,9 +296,9 @@ public class VideoApp extends JDialog {
                 boolean cellHasFocus)    // does the cell have focus
         {
             String s = value.toString();
-            if (s.contains(".gif :")) {
+            if (m_va.gifList.contains(value)) {
                 setForeground(Color.RED);
-            } else if (s.contains(".webp :")) {
+            } else if (m_va.webpList.contains(value)) {
                 setForeground(Color.BLUE);
             } else {
                 setForeground(Color.BLACK);
