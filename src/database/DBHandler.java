@@ -571,7 +571,6 @@ public class DBHandler {
         throw new RuntimeException("no query results");
     }
 
-
     public SoftReference<byte[]> loadVideoBytes (DBHandler.NameID nid) throws Exception {
         return loadBytes (nid, "select VID from VIDEOS where _ROWID_='" + nid.rowid + "'");
     }
@@ -581,11 +580,11 @@ public class DBHandler {
     }
 
     public String getGifBlobLen(DBHandler.NameID nid) {
-        return loadLen (nid, "select LENGTH(GIFDATA) from VIDEOS where _ROWID_='" + nid.rowid + "'");
+        return loadLen (nid, "select LENGTH(GIFDATA) from GIFS where _ROWID_='" + nid.rowid + "'");
     }
 
     public String getWEBPBlobLen(DBHandler.NameID nid){
-        return loadLen (nid, "select LENGTH(WEBPDATA) from VIDEOS where _ROWID_='" + nid.rowid + "'");
+        return loadLen (nid, "select LENGTH(WEBPDATA) from WEBP where _ROWID_='" + nid.rowid + "'");
     }
 
     public SoftReference<byte[]> loadGifBytes (DBHandler.NameID nid) throws Exception {

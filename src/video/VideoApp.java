@@ -17,9 +17,12 @@ import java.awt.event.*;
 import java.io.File;
 import java.lang.ref.SoftReference;
 import java.nio.file.Files;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 
 import static common.Sam.speak;
 
@@ -170,6 +173,30 @@ public class VideoApp extends JDialog {
         });
 
         restoreButton.addActionListener(e -> listToListControl(entireList));
+
+        /**
+         * Right mouseclick on listcontrol
+         */
+        listControl.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if ( SwingUtilities.isRightMouseButton(e) ) {
+                    int row = listControl.locationToIndex(e.getPoint());
+                    listControl.setSelectedIndex(row);
+                    DBHandler.NameID nid = listControl.getSelectedValue();
+                    String len = null;
+                    if (videoList.contains(nid))
+                        len = DBHandler.getInst().getVideoBlobLen(nid);
+                    else if (gifList.contains(nid))
+                        len = DBHandler.getInst().getGifBlobLen(nid);
+                    else if (webpList.contains(nid))
+                        len = DBHandler.getInst().getWEBPBlobLen(nid);
+                    String flen = NumberFormat.getNumberInstance(Locale.GERMAN)
+                            .format(Double.parseDouble(len));
+                    Tools.Info("Bloblen: "+flen+ " Bytes");
+                }
+            }
+        });
     }
 
 
