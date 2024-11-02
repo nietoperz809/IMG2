@@ -17,7 +17,6 @@ import java.awt.event.*;
 import java.io.File;
 import java.lang.ref.SoftReference;
 import java.nio.file.Files;
-import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -45,7 +44,7 @@ public class VideoApp extends JDialog {
     public List<DBHandler.NameID> gifList;
     public List<DBHandler.NameID> webpList;
     private final List<DBHandler.NameID> entireList = new ArrayList<>();
-    private JScrollPane listscroll;
+    //private JScrollPane listscroll;
     private JButton filterButton;
     private JButton restoreButton;
 
@@ -92,7 +91,7 @@ public class VideoApp extends JDialog {
             }
         });
 
-        setAndSortJListContent(true);
+        setAndSortJListContent();
 
         enableDrop();
 //        setResizable(false);
@@ -112,7 +111,7 @@ public class VideoApp extends JDialog {
             } else {
                 DBHandler.getInst().deleteVideo(nameid.rowid());
             }
-            setAndSortJListContent(true);
+            setAndSortJListContent();
             repaint();
         });
 
@@ -152,7 +151,7 @@ public class VideoApp extends JDialog {
             } else {
                 DBHandler.getInst().changeVideoName(res, nameid.rowid());
             }
-            setAndSortJListContent(true);
+            setAndSortJListContent();
         });
 
         listControl.setCellRenderer(new MyCellRenderer(this));
@@ -165,8 +164,7 @@ public class VideoApp extends JDialog {
                 return;
             input = input.toLowerCase();
             ArrayList<DBHandler.NameID> filteredList = new ArrayList<>();
-            for (int s=0; s<entireList.size(); s++) {
-                DBHandler.NameID nid = entireList.get(s);
+            for (DBHandler.NameID nid : entireList) {
                 if (nid.name().toLowerCase().contains(input)) {
                     filteredList.add(nid);
                 }
@@ -176,7 +174,7 @@ public class VideoApp extends JDialog {
 
         restoreButton.addActionListener(e -> listToListControl(entireList));
 
-        /**
+        /*
          * Right mouseclick on listcontrol
          */
         listControl.addMouseListener(new MouseAdapter() {
@@ -233,26 +231,21 @@ public class VideoApp extends JDialog {
             listControl.setSelectedIndex(0);
             nid = listControl.getSelectedValue();
         }
-        if (gifList.contains(nid)) {
-            try {
-                File f = DBHandler.getInst().transferGifIntoFile(nid);
-                playerBox = new AnimPlayerBox(f, this,
-                        new GifDecoder(), checkBoxAC.isSelected());
-            } catch (Exception e) {
-                throw new RuntimeException(e);
-            }
-        } else if (webpList.contains(nid)) {
-            try {
-                File f = DBHandler.getInst().transferwEBPIntoFile(nid);
-                playerBox = new AnimPlayerBox(f, this,
-                        new WebPDecoder(), checkBoxAC.isSelected());
-            } catch (Exception e) {
-                throw new RuntimeException(e);
-            }
+        if (gifList.contains(nid)) try {
+            File f = DBHandler.getInst().transferGifIntoFile(nid);
+            playerBox = new AnimPlayerBox(f, this,
+                    new GifDecoder(), checkBoxAC.isSelected());
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
-        else {
-            playerBox = new VideoPlayerBox(this, nid, checkBoxAC.isSelected());
+        else if (webpList.contains(nid)) try {
+            File f = DBHandler.getInst().transferwEBPIntoFile(nid);
+            playerBox = new AnimPlayerBox(f, this,
+                    new WebPDecoder(), checkBoxAC.isSelected());
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
+        else playerBox = new VideoPlayerBox(this, nid, checkBoxAC.isSelected());
         playerBox.start();
     }
 
@@ -326,16 +319,15 @@ public class VideoApp extends JDialog {
 
     /**
      * Initial filling the JList
-     * @param sort_by_id otherwise sort by name
      */
-    private void setAndSortJListContent(boolean sort_by_id) {
+    private void setAndSortJListContent() {
         entireList.clear();
-        videoList = DBHandler.getInst().getVideoFileNames(sort_by_id);
+        videoList = DBHandler.getInst().getVideoFileNames();
         //------------------
         //String test = DBHandler.getInst().getVideoBlobLen(videoList.get(0));
         //------------------
-        gifList = DBHandler.getInst().getGifFileNames(sort_by_id);
-        webpList = DBHandler.getInst().getWebPFileNames(sort_by_id);
+        gifList = DBHandler.getInst().getGifFileNames();
+        webpList = DBHandler.getInst().getWebPFileNames();
         entireList.addAll (videoList);
         entireList.addAll (gifList);
         entireList.addAll (webpList);
@@ -383,7 +375,7 @@ public class VideoApp extends JDialog {
                                     speak ("could not delete");
                                 }
                             }
-                            setAndSortJListContent(true);
+                            setAndSortJListContent();
                             repaint();
                         } catch (Exception e) {
                             throw new RuntimeException(e);

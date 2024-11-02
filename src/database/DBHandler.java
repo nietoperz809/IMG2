@@ -78,7 +78,13 @@ public class DBHandler {
             connection = DriverManager.getConnection(url, user, pwd);
             statement = connection.createStatement();
             String sql;
-            // create log table
+            sql = "alter table VIDEOS add if not exists BLOBSiZE INT";
+            statement.execute(sql);
+            sql = "alter table GIFS add if not exists BLOBSiZE INT";
+            statement.execute(sql);
+            sql = "alter table WEBP add if not exists BLOBSiZE INT";
+            statement.execute(sql);
+
             sql = "create table if not exists LOG " +
                     "(ltime timestamp GENERATED ALWAYS AS CURRENT_TIMESTAMP, entry varchar(256))";
             statement.execute(sql);
@@ -200,23 +206,22 @@ public class DBHandler {
         return res;
     }
 
-    public List<NameID> getFileNames (String dbname, boolean sort_by_id) {
-        String sort = sort_by_id ? "_ROWID_" : "name";
-        String sql = "select name,_ROWID_,tag from "+dbname+" order by "+sort+" asc";
+    public List<NameID> getFileNames (String dbname) {
+        String sql = "select name,_ROWID_,tag from "+dbname+" order by _ROWID_ asc";
         return getNames(sql);
     }
 
-    public List<NameID> getVideoFileNames(boolean sort_by_id) {
+    public List<NameID> getVideoFileNames() {
 
-        return getFileNames("VIDEOS", sort_by_id);
+        return getFileNames("VIDEOS");
     }
 
-    public List<NameID> getGifFileNames(boolean sort_by_id) {
-        return getFileNames("GIFS", sort_by_id);
+    public List<NameID> getGifFileNames() {
+        return getFileNames("GIFS");
     }
 
-    public List<NameID> getWebPFileNames(boolean sort_by_id) {
-        return getFileNames("WEBP", sort_by_id);
+    public List<NameID> getWebPFileNames() {
+        return getFileNames("WEBP");
     }
 
     private synchronized List<NameID> getNames(String sql) {
@@ -314,9 +319,6 @@ public class DBHandler {
                     String s = res.getString(1);
                     if (s != null) {
                         TreeSet<String> l2 = Tools.SetFromCSVString(s);
-//                        if (l2.contains("a")) {
-//                            System.out.println(l2);
-//                        }
                         ll.addAll(l2);
                     }
                 }
@@ -539,10 +541,8 @@ public class DBHandler {
         }
     }
 
-    public String loadLen (DBHandler.NameID nid, String sql) {
-        String filename = nid.name.replace("'", "''");
-        ResultSet res = DBHandler.getInst()
-                .query(sql);
+    public String querySingleValue(String sql) {
+        ResultSet res = query(sql);
         if (res == null)
             throw new RuntimeException("no query results");
         try {
@@ -571,20 +571,17 @@ public class DBHandler {
         throw new RuntimeException("no query results");
     }
 
+    public String queryBlobLen(DBHandler.NameID nid, String table, String blobentry) {
+        String s = querySingleValue("select BLOBSIZE from "+table+" where _ROWID_='" + nid.rowid + "'");
+        if (s == null) {
+            s = querySingleValue("select LENGTH("+blobentry+") from "+table+" where _ROWID_='" + nid.rowid + "'");
+            execSQL("update "+table+" set BLOBSIZE="+s+" where _ROWID_='" + nid.rowid + "'");
+        }
+        return s;
+    }
+
     public SoftReference<byte[]> loadVideoBytes (DBHandler.NameID nid) throws Exception {
         return loadBytes (nid, "select VID from VIDEOS where _ROWID_='" + nid.rowid + "'");
-    }
-
-    public String getVideoBlobLen(DBHandler.NameID nid) {
-        return loadLen (nid, "select LENGTH(VID) from VIDEOS where _ROWID_='" + nid.rowid + "'");
-    }
-
-    public String getGifBlobLen(DBHandler.NameID nid) {
-        return loadLen (nid, "select LENGTH(GIFDATA) from GIFS where _ROWID_='" + nid.rowid + "'");
-    }
-
-    public String getWEBPBlobLen(DBHandler.NameID nid){
-        return loadLen (nid, "select LENGTH(WEBPDATA) from WEBP where _ROWID_='" + nid.rowid + "'");
     }
 
     public SoftReference<byte[]> loadGifBytes (DBHandler.NameID nid) throws Exception {
@@ -593,6 +590,18 @@ public class DBHandler {
 
     public SoftReference<byte[]> loadWEBPBytes (DBHandler.NameID nid) throws Exception {
         return loadBytes(nid,"select WEBPDATA from WEBP where _ROWID_='"+nid.rowid +"'");
+    }
+
+    public String getVideoBlobLen(DBHandler.NameID nid) {
+        return queryBlobLen(nid, "VIDEOS", "VID");
+    }
+
+    public String getGifBlobLen(DBHandler.NameID nid) {
+        return queryBlobLen(nid, "GIFS", "GIFDATA");
+    }
+
+    public String getWEBPBlobLen(DBHandler.NameID nid){
+        return queryBlobLen(nid, "WEBP", "WEBPDATA");
     }
 
     /**
@@ -609,7 +618,7 @@ public class DBHandler {
             case "WEBP":
                 bt = loadWEBPBytes(nid);
                 break;
-            default:
+            default:  // regular vid
                 bt = loadVideoBytes(nid);
                 break;
         }
