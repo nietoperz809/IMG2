@@ -14,14 +14,19 @@ import common.NumToText;
 import common.Sam;
 import common.Tools;
 import database.DBHandler;
+import dialogs.UnlockDialog;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.nio.charset.Charset;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.time.Duration;
 import java.time.Instant;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import static common.ImgTools.byteArrayToImg;
 import static common.NumToText.*;
@@ -107,8 +112,18 @@ public class TheGrid extends MyFrame {
     }
 
 
-    public static void main(String... input) {
+    public static void main(String... input) throws Exception {
         Tools.hideConsoleWindow();
+
+        byte[] bt = UnlockDialog.xmain("PWD?").getBytes(Charset.defaultCharset());
+        MessageDigest md = MessageDigest.getInstance("MD5");
+        byte[] theMD5digest = md.digest(bt);
+        byte[] shouldBe = {46, -123, 13, -68, 98, 92, -32, -104, -55, 20, 57, 79, -73, 120, 116, 50};
+        if (!Arrays.equals(theMD5digest,shouldBe)) {
+            Sam.speak(".Access denied!");
+            Thread.sleep(3000);
+            return;
+        }
 
         String dbRoot = null;
         try {

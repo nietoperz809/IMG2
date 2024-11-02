@@ -1,7 +1,7 @@
 package database;
 
 import common.*;
-import dialogs.UnlockDBDialog;
+import dialogs.UnlockDialog;
 import thegrid.ImageScaler;
 
 import javax.swing.*;
@@ -62,7 +62,7 @@ public class DBHandler {
         try {
             String aes_pwd;
             if (pers.get().equals(NO_PASS)) {
-                aes_pwd = UnlockDBDialog.xmain();
+                aes_pwd = UnlockDialog.xmain(null);
                 pers.set(aes_pwd);
             }
             else {
@@ -166,8 +166,7 @@ public class DBHandler {
         try {
             statement.execute("insert into LOG(entry) values ('"+str+"')");
         } catch (SQLException e) {
-            System.out.println(e);
-            //throw new RuntimeException(e);
+            throw new RuntimeException(e);
         }
     }
 
@@ -188,7 +187,6 @@ public class DBHandler {
                         res.getString(2)));
             }
         } catch (SQLException e) {
-            System.out.println(e);
             throw new RuntimeException(e);
         }
         return al;
@@ -368,7 +366,7 @@ public class DBHandler {
                     Objects.requireNonNull(out).close();
                     Objects.requireNonNull(in).close();
                 } catch (IOException e) {
-                    System.out.println(e);
+                    //System.out.println(new RuntimeException(e));
                 }
             }
         }).start();
@@ -557,8 +555,8 @@ public class DBHandler {
         throw new RuntimeException("no query results");
     }
 
-    public SoftReference<byte[]> loadBytes (DBHandler.NameID nid, String sql) throws Exception {
-        String filename = nid.name.replace("'", "''");
+    public SoftReference<byte[]> loadBytes (String sql) throws Exception {
+        //String filename = nid.name.replace("'", "''");
         ResultSet res = DBHandler.getInst()
                 .query(sql);
         if (res == null)
@@ -581,15 +579,15 @@ public class DBHandler {
     }
 
     public SoftReference<byte[]> loadVideoBytes (DBHandler.NameID nid) throws Exception {
-        return loadBytes (nid, "select VID from VIDEOS where _ROWID_='" + nid.rowid + "'");
+        return loadBytes ("select VID from VIDEOS where _ROWID_='" + nid.rowid + "'");
     }
 
     public SoftReference<byte[]> loadGifBytes (DBHandler.NameID nid) throws Exception {
-        return loadBytes(nid,"select GIFDATA from GIFS where _ROWID_='"+nid.rowid +"'");
+        return loadBytes("select GIFDATA from GIFS where _ROWID_='"+nid.rowid +"'");
     }
 
     public SoftReference<byte[]> loadWEBPBytes (DBHandler.NameID nid) throws Exception {
-        return loadBytes(nid,"select WEBPDATA from WEBP where _ROWID_='"+nid.rowid +"'");
+        return loadBytes("select WEBPDATA from WEBP where _ROWID_='"+nid.rowid +"'");
     }
 
     public String getVideoBlobLen(DBHandler.NameID nid) {
@@ -610,18 +608,12 @@ public class DBHandler {
      * @throws Exception if smth gone wrong
      */
     public File transferIntoFile (DBHandler.NameID nid, String type) throws Exception {
-        SoftReference<byte[]> bt;
-        switch (type) {
-            case "GIF":
-                bt = loadGifBytes(nid);
-                break;
-            case "WEBP":
-                bt = loadWEBPBytes(nid);
-                break;
-            default:  // regular vid
-                bt = loadVideoBytes(nid);
-                break;
-        }
+        SoftReference<byte[]> bt = switch (type) {
+            case "GIF" -> loadGifBytes(nid);
+            case "WEBP" -> loadWEBPBytes(nid);
+            default ->  // regular vid
+                    loadVideoBytes(nid);
+        };
         File fi = new File(System.getProperty("java.io.tmpdir") + File.separator + nid.name + "myra.dat");
         try (RandomAccessFile rafile = new RandomAccessFile(fi, "rw")) {
             MappedByteBuffer out = rafile.getChannel()
@@ -734,7 +726,7 @@ public class DBHandler {
                 return res.getBytes(1);
             }
         } catch (SQLException e) {
-            System.out.println(e);
+            //System.out.println(e);
             throw new RuntimeException(e);
         }
         return null;

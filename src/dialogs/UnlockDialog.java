@@ -3,14 +3,14 @@ package dialogs;
 import javax.swing.*;
 import java.awt.event.*;
 
-public class UnlockDBDialog extends JDialog {
+public class UnlockDialog extends JDialog {
     private JPanel contentPane;
     private JPasswordField passwordField1;
 
-    public UnlockDBDialog() {
+    public UnlockDialog(String title) {
         setContentPane(contentPane);
         setModal(true);
-        setTitle("Unlock DB");
+        setTitle(title == null ? "Unlock ..." : title);
 
         // call onCancel() when cross is clicked
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
@@ -33,8 +33,8 @@ public class UnlockDBDialog extends JDialog {
         dispose();
     }
 
-    public static String xmain() {
-        UnlockDBDialog dialog = new UnlockDBDialog();
+    public static String xmain(String title) {
+        UnlockDialog dialog = new UnlockDialog(title);
         dialog.pack();
         dialog.setLocationRelativeTo(null);
         dialog.setVisible(true);

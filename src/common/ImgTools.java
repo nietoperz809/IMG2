@@ -139,8 +139,8 @@ public class ImgTools {
 
     public static BufferedImage loadImageFromFile (String name) throws IOException {
         if (Tools.isGIF (name)) {
-            Tools.Error ("Please put gifs in video app");
-            return null;
+            Tools.Info ("Please put animated gifs in video app");
+            return ImageIO.read(new File (name));
         } else if (hasExtension(name, ".webp")) {
             // Obtain a WebP ImageReader instance
             ImageReader reader = ImageIO.getImageReadersByMIMEType("image/webp").next();

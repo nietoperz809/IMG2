@@ -14,14 +14,16 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ddb69741-e020-4d21-a32f-f00e79c6818a" name="Changes" comment="bugfix in list renderer">
+    <list default="true" id="ddb69741-e020-4d21-a32f-f00e79c6818a" name="Changes" comment="optimized blob length query">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/IMG2_jar/IMG2.jar" beforeDir="false" afterPath="$PROJECT_DIR$/IMG2_jar/IMG2.jar" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/buildinfo/BuildInfo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/buildinfo/BuildInfo.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/buildinfo/build.number" beforeDir="false" afterPath="$PROJECT_DIR$/src/buildinfo/build.number" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/common/ImgTools.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/common/ImgTools.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/database/DBHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/database/DBHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/video/VideoApp.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/video/VideoApp.form" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/video/VideoApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/video/VideoApp.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dialogs/UnlockDBDialog.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/dialogs/UnlockDialog.form" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dialogs/UnlockDBDialog.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/dialogs/UnlockDialog.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/thegrid/TheGrid.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/thegrid/TheGrid.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -587,7 +589,7 @@
       <option name="project" value="LOCAL" />
       <updated>1683976691765</updated>
     </task>
-    <option name="localTasksCounter" value="170" />
+    <option name="localTasksCounter" value="171" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -619,7 +621,6 @@
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_NEW_TODO" value="false" />
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="new release, little improvements" />
     <MESSAGE value="made csv input more stable" />
     <MESSAGE value="some improvements regarding LineInput" />
     <MESSAGE value="some improvements" />
@@ -644,7 +645,8 @@
     <MESSAGE value="backup" />
     <MESSAGE value="right click on video list shows blob size" />
     <MESSAGE value="bugfix in list renderer" />
-    <option name="LAST_COMMIT_MESSAGE" value="bugfix in list renderer" />
+    <MESSAGE value="optimized blob length query" />
+    <option name="LAST_COMMIT_MESSAGE" value="optimized blob length query" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
