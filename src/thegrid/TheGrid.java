@@ -111,10 +111,7 @@ public class TheGrid extends MyFrame {
         this.pack();
     }
 
-
-    public static void main(String... input) throws Exception {
-        Tools.hideConsoleWindow();
-
+    private static void AskforPWD() throws Exception {
         byte[] bt = UnlockDialog.xmain("PWD?").getBytes(Charset.defaultCharset());
         MessageDigest md = MessageDigest.getInstance("MD5");
         byte[] theMD5digest = md.digest(bt);
@@ -122,7 +119,22 @@ public class TheGrid extends MyFrame {
         if (!Arrays.equals(theMD5digest,shouldBe)) {
             Sam.speak(".Access denied!");
             Thread.sleep(3000);
-            return;
+            System.exit(0);
+        }
+    }
+
+    public static void main(String... input) {
+        Thread hook = new Thread(() ->
+                DBHandler.getInst().log("SHUTDOWN"));
+        Runtime.getRuntime().addShutdownHook(hook);
+
+        Tools.hideConsoleWindow();
+
+        try {
+            if (Tools.runningFromJAR())
+                AskforPWD();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
 
         String dbRoot = null;
@@ -134,14 +146,9 @@ public class TheGrid extends MyFrame {
                     System.out.println(dbRoot);
                 }
             }
-//            Thread hook = new Thread(() ->
-//                    DBHandler.getInst().log("SHUTDOWN"));
-//            Runtime.getRuntime().addShutdownHook(hook);
-
 
             DBHandler.getInst().log("+++ TheGrid started");
             new TheGrid (mainSQL.get(), dbRoot);
-//            Thread.sleep(100000);
             System.out.println("end main");
         } catch (Exception e) {
             System.out.println("FAIL: " + e);

@@ -11,11 +11,14 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.io.*;
+import java.net.URL;
 import java.util.Objects;
 import java.util.TreeSet;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.FutureTask;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipFile;
 
 public class Tools {
 
@@ -27,6 +30,12 @@ public class Tools {
 
     public static FutureTask<?> runTask(Runnable r) {
         return (FutureTask<?>) globalExecutor.submit(r);
+    }
+
+    public static boolean runningFromJAR()
+    {
+        URL path = Tools.class.getResource("Tools.class");
+        return path.toString().startsWith("jar:");
     }
 
     /**
