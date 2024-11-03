@@ -137,11 +137,11 @@ public class TheGrid extends MyFrame {
             throw new RuntimeException(e);
         }
 
-        String dbRoot = null;
         try {
+            String dbRoot = "dbdir:";
             if (input.length != 0) {
-                if (input[0].startsWith("dbdir:")) {
-                    dbRoot = input[0].substring(6);
+                if (input[0].startsWith(dbRoot)) {
+                    dbRoot = input[0].substring(dbRoot.length());
                     DBHandler.setDBRoot(dbRoot);
                     System.out.println(dbRoot);
                 }
