@@ -1,5 +1,7 @@
 package video;
 
+import common.NumToText;
+import common.Sam;
 import dialogs.LineInput;
 import common.Tools;
 import database.DBHandler;
@@ -98,6 +100,7 @@ public class VideoApp extends JDialog {
 //        setSize(800, 600);
 
         listControl.ensureIndexIsVisible(listControl.getSelectedIndex());
+        listControl.setToolTipText("right click to get BLOB size, be patient");
 
         deleteButton.addActionListener(e -> {
             DBHandler.NameID nameid = listControl.getSelectedValue();
@@ -191,6 +194,7 @@ public class VideoApp extends JDialog {
                         len = DBHandler.getInst().getGifBlobLen(nid);
                     else if (webpList.contains(nid))
                         len = DBHandler.getInst().getWEBPBlobLen(nid);
+                    Sam.speak(NumToText.convert(len) + " Bites");
                     String flen = NumberFormat.getNumberInstance(Locale.GERMAN)
                             .format(Double.parseDouble(len));
                     Tools.Info("Bloblen: "+flen+ " Bytes");
