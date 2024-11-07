@@ -178,6 +178,17 @@ public class DBHandler {
         }
     }
 
+    public String getVersion() {
+        String sql = "select H2VERSION()";
+        try (ResultSet res = query(sql)) {
+            if (res.next())
+                return res.getString(1);
+            return null;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     public ArrayList<LogMessage> getLog() {
         String sql = "select * from LOG order by ltime";
         ArrayList<LogMessage> al = new ArrayList<>();
@@ -504,9 +515,10 @@ public class DBHandler {
         PreparedStatement prep;
         try {
             prep = connection.prepareStatement(
-                    "insert into VIDEOS (vid,name) values (?,?)");
+                    "insert into VIDEOS (vid,name,blobsize) values (?,?,?)");
             prep.setBytes(1, vid);
             prep.setString(2, name);
+            prep.setString(3,String.valueOf(vid.length));
             prep.execute();
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -517,9 +529,10 @@ public class DBHandler {
         PreparedStatement prep;
         try {
             prep = connection.prepareStatement(
-                    "insert into GiFS (gifdata,name) values (?,?)");
+                    "insert into GiFS (gifdata,name,blobsize) values (?,?,?)");
             prep.setBytes(1, gif);
             prep.setString(2, name);
+            prep.setString(3,String.valueOf(gif.length));
             prep.execute();
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -530,9 +543,10 @@ public class DBHandler {
         PreparedStatement prep;
         try {
             prep = connection.prepareStatement(
-                    "insert into WEBP (webpdata,name) values (?,?)");
+                    "insert into WEBP (webpdata,name,blobsize) values (?,?,?)");
             prep.setBytes(1, webp);
             prep.setString(2, name);
+            prep.setString(3,String.valueOf(webp.length));
             prep.execute();
         } catch (SQLException e) {
             throw new RuntimeException(e);

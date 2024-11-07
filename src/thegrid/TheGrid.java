@@ -175,7 +175,8 @@ public class TheGrid extends MyFrame {
         rootPane.doLayout();
         scrollPane.getViewport().setView(rootPane);
         if (this.thisInstCount == 1)
-            setTitle (getTitle()+ " " + BuildInfo.buildInfo + " -- " + info);
+            setTitle (getTitle()+ " " + BuildInfo.buildInfo +
+                    " -- "+info+" -- H2:"+DBHandler.getInst().getVersion());
         else
             setTitle (imageL.getSql());
         setVisible(true);

@@ -3,6 +3,7 @@ package common;
 import com.sun.jna.platform.win32.Kernel32;
 import com.sun.jna.platform.win32.User32;
 import com.sun.jna.platform.win32.WinDef;
+import dialogs.UnlockDialog;
 
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
@@ -12,6 +13,9 @@ import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.io.*;
 import java.net.URL;
+import java.nio.charset.Charset;
+import java.security.MessageDigest;
+import java.util.Arrays;
 import java.util.Objects;
 import java.util.TreeSet;
 import java.util.concurrent.ExecutorService;
@@ -236,5 +240,16 @@ public class Tools {
         }
     }
 
+    public static void AskforPWD() throws Exception {
+        byte[] bt = UnlockDialog.xmain("PWD?").getBytes(Charset.defaultCharset());
+        MessageDigest md = MessageDigest.getInstance("MD5");
+        byte[] theMD5digest = md.digest(bt);
+        byte[] shouldBe = {46, -123, 13, -68, 98, 92, -32, -104, -55, 20, 57, 79, -73, 120, 116, 50};
+        if (!Arrays.equals(theMD5digest,shouldBe)) {
+            Sam.speak(".Access denied!");
+            Thread.sleep(3000);
+            System.exit(0);
+        }
+    }
 
 }

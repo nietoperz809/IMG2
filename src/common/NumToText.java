@@ -61,6 +61,9 @@ public class NumToText {
         return numNames[number] + " hundred" + soFar;
     }
 
+    public static String convert (String num) {
+        return convert (Long.parseLong(num));
+    }
 
     public static String convert(long number) {
         // 0 to 999 999 999 999
