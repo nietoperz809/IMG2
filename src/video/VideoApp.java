@@ -223,13 +223,15 @@ public class VideoApp extends JDialog {
     }
 
     private void onOK() {
-        SwingUtilities.invokeLater(this::onOK2);
+        SwingUtilities.invokeLater(() -> transferAndRun());
+        //transferAndRun();
+        //Tools.runTask(() -> transferAndRun());
     }
 
         /**
          * Start playing
          */
-    private void onOK2() {
+    private void transferAndRun() {
         DBHandler.NameID nid = listControl.getSelectedValue();
         if (nid == null) {
             listControl.setSelectedIndex(0);
@@ -272,7 +274,9 @@ public class VideoApp extends JDialog {
     private void onCancel() {
         if (playerBox == null)
             return;
+        DBHandler.getInst().cancelFileTransfer();
         playerBox.stop();
+        DBHandler.getInst().cancelFileTransfer();
     }
 
     /**

@@ -19,6 +19,8 @@ import java.time.Duration;
 import java.time.Instant;
 import java.util.*;
 import java.util.List;
+import java.util.concurrent.Future;
+import java.util.concurrent.atomic.AtomicReference;
 
 import static common.ImgTools.byteArrayToImg;
 import static common.Tools.extractResource;
@@ -105,9 +107,9 @@ public class DBHandler {
             statement.execute(sql);
             sql = "alter table VIDEOS add if not exists TAG varchar(128)";
             statement.execute(sql);
-            Sam.speak("deta base is on line.");
+            Sam.speak("deta base is ready!");
         } catch (SQLException e) {
-            Sam.speak("Failed to connect to data base");
+            Sam.speak("Failed to connect to data base!");
             pers.reset();
             Tools.Error(e.toString());
             System.exit(-1);
@@ -616,12 +618,30 @@ public class DBHandler {
         return queryBlobLen(nid, "WEBP", "WEBPDATA");
     }
 
+    private Future fut;
+
+    public void cancelFileTransfer() {
+        fut.cancel(true);
+    }
+
+    public File transferIntoFile (DBHandler.NameID nid, String type) throws Exception {
+        AtomicReference<File> f = new AtomicReference<>();
+        fut = Tools.runTask(() -> {
+            try {
+                f.set(transferIntoFile2(nid, type));
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        });
+        Object o = fut.get(); // wait
+        return f.get();
+    }
     /**
      * Load DB record into mapped file
      * @return file name of file on disk
      * @throws Exception if smth gone wrong
      */
-    public File transferIntoFile (DBHandler.NameID nid, String type) throws Exception {
+    public File transferIntoFile2 (DBHandler.NameID nid, String type) throws Exception {
         SoftReference<byte[]> bt = switch (type) {
             case "GIF" -> loadGifBytes(nid);
             case "WEBP" -> loadWEBPBytes(nid);

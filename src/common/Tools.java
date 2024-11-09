@@ -33,7 +33,9 @@ public class Tools {
     }
 
     public static FutureTask<?> runTask(Runnable r) {
-        return (FutureTask<?>) globalExecutor.submit(r);
+        FutureTask<?> ft = (FutureTask<?>) globalExecutor.submit(r);
+        System.out.println(ft.toString());
+        return ft;
     }
 
     public static boolean runningFromJAR()
