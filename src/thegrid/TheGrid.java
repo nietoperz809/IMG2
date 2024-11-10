@@ -116,18 +116,22 @@ public class TheGrid extends MyFrame {
 //                DBHandler.getInst().log("SHUTDOWN"));
 //        Runtime.getRuntime().addShutdownHook(hook);
 
+        System.out.println (Arrays.toString(input));
         Tools.hideConsoleWindow();
 
         try {
-            if (Tools.runningFromJAR())
-                Tools.AskforPWD();
-
             String dbRoot = "dbdir:";
             if (input.length != 0) {
                 if (input[0].startsWith(dbRoot)) {
                     dbRoot = input[0].substring(dbRoot.length());
                     DBHandler.setDBRoot(dbRoot);
                     System.out.println(dbRoot);
+                }
+                if (input.length>1 && input[1].equals("nopwd")) {
+                    System.out.println("nopwd");
+                }
+                else {
+                    Tools.AskforPWD();
                 }
             }
 
@@ -152,7 +156,8 @@ public class TheGrid extends MyFrame {
         command.add("-jar");
         command.add(currentJar.getPath());
         command.add ("dbdir:" + DBHandler.getDBRoot());
-
+        command.add ("nopwd");
+        
         final ProcessBuilder builder = new ProcessBuilder(command);
         builder.start();
         System.exit(0);
