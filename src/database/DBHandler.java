@@ -26,35 +26,22 @@ import static common.ImgTools.byteArrayToImg;
 import static common.Tools.extractResource;
 
 public class DBHandler {
-    private static String ROOT_DIR = "C:\\Databases\\";
+    /**
+     * rowid reverse comparator
+     */
+    static final Comparator<NameID> comp = Comparator.comparing(NameID::rowid).reversed();
     private static final String NO_PASS = "NoPass";
     private static final String DB_FILE = "mydb";
     private static final String DB_FILE_FULL = DB_FILE + ".mv.db";
+    private static String ROOT_DIR = "C:\\Databases\\";
     private static DBHandler _inst = null;
     private Connection connection;
     private Statement statement;
-    private volatile boolean _backupIsRunning;
     /*
         jdbc:h2:C:\peter.home\java\IMG2\datastore\mydb;CIPHER=AES
      */
-
-    public boolean execSQL (String sql) {
-        try {
-            return statement.execute(sql);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    public static String getDBRoot() {
-        return ROOT_DIR;
-    }
-
-    public static void setDBRoot(String s) {
-        ROOT_DIR = s;
-        getInst().log ("DBROOT set to:"+s);
-    }
-
+    private volatile boolean _backupIsRunning;
+    private Future transferTask;
 
     /**
      * Private constructor like Singletons should have
@@ -116,6 +103,15 @@ public class DBHandler {
         }
     }
 
+    public static String getDBRoot() {
+        return ROOT_DIR;
+    }
+
+    public static void setDBRoot(String s) {
+        ROOT_DIR = s;
+        getInst().log ("DBROOT set to:"+s);
+    }
+
     /**
      * get access to the DB
      *
@@ -132,15 +128,6 @@ public class DBHandler {
         return _inst;
     }
 
-    public void close() {
-        try {
-            connection.close();
-            //_inst = null;
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
     /**
      * Warning box if an image is about to be deleted
      *
@@ -154,6 +141,23 @@ public class DBHandler {
                 JOptionPane.DEFAULT_OPTION,
                 JOptionPane.WARNING_MESSAGE, null, options, options[1]
         ) != 0;
+    }
+
+    public boolean execSQL (String sql) {
+        try {
+            return statement.execute(sql);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void close() {
+        try {
+            connection.close();
+            //_inst = null;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public synchronized ResultSet query(String txt) {
@@ -204,12 +208,6 @@ public class DBHandler {
         }
         return al;
     }
-
-    /**
-     * rowid reverse comparator
-     */
-    static final Comparator<NameID> comp = Comparator.comparing(NameID::rowid).reversed();
-
 
     public List<NameID> loadImageInfosTopDown(String eSQL) {
         List<NameID> res = getNames (Objects.requireNonNull(eSQL));
@@ -306,7 +304,6 @@ public class DBHandler {
             throw new RuntimeException(e);
         }
     }
-
 
     public String getTag (int rowid) {
         String strres = null;
@@ -492,7 +489,6 @@ public class DBHandler {
         }
     }
 
-
     /**
      * Put raw data into IMAGES table
      * @param img image as byte array
@@ -618,22 +614,20 @@ public class DBHandler {
         return queryBlobLen(nid, "WEBP", "WEBPDATA");
     }
 
-    private Future fut;
-
     public void cancelFileTransfer() {
-        fut.cancel(true);
+        transferTask.cancel(true);
     }
 
     public File transferIntoFile (DBHandler.NameID nid, String type) throws Exception {
         AtomicReference<File> f = new AtomicReference<>();
-        fut = Tools.runTask(() -> {
+        transferTask = Tools.runTask(() -> {
             try {
-                f.set(transferIntoFile2(nid, type));
+                f.set(transferIntoFileInternal(nid, type));
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
         });
-        Object o = fut.get(); // wait
+        Object o = transferTask.get(); // wait
         return f.get();
     }
     /**
@@ -641,14 +635,15 @@ public class DBHandler {
      * @return file name of file on disk
      * @throws Exception if smth gone wrong
      */
-    public File transferIntoFile2 (DBHandler.NameID nid, String type) throws Exception {
+    private File transferIntoFileInternal (DBHandler.NameID nid, String type) throws Exception {
         SoftReference<byte[]> bt = switch (type) {
             case "GIF" -> loadGifBytes(nid);
             case "WEBP" -> loadWEBPBytes(nid);
             default ->  // regular vid
                     loadVideoBytes(nid);
         };
-        File fi = new File(System.getProperty("java.io.tmpdir") + File.separator + nid.name + "myra.dat");
+        File fi = new File(System.getProperty("java.io.tmpdir") + File.separator + "tempfile-" + "myra.dat");
+        fi.deleteOnExit();
         try (RandomAccessFile rafile = new RandomAccessFile(fi, "rw")) {
             MappedByteBuffer out = rafile.getChannel()
                     .map(FileChannel.MapMode.READ_WRITE, 0, bt.get().length);
