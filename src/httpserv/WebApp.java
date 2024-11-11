@@ -6,10 +6,11 @@
 
 */
 
-package thegrid;
+package httpserv;
 
 import database.DBHandler;
-import httpserv.NanoHTTPD;
+import thegrid.TheGrid;
+import thegrid.UniqueRng;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;

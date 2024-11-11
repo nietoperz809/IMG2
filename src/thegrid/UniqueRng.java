@@ -3,7 +3,7 @@ package thegrid;
 import java.util.ArrayList;
 import java.util.Collections;
 
-class UniqueRng {
+public class UniqueRng {
     private final ArrayList<Integer> _list = new ArrayList<>();
     private int idx = 0;
 
@@ -31,7 +31,7 @@ class UniqueRng {
      * Get next element
      * @return
      */
-    int getNext() {
+    public int getNext() {
         idx++;
         if (idx >= _list.size())
             idx = 0;
@@ -42,14 +42,14 @@ class UniqueRng {
      * Get previous element
      * @return
      */
-    int getPrev() {
+    public int getPrev() {
         idx--;
         if (idx < 0)
             idx = _list.size()-1;
         return _list.get(idx);
     }
 
-    int get() {
+    public int get() {
         return _list.get(idx);
     }
 }
