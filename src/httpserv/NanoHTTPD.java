@@ -33,6 +33,8 @@ package httpserv;
  * #L%
  */
 
+import common.Tools;
+
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -364,11 +366,11 @@ public abstract class NanoHTTPD {
         @Override
         public void exec(ClientHandler clientHandler) {
             ++this.requestCount;
-            Thread t = new Thread(clientHandler);
-            t.setDaemon(true);
+            Thread t = Tools.loomThread(clientHandler);
+            //t.setDaemon(true);
             t.setName("NanoHttpd Request Processor (#" + this.requestCount + ")");
             this.running.add(clientHandler);
-            t.start();
+            //t.start();
         }
     }
 
@@ -2103,10 +2105,10 @@ public abstract class NanoHTTPD {
         this.myServerSocket.setReuseAddress(true);
 
         ServerRunnable serverRunnable = createServerRunnable(timeout);
-        this.myThread = new Thread(serverRunnable);
-        this.myThread.setDaemon(daemon);
+        this.myThread = Tools.loomThread(serverRunnable);
+        //this.myThread.setDaemon(daemon);
         this.myThread.setName("NanoHttpd Main Listener");
-        this.myThread.start();
+        //this.myThread.start();
         while (!serverRunnable.hasBinded && serverRunnable.bindException == null) {
             try {
                 Thread.sleep(10L);
