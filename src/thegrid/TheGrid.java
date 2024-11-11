@@ -1,28 +1,16 @@
 package thegrid;
 
 import buildinfo.BuildInfo;
-import com.sun.jna.Library;
-import com.sun.jna.Native;
-import com.sun.jna.Platform;
-import com.sun.jna.platform.win32.Kernel32;
-import com.sun.jna.platform.win32.User32;
-import com.sun.jna.platform.win32.WinDef;
-import com.sun.jna.platform.win32.Wincon;
 import common.PersistString;
 import common.ProgressBox;
-import common.NumToText;
 import common.Sam;
 import common.Tools;
 import database.DBHandler;
-import dialogs.UnlockDialog;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.nio.charset.Charset;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.time.Duration;
 import java.time.Instant;
 import java.util.ArrayList;
@@ -116,24 +104,23 @@ public class TheGrid extends MyFrame {
 //                DBHandler.getInst().log("SHUTDOWN"));
 //        Runtime.getRuntime().addShutdownHook(hook);
 
-        System.out.println (Arrays.toString(input));
         Tools.hideConsoleWindow();
 
         try {
+            boolean askPwd = true;
             String dbRoot = "dbdir:";
-            if (input.length != 0) {
-                if (input[0].startsWith(dbRoot)) {
-                    dbRoot = input[0].substring(dbRoot.length());
+            for (String s : input) {
+                if (s.startsWith(dbRoot)) {
+                    dbRoot = s.substring(dbRoot.length());
                     DBHandler.setDBRoot(dbRoot);
-                    System.out.println(dbRoot);
+                    //System.out.println(dbRoot);
                 }
-                if (input.length>1 && input[1].equals("nopwd")) {
-                    System.out.println("nopwd");
-                }
-                else {
-                    Tools.AskforPWD();
+                else if (s.equals("nopwd")) {
+                    askPwd = false;
                 }
             }
+            if (askPwd)
+                Tools.AskforPWD();
 
             DBHandler.getInst().log("+++ TheGrid started");
             new TheGrid (mainSQL.get(), dbRoot);
@@ -147,8 +134,6 @@ public class TheGrid extends MyFrame {
     public static void restartApplication() throws Exception {
         final String javaBin = System.getProperty("java.home") + File.separator + "bin" + File.separator + "java";
         final File currentJar = new File(TheGrid.class.getProtectionDomain().getCodeSource().getLocation().toURI());
-
-        /* is it a jar file? */
 
         /* Build command: java -jar application.jar */
         final ArrayList<String> command = new ArrayList<>();

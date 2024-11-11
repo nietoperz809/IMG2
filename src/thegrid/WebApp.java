@@ -9,7 +9,7 @@
 package thegrid;
 
 import database.DBHandler;
-import fi.iki.elonen.NanoHTTPD;
+import httpserv.NanoHTTPD;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -20,8 +20,6 @@ import static common.Tools.extractResource;
 public class WebApp extends NanoHTTPD {
     private final java.util.List<DBHandler.NameID> allFiles;
     private final UniqueRng ring;
-    //int firstimg = -1;
-
 
     /**
      * Get indec from RowID
@@ -73,11 +71,10 @@ public class WebApp extends NanoHTTPD {
     /**
      * Send whole image page
      *
-     * @param session from serve function
      * @param rowid   the database id of the image
      * @return response object
      */
-    private Response sendImagePage(IHTTPSession session, int rowid) {
+    private Response sendImagePage (int rowid) {
         try {
             String str = new String(extractResource("imgpage0.html"));
             str = str.replace("@@THEIMG", rowid + ".jpg");
@@ -137,7 +134,7 @@ public class WebApp extends NanoHTTPD {
         } else /* @@RES */ {
             rowid = 0;
         }
-        return sendImagePage(null, rowid);
+        return sendImagePage(rowid);
     }
 
 
@@ -166,7 +163,7 @@ public class WebApp extends NanoHTTPD {
             return sendImageBytes(tbh.bt);
         } else if (uri.endsWith(".lnk")) {
             System.out.println("send linkpage: "+rowid);
-            return sendImagePage(session, rowid);
+            return sendImagePage(rowid);
         } else if (uri.endsWith(".jpg")) {
             byte[] bytes = DBHandler.getInst().loadImage(rowid);
 
