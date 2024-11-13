@@ -220,9 +220,9 @@ public abstract class NanoHTTPD {
 
         private final String n, v, e;
 
-        public Cookie(String name, String value) {
-            this(name, value, 30);
-        }
+//        public Cookie(String name, String value) {
+//            this(name, value, 30);
+//        }
 
         public Cookie(String name, String value, int numDays) {
             this.n = name;
@@ -566,11 +566,11 @@ public abstract class NanoHTTPD {
 
         private String protocolVersion;
 
-        public HTTPSession(TempFileManager tempFileManager, InputStream inputStream, OutputStream outputStream) {
-            this.tempFileManager = tempFileManager;
-            this.inputStream = new BufferedInputStream(inputStream, HTTPSession.BUFSIZE);
-            this.outputStream = outputStream;
-        }
+//        public HTTPSession(TempFileManager tempFileManager, InputStream inputStream, OutputStream outputStream) {
+//            this.tempFileManager = tempFileManager;
+//            this.inputStream = new BufferedInputStream(inputStream, HTTPSession.BUFSIZE);
+//            this.outputStream = outputStream;
+//        }
 
         public HTTPSession(TempFileManager tempFileManager, InputStream inputStream, OutputStream outputStream, InetAddress inetAddress) {
             this.tempFileManager = tempFileManager;

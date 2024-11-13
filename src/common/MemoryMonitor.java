@@ -4,8 +4,7 @@ package common;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import java.awt.event.*;
 import java.awt.geom.Line2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
@@ -65,7 +64,6 @@ import static java.lang.Thread.sleep;
 public class MemoryMonitor extends JPanel
 {
     private final int sleep = 100;
-    //private static final JCheckBox dateStampCB = new JCheckBox("Output Date Stamp");
     public final Surface surf = new Surface(sleep);
     private final JPanel controls = new JPanel();
     private boolean doControls;
@@ -74,7 +72,6 @@ public class MemoryMonitor extends JPanel
     public MemoryMonitor()
     {
         setLayout(new BorderLayout());
-        //setBorder (new EtchedBorder());
         add(surf);
         controls.setPreferredSize(new Dimension(135, 80));
         Font font = new Font("serif", PLAIN, 10);
@@ -88,8 +85,6 @@ public class MemoryMonitor extends JPanel
         controls.add(label);
         label.setFont(font);
         label.setForeground(BLACK);
-        //controls.add(dateStampCB);
-        //dateStampCB.setFont(font);
 
         addMouseListener(new MouseAdapter()
         {
@@ -142,11 +137,25 @@ public class MemoryMonitor extends JPanel
         private final Color graphColor = new Color(46, 139, 87);
         private final Color mfColor = new Color(0, 100, 0);
         private String usedStr;
-        //private boolean running = true;
-        private Future running;
+        private Future running = null;
+
+        class ResizeListener extends ComponentAdapter {
+            public void componentResized(ComponentEvent e) {
+                Dimension d = getSize();
+                w = d.width;
+                h = d.height;
+                bimg = (BufferedImage) createImage(w, h);
+                big = bimg.createGraphics();
+                big.setFont(font);
+                FontMetrics fm = big.getFontMetrics(font);
+                ascent = fm.getAscent();
+                descent = fm.getDescent();
+            }
+        }
 
         public Surface (long sleep)
         {
+            addComponentListener(new ResizeListener());
             sleepAmount = sleep;
             setBackground(BLACK);
         }
@@ -319,6 +328,7 @@ public class MemoryMonitor extends JPanel
             running = Tools.runTask(this);
         }
 
+
         public synchronized void stop()
         {
             System.out.println("stopping");
@@ -327,23 +337,12 @@ public class MemoryMonitor extends JPanel
 
         public void run()
         {
-            while (!running.isCancelled())
+            System.out.println("thread start");
+            while (true)
             {
-                Dimension d = getSize();
-                if (d.height > 50)
-                {
-                    if (d.width != w || d.height != h)
-                    {
-                        w = d.width;
-                        h = d.height;
-                        bimg = (BufferedImage) createImage(w, h);
-                        big = bimg.createGraphics();
-                        big.setFont(font);
-                        FontMetrics fm = big.getFontMetrics(font);
-                        ascent = fm.getAscent();
-                        descent = fm.getDescent();
-                    }
-                    repaint();
+                repaint();
+                if (running != null && running.isCancelled()) {
+                    break;
                 }
                 try
                 {
@@ -353,12 +352,8 @@ public class MemoryMonitor extends JPanel
                 {
                     break;
                 }
-//                if (dateStampCB.isSelected())
-//                {
-//                    out.println(new Date().toString() + " " + usedStr);
-//                }
             }
-            System.out.println("stopped");
+            System.out.println("thread end");
         }
     }
 }

@@ -34,9 +34,9 @@ public class MonitorFrame extends javax.swing.JDialog {
         setVisible(true);
     }
 
-//    public static void main(String[] args) {
-//        new MonitorFrame();
-//    }
+    public static void main(String[] args) {
+        var m = new MonitorFrame();
+    }
 
 }
 

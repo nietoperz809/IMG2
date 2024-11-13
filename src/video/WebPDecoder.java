@@ -237,23 +237,23 @@ public class WebPDecoder implements AnimDecoder {
 //        }
 //    }
 
-    /**
-     * Decode a WebP image based on the url in the given String.
-     *
-     * @param url The url
-     * @return A decoded {@link WebPImage}
-     * @throws IOException When loading the data from the url fails
-     * @throws WebPDecoderException When the decoder encounters an issue (e.g.
-     * if it's not a valid WebP file)
-     * @throws UnsatisfiedLinkError When there was an issue loading the native
-     * libraries (note that this is an error, not an exception)
-     */
-    public static WebPImage decodeUrl(String url) throws IOException,
-            WebPDecoderException,
-            UnsatisfiedLinkError {
-        byte[] rawData = getBytesFromURL(new URL(url));
-        return decode(rawData);
-    }
+//    /**
+//     * Decode a WebP image based on the url in the given String.
+//     *
+//     * @param url The url
+//     * @return A decoded {@link WebPImage}
+//     * @throws IOException When loading the data from the url fails
+//     * @throws WebPDecoderException When the decoder encounters an issue (e.g.
+//     * if it's not a valid WebP file)
+//     * @throws UnsatisfiedLinkError When there was an issue loading the native
+//     * libraries (note that this is an error, not an exception)
+//     */
+//    public static WebPImage decodeUrl(String url) throws IOException,
+//            WebPDecoderException,
+//            UnsatisfiedLinkError {
+//        byte[] rawData = getBytesFromURL(new URL(url));
+//        return decode(rawData);
+//    }
 
     /**
      * Decode a WebP image.
@@ -265,7 +265,7 @@ public class WebPDecoder implements AnimDecoder {
      * @throws UnsatisfiedLinkError When there was an issue loading the native
      * libraries (note that this is an error, not an exception)
      */
-    public static WebPImage decode(byte[] rawData) throws WebPDecoderException,
+    public static WebPImage decode(byte[] rawData, int maxframes) throws WebPDecoderException,
             UnsatisfiedLinkError {
         List<WebPImageFrame> frames = new ArrayList<>();
         Pointer bytes = null;
@@ -303,6 +303,9 @@ public class WebPDecoder implements AnimDecoder {
 
                 BufferedImage image = createImage(buf.getValue(), info.canvas_width, info.canvas_height);
                 frames.add(new WebPImageFrame(image, timestamp.getValue(), delay));
+                if (frames.size() >= maxframes)
+                    break;
+                //System.out.println ("WebpFrames: "+frames.size());
             }
         }
         finally {
@@ -669,9 +672,7 @@ public class WebPDecoder implements AnimDecoder {
         byte[] data = getBytesFromLine(line);
         long start = System.currentTimeMillis();
         WebPImage image = null;
-        for (int i = 0; i < rep; i++) {
-            image = WebPDecoder.decode(data);
-        }
+        image = WebPDecoder.decode (data, 1000);
         long duration = System.currentTimeMillis() - start;
         LOGGER.info(String.format("Decoding took %dms", duration));
         return new ImageResult(image, duration);

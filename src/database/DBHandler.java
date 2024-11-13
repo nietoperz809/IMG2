@@ -627,7 +627,7 @@ public class DBHandler {
                 throw new RuntimeException(e);
             }
         });
-        Object o = transferTask.get(); // wait
+        transferTask.get(); // wait
         return f.get();
     }
     /**

@@ -14,13 +14,17 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ddb69741-e020-4d21-a32f-f00e79c6818a" name="Changes" comment="works now with loom threads">
+    <list default="true" id="ddb69741-e020-4d21-a32f-f00e79c6818a" name="Changes" comment="latest release">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IMG2_jar/IMG2.jar" beforeDir="false" afterPath="$PROJECT_DIR$/IMG2_jar/IMG2.jar" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/buildinfo/BuildInfo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/buildinfo/BuildInfo.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/buildinfo/build.number" beforeDir="false" afterPath="$PROJECT_DIR$/src/buildinfo/build.number" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/thegrid/GridMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/thegrid/GridMenu.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/thegrid/UniqueRng.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/thegrid/UniqueRng.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/thegrid/WebApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/httpserv/WebApp.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/common/MemoryMonitor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/common/MemoryMonitor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/database/DBHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/database/DBHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dialogs/MonitorFrame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/dialogs/MonitorFrame.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/httpserv/NanoHTTPD.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/httpserv/NanoHTTPD.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/httpserv/WebApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/httpserv/WebApp.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/video/WebPDecoder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/video/WebPDecoder.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -163,6 +167,19 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="MonitorFrame" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="dialogs.MonitorFrame" />
+      <module name="IMG2" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="dialogs.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="IMG2.jar" type="JarApplication" temporary="true">
       <option name="JAR_PATH" value="$PROJECT_DIR$/IMG2_jar/IMG2.jar" />
       <option name="VM_PARAMETERS" value="-Xmx6g" />
@@ -179,11 +196,13 @@
     </configuration>
     <list>
       <item itemvalue="Application.Main" />
+      <item itemvalue="Application.MonitorFrame" />
       <item itemvalue="JAR Application.IMG2.jar" />
       <item itemvalue="Java Scratch.Scratch" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.MonitorFrame" />
         <item itemvalue="Java Scratch.Scratch" />
         <item itemvalue="JAR Application.IMG2.jar" />
       </list>
@@ -546,7 +565,7 @@
       <option name="project" value="LOCAL" />
       <updated>1683976691765</updated>
     </task>
-    <option name="localTasksCounter" value="182" />
+    <option name="localTasksCounter" value="183" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -578,7 +597,6 @@
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_NEW_TODO" value="false" />
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="reversed warp direction" />
     <MESSAGE value="added NumToText.java" />
     <MESSAGE value="adjusted speaking of tenths" />
     <MESSAGE value="lineinput: bugfix" />
@@ -603,7 +621,8 @@
     <MESSAGE value="startparam &quot;nopwd&quot; to suppress pwd box" />
     <MESSAGE value="+nanohttp as source code" />
     <MESSAGE value="works now with loom threads" />
-    <option name="LAST_COMMIT_MESSAGE" value="works now with loom threads" />
+    <MESSAGE value="latest release" />
+    <option name="LAST_COMMIT_MESSAGE" value="latest release" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -628,7 +647,7 @@
         </line-breakpoint>
         <line-breakpoint type="java-line">
           <url>file://$PROJECT_DIR$/src/httpserv/WebApp.java</url>
-          <line>134</line>
+          <line>133</line>
           <option name="timeStamp" value="25" />
         </line-breakpoint>
         <breakpoint type="java-exception">

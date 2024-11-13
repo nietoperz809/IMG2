@@ -23,9 +23,9 @@ public class WebApp extends NanoHTTPD {
     private final UniqueRng ring;
 
     /**
-     * Get indec from RowID
-     * @param rowid
-     * @return
+     * Get index from RowID
+     * @param rowid rowid of image
+     * @return   found index or 0
      */
     int findIndex (int rowid) {
         for (int i=0; i<allFiles.size(); i++) {
@@ -43,7 +43,6 @@ public class WebApp extends NanoHTTPD {
         super(80);
         allFiles = DBHandler.getInst().loadImageInfosTopDown(TheGrid.mainSQL.get().substring(0,42));
         ring = new UniqueRng(allFiles.size(), false);
-        //ring.reset();
 
         try {
             start(NanoHTTPD.SOCKET_READ_TIMEOUT, false);
@@ -120,7 +119,7 @@ public class WebApp extends NanoHTTPD {
     }
 
     /**
-     * send adjusted image page regarding to user action
+     * send adjusted image page regarding user action
      *
      * @param session request object from browser
      * @return response object
