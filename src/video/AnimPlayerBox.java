@@ -12,9 +12,12 @@ import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.concurrent.ArrayBlockingQueue;
+import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.Future;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
+
+import static video.AnimDecoder.stopImage;
 
 public class AnimPlayerBox implements PlayerBox {
 
@@ -28,7 +31,7 @@ public class AnimPlayerBox implements PlayerBox {
     private final File file;
     private boolean reverse = false;
     private boolean saveFlag;
-    private ArrayBlockingQueue<BufferedImage> __que = new ArrayBlockingQueue<>(1000);
+    private BlockingQueue<BufferedImage> __que = new ArrayBlockingQueue<>(20);
     private Future decoderTask = null;
 
     public AnimPlayerBox(File file, VideoApp parent, AnimDecoder decoder,
@@ -96,11 +99,14 @@ public class AnimPlayerBox implements PlayerBox {
                 if (!waitFlag.get()) {
                     Image im2 = null;
                     try {
-                        im2 = __que.take()
-                                .getScaledInstance(label.getWidth(), label.getHeight(), Image.SCALE_DEFAULT);
+                        im2 = __que.take();
                     } catch (InterruptedException e) {
                         throw new RuntimeException(e);
                     }
+                    if(im2.equals(stopImage))
+                        break;
+                    im2 = im2.getScaledInstance(label.getWidth(), label.getHeight(), Image.SCALE_DEFAULT);
+
                     frameNum++;
                     if (saveFlag) {
                         ImgTools.writeToFile(im2, "jpg", parent.snapDir, "" + frameNum);
@@ -120,6 +126,11 @@ public class AnimPlayerBox implements PlayerBox {
 
         decoderTask = Tools.runTask(() -> {
             decoder.decodeFile(file.getAbsolutePath(), __que);
+            try {
+                __que.put (stopImage);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
             System.out.println("all frames decoded!");
         });
     }

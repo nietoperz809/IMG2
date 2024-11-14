@@ -8,6 +8,7 @@ import java.io.*;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.concurrent.ArrayBlockingQueue;
+import java.util.concurrent.BlockingQueue;
 
 
 public class GifDecoder implements AnimDecoder {
@@ -310,7 +311,7 @@ public class GifDecoder implements AnimDecoder {
         return status;
     }
 
-    private ArrayBlockingQueue<BufferedImage> __que;
+    private BlockingQueue<BufferedImage> __que;
 
     /**
      * Reads GIF file from specified file/URL source
@@ -318,7 +319,7 @@ public class GifDecoder implements AnimDecoder {
      *
      * @param name String containing source
      */
-    public void decodeFile(String name, ArrayBlockingQueue<BufferedImage> outputQue) {
+    public void decodeFile(String name, BlockingQueue<BufferedImage> outputQue) {
         __que = outputQue;
         status = STATUS_OK;
         try {
@@ -698,7 +699,11 @@ public class GifDecoder implements AnimDecoder {
         setPixels(); // transfer pixel data to image
 
         //frames.add(new GifFrame(image, delay)); // add image to frame list
-        __que.offer(image);
+        try {
+            __que.put(image);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
 
         if (transparency) {
             act[transIndex] = save;

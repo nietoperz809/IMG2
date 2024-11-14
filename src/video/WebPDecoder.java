@@ -30,6 +30,7 @@ import java.util.Hashtable;
 import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.ArrayBlockingQueue;
+import java.util.concurrent.BlockingQueue;
 import java.util.logging.Logger;
 
 /**
@@ -266,7 +267,7 @@ public class WebPDecoder implements AnimDecoder {
      * @throws UnsatisfiedLinkError When there was an issue loading the native
      * libraries (note that this is an error, not an exception)
      */
-    public static WebPImage decode(byte[] rawData, ArrayBlockingQueue<BufferedImage> que) throws WebPDecoderException,
+    public static WebPImage decode(byte[] rawData, BlockingQueue<BufferedImage> que) throws WebPDecoderException,
             UnsatisfiedLinkError {
         List<WebPImageFrame> frames = new ArrayList<>();
         Pointer bytes = null;
@@ -305,8 +306,13 @@ public class WebPDecoder implements AnimDecoder {
                 BufferedImage image = createImage(buf.getValue(), info.canvas_width, info.canvas_height);
                 if (que == null)
                     frames.add(new WebPImageFrame(image, timestamp.getValue(), delay));
-                else
-                    que.offer(image);
+                else {
+                    try {
+                        que.put(image);
+                    } catch (InterruptedException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
             }
         }
         finally {
@@ -338,26 +344,10 @@ public class WebPDecoder implements AnimDecoder {
 
     /* START Decoder Interface */
 
-//    @Override
-//    public BufferedImage getFrame(int n) {
-//        try {
-//            return __que.take();
-//        } catch (InterruptedException e) {
-//            throw new RuntimeException(e);
-//        }
-//    }
-
-//    @Override
-//    public int getFrameCount() {
-//        return __image.frameCount;
-//    }
-
-    //private WebPImage __image;
-
-    private ArrayBlockingQueue<BufferedImage> __que; // = new ArrayBlockingQueue<>(1000);
+    private BlockingQueue<BufferedImage> __que; 
 
     @Override
-    public void decodeFile(String filename, ArrayBlockingQueue<BufferedImage> outputQue) {
+    public void decodeFile(String filename, BlockingQueue<BufferedImage> outputQue) {
         __que = outputQue;
         try {
             ImageResult result = getImage(filename, outputQue);
@@ -672,7 +662,7 @@ public class WebPDecoder implements AnimDecoder {
         return WebPDecoder.getBytesFromURL(url);
     }
 
-    private static ImageResult getImage(String line, ArrayBlockingQueue<BufferedImage> que) throws IOException {
+    private static ImageResult getImage(String line, BlockingQueue<BufferedImage> que) throws IOException {
         LOGGER.info(String.format("Decoding %s", line));
         byte[] data = getBytesFromLine(line);
         long start = System.currentTimeMillis();
