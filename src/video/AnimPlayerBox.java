@@ -20,8 +20,6 @@ import java.util.concurrent.atomic.AtomicInteger;
 import static video.AnimDecoder.stopImage;
 
 public class AnimPlayerBox implements PlayerBox {
-
-    private final AtomicBoolean stopFlag = new AtomicBoolean(false);
     private final AtomicBoolean waitFlag = new AtomicBoolean(false);
     //private final AtomicReference<Image> currentFrame = new AtomicReference<>();
     private final boolean autoclose;
@@ -31,7 +29,7 @@ public class AnimPlayerBox implements PlayerBox {
     private final File file;
     private boolean reverse = false;
     private boolean saveFlag;
-    private BlockingQueue<BufferedImage> __que = new ArrayBlockingQueue<>(20);
+    private final BlockingQueue<BufferedImage> __que = new ArrayBlockingQueue<>(20);
     private Future decoderTask = null;
 
     public AnimPlayerBox(File file, VideoApp parent, AnimDecoder decoder,
@@ -95,9 +93,9 @@ public class AnimPlayerBox implements PlayerBox {
             int frameNum = 0;
             ImageIcon iic = new ImageIcon();
             label.setIcon(iic);
-            while (!stopFlag.get()) {
+            while (true) {
                 if (!waitFlag.get()) {
-                    Image im2 = null;
+                    Image im2;
                     try {
                         im2 = __que.take();
                     } catch (InterruptedException e) {
@@ -118,8 +116,6 @@ public class AnimPlayerBox implements PlayerBox {
             }
             if (autoclose)
                 stop();
-            decoderTask.cancel(true);
-            __que.clear();
             //Tools.gc_now();
             System.out.println("end thread");
         });
@@ -141,13 +137,15 @@ public class AnimPlayerBox implements PlayerBox {
     }
 
     public void stop() {
-        stopFlag.set(true);
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                window.dispose();
-                file.delete();
+        SwingUtilities.invokeLater(() -> {
+            try {
+                __que.put (stopImage);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
             }
+            window.dispose();
+            file.delete();
+            decoderTask.cancel(true);
         });
     }
 }

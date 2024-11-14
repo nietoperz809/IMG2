@@ -25,11 +25,9 @@ import java.net.URLConnection;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.Objects;
-import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 import java.util.logging.Logger;
 
@@ -261,15 +259,14 @@ public class WebPDecoder implements AnimDecoder {
      * Decode a WebP image.
      *
      * @param rawData The raw bytes of the image
-     * @return A decoded {@link WebPImage}
      * @throws WebPDecoderException When the decoder encounters an issue (e.g.
      * if it's not a valid WebP file)
      * @throws UnsatisfiedLinkError When there was an issue loading the native
      * libraries (note that this is an error, not an exception)
      */
-    public static WebPImage decode(byte[] rawData, BlockingQueue<BufferedImage> que) throws WebPDecoderException,
+    public static void decode(byte[] rawData, BlockingQueue<BufferedImage> que) throws WebPDecoderException,
             UnsatisfiedLinkError {
-        List<WebPImageFrame> frames = new ArrayList<>();
+        //List<WebPImageFrame> frames = new ArrayList<>();
         Pointer bytes = null;
         Pointer decoder = null;
         LibWebP.WebPAnimInfo info;
@@ -291,7 +288,7 @@ public class WebPDecoder implements AnimDecoder {
                 throw new WebPDecoderException("Failed getting decoder info");
             }
 
-            int prevTimestamp = 0;
+            // int prevTimestamp = 0;
             while (lib().WebPAnimDecoderHasMoreFrames(decoder) == 1) {
                 PointerByReference buf = new PointerByReference();
                 IntByReference timestamp = new IntByReference();
@@ -299,20 +296,16 @@ public class WebPDecoder implements AnimDecoder {
                 if (lib().WebPAnimDecoderGetNext(decoder, buf, timestamp) == 0) {
                     throw new WebPDecoderException("Error decoding next frame");
                 }
-
-                int delay = timestamp.getValue() - prevTimestamp;
-                prevTimestamp = timestamp.getValue();
+                // int delay = timestamp.getValue() - prevTimestamp;
+                // prevTimestamp = timestamp.getValue();
 
                 BufferedImage image = createImage(buf.getValue(), info.canvas_width, info.canvas_height);
-                if (que == null)
-                    frames.add(new WebPImageFrame(image, timestamp.getValue(), delay));
-                else {
                     try {
                         que.put(image);
                     } catch (InterruptedException e) {
                         throw new RuntimeException(e);
                     }
-                }
+
             }
         }
         finally {
@@ -323,8 +316,8 @@ public class WebPDecoder implements AnimDecoder {
                 lib().WebPFree(bytes);
             }
         }
-        return new WebPImage(frames, info.canvas_width, info.canvas_height,
-                info.loop_count, Color.BLACK, info.frame_count);
+//        return new WebPImage(frames, info.canvas_width, info.canvas_height,
+//                info.loop_count, Color.BLACK, info.frame_count);
     }
 
     private static BufferedImage createImage(Pointer pixelData, int width, int height) {
@@ -344,14 +337,13 @@ public class WebPDecoder implements AnimDecoder {
 
     /* START Decoder Interface */
 
-    private BlockingQueue<BufferedImage> __que; 
+    //private BlockingQueue<BufferedImage> __que;
 
     @Override
     public void decodeFile(String filename, BlockingQueue<BufferedImage> outputQue) {
-        __que = outputQue;
+        //__que = outputQue;
         try {
-            ImageResult result = getImage(filename, outputQue);
-            //__image = result.image;
+            extractFrames(filename, outputQue);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -449,16 +441,16 @@ public class WebPDecoder implements AnimDecoder {
             // by the core 'libwebp' library.
             WEBP_EXTERN void* WebPMalloc(size_t size);
         */
-        public Pointer WebPMalloc(int size);
+        Pointer WebPMalloc(int size);
 
         /*
         [webp/types.h]
             // Releases memory returned by the WebPDecode*() functions (from decode.h).
             WEBP_EXTERN void WebPFree(void* ptr);
         */
-        public void WebPFree(Pointer pointer);
+        void WebPFree(Pointer pointer);
 
-        static final int WEBP_DEMUX_ABI_VERSION = 0x0107;
+        int WEBP_DEMUX_ABI_VERSION = 0x0107;
 
         /*
         [webp/demux.h]
@@ -482,7 +474,7 @@ public class WebPDecoder implements AnimDecoder {
                                                 WEBP_DEMUX_ABI_VERSION);
             }
         */
-        public Pointer WebPAnimDecoderNewInternal(WebPData webp_data, Structure dec_options, int version);
+        Pointer WebPAnimDecoderNewInternal(WebPData webp_data, Structure dec_options, int version);
 
         /*
         [webp/mux_types.h]
@@ -495,7 +487,7 @@ public class WebPDecoder implements AnimDecoder {
             };
         */
         @Structure.FieldOrder({ "bytes", "length" })
-        public static class WebPData extends Structure {
+        class WebPData extends Structure {
             public Pointer bytes;
             public Size_T length;
         }
@@ -511,7 +503,7 @@ public class WebPDecoder implements AnimDecoder {
             WEBP_EXTERN int WebPAnimDecoderGetInfo(const WebPAnimDecoder* dec,
                                                    WebPAnimInfo* info);
         */
-        public int WebPAnimDecoderGetInfo(Pointer dec, WebPAnimInfo info);
+        int WebPAnimDecoderGetInfo(Pointer dec, WebPAnimInfo info);
 
         /*
         [webp/demux.h]
@@ -526,7 +518,7 @@ public class WebPDecoder implements AnimDecoder {
             };
         */
         @Structure.FieldOrder({ "canvas_width", "canvas_height", "loop_count", "bgcolor", "frame_count", "pad" })
-        public static class WebPAnimInfo extends Structure {
+        class WebPAnimInfo extends Structure {
             public int canvas_width;
             public int canvas_height;
             public int loop_count;
@@ -545,7 +537,7 @@ public class WebPDecoder implements AnimDecoder {
             //   Otherwise, returns false.
             WEBP_EXTERN int WebPAnimDecoderHasMoreFrames(const WebPAnimDecoder* dec);
         */
-        public int WebPAnimDecoderHasMoreFrames(Pointer dec);
+        int WebPAnimDecoderHasMoreFrames(Pointer dec);
 
         /*
         [webp/demux.h]
@@ -564,7 +556,7 @@ public class WebPDecoder implements AnimDecoder {
             WEBP_EXTERN int WebPAnimDecoderGetNext(WebPAnimDecoder* dec,
                                                    uint8_t** buf, int* timestamp);
         */
-        public int WebPAnimDecoderGetNext(Pointer dec, PointerByReference buf, IntByReference timestamp);
+        int WebPAnimDecoderGetNext(Pointer dec, PointerByReference buf, IntByReference timestamp);
 
         /*
         [webp/demux.h]
@@ -573,9 +565,9 @@ public class WebPDecoder implements AnimDecoder {
             //   dec - (in/out) decoder instance to be deleted
             WEBP_EXTERN void WebPAnimDecoderDelete(WebPAnimDecoder* dec);
         */
-        public void WebPAnimDecoderDelete(Pointer dec);
+        void WebPAnimDecoderDelete(Pointer dec);
 
-        public static class Size_T extends IntegerType {
+        class Size_T extends IntegerType {
 
             private static final long serialVersionUID = 1L;
 
@@ -614,8 +606,7 @@ public class WebPDecoder implements AnimDecoder {
     public static byte[] getBytesFromURL(URL url) throws IOException {
         URLConnection c = url.openConnection();
         try (InputStream input = c.getInputStream()) {
-            byte[] imageData = readAllBytes(input);
-            return imageData;
+            return readAllBytes(input);
         }
     }
 
@@ -647,10 +638,10 @@ public class WebPDecoder implements AnimDecoder {
 
     ///////////////////////////////////////////////////////////////////////
 
-    private record ImageResult(WebPImage image, long loadTime) {
-
-    }
-
+//    private record ImageResult(WebPImage image, long loadTime) {
+//
+//    }
+//
     private static byte[] getBytesFromLine(String line) throws IOException {
         URL url;
         line = line.replace("\"", "");
@@ -662,15 +653,14 @@ public class WebPDecoder implements AnimDecoder {
         return WebPDecoder.getBytesFromURL(url);
     }
 
-    private static ImageResult getImage(String line, BlockingQueue<BufferedImage> que) throws IOException {
+    private static void extractFrames(String line, BlockingQueue<BufferedImage> que) throws IOException {
         LOGGER.info(String.format("Decoding %s", line));
         byte[] data = getBytesFromLine(line);
         long start = System.currentTimeMillis();
-        WebPImage image = null;
-        image = WebPDecoder.decode (data, que);
+        WebPDecoder.decode (data, que);
         long duration = System.currentTimeMillis() - start;
         LOGGER.info(String.format("Decoding took %dms", duration));
-        return new ImageResult(image, duration);
+        //return new ImageResult(image, duration);
     }
 
     ///////////////////////////////////////////////////////////////////////

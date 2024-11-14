@@ -1,13 +1,11 @@
 package video;
 
-import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferInt;
 import java.io.*;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 
 
@@ -233,27 +231,27 @@ public class GifDecoder implements AnimDecoder {
         return im;
     }
 
-    public void saveFrames (String dir, int from, int to) {
-        for (int s = from; s<=to; s++) {
-            BufferedImage img = getFrame(s);
-            try {
-                ImageIO.write(img, "png",
-                        new File(dir + File.separator + (from+s) + ".png"));
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        }
-    }
+//    public void saveFrames (String dir, int from, int to) {
+//        for (int s = from; s<=to; s++) {
+//            BufferedImage img = getFrame(s);
+//            try {
+//                ImageIO.write(img, "png",
+//                        new File(dir + File.separator + (from+s) + ".png"));
+//            } catch (IOException e) {
+//                throw new RuntimeException(e);
+//            }
+//        }
+//    }
 
 
-    /**
-     * Gets image size.
-     *
-     * @return GIF image dimensions
-     */
-    public Dimension getFrameSize() {
-        return new Dimension(width, height);
-    }
+//    /**
+//     * Gets image size.
+//     *
+//     * @return GIF image dimensions
+//     */
+//    public Dimension getFrameSize() {
+//        return new Dimension(width, height);
+//    }
 
     /**
      * Reads GIF image from stream
@@ -277,7 +275,7 @@ public class GifDecoder implements AnimDecoder {
         }
         try {
             is.close();
-        } catch (IOException e) {
+        } catch (IOException ignored) {
         }
         return status;
     }
@@ -307,6 +305,7 @@ public class GifDecoder implements AnimDecoder {
         try {
             is.close();
         } catch (IOException e) {
+            throw new RuntimeException(e);
         }
         return status;
     }
@@ -513,7 +512,7 @@ public class GifDecoder implements AnimDecoder {
         int n = 0;
         if (blockSize > 0) {
             try {
-                int count = 0;
+                int count;
                 while (n < blockSize) {
                     count = in.read(block, n, blockSize - n);
                     if (count == -1)
@@ -521,6 +520,7 @@ public class GifDecoder implements AnimDecoder {
                     n += count;
                 }
             } catch (IOException e) {
+                throw new RuntimeException(e);
             }
 
             if (n < blockSize) {
@@ -540,10 +540,11 @@ public class GifDecoder implements AnimDecoder {
         int nbytes = 3 * ncolors;
         int[] tab = null;
         byte[] c = new byte[nbytes];
-        int n = 0;
+        int n;
         try {
             n = in.read(c);
         } catch (IOException e) {
+            throw new RuntimeException(e);
         }
         if (n < nbytes) {
             status = STATUS_FORMAT_ERROR;
@@ -763,9 +764,6 @@ public class GifDecoder implements AnimDecoder {
         lastRect = new Rectangle(ix, iy, iw, ih);
         lastImage = image;
         lastBgColor = bgColor;
-        int dispose = 0;
-        boolean transparency = false;
-        int delay = 0;
         lct = null;
     }
 
