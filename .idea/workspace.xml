@@ -14,16 +14,16 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ddb69741-e020-4d21-a32f-f00e79c6818a" name="Changes" comment="latest release">
+    <list default="true" id="ddb69741-e020-4d21-a32f-f00e79c6818a" name="Changes" comment="memorymon repaired">
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/IMG2_jar/IMG2.jar" beforeDir="false" afterPath="$PROJECT_DIR$/IMG2_jar/IMG2.jar" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/buildinfo/BuildInfo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/buildinfo/BuildInfo.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/buildinfo/build.number" beforeDir="false" afterPath="$PROJECT_DIR$/src/buildinfo/build.number" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/common/MemoryMonitor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/common/MemoryMonitor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/database/DBHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/database/DBHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/dialogs/MonitorFrame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/dialogs/MonitorFrame.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/common/Tools.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/common/Tools.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/httpserv/NanoHTTPD.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/httpserv/NanoHTTPD.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/httpserv/WebApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/httpserv/WebApp.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/video/AnimDecoder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/video/AnimDecoder.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/video/AnimPlayerBox.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/video/AnimPlayerBox.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/video/GifDecoder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/video/GifDecoder.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/video/WebPDecoder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/video/WebPDecoder.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -41,6 +41,11 @@
     </option>
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="master" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="GitHubPullRequestSearchHistory">{
@@ -79,7 +84,7 @@
   "keyToString": {
     "ASKED_ADD_EXTERNAL_FILES": "true",
     "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "Application.Main.executor": "Run",
+    "Application.Main.executor": "Debug with VisualVM",
     "Application.MonitorFrame.executor": "Run",
     "Application.WebPDecoder.executor": "Run",
     "Application.web.executor": "Run",
@@ -109,7 +114,7 @@
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Libraries",
+    "project.structure.last.edited": "Global Libraries",
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.2",
     "run.code.analysis.last.selected.profile": "aDefault",
@@ -565,7 +570,7 @@
       <option name="project" value="LOCAL" />
       <updated>1683976691765</updated>
     </task>
-    <option name="localTasksCounter" value="183" />
+    <option name="localTasksCounter" value="184" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -597,7 +602,6 @@
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_NEW_TODO" value="false" />
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="added NumToText.java" />
     <MESSAGE value="adjusted speaking of tenths" />
     <MESSAGE value="lineinput: bugfix" />
     <MESSAGE value="better gifplayer frame save" />
@@ -622,7 +626,8 @@
     <MESSAGE value="+nanohttp as source code" />
     <MESSAGE value="works now with loom threads" />
     <MESSAGE value="latest release" />
-    <option name="LAST_COMMIT_MESSAGE" value="latest release" />
+    <MESSAGE value="memorymon repaired" />
+    <option name="LAST_COMMIT_MESSAGE" value="memorymon repaired" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -649,6 +654,11 @@
           <url>file://$PROJECT_DIR$/src/httpserv/WebApp.java</url>
           <line>133</line>
           <option name="timeStamp" value="25" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/video/AnimPlayerBox.java</url>
+          <line>98</line>
+          <option name="timeStamp" value="93" />
         </line-breakpoint>
         <breakpoint type="java-exception">
           <properties class="java.lang.NullPointerException" package="java.lang" />

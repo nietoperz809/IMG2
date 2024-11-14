@@ -366,9 +366,9 @@ public abstract class NanoHTTPD {
         @Override
         public void exec(ClientHandler clientHandler) {
             ++this.requestCount;
-            Thread t = Tools.loomThread(clientHandler);
+            /*Thread t =*/ Tools.runTask(clientHandler);
             //t.setDaemon(true);
-            t.setName("NanoHttpd Request Processor (#" + this.requestCount + ")");
+            //t.setName("NanoHttpd Request Processor (#" + this.requestCount + ")");
             this.running.add(clientHandler);
             //t.start();
         }
@@ -2105,9 +2105,9 @@ public abstract class NanoHTTPD {
         this.myServerSocket.setReuseAddress(true);
 
         ServerRunnable serverRunnable = createServerRunnable(timeout);
-        this.myThread = Tools.loomThread(serverRunnable);
+        /*this.myThread =*/ Tools.runTask(serverRunnable);
         //this.myThread.setDaemon(daemon);
-        this.myThread.setName("NanoHttpd Main Listener");
+        //this.myThread.setName("NanoHttpd Main Listener");
         //this.myThread.start();
         while (!serverRunnable.hasBinded && serverRunnable.bindException == null) {
             try {

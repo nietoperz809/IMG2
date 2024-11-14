@@ -9,10 +9,12 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.awt.image.BufferedImage;
 import java.io.File;
+import java.util.concurrent.ArrayBlockingQueue;
+import java.util.concurrent.Future;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
-import java.util.concurrent.atomic.AtomicReference;
 
 public class AnimPlayerBox implements PlayerBox {
 
@@ -21,20 +23,21 @@ public class AnimPlayerBox implements PlayerBox {
     //private final AtomicReference<Image> currentFrame = new AtomicReference<>();
     private final boolean autoclose;
     private final VideoApp parent;
-    private boolean reverse = false;
     private final AtomicInteger sleepTime = new AtomicInteger(100);
-    private boolean saveFlag;
     private final JFrame window;
     private final File file;
+    private boolean reverse = false;
+    private boolean saveFlag;
+    private ArrayBlockingQueue<BufferedImage> __que = new ArrayBlockingQueue<>(1000);
+    private Future decoderTask = null;
 
-    public AnimPlayerBox (File file, VideoApp parent, AnimDecoder decoder,
-                          boolean close_when_finished) {
+    public AnimPlayerBox(File file, VideoApp parent, AnimDecoder decoder,
+                         boolean close_when_finished) {
         autoclose = close_when_finished;
         this.file = file;
         this.parent = parent;
-        decoder.read(file.getAbsolutePath());
-        int frameCount = decoder.getFrameCount();
-        System.out.println(frameCount);
+//        int frameCount = decoder.getFrameCount();
+//        System.out.println(frameCount);
 
         JLabel label = new JLabel();
         window = new javax.swing.JFrame();
@@ -52,6 +55,7 @@ public class AnimPlayerBox implements PlayerBox {
             public void windowClosing(WindowEvent e) {
                 stop();
             }
+
             @Override
             public void windowClosed(WindowEvent e) {
                 parent.clientDisposed();
@@ -85,26 +89,38 @@ public class AnimPlayerBox implements PlayerBox {
         });
 
         Tools.runTask(() -> {
+            int frameNum = 0;
             ImageIcon iic = new ImageIcon();
             label.setIcon(iic);
             while (!stopFlag.get()) {
-                for (int frameNum = 0; frameNum < frameCount && !stopFlag.get(); frameNum++) {
-                    if (!waitFlag.get()) {
-                        Image im2 = decoder.getFrame(reverse ? frameCount - 1 - frameNum : frameNum)
-                            .getScaledInstance(label.getWidth(), label.getHeight(),Image.SCALE_DEFAULT);
-                        if (saveFlag) {
-                            ImgTools.writeToFile(im2, "jpg", parent.snapDir,""+frameNum);
-                        }
-                        iic.setImage(im2);
-                        label.repaint();
-                        //label.setIcon(new ImageIcon(im2));
-                        Tools.delay(sleepTime.get());
+                if (!waitFlag.get()) {
+                    Image im2 = null;
+                    try {
+                        im2 = __que.take()
+                                .getScaledInstance(label.getWidth(), label.getHeight(), Image.SCALE_DEFAULT);
+                    } catch (InterruptedException e) {
+                        throw new RuntimeException(e);
                     }
+                    frameNum++;
+                    if (saveFlag) {
+                        ImgTools.writeToFile(im2, "jpg", parent.snapDir, "" + frameNum);
+                    }
+                    iic.setImage(im2);
+                    label.repaint();
+                    Tools.delay(sleepTime.get());
                 }
-                if (autoclose)
-                    stop();
             }
+            if (autoclose)
+                stop();
+            decoderTask.cancel(true);
+            __que.clear();
+            //Tools.gc_now();
             System.out.println("end thread");
+        });
+
+        decoderTask = Tools.runTask(() -> {
+            decoder.decodeFile(file.getAbsolutePath(), __que);
+            System.out.println("all frames decoded!");
         });
     }
 

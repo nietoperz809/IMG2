@@ -7,6 +7,7 @@ import java.awt.image.DataBufferInt;
 import java.io.*;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.concurrent.ArrayBlockingQueue;
 
 
 public class GifDecoder implements AnimDecoder {
@@ -100,13 +101,13 @@ public class GifDecoder implements AnimDecoder {
 //        return delay;
 //    }
 
-    /**
-     * Gets the number of frames read from file.
-     * @return frame count
-     */
-    public int getFrameCount() {
-        return frameCount;
-    }
+//    /**
+//     * Gets the number of frames read from file.
+//     * @return frame count
+//     */
+//    public int getFrameCount() {
+//        return frameCount;
+//    }
 
     /**
      * Gets the first (or only) image read.
@@ -309,13 +310,16 @@ public class GifDecoder implements AnimDecoder {
         return status;
     }
 
+    private ArrayBlockingQueue<BufferedImage> __que;
+
     /**
      * Reads GIF file from specified file/URL source
      * (URL assumed if name contains ":/" or "file:")
      *
      * @param name String containing source
      */
-    public void read(String name) {
+    public void decodeFile(String name, ArrayBlockingQueue<BufferedImage> outputQue) {
+        __que = outputQue;
         status = STATUS_OK;
         try {
             name = name.trim().toLowerCase();
@@ -693,7 +697,8 @@ public class GifDecoder implements AnimDecoder {
 
         setPixels(); // transfer pixel data to image
 
-        frames.add(new GifFrame(image, delay)); // add image to frame list
+        //frames.add(new GifFrame(image, delay)); // add image to frame list
+        __que.offer(image);
 
         if (transparency) {
             act[transIndex] = save;
