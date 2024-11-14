@@ -14,13 +14,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ddb69741-e020-4d21-a32f-f00e79c6818a" name="Changes" comment="added stopimage to queue if no more frames available">
+    <list default="true" id="ddb69741-e020-4d21-a32f-f00e79c6818a" name="Changes" comment="relatively stable version">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IMG2_jar/IMG2.jar" beforeDir="false" afterPath="$PROJECT_DIR$/IMG2_jar/IMG2.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IMG2_jar/runD.bat" beforeDir="false" afterPath="$PROJECT_DIR$/IMG2_jar/runD.bat" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/buildinfo/BuildInfo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/buildinfo/BuildInfo.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/buildinfo/build.number" beforeDir="false" afterPath="$PROJECT_DIR$/src/buildinfo/build.number" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/video/AnimDecoder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/video/AnimDecoder.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/video/AnimPlayerBox.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/video/AnimPlayerBox.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/video/GifDecoder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/video/GifDecoder.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/video/WebPDecoder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/video/WebPDecoder.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -568,7 +569,7 @@
       <option name="project" value="LOCAL" />
       <updated>1683976691765</updated>
     </task>
-    <option name="localTasksCounter" value="185" />
+    <option name="localTasksCounter" value="186" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -600,7 +601,6 @@
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_NEW_TODO" value="false" />
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="lineinput: bugfix" />
     <MESSAGE value="better gifplayer frame save" />
     <MESSAGE value="integrated webpdecoder, not yet tested" />
     <MESSAGE value="webp decoder is working" />
@@ -625,7 +625,8 @@
     <MESSAGE value="latest release" />
     <MESSAGE value="memorymon repaired" />
     <MESSAGE value="added stopimage to queue if no more frames available" />
-    <option name="LAST_COMMIT_MESSAGE" value="added stopimage to queue if no more frames available" />
+    <MESSAGE value="relatively stable version" />
+    <option name="LAST_COMMIT_MESSAGE" value="relatively stable version" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

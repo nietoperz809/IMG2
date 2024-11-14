@@ -17,38 +17,32 @@ import java.util.concurrent.Future;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import static video.AnimDecoder.stopImage;
+import static video.AnimDecoder.stopSymbol;
 
 public class AnimPlayerBox implements PlayerBox {
     private final AtomicBoolean waitFlag = new AtomicBoolean(false);
     //private final AtomicReference<Image> currentFrame = new AtomicReference<>();
     private final boolean autoclose;
-    private final VideoApp parent;
     private final AtomicInteger sleepTime = new AtomicInteger(100);
     private final JFrame window;
     private final File file;
-    private boolean reverse = false;
-    private boolean saveFlag;
     private final BlockingQueue<BufferedImage> __que = new ArrayBlockingQueue<>(20);
-    private Future decoderTask = null;
+    private boolean saveFlag;
+    private final Future decoderTask;
 
     public AnimPlayerBox(File file, VideoApp parent, AnimDecoder decoder,
                          boolean close_when_finished) {
         autoclose = close_when_finished;
         this.file = file;
-        this.parent = parent;
-//        int frameCount = decoder.getFrameCount();
-//        System.out.println(frameCount);
-
         JLabel label = new JLabel();
         window = new javax.swing.JFrame();
         window.setBackground(Color.orange);
         window.setLayout(new BorderLayout());
         window.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         window.getContentPane().add(label, BorderLayout.CENTER);
-        window.setSize(600, 600);
+        window.setSize(800, 800);
         window.setVisible(true);
-        window.setTitle("(p)photo (r)reverse, (+/-)faster/slower (s)wait");
+        window.setTitle("(p)photo, (+/-)faster/slower, (s)wait");
         window.setLocationRelativeTo(null); // center on screen
 
         window.addWindowListener(new WindowAdapter() {
@@ -68,9 +62,6 @@ public class AnimPlayerBox implements PlayerBox {
             @Override
             public void keyTyped(KeyEvent keyEvent) {
                 switch (keyEvent.getKeyChar()) {
-                    case 'r':
-                        reverse = !reverse;
-                        break;
                     case 's':
                         waitFlag.set(!waitFlag.get());
                         break;
@@ -101,7 +92,7 @@ public class AnimPlayerBox implements PlayerBox {
                     } catch (InterruptedException e) {
                         throw new RuntimeException(e);
                     }
-                    if(im2.equals(stopImage))
+                    if (im2.equals(stopSymbol))
                         break;
                     im2 = im2.getScaledInstance(label.getWidth(), label.getHeight(), Image.SCALE_DEFAULT);
 
@@ -121,13 +112,18 @@ public class AnimPlayerBox implements PlayerBox {
         });
 
         decoderTask = Tools.runTask(() -> {
-            decoder.decodeFile(file.getAbsolutePath(), __que);
-            try {
-                __que.put (stopImage);
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
+            while (true) {
+                decoder.decodeFile(file.getAbsolutePath(), __que);
+                System.out.println("all frames decoded!");
+                if (autoclose) {
+                    try {
+                        __que.put(stopSymbol);
+                    } catch (InterruptedException e) {
+                        throw new RuntimeException(e);
+                    }
+                    break;
+                }
             }
-            System.out.println("all frames decoded!");
         });
     }
 
@@ -139,7 +135,7 @@ public class AnimPlayerBox implements PlayerBox {
     public void stop() {
         SwingUtilities.invokeLater(() -> {
             try {
-                __que.put (stopImage);
+                __que.put(stopSymbol);
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
