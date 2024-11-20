@@ -21,8 +21,6 @@ import java.util.TreeSet;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.FutureTask;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipFile;
 
 public class Tools {
 
@@ -34,7 +32,7 @@ public class Tools {
 
     public static FutureTask<?> runTask(Runnable r) {
         FutureTask<?> ft = (FutureTask<?>) globalExecutor.submit(r);
-        System.out.println(ft.toString());
+        System.out.println(ft);
         return ft;
     }
 

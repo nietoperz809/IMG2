@@ -126,9 +126,7 @@ public class VideoPlayerBox implements PlayerBox {
                             paused = !paused;
                             lock.unlock();
                         }
-                        case 'r' -> {
-                            controls.skipTime(-1000);
-                        }
+                        case 'r' -> controls.skipTime(-1000);
                         case 'f' -> {
                             controls.skipTime(1000);
                         }
@@ -142,6 +140,7 @@ public class VideoPlayerBox implements PlayerBox {
                         }
                         case 'p' -> mpc.mediaPlayer().snapshots()
                                 .save(new File(parent.snapDir + File.separator + System.currentTimeMillis() + ".png"));
+                        default -> throw new IllegalStateException("Unexpected value: " + c);
                     }
                 }
             });

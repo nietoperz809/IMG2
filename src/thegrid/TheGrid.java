@@ -14,7 +14,6 @@ import java.io.File;
 import java.time.Duration;
 import java.time.Instant;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 import static common.ImgTools.byteArrayToImg;
 import static common.NumToText.*;

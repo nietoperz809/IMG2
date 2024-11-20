@@ -27,50 +27,54 @@ class GridImage extends JLabel {
         return thisID.rowid();
     }
 
-    void hide (List<String> tags) {
-        if (tags.isEmpty()) {
-            GridImage g;
-            for(;;) {
-                g = tempImgBuffer.poll();
-                if (g == null)
-                    break;
-                rootPane.add(g);
-            }
-            return;
-        }
-        boolean hidden = true;
-        for (String s : tags) {
-            if (s.equals(thisID.tag())) {
-                hidden = false;
-                break;
-            }
-        }
-        if (hidden) {
-            tempImgBuffer.add(this);
-            rootPane.remove(this);
-        }
-    }
+//    void hide (List<String> tags) {
+//        if (tags.isEmpty()) {
+//            GridImage g;
+//            for(;;) {
+//                g = tempImgBuffer.poll();
+//                if (g == null)
+//                    break;
+//                rootPane.add(g);
+//            }
+//            return;
+//        }
+//        boolean hidden = true;
+//        for (String s : tags) {
+//            if (s.equals(thisID.tag())) {
+//                hidden = false;
+//                break;
+//            }
+//        }
+//        if (hidden) {
+//            tempImgBuffer.add(this);
+//            rootPane.remove(this);
+//        }
+//    }
 
     private void init (TheGrid grid, int index, JPanel jp) {
         rootPane = jp;
         thisID = grid.imageL.get(index);
-        setToolTipText (thisID.name()+" -- right mouse button to delete");
+        setToolTipText (thisID.name()+" right mouse button to delete\n shift&rmb to renew thumb");
         setVerticalTextPosition(JLabel.BOTTOM);
         setHorizontalTextPosition(JLabel.CENTER);
-        String tag = thisID.tag() == null ? "": thisID.tag()+" : ";
-        setText(tag+thisID.rowid());
+        //String tag = thisID.tag() == null ? "": thisID.tag()+" : ";
+        setText(/*tag+*/ String.valueOf(thisID.rowid()));
         addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 if (e.getButton() == 3) { // right click
-                    if (!Tools.Question("Really delete "+thisID.rowid()+"?"))
+                    if (e.isShiftDown()) {
+                        DBHandler.getInst().createNewThumb(thisID.rowid());
+                        Tools.Info("New thumbnail created for: "+thisID.rowid());
                         return;
-                    if (DBHandler.getInst().deleteImage(thisID.rowid())) {
-                        rootPane.remove(GridImage.this);
-                        rootPane.doLayout();
-                        rootPane.repaint();
                     }
-                    return;
+                    if (Tools.Question("Really delete "+thisID.rowid()+"?")) {
+                        if (DBHandler.getInst().deleteImage(thisID.rowid())) {
+                            rootPane.remove(GridImage.this);
+                            rootPane.doLayout();
+                            rootPane.repaint();
+                        }
+                    }
                 }
                 ImageView iv = new ImageView (grid,index); // left click
                 grid.controller.add (iv);

@@ -5,8 +5,6 @@ import thegrid.MyFrame;
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class ProgressBox extends JDialog {
     private final JProgressBar progressBar;

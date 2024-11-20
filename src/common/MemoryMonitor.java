@@ -117,7 +117,7 @@ public class MemoryMonitor extends JPanel
         });
     }
 
-    public class Surface extends JPanel implements Runnable
+    public static class Surface extends JPanel implements Runnable
     {
         //public Thread thread;
         public long sleepAmount;
@@ -204,8 +204,8 @@ public class MemoryMonitor extends JPanel
 
             // .. Draw allocated and used strings ..
             big.setColor(GREEN);
-            big.drawString(valueOf((int) totalMemory / 1024) + "K allocated", 4.0f, (float) ascent + 0.5f);
-            usedStr = valueOf(((int) (totalMemory - freeMemory)) / 1024)
+            big.drawString((int) totalMemory / 1024 + "K allocated", 4.0f, (float) ascent + 0.5f);
+            usedStr = ((int) (totalMemory - freeMemory)) / 1024
                       + "K used";
             big.drawString(usedStr, 4, h - descent);
 

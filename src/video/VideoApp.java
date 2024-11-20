@@ -242,7 +242,7 @@ public class VideoApp extends JDialog {
     }
 
     private void onOK() {
-        SwingUtilities.invokeLater(() -> transferAndRun());
+        SwingUtilities.invokeLater(this::transferAndRun);
         //transferAndRun();
         //Tools.runTask(() -> transferAndRun());
     }
@@ -378,7 +378,7 @@ public class VideoApp extends JDialog {
      */
     static class MyCellRenderer extends JLabel implements ListCellRenderer<Object> {
 
-        VideoApp m_va;
+        final VideoApp m_va;
 
         MyCellRenderer(VideoApp va) {
             m_va = va;

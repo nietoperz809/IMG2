@@ -7,12 +7,12 @@ public class ImageViewController {
     private final ArrayList<ImageView> _list = new ArrayList<>();
 
     public void add(ImageView iv) {
-        System.out.println("ivm add: "+iv);
+        //System.out.println("ivm add: "+iv);
         _list.add(iv);
     }
 
     public void remove(ImageView iv) {
-        System.out.println("ivm remove: "+iv);
+        //System.out.println("ivm remove: "+iv);
         _list.remove(iv);
     }
 

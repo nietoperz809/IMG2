@@ -42,9 +42,7 @@ public class LineInput extends JDialog {
             dispose();
         });
 
-        addTags.addActionListener(e -> {
-            listToText();
-        });
+        addTags.addActionListener(e -> listToText());
 
         setContentPane(contentPane);
         contentPane.registerKeyboardAction(e -> onCancel(),
@@ -86,8 +84,7 @@ public class LineInput extends JDialog {
     }
 
     public static String tagList(String init, String lab, Color col) {
-        String ret = xmain(init, lab, col, null, true);
-        return ret;
+        return xmain(init, lab, col, null, true);
     }
 
     public static int onlyPosNumber(String init, String lab, Color col) {
