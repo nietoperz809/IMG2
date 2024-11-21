@@ -2,6 +2,7 @@
 <project version="4">
   <component name="AnalysisUIOptions">
     <option name="ANALYZE_INJECTED_CODE" value="false" />
+    <option name="SCOPE_TYPE" value="3" />
     <option name="CUSTOM_SCOPE_NAME" value="Selected directory" />
   </component>
   <component name="ArtifactsWorkspaceSettings">
@@ -13,24 +14,16 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ddb69741-e020-4d21-a32f-f00e79c6818a" name="Changes" comment="latest release">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+    <list default="true" id="ddb69741-e020-4d21-a32f-f00e79c6818a" name="Changes" comment="some improvements">
+      <change afterPath="$PROJECT_DIR$/src/common/DeferredFileDeleter.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/IMG2_jar/IMG2.jar" beforeDir="false" afterPath="$PROJECT_DIR$/IMG2_jar/IMG2.jar" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/buildinfo/BuildInfo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/buildinfo/BuildInfo.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/buildinfo/build.number" beforeDir="false" afterPath="$PROJECT_DIR$/src/buildinfo/build.number" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/common/MemoryMonitor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/common/MemoryMonitor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/common/NumToText.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/common/NumToText.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/common/ProgressBox.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/common/ProgressBox.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/common/Tools.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/common/Tools.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/dialogs/LineInput.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/dialogs/LineInput.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/dialogs/TagSelectorDlg.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/dialogs/TagSelectorDlg.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/dialogs/TextParamBox.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/dialogs/TextParamBox.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/database/DBHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/database/DBHandler.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/thegrid/GridImage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/thegrid/GridImage.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/thegrid/ImageViewController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/thegrid/ImageViewController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/thegrid/TheGrid.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/thegrid/TheGrid.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/video/VideoApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/video/VideoApp.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/video/VideoPlayerBox.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/video/VideoPlayerBox.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -579,7 +572,7 @@
       <option name="project" value="LOCAL" />
       <updated>1683976691765</updated>
     </task>
-    <option name="localTasksCounter" value="187" />
+    <option name="localTasksCounter" value="188" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -627,7 +620,6 @@
     <MESSAGE value="optimized blob length query" />
     <MESSAGE value="some enhancements" />
     <MESSAGE value="+speech output" />
-    <MESSAGE value="some improvements" />
     <MESSAGE value="update" />
     <MESSAGE value="startparam &quot;nopwd&quot; to suppress pwd box" />
     <MESSAGE value="+nanohttp as source code" />
@@ -636,7 +628,8 @@
     <MESSAGE value="added stopimage to queue if no more frames available" />
     <MESSAGE value="relatively stable version" />
     <MESSAGE value="latest release" />
-    <option name="LAST_COMMIT_MESSAGE" value="latest release" />
+    <MESSAGE value="some improvements" />
+    <option name="LAST_COMMIT_MESSAGE" value="some improvements" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

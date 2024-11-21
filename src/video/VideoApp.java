@@ -1,5 +1,6 @@
 package video;
 
+import common.DeferredFileDeleter;
 import common.NumToText;
 import common.Sam;
 import common.Tools;
@@ -358,9 +359,10 @@ public class VideoApp extends JDialog {
                                     DBHandler.getInst().addVideoFile(f);
                                     speak("Regular video added");
                                 }
-                                if (!f.delete()) {
-                                    speak("could not delete");
-                                }
+                                DeferredFileDeleter.getInst().put(f);
+//                                if (!f.delete()) {
+//                                    speak("could not delete");
+//                                }
                             }
                             setAndSortJListContent();
                             repaint();

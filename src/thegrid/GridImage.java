@@ -54,7 +54,8 @@ class GridImage extends JLabel {
     private void init (TheGrid grid, int index, JPanel jp) {
         rootPane = jp;
         thisID = grid.imageL.get(index);
-        setToolTipText (thisID.name()+" right mouse button to delete\n shift&rmb to renew thumb");
+        setToolTipText (thisID.name()+
+                " right mouse button to delete\n shift&rmb to renew thumb");
         setVerticalTextPosition(JLabel.BOTTOM);
         setHorizontalTextPosition(JLabel.CENTER);
         //String tag = thisID.tag() == null ? "": thisID.tag()+" : ";

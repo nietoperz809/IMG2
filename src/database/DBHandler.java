@@ -399,8 +399,8 @@ public class DBHandler {
             }
             insertImageRecord(name, img);
             ic.justInserted(img, name);
-            if (file.delete())
-                ret++;
+            DeferredFileDeleter.getInst().put(file);
+            ret++;
         }
         connection.commit();
         return ret;

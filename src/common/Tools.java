@@ -32,7 +32,7 @@ public class Tools {
 
     public static FutureTask<?> runTask(Runnable r) {
         FutureTask<?> ft = (FutureTask<?>) globalExecutor.submit(r);
-        System.out.println(ft);
+        //System.out.println(ft);
         return ft;
     }
 
