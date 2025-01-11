@@ -261,7 +261,7 @@ public class ImageView extends JFrame implements MouseWheelListener {
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         addKeyListener(new KA());
         addMouseWheelListener(this);
-        BufferedImage img = loadImgFromStore();
+        BufferedImage img = loadImgFromStore(true);
         assert img != null;
         imgPanel = new ImgPanel(grid,img, this);
         setTitle(toString());
@@ -312,7 +312,7 @@ public class ImageView extends JFrame implements MouseWheelListener {
             BufferedImage img;
 
             if (orig)
-                img = loadImgFromStore();
+                img = loadImgFromStore(false);
             else
                 img = ImgTools.removeAlpha(getIconImg());
 
@@ -399,8 +399,10 @@ public class ImageView extends JFrame implements MouseWheelListener {
 
     public String toString() {
         var v = grid.imageL.get(ring2.get());
+        BufferedImage bi = loadImgFromStore(false);
         return "IDX:" + ring2.get() + " ROWID:" +
                 v.rowid() + " TAG:" + v.tag() +
+                " -- x/y: "+bi.getWidth()+"/"+bi.getHeight()+
                 " -- ACC: "+DBHandler.getInst().getAccCounter(v.rowid());
     }
 
@@ -430,16 +432,17 @@ public class ImageView extends JFrame implements MouseWheelListener {
     }
 
     private void setImg() {
-        BufferedImage bimg = loadImgFromStore();
+        BufferedImage bimg = loadImgFromStore(true);
         imgPanel.setImage(bimg);
         setTitle(toString());
     }
 
-    private BufferedImage loadImgFromStore() {
+    private BufferedImage loadImgFromStore(boolean doInc) {
         try {
             var v = DBHandler.getInst();
             int id = grid.imageL.get(ring2.get()).rowid();
-            v.incAccCounter(id);
+            if (doInc)
+                v.incAccCounter(id);
             System.out.println("accC:"+v.getAccCounter(id));
             byte[] b = Objects.requireNonNull(v).loadImage(id);
             if (b == null) {
