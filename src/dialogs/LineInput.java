@@ -75,8 +75,9 @@ public class LineInput extends JDialog {
         //dialog.pack();
         if (hasTagList) {
             dialog.setUndecorated(false);
-            dialog.setSize(len + 50, 300);
-            dialog.repaint();
+            //dialog.setSize(len + 50, 300);
+            //dialog.repaint();
+            dialog.pack();
         }
         dialog.setLocationRelativeTo(null);
         dialog.setVisible(true);
