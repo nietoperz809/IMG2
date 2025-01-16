@@ -3,6 +3,7 @@ package dialogs;
 import database.DBHandler;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.TreeSet;
@@ -14,6 +15,7 @@ public class TagSelectorDlg extends JDialog {
     private JRadioButton radioAND;
     private JRadioButton radioOR;
     private JButton cancelButton;
+    private JPanel buttPanel;
     private boolean cancelled = false;
     private boolean andMode = true;
 
@@ -39,7 +41,6 @@ public class TagSelectorDlg extends JDialog {
     public static JList<String> open() {
         TagSelectorDlg dialog = new TagSelectorDlg();
         dialog.pack();
-        dialog.setLocationRelativeTo(null);
         dialog.setVisible(true);
         if (dialog.cancelled)
             return null;
@@ -59,5 +60,6 @@ public class TagSelectorDlg extends JDialog {
     private void createUIComponents() {
         TreeSet<String> tags = DBHandler.getInst().getImageTagList();
         list1 = new JList<>(tags.toArray(new String[0]));
+        //list1.setPreferredSize(new Dimension(300,300));
     }
 }

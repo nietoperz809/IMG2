@@ -322,8 +322,8 @@ public class ImageView extends JFrame implements MouseWheelListener {
             imgSavetime = milli;
 
             outPath = outPath+File.separator +
-                    rowid + "-" + milli
-                    + ".jpg";
+                    rowid + "- (" + img.getWidth()+"X"+img.getHeight()
+                    + ").jpg";
             try {
                 assert img != null;
                 boolean success = ImageIO.write(img, "jpg", new File(outPath));
@@ -443,7 +443,7 @@ public class ImageView extends JFrame implements MouseWheelListener {
             int id = grid.imageL.get(ring2.get()).rowid();
             if (doInc)
                 v.incAccCounter(id);
-            System.out.println("accC:"+v.getAccCounter(id));
+            //System.out.println("accC:"+v.getAccCounter(id));
             byte[] b = Objects.requireNonNull(v).loadImage(id);
             if (b == null) {
                 System.out.println("loadImgFromStore-1 fail!!!");

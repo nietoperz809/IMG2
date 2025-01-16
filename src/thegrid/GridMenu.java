@@ -24,6 +24,15 @@ public class GridMenu extends JMenuBar {
         JMenu jm = new JMenu("Menu");
         JMenuItem jmi;
 
+        jmi = new JMenuItem("Mail ...");
+        jmi.addActionListener(new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                EmailUtil.xmain(null);
+            }
+        });
+        jm.add(jmi);
+
         jmi = new JMenuItem("Speak Integer");
         jmi.addActionListener(new AbstractAction() {
             @Override
