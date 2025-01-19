@@ -14,16 +14,19 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ddb69741-e020-4d21-a32f-f00e79c6818a" name="Changes" comment="some improvements">
-      <change afterPath="$PROJECT_DIR$/src/common/DeferredFileDeleter.java" afterDir="false" />
+    <list default="true" id="ddb69741-e020-4d21-a32f-f00e79c6818a" name="Changes" comment="changed file name in save ops">
+      <change afterPath="$PROJECT_DIR$/lib/activation-1.1.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/javax.mail-1.5.5-javadoc.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/javax.mail-1.5.5.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IMG2.iml" beforeDir="false" afterPath="$PROJECT_DIR$/IMG2.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/IMG2_jar/IMG2.jar" beforeDir="false" afterPath="$PROJECT_DIR$/IMG2_jar/IMG2.jar" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/buildinfo/BuildInfo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/buildinfo/BuildInfo.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/buildinfo/build.number" beforeDir="false" afterPath="$PROJECT_DIR$/src/buildinfo/build.number" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/common/Tools.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/common/Tools.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/database/DBHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/database/DBHandler.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/thegrid/GridImage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/thegrid/GridImage.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/video/VideoApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/video/VideoApp.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/thegrid/ImageList.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/thegrid/ImageList.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/thegrid/ImageView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/thegrid/ImageView.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -113,11 +116,11 @@
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
     &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Libraries&quot;,
     &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
     &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
     &quot;run.code.analysis.last.selected.profile&quot;: &quot;aDefault&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;editor.reader.mode&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;com.jetbrains.python.configuration.PyIntegratedToolsModulesConfigurable&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
@@ -572,7 +575,7 @@
       <option name="project" value="LOCAL" />
       <updated>1683976691765</updated>
     </task>
-    <option name="localTasksCounter" value="188" />
+    <option name="localTasksCounter" value="192" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -604,9 +607,6 @@
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_NEW_TODO" value="false" />
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="better gifplayer frame save" />
-    <MESSAGE value="integrated webpdecoder, not yet tested" />
-    <MESSAGE value="webp decoder is working" />
     <MESSAGE value="some minor changes" />
     <MESSAGE value="new release" />
     <MESSAGE value="VideoApp dragdrop extended for multiple files" />
@@ -629,7 +629,10 @@
     <MESSAGE value="relatively stable version" />
     <MESSAGE value="latest release" />
     <MESSAGE value="some improvements" />
-    <option name="LAST_COMMIT_MESSAGE" value="some improvements" />
+    <MESSAGE value="list packed to display entire content" />
+    <MESSAGE value="diaplay raw img dimensions in title bar" />
+    <MESSAGE value="changed file name in save ops" />
+    <option name="LAST_COMMIT_MESSAGE" value="changed file name in save ops" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -656,6 +659,11 @@
           <url>file://$PROJECT_DIR$/src/httpserv/WebApp.java</url>
           <line>133</line>
           <option name="timeStamp" value="25" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/common/EmailUtil.java</url>
+          <line>24</line>
+          <option name="timeStamp" value="73" />
         </line-breakpoint>
         <breakpoint type="java-exception">
           <properties class="java.lang.NullPointerException" package="java.lang" />

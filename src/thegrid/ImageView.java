@@ -322,8 +322,8 @@ public class ImageView extends JFrame implements MouseWheelListener {
             imgSavetime = milli;
 
             outPath = outPath+File.separator +
-                    rowid + "- (" + img.getWidth()+"X"+img.getHeight()
-                    + ").jpg";
+                    rowid + "-" + img.getWidth()+"•"+img.getHeight()
+                    + ".jpg";
             try {
                 assert img != null;
                 boolean success = ImageIO.write(img, "jpg", new File(outPath));

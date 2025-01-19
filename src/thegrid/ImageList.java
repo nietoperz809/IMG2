@@ -62,13 +62,13 @@ public class ImageList {
 
     private boolean rec = false;
 
-    public void recoverThumbs() {
-        if (rec) return;
-        rec = true;
-        System.out.println("StartThumbRecovery!");
-        for (DBHandler.NameID elem : allFiles) {
-            System.out.println(elem.rowid());
-            DBHandler.getInst().createNewThumb(elem.rowid());
-        }
-    }
+//    public void recoverThumbs() {
+//        if (rec) return;
+//        rec = true;
+//        System.out.println("StartThumbRecovery!");
+//        for (DBHandler.NameID elem : allFiles) {
+//            System.out.println(elem.rowid());
+//            DBHandler.getInst().createNewThumb(elem.rowid());
+//        }
+//    }
 }

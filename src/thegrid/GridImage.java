@@ -14,7 +14,19 @@ import java.util.List;
 
 class GridImage extends JLabel {
 
-    private static final LinkedList<GridImage> tempImgBuffer = new LinkedList<>();
+    private static final LinkedList<GridImage> marked = new LinkedList<>();
+
+    final static Color markedColor = Color.RED;
+    final static Color unmarkedColor = null;
+
+    static public void unmarkAll() {
+        for (int i = 0; i < marked.size(); i++) {
+            GridImage img = marked.get(i);
+            img.setBackground(unmarkedColor);
+            //img.repaint();
+        }
+        marked.clear();
+    }
 
     private final byte[] imgHash;
     private DBHandler.NameID thisID;
@@ -27,29 +39,6 @@ class GridImage extends JLabel {
         return thisID.rowid();
     }
 
-//    void hide (List<String> tags) {
-//        if (tags.isEmpty()) {
-//            GridImage g;
-//            for(;;) {
-//                g = tempImgBuffer.poll();
-//                if (g == null)
-//                    break;
-//                rootPane.add(g);
-//            }
-//            return;
-//        }
-//        boolean hidden = true;
-//        for (String s : tags) {
-//            if (s.equals(thisID.tag())) {
-//                hidden = false;
-//                break;
-//            }
-//        }
-//        if (hidden) {
-//            tempImgBuffer.add(this);
-//            rootPane.remove(this);
-//        }
-//    }
 
     private void init (TheGrid grid, int index, JPanel jp) {
         rootPane = jp;
@@ -60,10 +49,14 @@ class GridImage extends JLabel {
         setHorizontalTextPosition(JLabel.CENTER);
         //String tag = thisID.tag() == null ? "": thisID.tag()+" : ";
         setText(/*tag+*/ String.valueOf(thisID.rowid()));
+//        ///  test
+//        setOpaque(true);
+//        setBackground(Color.RED);
+//        ///
         addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                if (e.getButton() == 3) { // right click
+                if (e.getButton() == MouseEvent.BUTTON3) { // right click
                     if (e.isShiftDown()) {
                         DBHandler.getInst().createNewThumb(thisID.rowid());
                         Tools.Info("New thumbnail created for: "+thisID.rowid());
@@ -77,8 +70,23 @@ class GridImage extends JLabel {
                         }
                     }
                 }
-                ImageView iv = new ImageView (grid,index); // left click
-                grid.controller.add (iv);
+                // left click
+                else if (e.getButton() == MouseEvent.BUTTON1) {
+                    if (e.isControlDown()) {
+                        setOpaque(true);
+                        if (getBackground() == markedColor) {
+                            setBackground(unmarkedColor);
+                            marked.remove(GridImage.this);
+                        } else {
+                            setBackground(markedColor);
+                            marked.add(GridImage.this);
+                        }
+                        return;
+                    }
+                    ImageView iv = new ImageView(grid, index);
+                    unmarkAll();
+                    grid.controller.add(iv);
+                }
             }
         });
     }
