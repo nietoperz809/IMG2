@@ -13,13 +13,11 @@ import common.*;
 import database.DBHandler;
 import dialogs.LineInput;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
 import java.awt.image.RescaleOp;
-import java.io.File;
 import java.io.IOException;
 import java.util.Objects;
 
@@ -306,6 +304,7 @@ public class ImageView extends JFrame implements MouseWheelListener {
 
     private long imgSavetime;
 
+
     public void saveImageAsFile (boolean orig, String outPath) {
         if (outPath != null) {
             int rowid = grid.imageL.get(ring2.get()).rowid();
@@ -321,18 +320,7 @@ public class ImageView extends JFrame implements MouseWheelListener {
                 return;
             imgSavetime = milli;
 
-            outPath = outPath+File.separator +
-                    rowid + "-" + img.getWidth()+"•"+img.getHeight()
-                    + ".jpg";
-            try {
-                assert img != null;
-                boolean success = ImageIO.write(img, "jpg", new File(outPath));
-                if (!success)
-                    System.err.println("imgIO write fail ");
-            } catch (Exception ex) {
-                System.err.println("imgIO write fail "+ex);
-                throw new RuntimeException(ex);
-            }
+            ImgTools.saveImg2Disk(img, rowid, outPath);
         }
     }
 

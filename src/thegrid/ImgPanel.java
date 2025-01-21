@@ -40,34 +40,6 @@ public class ImgPanel extends JPanel {
         image = img;
         theView = parent;
         setSize(img.getWidth(), img.getHeight());
-
-        setToolTipText
-                ("<html>+/- - scale<br>" +
-                        "1,2 - gamma<br>" +
-                        "3,4 - change contrast<br>"+
-                        "5,6,7 - denoise, dilate, oilpaint<br>"+
-                        "8,9.0 - erode, bloom, histogramEQ<br>" +
-                        "y, ctrl-y - heatmap<br>" +
-                        "right mouse - set watermark<br>"+
-                        "a - tagger<br>" +
-                        "ctrl+c - copy to clipboard<br>" +
-                        "ctrl+z - undo<br>" +
-                        "r - rotate<br>" +
-                        "c - change img in database<br>" +
-                        "n - go to specific rowid<br>" +
-                        "page up/down - load next/prev image<br>" +
-                        "up/down/left/right - move image<br>" +
-                        "w,h - scale to width or height<br>" +
-                        "l - reload<br>" +
-                        "esc - close window<br>" +
-                        "s - slideshow<br>" +
-                        "f - save original img to file<br>"+
-                        "g - save manipulated img to file<br>"+
-                        "x - sharpen<br>"+
-                        "t - random image forward<br>" +
-                        "z - random image backwardt<br>" +
-                        "d - delete from database<br>" +
-                        "m - mirror</html>");
     }
 
     /**

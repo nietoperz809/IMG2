@@ -62,14 +62,14 @@ public class Denoise {
      * Get the Image path
      */
 
-    /**
-     * Get a buffered Image
-     * @return
-     */
-    public BufferedImage getBufferedImage() {
-        // TODO return the image
-        return image;
-    }
+//    /**
+//     * Get a buffered Image
+//     * @return
+//     */
+//    public BufferedImage getBufferedImage() {
+//        // TODO return the image
+//        return image;
+//    }
 
     /**
      * Return the image object
@@ -85,19 +85,19 @@ public class Denoise {
             perform_denoise_average();
         }
 
-    /**
-     * Perform the laplace based denoise
-     */
-    public void laplace_denoise() {
-        // TODO call for denoising using laplacian filter
-
-        // set the filetype string and if found, render the image
-        if (image != null) {
-            // if the path points to an image perform denoise
-            perform_denoise();
-
-        }
-    }
+//    /**
+//     * Perform the laplace based denoise
+//     */
+//    public void laplace_denoise() {
+//        // TODO call for denoising using laplacian filter
+//
+//        // set the filetype string and if found, render the image
+//        if (image != null) {
+//            // if the path points to an image perform denoise
+//            perform_denoise();
+//
+//        }
+//    }
 
     /**
      * Perform an average denoise

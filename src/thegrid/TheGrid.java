@@ -81,7 +81,7 @@ public class TheGrid extends MyFrame {
         setLocationRelativeTo(null);
         rootPane.setToolTipText(imageL.size() + " Images, press 'a' to add more");
         new GridListeners(this);
-        new GridMenu(this);
+        new GridMenuBar(this);
         // Action ...
         imageCount = 0;
         startTime = Instant.now();

@@ -689,7 +689,6 @@ public class DBHandler {
 
     }
 
-
     public ThumbHash loadThumbnail (int rowid) {
         String q = "select thumb from IMAGES where _rowid_ =" + rowid;
         try (ResultSet res = query(q)) {

@@ -124,12 +124,10 @@ public class Tools {
                 JOptionPane.ERROR_MESSAGE);
     }
 
-
     public static void Info(String msg) {
         JOptionPane.showMessageDialog(null, msg, "Info",
                 JOptionPane.PLAIN_MESSAGE);
     }
-
 
     public static boolean Question(String msg) {
         Object response = JOptionPane.showInputDialog(null,

@@ -15,9 +15,11 @@ import java.util.List;
 class GridImage extends JLabel {
 
     private static final LinkedList<GridImage> marked = new LinkedList<>();
-
     final static Color markedColor = Color.RED;
     final static Color unmarkedColor = null;
+    private final byte[] imgHash;
+    private DBHandler.NameID thisID;
+    private JPanel rootPane;
 
     static public void unmarkAll() {
         for (int i = 0; i < marked.size(); i++) {
@@ -28,17 +30,22 @@ class GridImage extends JLabel {
         marked.clear();
     }
 
-    private final byte[] imgHash;
-    private DBHandler.NameID thisID;
-    private JPanel rootPane;
+    static public GridImage[] getMarked() {
+        return marked.toArray(new GridImage[0]);
+    }
+
 
     public byte[] getHash() {
         return imgHash;
     }
+
     public int getRowID() {
         return thisID.rowid();
     }
 
+    public boolean isMarked() {
+        return getBackground() == markedColor;
+    }
 
     private void init (TheGrid grid, int index, JPanel jp) {
         rootPane = jp;
@@ -47,12 +54,8 @@ class GridImage extends JLabel {
                 " right mouse button to delete\n shift&rmb to renew thumb");
         setVerticalTextPosition(JLabel.BOTTOM);
         setHorizontalTextPosition(JLabel.CENTER);
-        //String tag = thisID.tag() == null ? "": thisID.tag()+" : ";
-        setText(/*tag+*/ String.valueOf(thisID.rowid()));
-//        ///  test
-//        setOpaque(true);
-//        setBackground(Color.RED);
-//        ///
+        setText (String.valueOf(thisID.rowid()));
+
         addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {

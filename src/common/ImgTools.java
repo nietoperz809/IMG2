@@ -18,6 +18,26 @@ import java.security.MessageDigest;
 import static common.Tools.hasExtension;
 
 public class ImgTools {
+    /**
+     * save IMG zo Disk
+     * @param img the Image
+     * @param anum arbitrary ID
+     * @param outPath path were the Img goes
+     */
+    public static void saveImg2Disk (BufferedImage img, int anum, String outPath) {
+        outPath = outPath+File.separator +
+                anum + "-" + img.getWidth()+"•"+img.getHeight()
+                + ".jpg";
+        try {
+            boolean success = ImageIO.write(img, "jpg", new File(outPath));
+            if (!success)
+                System.err.println("imgIO write fail ");
+        } catch (Exception ex) {
+            System.err.println("imgIO write fail "+ex);
+            throw new RuntimeException(ex);
+        }
+    }
+
     private record TransferableImage(Image i) implements Transferable, ClipboardOwner {
         @Override
         public Object getTransferData(DataFlavor flavor)

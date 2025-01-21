@@ -2,10 +2,7 @@ package thegrid;
 
 import common.*;
 import database.DBHandler;
-import dialogs.LineInput;
-import dialogs.LogBox;
-import dialogs.MonitorFrame;
-import dialogs.TagSelectorDlg;
+import dialogs.*;
 import httpserv.WebApp;
 import video.VideoApp;
 
@@ -15,14 +12,52 @@ import java.awt.*;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.event.ActionEvent;
+import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.IOException;
 import java.util.Arrays;
+import java.util.Objects;
 
 
-public class GridMenu extends JMenuBar {
-    public GridMenu(TheGrid theGrid) {
+public class GridMenuBar extends JMenuBar {
+    public GridMenuBar(TheGrid theGrid) {
         JMenu jm = new JMenu("Menu");
         JMenuItem jmi;
+
+        JMenu menu2 = new JMenu ("Marked ...");
+        jmi = new JMenuItem("Save to Disk");
+        jmi.addActionListener(new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                GridImage[] marked = GridImage.getMarked();
+                if (marked.length == 0) {
+                    Tools.Error("none element marked");
+                    return;
+                }
+                var v = DBHandler.getInst();
+                String outPath = Tools.chooseDir(GridMenuBar.this);
+                for (GridImage gi : marked) {
+                    int id = gi.getRowID();
+                    byte[] b = Objects.requireNonNull(v).loadImage(id);
+                    try {
+                        BufferedImage b2 = ImgTools.byteArrayToImg (b);
+                        ImgTools.saveImg2Disk(b2, id, outPath);
+                    } catch (IOException ex) {
+                        throw new RuntimeException(ex);
+                    }
+                }
+                GridImage.unmarkAll();
+            }
+        });
+        menu2.add (jmi);
+        jm.add(menu2);
+
+        jmi = new JMenuItem("Instructions ...");
+        jmi.addActionListener(new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {Manual.start();            }
+        });
+        jm.add(jmi);
 
         jmi = new JMenuItem("Mail ...");
         jmi.addActionListener(new AbstractAction() {
@@ -177,7 +212,7 @@ public class GridMenu extends JMenuBar {
         jmi.addActionListener(new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                worker_for_5x();
+                worker_for_tagList();
             }
         });
         jm.add(jmi);
@@ -284,7 +319,7 @@ public class GridMenu extends JMenuBar {
         return m3;
     }
 
-    private void worker_for_5x() {
+    private void worker_for_tagList() {
         JList<String> jlist = TagSelectorDlg.open();
         if (jlist == null) // cancelled
             return;
