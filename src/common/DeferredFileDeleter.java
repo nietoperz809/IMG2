@@ -21,7 +21,7 @@ public class DeferredFileDeleter {
                 try {
                     File f = __que.take();
                     Tools.runTask(() ->
-                            System.out.println(f.delete() ? "delete: " : "fail " +f));
+                            System.out.println((f.delete() ? "delete: " : "fail ") +f));
                 } catch (InterruptedException e) {
                     throw new RuntimeException(e);
                 }

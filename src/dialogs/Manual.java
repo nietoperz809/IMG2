@@ -7,14 +7,11 @@ import javax.swing.text.*;
 import java.awt.*;
 
 public class Manual extends JFrame {
-    private JPanel contentPane;
-    private JButton dismissButton;
+    private JScrollPane contentPane;
     private JTextPane textPane1;
 
     public Manual() {
         setContentPane(contentPane);
-        getRootPane().setDefaultButton(dismissButton);
-        dismissButton.addActionListener(e -> dispose());
     }
 
     public static void start() {
@@ -24,23 +21,17 @@ public class Manual extends JFrame {
         StyleConstants.setAlignment(center, StyleConstants.ALIGN_CENTER);
         doc.setParagraphAttributes(0, doc.getLength(), center, false);
         dialog.textPane1.setContentType("text/html");
-        dialog.loadPage("manual.html");
+        try {
+            dialog.textPane1.setText (new String (Tools.extractResource("manual.html")));
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
         dialog.textPane1.setEditable(false);
 
         dialog.pack();
         //dialog.setResizable(false);
         dialog.setLocationRelativeTo(null);
         dialog.setVisible(true);
-    }
-
-
-    private void loadPage(String name) {
-        try {
-            textPane1.setText (new String (Tools.extractResource("manual.html")));
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-        textPane1.setCaretPosition(0);
     }
 
     {
@@ -58,19 +49,11 @@ public class Manual extends JFrame {
      * @noinspection ALL
      */
     private void $$$setupUI$$$() {
-        contentPane = new JPanel();
-        contentPane.setLayout(new BorderLayout(0, 0));
+        contentPane = new JScrollPane();
         contentPane.setMinimumSize(new Dimension(350, 500));
         contentPane.setPreferredSize(new Dimension(350, 500));
-        dismissButton = new JButton();
-        dismissButton.setText("Dismiss");
-        contentPane.add(dismissButton, BorderLayout.SOUTH);
-        final JScrollPane scrollPane1 = new JScrollPane();
-        scrollPane1.setMinimumSize(new Dimension(400, 500));
-        scrollPane1.setPreferredSize(new Dimension(400, 500));
-        contentPane.add(scrollPane1, BorderLayout.CENTER);
         textPane1 = new JTextPane();
-        scrollPane1.setViewportView(textPane1);
+        contentPane.setViewportView(textPane1);
     }
 
     /**

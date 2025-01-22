@@ -13,6 +13,7 @@ import java.nio.MappedByteBuffer;
 import java.nio.channels.FileChannel;
 import java.nio.file.*;
 import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.sql.*;
 import java.text.SimpleDateFormat;
 import java.time.Duration;
@@ -72,6 +73,8 @@ public class DBHandler {
             sql = "alter table GIFS add if not exists BLOBSiZE INT";
             statement.execute(sql);
             sql = "alter table WEBP add if not exists BLOBSiZE INT";
+            statement.execute(sql);
+            sql = "alter table IMAGES add if not exists HASHVAL blob(16)";
             statement.execute(sql);
 
             sql = "create table if not exists LOG " +
@@ -451,10 +454,18 @@ public class DBHandler {
         try {
             img = ImgTools.removeAlpha(img);
             byte[] buff = ImgTools.imgToByteArray(img);
+            MessageDigest md5Maker = null;
+            try {
+                md5Maker = MessageDigest.getInstance("MD5");
+            } catch (NoSuchAlgorithmException e) {
+                throw new RuntimeException(e);
+            }
+            md5Maker.update(buff);
             PreparedStatement prep;
             prep = connection.prepareStatement(
-                    "update IMAGES set image=? where _rowid_ = "+id);
+                    "update IMAGES set image=?,hashval=? where _rowid_ = "+id);
             prep.setBytes(1, buff);
+            prep.setBytes(2, md5Maker.digest());
             prep.execute();
             connection.commit();
         } catch (Exception e) {
@@ -497,12 +508,20 @@ public class DBHandler {
      */
     private void insertImageRecord (byte[] img, byte[] thumb, String name) {
         PreparedStatement prep;
+        MessageDigest md5Maker = null;
+        try {
+            md5Maker = MessageDigest.getInstance("MD5");
+        } catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException(e);
+        }
+        md5Maker.update(img);
         try {
             prep = connection.prepareStatement(
-                    "insert into IMAGES (image,thumb,name) values (?,?,?)");
+                    "insert into IMAGES (image,thumb,name,hashval) values (?,?,?,?)");
             prep.setBytes(1, img);
             prep.setBytes(2, thumb);
             prep.setString(3, name);
+            prep.setBytes(4, md5Maker.digest());
             prep.execute();
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -747,11 +766,38 @@ public class DBHandler {
         return -1;
     }
 
-    public byte[] loadImage (int rowid) {
-        String q = "select image from IMAGES where _rowid_ =" + rowid;
+    public byte[] loadImgHash (int rowid) {
+        String q = "select hashval from IMAGES where _rowid_ =" + rowid;
         try (ResultSet res = query(q)) {
             if (res.next()) {
                 return res.getBytes(1);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        throw new RuntimeException("no hash");
+    }
+
+    public byte[] loadImage (int rowid) {
+        String q = "select image, hashval from IMAGES where _rowid_ =" + rowid;
+        try (ResultSet res = query(q)) {
+            if (res.next()) {
+                byte[] img = res.getBytes(1);
+                byte[] hash = res.getBytes(2);
+                if (hash == null) { // create hash if missing
+                    MessageDigest md5Maker = null;
+                    try {
+                        md5Maker = MessageDigest.getInstance("MD5");
+                    } catch (NoSuchAlgorithmException e) {
+                        throw new RuntimeException(e);
+                    }
+                    md5Maker.update(img);
+                    PreparedStatement prep = connection.prepareStatement(
+                            "update IMAGES set hashval=? where _rowid_ = "+rowid);
+                    prep.setBytes(1, md5Maker.digest());
+                    prep.execute();
+                }
+                return img;
             }
         } catch (SQLException e) {
             //System.out.println(e);
@@ -759,6 +805,21 @@ public class DBHandler {
         }
         return null;
     }
+
+    ///   ///////////////////////
+//    public void make_all_hashes() { // 11626
+//        for (int s=0; s<11627; s++) {
+//            byte[] img = loadImage(s);
+//            if (s%100 == 0) {
+//                System.out.println(s);
+//            }
+//        }
+//    }
+//
+//    public static void main(String[] args) {
+//        getInst().make_all_hashes();
+//    }
+// / /////////////////////////
 
     public record NameID(String name, int rowid, String tag) {
         @Override
