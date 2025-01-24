@@ -41,7 +41,7 @@ public class WebApp extends NanoHTTPD {
      */
     public WebApp() {
         super(80);
-        allFiles = DBHandler.getInst().loadImageInfosTopDown(TheGrid.mainSQL.get().substring(0,42));
+        allFiles = DBHandler.loadImageInfosTopDown(TheGrid.mainSQL.get().substring(0,42));
         ring = new UniqueRng(allFiles.size(), false);
 
         try {
@@ -159,13 +159,13 @@ public class WebApp extends NanoHTTPD {
         if (uri.equals("/")) {
             return sendDirectory();
         } else if (uri.endsWith(".tmb")) {
-            DBHandler.ThumbHash tbh = DBHandler.getInst().loadThumbnail(rowid);
+            DBHandler.ThumbHash tbh = DBHandler.loadThumbnail(rowid);
             return sendImageBytes(tbh.bt);
         } else if (uri.endsWith(".lnk")) {
             System.out.println("send linkpage: "+rowid);
             return sendImagePage(rowid);
         } else if (uri.endsWith(".jpg")) {
-            byte[] bytes = DBHandler.getInst().loadImage(rowid);
+            byte[] bytes = DBHandler.loadImage(rowid);
 
             /////////////////
             System.out.println("send img2: "+rowid);

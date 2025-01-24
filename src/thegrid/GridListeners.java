@@ -26,9 +26,9 @@ public class GridListeners implements KeyListener {
                     g.dispose();
                     return;
                 }
-                DBHandler.getInst().log("--- TheGrid ended");
+                DBHandler.log("--- TheGrid ended");
                 super.windowClosing(e);
-                DBHandler.getInst().close();
+                DBHandler.close();
                 System.exit(1);
             }
         });

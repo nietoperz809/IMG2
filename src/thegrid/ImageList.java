@@ -16,8 +16,7 @@ public class ImageList {
     public java.util.List<DBHandler.NameID> allFiles;
 
     public void refresh() {
-        allFiles = requireNonNull(DBHandler.getInst())
-                .loadImageInfosTopDown(this.sql);
+        allFiles = DBHandler.loadImageInfosTopDown(this.sql);
         //recoverThumbs();
     }
 

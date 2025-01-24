@@ -90,10 +90,10 @@ public class ImageView extends JFrame implements MouseWheelListener {
 
                 case KeyEvent.VK_J -> {
                     int id = grid.imageL.get(ring2.get()).rowid();
-                    String init = ""+DBHandler.getInst().getAccCounter(id);
+                    String init = ""+DBHandler.getAccCounter(id);
                     int res = LineInput.onlyPosNumber(init, "new acc counter for: "+id,
                     Color.orange);
-                    DBHandler.getInst().setAccCounter(id, res);
+                    DBHandler.setAccCounter(id, res);
                 }
 
                 case KeyEvent.VK_R -> {
@@ -163,7 +163,7 @@ public class ImageView extends JFrame implements MouseWheelListener {
 
                 case KeyEvent.VK_D -> {
                     if (Tools.Question("Delete image from DB?")) {
-                        Objects.requireNonNull(DBHandler.getInst()).deleteImage(grid.imageL.get(ring2.get()).rowid());
+                        DBHandler.deleteImage(grid.imageL.get(ring2.get()).rowid());
                     }
                 }
 
@@ -187,11 +187,10 @@ public class ImageView extends JFrame implements MouseWheelListener {
 
                 case KeyEvent.VK_A -> {
                     int rowid = grid.imageL.get(ring2.get()).rowid();
-                    String tag = LineInput.tagList(
-                                    Objects.requireNonNull(DBHandler.getInst()).getTag(rowid), "Tag:", Color.YELLOW)
+                    String tag = LineInput.tagList(DBHandler.getTag(rowid), "Tag:", Color.YELLOW)
                             .trim().toLowerCase();
                     if (!tag.isEmpty())
-                        DBHandler.getInst().setTag(rowid, tag);
+                        DBHandler.setTag(rowid, tag);
                 }
 
                 case KeyEvent.VK_5 -> { // denoise
@@ -227,7 +226,7 @@ public class ImageView extends JFrame implements MouseWheelListener {
                         int id = grid.imageL.get(ring2.get()).rowid();
                         if (Tools.Question("Replace image #" + id)) {
                             BufferedImage img = getIconImg();
-                            Objects.requireNonNull(DBHandler.getInst()).changeBigImg(img, id);
+                            DBHandler.changeBigImg(img, id);
                         }
                     }
                 }
@@ -239,7 +238,7 @@ public class ImageView extends JFrame implements MouseWheelListener {
                         return;
                     BufferedImage img = getIconImg();
                     try {
-                        DBHandler.getInst().insertImageRecord(name, img);
+                        DBHandler.insertImageRecord(name, img);
                     } catch (IOException ex) {
                         throw new RuntimeException(ex);
                     }
@@ -391,7 +390,7 @@ public class ImageView extends JFrame implements MouseWheelListener {
         return "IDX:" + ring2.get() + " ROWID:" +
                 v.rowid() + " TAG:" + v.tag() +
                 " -- x/y: "+bi.getWidth()+"/"+bi.getHeight()+
-                " -- ACC: "+DBHandler.getInst().getAccCounter(v.rowid());
+                " -- ACC: "+DBHandler.getAccCounter(v.rowid());
     }
 
     private void showByIdx() {
@@ -427,12 +426,11 @@ public class ImageView extends JFrame implements MouseWheelListener {
 
     private BufferedImage loadImgFromStore(boolean doInc) {
         try {
-            var v = DBHandler.getInst();
             int id = grid.imageL.get(ring2.get()).rowid();
             if (doInc)
-                v.incAccCounter(id);
+                DBHandler.incAccCounter(id);
             //System.out.println("accC:"+v.getAccCounter(id));
-            byte[] b = Objects.requireNonNull(v).loadImage(id);
+            byte[] b = DBHandler.loadImage(id);
             if (b == null) {
                 System.out.println("loadImgFromStore-1 fail!!!");
                 return TheGrid.failImg;

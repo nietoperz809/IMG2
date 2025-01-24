@@ -5,7 +5,7 @@ import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 
 public class DeferredFileDeleter {
-    private final BlockingQueue<File> __que = new ArrayBlockingQueue<>(100);
+    private static final BlockingQueue<File> __que = new ArrayBlockingQueue<>(100);
     private static DeferredFileDeleter singleton;
 
     public static DeferredFileDeleter getInst() {
@@ -29,7 +29,7 @@ public class DeferredFileDeleter {
         });
     }
 
-    public void put (File f) {
+    public static void put(File f) {
         try {
             __que.put(f);
         } catch (InterruptedException e) {

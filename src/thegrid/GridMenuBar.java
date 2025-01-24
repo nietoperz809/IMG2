@@ -15,8 +15,11 @@ import java.awt.event.ActionEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Objects;
+
+import static java.util.Objects.requireNonNull;
 
 
 public class GridMenuBar extends JMenuBar {
@@ -24,7 +27,7 @@ public class GridMenuBar extends JMenuBar {
         JMenu jm = new JMenu("Menu");
         JMenuItem jmi;
 
-        JMenu menu2 = new JMenu ("Marked ...");
+        JMenu menu2 = new JMenu("Marked ...");
         jmi = new JMenuItem("Save to Disk");
         jmi.addActionListener(new AbstractAction() {
             @Override
@@ -34,13 +37,12 @@ public class GridMenuBar extends JMenuBar {
                     Tools.Error("none element marked");
                     return;
                 }
-                var v = DBHandler.getInst();
                 String outPath = Tools.chooseDir(GridMenuBar.this);
                 for (GridImage gi : marked) {
                     int id = gi.getRowID();
-                    byte[] b = Objects.requireNonNull(v).loadImage(id);
+                    byte[] b = DBHandler.loadImage(id);
                     try {
-                        BufferedImage b2 = ImgTools.byteArrayToImg (b);
+                        BufferedImage b2 = ImgTools.byteArrayToImg(b);
                         ImgTools.saveImg2Disk(b2, id, outPath);
                     } catch (IOException ex) {
                         throw new RuntimeException(ex);
@@ -49,13 +51,15 @@ public class GridMenuBar extends JMenuBar {
                 GridImage.unmarkAll();
             }
         });
-        menu2.add (jmi);
+        menu2.add(jmi);
         jm.add(menu2);
 
         jmi = new JMenuItem("Instructions ...");
         jmi.addActionListener(new AbstractAction() {
             @Override
-            public void actionPerformed(ActionEvent e) {Manual.start();            }
+            public void actionPerformed(ActionEvent e) {
+                Manual.start();
+            }
         });
         jm.add(jmi);
 
@@ -72,7 +76,7 @@ public class GridMenuBar extends JMenuBar {
         jmi.addActionListener(new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                int num = LineInput.onlyPosNumber("","Num", Color.MAGENTA);
+                int num = LineInput.onlyPosNumber("", "Num", Color.MAGENTA);
                 String s = NumToText.convert(num);
                 Sam.speak(s);
             }
@@ -92,8 +96,8 @@ public class GridMenuBar extends JMenuBar {
         jmi.addActionListener(new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                DBHandler.getInst().log("--- TheGrid ended");
-                DBHandler.getInst().close();
+                DBHandler.log("--- TheGrid ended");
+                DBHandler.close();
                 try {
                     Tools.delay(600);
                     TheGrid.restartApplication();
@@ -111,7 +115,7 @@ public class GridMenuBar extends JMenuBar {
                 String sql = LineInput.xmain(TheGrid.mainSQL.get().substring(0, 42),
                         "direct SQL", Color.BLUE);
                 if (!sql.isEmpty()) {
-                    boolean b = DBHandler.getInst().execSQL(sql);
+                    boolean b = DBHandler.execSQL(sql);
                     System.out.println(b);
                 }
             }
@@ -189,7 +193,7 @@ public class GridMenuBar extends JMenuBar {
         jmi.addActionListener(new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                DBHandler.getInst().backup();
+                DBHandler.backup();
             }
         });
         jm.add(jmi);
@@ -274,48 +278,39 @@ public class GridMenuBar extends JMenuBar {
 
     private JMenuItem searchDupes(boolean searchOnly, TheGrid theGrid, String text) {
         JMenuItem m3 = new JMenuItem(text);
+//        m3.addActionListener(new AbstractAction() {
+//            @Override
+//            public void actionPerformed(ActionEvent e) {
+//                StringBuilder sb = new StringBuilder();
+//                ArrayList<Integer> rod = DBHandler.getImgRowids();
+//                for (int i = 0; i < rod.size(); i++) {
+//                    byte[] h1 = DBHandler.loadImgHash(rod.get(i));
+//                    if (h1 == null)
+//                        continue;
+//                    for (int j = i + 1; j < rod.size(); j++) {
+//                        byte[] h2 = DBHandler.loadImgHash(rod.get(j));
+//                        if (h2 == null)
+//                            continue;
+//                        if (Arrays.equals(h1,h2)) {
+//                            System.out.println("dupe!"+rod.get(i)+"--"+rod.get(j));
+//                        }
+//                    }
+//                }
+//            }
+//        });
+
         m3.addActionListener(new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                StringBuilder sb = new StringBuilder();
-                Component[] components = theGrid.rootPane.getComponents();
-                if (components.length != theGrid.imageL.allFiles.size()) {
-                    String mess = "Please restart and wait until all " + theGrid.imageL.allFiles.size() + " tiles are loaded!";
-                    int res = JOptionPane.showConfirmDialog(theGrid, mess, "Warn!", JOptionPane.YES_NO_OPTION);
-                    if (res == 0) /*OK*/ {
-                        System.exit(-1);
-                    }
-                    return;
+                SwingUtilities.invokeLater(() -> {
+                    DBHandler.main(null);
+                    for (int s = 1; s < 10; s++)
+                        DBHandler.loadImgHash(s);
                 }
-                GridImage g1, g2;
-                for (int i = 0; i < components.length; i++) {
-                    for (int j = i + 1; j < components.length; j++) {
-                        g1 = (GridImage) components[i];
-                        g2 = (GridImage) components[j];
-                        byte[] h1 = g1.getHash();
-                        byte[] h2 = g2.getHash();
-                        if (Arrays.equals(h1, h2)) {
-                            sb.append(g1.getRowID()).append(":")
-                                    .append(g2.getRowID()).append(" * ");
-                            if (!searchOnly) {
-                                if (DBHandler.getInst().deleteImage(g2.getRowID())) {
-                                    theGrid.rootPane.remove(g2);
-                                }
-                            }
-                        }
-                    }
-                }
-                theGrid.rootPane.doLayout();
-                theGrid.rootPane.repaint();
-                String msg;
-                if (sb.isEmpty()) {
-                    msg = "No duplicates!";
-                } else {
-                    msg = sb.toString();
-                }
-                JOptionPane.showMessageDialog(theGrid, msg, "Search result", JOptionPane.INFORMATION_MESSAGE);
+                );
             }
         });
+
         return m3;
     }
 

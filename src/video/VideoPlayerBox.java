@@ -71,7 +71,7 @@ public class VideoPlayerBox implements PlayerBox {
         try {
             speed = new UpDown(new float[]{0.01f, 0.1f, 0.3f, 1.0f, 2.0f, 3.0f, 5.0f}, 3);
             sbar.setValue(0);
-            File tempFile = Objects.requireNonNull(DBHandler.getInst()).transferVideoIntoFile(nid);
+            File tempFile = DBHandler.transferVideoIntoFile(nid);
             System.out.println(tempFile);
             mpc = new EmbeddedMediaPlayerComponent();
             playerFrame = new JFrame();

@@ -115,11 +115,11 @@ public class VideoApp extends JDialog {
                 return;
             }
             if (gifList.contains(nameid)) {
-                DBHandler.getInst().deleteGif(nameid.rowid());
+                DBHandler.deleteGif(nameid.rowid());
             } else if (webpList.contains(nameid)) {
-                DBHandler.getInst().deleteWEBP(nameid.rowid());
+                DBHandler.deleteWEBP(nameid.rowid());
             } else {
-                DBHandler.getInst().deleteVideo(nameid.rowid());
+                DBHandler.deleteVideo(nameid.rowid());
             }
             setAndSortJListContent();
             repaint();
@@ -135,11 +135,11 @@ public class VideoApp extends JDialog {
                     File f = fileChooser.getSelectedFile();
                     SoftReference<byte[]> bt;
                     if (gifList.contains(nameid)) {
-                        bt = DBHandler.getInst().loadGifBytes(nameid);
+                        bt = DBHandler.loadGifBytes(nameid);
                     } else if (webpList.contains(nameid)) {
-                        bt = DBHandler.getInst().loadWEBPBytes(nameid);
+                        bt = DBHandler.loadWEBPBytes(nameid);
                     } else {
-                        bt = DBHandler.getInst().loadVideoBytes(nameid);
+                        bt = DBHandler.loadVideoBytes(nameid);
                     }
                     Files.write(f.toPath(), bt.get());
                 }
@@ -154,11 +154,11 @@ public class VideoApp extends JDialog {
             if (res.isEmpty())
                 return;
             if (gifList.contains(nameid)) {
-                DBHandler.getInst().changeGifName(res, nameid.rowid());
+                DBHandler.changeGifName(res, nameid.rowid());
             } else if (webpList.contains(nameid)) {
-                DBHandler.getInst().changeWebpName(res, nameid.rowid());
+                DBHandler.changeWebpName(res, nameid.rowid());
             } else {
-                DBHandler.getInst().changeVideoName(res, nameid.rowid());
+                DBHandler.changeVideoName(res, nameid.rowid());
             }
             setAndSortJListContent();
         });
@@ -195,11 +195,11 @@ public class VideoApp extends JDialog {
                     DBHandler.NameID nid = listControl.getSelectedValue();
                     String len = null;
                     if (videoList.contains(nid))
-                        len = DBHandler.getInst().getVideoBlobLen(nid);
+                        len = DBHandler.getVideoBlobLen(nid);
                     else if (gifList.contains(nid))
-                        len = DBHandler.getInst().getGifBlobLen(nid);
+                        len = DBHandler.getGifBlobLen(nid);
                     else if (webpList.contains(nid))
-                        len = DBHandler.getInst().getWEBPBlobLen(nid);
+                        len = DBHandler.getWEBPBlobLen(nid);
                     Sam.speak(NumToText.convert(len) + " Bites");
                     String flen = NumberFormat.getNumberInstance(Locale.GERMAN)
                             .format(Double.parseDouble(len));
@@ -258,14 +258,14 @@ public class VideoApp extends JDialog {
             nid = listControl.getSelectedValue();
         }
         if (gifList.contains(nid)) try {
-            File f = DBHandler.getInst().transferGifIntoFile(nid);
+            File f = DBHandler.transferGifIntoFile(nid);
             playerBox = new AnimPlayerBox(f, this,
                     new GifDecoder(), checkBoxAC.isSelected());
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
         else if (webpList.contains(nid)) try {
-            File f = DBHandler.getInst().transferwEBPIntoFile(nid);
+            File f = DBHandler.transferwEBPIntoFile(nid);
             playerBox = new AnimPlayerBox(f, this,
                     new WebPDecoder(), checkBoxAC.isSelected());
         } catch (Exception e) {
@@ -293,9 +293,9 @@ public class VideoApp extends JDialog {
     private void onCancel() {
         if (playerBox == null)
             return;
-        DBHandler.getInst().cancelFileTransfer();
+        DBHandler.cancelFileTransfer();
         playerBox.stop();
-        DBHandler.getInst().cancelFileTransfer();
+        DBHandler.cancelFileTransfer();
     }
 
     private void listToListControl(List<DBHandler.NameID> list) {
@@ -310,12 +310,12 @@ public class VideoApp extends JDialog {
      */
     private void setAndSortJListContent() {
         entireList.clear();
-        videoList = DBHandler.getInst().getVideoFileNames();
+        videoList = DBHandler.getVideoFileNames();
         //------------------
-        //String test = DBHandler.getInst().getVideoBlobLen(videoList.get(0));
+        //String test = DBHandler.getVideoBlobLen(videoList.get(0));
         //------------------
-        gifList = DBHandler.getInst().getGifFileNames();
-        webpList = DBHandler.getInst().getWebPFileNames();
+        gifList = DBHandler.getGifFileNames();
+        webpList = DBHandler.getWebPFileNames();
         entireList.addAll(videoList);
         entireList.addAll(gifList);
         entireList.addAll(webpList);
@@ -350,16 +350,16 @@ public class VideoApp extends JDialog {
                             java.util.List<File> files = (java.util.List<File>) transferable.getTransferData(flavor);
                             for (File f : files) {
                                 if (Tools.isGIF(f.getPath())) {
-                                    DBHandler.getInst().addGifFile(f);
+                                    DBHandler.addGifFile(f);
                                     speak("GIF file added");
                                 } else if (Tools.isWEBP(f.getPath())) {
-                                    DBHandler.getInst().addWebPFile(f);
+                                    DBHandler.addWebPFile(f);
                                     speak("WEBP file added");
                                 } else {
-                                    DBHandler.getInst().addVideoFile(f);
+                                    DBHandler.addVideoFile(f);
                                     speak("Regular video added");
                                 }
-                                DeferredFileDeleter.getInst().put(f);
+                                DeferredFileDeleter.put(f);
 //                                if (!f.delete()) {
 //                                    speak("could not delete");
 //                                }

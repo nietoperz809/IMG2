@@ -61,12 +61,12 @@ class GridImage extends JLabel {
             public void mouseClicked(MouseEvent e) {
                 if (e.getButton() == MouseEvent.BUTTON3) { // right click
                     if (e.isShiftDown()) {
-                        DBHandler.getInst().createNewThumb(thisID.rowid());
+                        DBHandler.createNewThumb(thisID.rowid());
                         Tools.Info("New thumbnail created for: "+thisID.rowid());
                         return;
                     }
                     if (Tools.Question("Really delete "+thisID.rowid()+"?")) {
-                        if (DBHandler.getInst().deleteImage(thisID.rowid())) {
+                        if (DBHandler.deleteImage(thisID.rowid())) {
                             rootPane.remove(GridImage.this);
                             rootPane.doLayout();
                             rootPane.repaint();

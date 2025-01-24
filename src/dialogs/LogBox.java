@@ -17,7 +17,7 @@ public class LogBox {
         textArea1.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                DBHandler.getInst().reduceLog();
+                DBHandler.reduceLog();
                 fillTextArea();
             }
         });
@@ -36,7 +36,7 @@ public class LogBox {
 
     private void fillTextArea() {
         textArea1.setText("");
-        ArrayList<DBHandler.LogMessage> al = DBHandler.getInst().getLog();
+        ArrayList<DBHandler.LogMessage> al = DBHandler.getLog();
         for (DBHandler.LogMessage lm: al) {
             textArea1.append(lm.toString());
         }

@@ -35,19 +35,15 @@ public class DBHandler {
     private static final String DB_FILE = "mydb";
     private static final String DB_FILE_FULL = DB_FILE + ".mv.db";
     private static String ROOT_DIR = "C:\\Databases\\";
-    private static DBHandler _inst = null;
-    private Connection connection;
-    private Statement statement;
+    private static Connection connection;
+    private static Statement statement;
     /*
         jdbc:h2:C:\peter.home\java\IMG2\datastore\mydb;CIPHER=AES
      */
-    private volatile boolean _backupIsRunning;
-    private Future transferTask;
+    private static volatile boolean _backupIsRunning;
+    private static Future transferTask;
 
-    /**
-     * Private constructor like Singletons should have
-     */
-    private DBHandler() {
+    static {
         PersistString pers = new PersistString("pwddb", NO_PASS);
         try {
             String aes_pwd;
@@ -112,23 +108,7 @@ public class DBHandler {
 
     public static void setDBRoot(String s) {
         ROOT_DIR = s;
-        getInst().log ("DBROOT set to:"+s);
-    }
-
-    /**
-     * get access to the DB
-     *
-     * @return the one and only DB handler
-     */
-    public static DBHandler getInst() {
-        if (_inst == null) {
-            _inst = new DBHandler();
-        }
-        if (_inst._backupIsRunning) {
-            Sam.speak("backup is running.");
-            return null;
-        }
-        return _inst;
+        log ("DBROOT set to:"+s);
     }
 
     /**
@@ -146,7 +126,7 @@ public class DBHandler {
         ) != 0;
     }
 
-    public boolean execSQL (String sql) {
+    public static boolean execSQL(String sql) {
         try {
             return statement.execute(sql);
         } catch (SQLException e) {
@@ -154,7 +134,7 @@ public class DBHandler {
         }
     }
 
-    public void close() {
+    public static void close() {
         try {
             connection.close();
             //_inst = null;
@@ -163,7 +143,7 @@ public class DBHandler {
         }
     }
 
-    public synchronized ResultSet query(String txt) {
+    public static synchronized ResultSet query(String txt) {
         try {
             return statement.executeQuery(txt);
         } catch (SQLException e) {
@@ -171,15 +151,15 @@ public class DBHandler {
         }
     }
 
-    public void log (String str) {
-        try {
-            statement.execute("insert into LOG(entry) values ('"+str+"')");
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+    public static void log (String str) {
+//        try {
+//            statement.execute("insert into LOG(entry) values ('"+str+"')");
+//        } catch (SQLException e) {
+//            throw new RuntimeException(e);
+//        }
     }
 
-    public void reduceLog () {
+    public static void reduceLog () {
         try {
             statement.execute("delete from log where _rowid_ < (select max (_rowid_)-50 from log)");
         } catch (SQLException e) {
@@ -187,7 +167,7 @@ public class DBHandler {
         }
     }
 
-    public String getVersion() {
+    public static String getVersion() {
         String sql = "select H2VERSION()";
         try (ResultSet res = query(sql)) {
             if (res.next())
@@ -198,7 +178,7 @@ public class DBHandler {
         }
     }
 
-    public ArrayList<LogMessage> getLog() {
+    public static ArrayList<LogMessage> getLog() {
         String sql = "select * from LOG order by ltime";
         ArrayList<LogMessage> al = new ArrayList<>();
         try (ResultSet res = query(sql)) {
@@ -212,31 +192,46 @@ public class DBHandler {
         return al;
     }
 
-    public List<NameID> loadImageInfosTopDown(String eSQL) {
+    public static List<NameID> loadImageInfosTopDown(String eSQL) {
         List<NameID> res = getNames (Objects.requireNonNull(eSQL));
         res.sort(comp);
         return res;
     }
 
-    public List<NameID> getFileNames (String dbname) {
-        String sql = "select name,_ROWID_,tag from "+dbname+" order by _ROWID_ asc";
+    public ArrayList<Integer> getImgRowids() {
+        ArrayList<Integer> li = new ArrayList<>();
+        String sql = "select _ROWID_ from IMAGES order by _ROWID_ asc";
+        try (ResultSet res = query(sql)) {
+            if (res == null)
+                return li;
+            while (res.next()) {
+                li.add(res.getInt(1));
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return li;
+    }
+
+    public static List<NameID> getFileNames(String dbname) {
+        String sql = "select name,_ROWID_,tag from " + dbname + " order by _ROWID_ asc";
         return getNames(sql);
     }
 
-    public List<NameID> getVideoFileNames() {
+    public static List<NameID> getVideoFileNames() {
 
         return getFileNames("VIDEOS");
     }
 
-    public List<NameID> getGifFileNames() {
+    public static List<NameID> getGifFileNames() {
         return getFileNames("GIFS");
     }
 
-    public List<NameID> getWebPFileNames() {
+    public static List<NameID> getWebPFileNames() {
         return getFileNames("WEBP");
     }
 
-    private synchronized List<NameID> getNames(String sql) {
+    private static synchronized List<NameID> getNames(String sql) {
         ArrayList<NameID> al = new ArrayList<>();
         try (ResultSet res = query(sql)) {
             if (res == null)
@@ -253,7 +248,7 @@ public class DBHandler {
         return al;
     }
 
-    public boolean deleteImage (int rowid) {
+    public static boolean deleteImage(int rowid) {
         if (askForDel(String.valueOf(rowid))) {
             return false;
         }
@@ -266,19 +261,19 @@ public class DBHandler {
         }
     }
 
-    public void deleteVideo (int rowid) {
+    public static void deleteVideo(int rowid) {
         deleteGifOrVideo("VIDEOS", rowid);
     }
 
-    public void deleteGif (int rowid) {
+    public static void deleteGif(int rowid) {
         deleteGifOrVideo("GIFS", rowid);
     }
 
-    public void deleteWEBP (int rowid) {
+    public static void deleteWEBP(int rowid) {
         deleteGifOrVideo("WEBP", rowid);
     }
 
-    public boolean deleteGifOrVideo (String tablename, int rowid) {
+    public static boolean deleteGifOrVideo(String tablename, int rowid) {
         if (askForDel(String.valueOf(rowid))) {
             return false;
         }
@@ -291,7 +286,7 @@ public class DBHandler {
         }
     }
 
-    public void setTag (int rowid, String... tag) {
+    public static void setTag(int rowid, String... tag) {
         if (tag.length == 0)
             return;
         StringBuilder sb = new StringBuilder();
@@ -308,7 +303,7 @@ public class DBHandler {
         }
     }
 
-    public String getTag (int rowid) {
+    public static String getTag(int rowid) {
         String strres = null;
         try {
             try (ResultSet res = query("select tag from IMAGES where _ROWID_ = " + rowid)) {
@@ -322,7 +317,7 @@ public class DBHandler {
         return strres;
     }
 
-    public TreeSet<String> getImageTagList() {
+    public static TreeSet<String> getImageTagList() {
         TreeSet<String> ll = new TreeSet<>();
         try {
             try (ResultSet res = query("select tag from IMAGES")) {
@@ -340,7 +335,7 @@ public class DBHandler {
         return ll;
     }
 
-    public void backup() {
+    public static void backup() {
         final String timeStamp = new SimpleDateFormat("yyyy-MM-dd HH-mm-ss")
                 .format(new java.util.Date());
         final String dest = ROOT_DIR + timeStamp + ".backup";
@@ -370,7 +365,6 @@ public class DBHandler {
                 throw new RuntimeException(e);
             } finally {
                 _backupIsRunning = false;
-                _inst = null;
                 Instant end = Instant.now();
                 String msg = "DB backup took: " + Duration.between(startTime, end).toSeconds() + " Seconds";
                 Tools.Info(msg);
@@ -391,7 +385,7 @@ public class DBHandler {
      * @param ic Callback object after insertion into DB
      * @throws Exception if smth. went wrong
      */
-    public int MoveImageFilesToDB (File[] files, InsertCallback ic) throws Exception {
+    public static int MoveImageFilesToDB(File[] files, InsertCallback ic) throws Exception {
         int ret = 0;
         for (File file : files) {
             String name = UUID.randomUUID().toString();
@@ -415,17 +409,17 @@ public class DBHandler {
      * @param img th image
      * @throws IOException if smth. gone wrong
      */
-    public void insertImageRecord (String name, BufferedImage img) throws IOException {
+    public static void insertImageRecord(String name, BufferedImage img) throws IOException {
         BufferedImage big = ImageScaler.scaleExact(img,
                 new Dimension (img.getWidth(), img.getWidth()));
         byte[] buff = ImgTools.imgToByteArray(big);
         BufferedImage thumbnailImage = ImageScaler.scaleExact(img,
                 new Dimension(100, 100));
         byte[] buff2 = ImgTools.imgToByteArray(thumbnailImage);
-        insertImageRecord(buff, buff2, name);
+        stat_insertImageRecord(buff, buff2, name);
     }
 
-    public void createNewThumb (int id) {
+    public static void createNewThumb(int id) {
         try {
             byte[] bigbytes = loadImage(id);
             BufferedImage bigImg = ImgTools.byteArrayToImg(bigbytes);
@@ -450,7 +444,7 @@ public class DBHandler {
         }
     }
 
-    public void changeBigImg (BufferedImage img, int id) {
+    public static void changeBigImg(BufferedImage img, int id) {
         try {
             img = ImgTools.removeAlpha(img);
             byte[] buff = ImgTools.imgToByteArray(img);
@@ -473,7 +467,7 @@ public class DBHandler {
         }
     }
 
-    public void addVideoFile (File file) {
+    public static void addVideoFile(File file) {
         try {
             byte[] fileContent = Files.readAllBytes(file.toPath());
             insertVideoRecord(fileContent, file.getName());
@@ -482,7 +476,7 @@ public class DBHandler {
         }
     }
 
-    public void addGifFile (File file) {
+    public static void addGifFile(File file) {
         try {
             byte[] fileContent = Files.readAllBytes(file.toPath());
             insertGifRecord(fileContent, file.getName());
@@ -491,7 +485,7 @@ public class DBHandler {
         }
     }
 
-    public void addWebPFile (File file) {
+    public static void addWebPFile(File file) {
         try {
             byte[] fileContent = Files.readAllBytes(file.toPath());
             insertWEBPRecord(fileContent, file.getName());
@@ -506,7 +500,7 @@ public class DBHandler {
      * @param thumb thumbnail as byte array
      * @param name record name
      */
-    private void insertImageRecord (byte[] img, byte[] thumb, String name) {
+    private static void stat_insertImageRecord(byte[] img, byte[] thumb, String name) {
         PreparedStatement prep;
         MessageDigest md5Maker = null;
         try {
@@ -528,7 +522,7 @@ public class DBHandler {
         }
     }
 
-    private void insertVideoRecord (byte[] vid, String name) {
+    private static void insertVideoRecord(byte[] vid, String name) {
         PreparedStatement prep;
         try {
             prep = connection.prepareStatement(
@@ -542,7 +536,7 @@ public class DBHandler {
         }
     }
 
-    private void insertGifRecord (byte[] gif, String name) {
+    private static void insertGifRecord(byte[] gif, String name) {
         PreparedStatement prep;
         try {
             prep = connection.prepareStatement(
@@ -556,7 +550,7 @@ public class DBHandler {
         }
     }
 
-    private void insertWEBPRecord (byte[] webp, String name) {
+    private static void insertWEBPRecord(byte[] webp, String name) {
         PreparedStatement prep;
         try {
             prep = connection.prepareStatement(
@@ -570,7 +564,7 @@ public class DBHandler {
         }
     }
 
-    public String querySingleValue(String sql) {
+    public static String querySingleValue(String sql) {
         ResultSet res = query(sql);
         if (res == null)
             throw new RuntimeException("no query results");
@@ -586,10 +580,9 @@ public class DBHandler {
         throw new RuntimeException("no query results");
     }
 
-    public SoftReference<byte[]> loadBytes (String sql) throws Exception {
+    public static SoftReference<byte[]> loadBytes(String sql) throws Exception {
         //String filename = nid.name.replace("'", "''");
-        ResultSet res = DBHandler.getInst()
-                .query(sql);
+        ResultSet res = query(sql);
         if (res == null)
             throw new RuntimeException("no query results");
         if (res.next()) {
@@ -600,7 +593,7 @@ public class DBHandler {
         throw new RuntimeException("no query results");
     }
 
-    public String queryBlobLen(DBHandler.NameID nid, String table, String blobentry) {
+    public static String queryBlobLen(DBHandler.NameID nid, String table, String blobentry) {
         String s = querySingleValue("select BLOBSIZE from "+table+" where _ROWID_='" + nid.rowid + "'");
         if (s == null) {
             s = querySingleValue("select LENGTH("+blobentry+") from "+table+" where _ROWID_='" + nid.rowid + "'");
@@ -609,35 +602,35 @@ public class DBHandler {
         return s;
     }
 
-    public SoftReference<byte[]> loadVideoBytes (DBHandler.NameID nid) throws Exception {
+    public static SoftReference<byte[]> loadVideoBytes(DBHandler.NameID nid) throws Exception {
         return loadBytes ("select VID from VIDEOS where _ROWID_='" + nid.rowid + "'");
     }
 
-    public SoftReference<byte[]> loadGifBytes (DBHandler.NameID nid) throws Exception {
+    public static SoftReference<byte[]> loadGifBytes(DBHandler.NameID nid) throws Exception {
         return loadBytes("select GIFDATA from GIFS where _ROWID_='"+nid.rowid +"'");
     }
 
-    public SoftReference<byte[]> loadWEBPBytes (DBHandler.NameID nid) throws Exception {
+    public static SoftReference<byte[]> loadWEBPBytes(DBHandler.NameID nid) throws Exception {
         return loadBytes("select WEBPDATA from WEBP where _ROWID_='"+nid.rowid +"'");
     }
 
-    public String getVideoBlobLen(DBHandler.NameID nid) {
+    public static String getVideoBlobLen(DBHandler.NameID nid) {
         return queryBlobLen(nid, "VIDEOS", "VID");
     }
 
-    public String getGifBlobLen(DBHandler.NameID nid) {
+    public static String getGifBlobLen(DBHandler.NameID nid) {
         return queryBlobLen(nid, "GIFS", "GIFDATA");
     }
 
-    public String getWEBPBlobLen(DBHandler.NameID nid){
+    public static String getWEBPBlobLen(DBHandler.NameID nid){
         return queryBlobLen(nid, "WEBP", "WEBPDATA");
     }
 
-    public void cancelFileTransfer() {
+    public static void cancelFileTransfer() {
         transferTask.cancel(true);
     }
 
-    public File transferIntoFile (DBHandler.NameID nid, String type) throws Exception {
+    public static File transferIntoFile (DBHandler.NameID nid, String type) throws Exception {
         AtomicReference<File> f = new AtomicReference<>();
         transferTask = Tools.runTask(() -> {
             try {
@@ -654,7 +647,7 @@ public class DBHandler {
      * @return file name of file on disk
      * @throws Exception if smth gone wrong
      */
-    private File transferIntoFileInternal (DBHandler.NameID nid, String type) throws Exception {
+    private static File transferIntoFileInternal(DBHandler.NameID nid, String type) throws Exception {
         SoftReference<byte[]> bt = switch (type) {
             case "GIF" -> loadGifBytes(nid);
             case "WEBP" -> loadWEBPBytes(nid);
@@ -673,32 +666,32 @@ public class DBHandler {
     }
 
 
-    public File transferGifIntoFile (DBHandler.NameID nid) throws Exception {
+    public static File transferGifIntoFile(DBHandler.NameID nid) throws Exception {
         return transferIntoFile (nid, "GIF");
     }
 
-    public File transferwEBPIntoFile (DBHandler.NameID nid) throws Exception {
+    public static File transferwEBPIntoFile(DBHandler.NameID nid) throws Exception {
         return transferIntoFile (nid, "WEBP");
     }
 
 
-    public File transferVideoIntoFile (DBHandler.NameID nid) throws Exception {
+    public static File transferVideoIntoFile(DBHandler.NameID nid) throws Exception {
         return transferIntoFile(nid,"VID");
     }
 
-    public void changeVideoName (String name, int rowid) {
+    public static void changeVideoName(String name, int rowid) {
         changeName("VIDEOS", name, rowid);
     }
 
-    public void changeGifName (String name, int rowid) {
+    public static void changeGifName(String name, int rowid) {
         changeName("GIFS", name, rowid);
     }
 
-    public void changeWebpName (String name, int rowid) {
+    public static void changeWebpName(String name, int rowid) {
         changeName("WEBP", name, rowid);
     }
 
-    public void changeName (String table, String name, int rowid) {
+    public static void changeName(String table, String name, int rowid) {
         String sql = "update "+table+" set name ='"+name+"' where _rowid_ ="+rowid;
         try {
             statement.execute(sql);
@@ -708,7 +701,7 @@ public class DBHandler {
 
     }
 
-    public ThumbHash loadThumbnail (int rowid) {
+    public static ThumbHash loadThumbnail(int rowid) {
         String q = "select thumb from IMAGES where _rowid_ =" + rowid;
         try (ResultSet res = query(q)) {
             if (res.next()) {
@@ -726,7 +719,7 @@ public class DBHandler {
         return null;
     }
 
-    public void incAccCounter (int rowid) {
+    public static void incAccCounter (int rowid) {
         String sql = "update IMAGES set ACCNUM = (ACCNUM + 1) where _rowid_ =" + rowid;
         try {
             statement.execute (sql);
@@ -736,7 +729,7 @@ public class DBHandler {
         }
     }
 
-    public void setAccCounter (int rowid, int val) {
+    public static void setAccCounter (int rowid, int val) {
         String sql = "update IMAGES set ACCNUM = "+ val + " where _rowid_ =" + rowid;
         try {
             statement.execute (sql);
@@ -747,7 +740,7 @@ public class DBHandler {
     }
 
 
-    public int getAccCounter (int rowid) {
+    public static int getAccCounter (int rowid) {
         String q = "select ACCNUM from IMAGES where _rowid_ =" + rowid;
         try (ResultSet res = query(q)) {
             if (res.next()) {
@@ -766,19 +759,28 @@ public class DBHandler {
         return -1;
     }
 
-    public byte[] loadImgHash (int rowid) {
-        String q = "select hashval from IMAGES where _rowid_ =" + rowid;
-        try (ResultSet res = query(q)) {
+    public static byte[] loadImgHash (int rowid) {
+        String q = "select hashval from IMAGES where _rowid_ = " + rowid;
+        try {
+            Statement stm = connection.createStatement();
+            ResultSet res = stm.executeQuery(q);
+
+            //stm.close();
             if (res.next()) {
-                return res.getBytes(1);
+                byte[] xout;
+                xout = res.getBytes(1);
+                System.out.println(rowid+"--"+Arrays.toString(xout));
+                return xout;
             }
+            System.out.println("no res");
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        throw new RuntimeException("no hash");
+        return null;
     }
 
-    public byte[] loadImage (int rowid) {
+
+    public static byte[] loadImage(int rowid) {
         String q = "select image, hashval from IMAGES where _rowid_ =" + rowid;
         try (ResultSet res = query(q)) {
             if (res.next()) {
@@ -816,9 +818,10 @@ public class DBHandler {
 //        }
 //    }
 //
-//    public static void main(String[] args) {
-//        getInst().make_all_hashes();
-//    }
+    public static void main(String[] args) {
+        for (int s=1;s<10;s++)
+            loadImgHash(s);
+    }
 // / /////////////////////////
 
     public record NameID(String name, int rowid, String tag) {

@@ -70,7 +70,7 @@ public class TheGrid extends MyFrame {
         setTitle(dbRoot);
         imageL.setSQL(sql);
         System.out.println("TheGrid constructor called");
-        DBHandler.getInst().log("Images in DB: "+this.imageL.size());
+        DBHandler.log("Images in DB: "+this.imageL.size());
         progress = new ProgressBox(this, this.imageL.size());
         rootPane = new JPanel();
         scrollPane = new JScrollPane(rootPane);
@@ -100,7 +100,7 @@ public class TheGrid extends MyFrame {
 
     public static void main(String... input) {
 //        Thread hook = new Thread(() ->
-//                DBHandler.getInst().log("SHUTDOWN"));
+//                DBHandler.log("SHUTDOWN"));
 //        Runtime.getRuntime().addShutdownHook(hook);
 
         Tools.hideConsoleWindow();
@@ -121,12 +121,12 @@ public class TheGrid extends MyFrame {
             if (askPwd)
                 Tools.AskforPWD();
 
-            DBHandler.getInst().log("+++ TheGrid started");
+            DBHandler.log("+++ TheGrid started");
             new TheGrid (mainSQL.get(), dbRoot);
             System.out.println("end main");
         } catch (Exception e) {
             System.out.println("FAIL: " + e);
-            DBHandler.getInst().log("FAIL: " + e);
+            DBHandler.log("FAIL: " + e);
         }
     }
 
@@ -148,7 +148,7 @@ public class TheGrid extends MyFrame {
     }
 
     public void addImageFilesToDatabase(File[] files) throws Exception {
-        int numadd = requireNonNull(DBHandler.getInst()).MoveImageFilesToDB(files, (img, name) -> {
+        int numadd = DBHandler.MoveImageFilesToDB(files, (img, name) -> {
             BufferedImage thumbnailImage = ImageScaler.scaleExact(img,
                     new Dimension(100, 100));
             GridImage lab = new GridImage(this, thumbnailImage, rootPane, name);
@@ -165,7 +165,7 @@ public class TheGrid extends MyFrame {
         scrollPane.getViewport().setView(rootPane);
         if (this.thisInstCount == 1)
             setTitle (getTitle()+ " " + BuildInfo.buildInfo +
-                    " -- "+info+" -- H2:"+DBHandler.getInst().getVersion());
+                    " -- "+info+" -- H2:"+DBHandler.getVersion());
         else
             setTitle (imageL.getSql());
         setVisible(true);
@@ -179,12 +179,12 @@ public class TheGrid extends MyFrame {
         int rowid = imageL.get(s).rowid();
         DBHandler.ThumbHash tbh = null;
         try {
-            tbh = requireNonNull(DBHandler.getInst()).loadThumbnail(rowid);
+            tbh = DBHandler.loadThumbnail(rowid);
         } catch (Exception e) {
             System.err.println("thumb read fail: " + rowid);
 //            int id = imageL.get(s).rowid();
-//            DBHandler.getInst().createNewThumb(id);
-//            tbh = DBHandler.getInst().loadThumbnail(rowid);
+//            DBHandler.createNewThumb(id);
+//            tbh = DBHandler.loadThumbnail(rowid);
         }
         GridImage lab = new GridImage(this, tbh, s, rootPane);
 
