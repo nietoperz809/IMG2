@@ -15,10 +15,10 @@ import java.awt.event.ActionEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Objects;
+import java.util.*;
+import java.util.List;
 
+import static database.DBHandler.RowIDfromImgHash;
 import static java.util.Objects.requireNonNull;
 
 
@@ -276,38 +276,155 @@ public class GridMenuBar extends JMenuBar {
         theGrid.setJMenuBar(this);
     }
 
+    /*
+[705, 10817]
+[1267, 9965]
+[1392, 11102]
+[1550, 10280]
+[1943, 10956]
+[2322, 11328]
+[2324, 11326]
+[2325, 11336]
+[2327, 11329]
+[2328, 11333]
+[2551, 10330]
+[2776, 10309]
+[2948, 11217]
+[2951, 11219]
+[2952, 11214]
+[3001, 11286]
+[3002, 11293]
+[3034, 10691]
+[3198, 9212]
+[3437, 10800]
+[3439, 9690]
+[3551, 10896]
+[3819, 9733]
+[3975, 9970]
+[3976, 9969]
+[4146, 9999]
+[4746, 9864]
+[5042, 10286]
+[5126, 11116]
+[5129, 11121]
+[5301, 11112]
+[5304, 11113, 11332]
+[5304, 11113, 11332]
+[5305, 11114, 11324]
+[5305, 11114, 11324]
+[5306, 11120]
+[5400, 10121]
+[5515, 10316]
+[5516, 10314]
+[5642, 11206]
+[5666, 10133]
+[5719, 10674, 11426]
+[5719, 10674, 11426]
+[5732, 10946]
+[5865, 10662]
+[5870, 9906]
+[5922, 9479]
+[5955, 9754]
+[5972, 10689]
+[6123, 11302]
+[6285, 10776]
+[6291, 10811]
+[6357, 9356]
+[6364, 9211]
+[6392, 10664]
+[6393, 10666]
+[6409, 10216]
+[6448, 10763]
+[6449, 10764]
+[6451, 10875]
+[6453, 10876]
+[6470, 10803]
+[6471, 10336]
+[6472, 10112]
+[6473, 10338]
+[6481, 10845]
+[6494, 9924]
+[6663, 10726]
+[6806, 10144]
+[6825, 9547]
+[6826, 11109]
+[6827, 9568]
+[6875, 9261]
+[6943, 10705]
+[6977, 10297]
+[7000, 11044]
+[7069, 10352]
+[7204, 10819]
+[7419, 10759]
+[7531, 11314]
+[7533, 9968]
+[7594, 9377]
+[7777, 10822]
+[7811, 10340]
+[7862, 10118]
+[7882, 9827]
+[7912, 9931]
+[7923, 10242]
+[7928, 10243]
+[8049, 11192]
+[8052, 11191]
+[8275, 9209]
+[8380, 9907]
+[8405, 9421]
+[8437, 11058]
+[8438, 9442]
+[8480, 10068]
+[8486, 10782]
+[8491, 10113]
+[8521, 11287]
+[8553, 11413]
+[8589, 10865]
+[8591, 10867]
+[8609, 9684]
+[8610, 11240]
+[8612, 9780]
+[8871, 10200]
+[8887, 9689]
+[8888, 9688]
+[8936, 9255]
+[8999, 10091]
+[9152, 11415]
+[9166, 9887]
+[9559, 11315]
+[10234, 11445]
+[5719, 10674, 11426]
+[10768, 11449]
+[11001, 11418]
+[5304, 11113, 11332]
+[5305, 11114, 11324]
+[11126, 11313]
+[11128, 11343]
+[11132, 11319]
+[11133, 11316]
+[11451, 11453]
+     */
+
     private JMenuItem searchDupes(boolean searchOnly, TheGrid theGrid, String text) {
         JMenuItem m3 = new JMenuItem(text);
-//        m3.addActionListener(new AbstractAction() {
-//            @Override
-//            public void actionPerformed(ActionEvent e) {
-//                StringBuilder sb = new StringBuilder();
-//                ArrayList<Integer> rod = DBHandler.getImgRowids();
-//                for (int i = 0; i < rod.size(); i++) {
-//                    byte[] h1 = DBHandler.loadImgHash(rod.get(i));
-//                    if (h1 == null)
-//                        continue;
-//                    for (int j = i + 1; j < rod.size(); j++) {
-//                        byte[] h2 = DBHandler.loadImgHash(rod.get(j));
-//                        if (h2 == null)
-//                            continue;
-//                        if (Arrays.equals(h1,h2)) {
-//                            System.out.println("dupe!"+rod.get(i)+"--"+rod.get(j));
-//                        }
-//                    }
-//                }
-//            }
-//        });
-
         m3.addActionListener(new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                SwingUtilities.invokeLater(() -> {
-                    DBHandler.main(null);
-                    for (int s = 1; s < 10; s++)
-                        DBHandler.loadImgHash(s);
+                ArrayList<byte[]> map = DBHandler.loadImgHashes();
+                ArrayList<Integer> found = new ArrayList<>();
+                StringBuilder output = new StringBuilder();
+                for (int s=0; s<map.size(); s++) {
+                    for (int n=s+1; n<map.size(); n++) {
+                        if (Arrays.equals (map.get(n), map.get(s))) {
+                            List<Integer> li = RowIDfromImgHash(map.get(s));
+                            if (found.containsAll(li))
+                                continue;
+                            found.addAll(li);
+                            //System.out.println(li);
+                            output.append(li).append(" * ");
+                        }
+                    }
                 }
-                );
+                Tools.Info(output.toString());
             }
         });
 

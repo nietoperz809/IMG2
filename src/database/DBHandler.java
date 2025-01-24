@@ -198,7 +198,7 @@ public class DBHandler {
         return res;
     }
 
-    public ArrayList<Integer> getImgRowids() {
+    public static ArrayList<Integer> getImgRowids() {
         ArrayList<Integer> li = new ArrayList<>();
         String sql = "select _ROWID_ from IMAGES order by _ROWID_ asc";
         try (ResultSet res = query(sql)) {
@@ -762,14 +762,12 @@ public class DBHandler {
     public static byte[] loadImgHash (int rowid) {
         String q = "select hashval from IMAGES where _rowid_ = " + rowid;
         try {
-            Statement stm = connection.createStatement();
-            ResultSet res = stm.executeQuery(q);
+            ResultSet res = query(q);
 
-            //stm.close();
             if (res.next()) {
                 byte[] xout;
                 xout = res.getBytes(1);
-                System.out.println(rowid+"--"+Arrays.toString(xout));
+                //System.out.println(rowid+"--"+Arrays.toString(xout));
                 return xout;
             }
             System.out.println("no res");
@@ -779,6 +777,37 @@ public class DBHandler {
         return null;
     }
 
+    public static List<Integer> RowIDfromImgHash(byte[] hash) {
+        List<Integer> li = new ArrayList<Integer>();
+        try {
+            PreparedStatement prep = connection.prepareStatement(
+                    "select _rowid_ from IMAGES where hashval=?");
+            prep.setBytes(1, hash);
+            ResultSet res = prep.executeQuery();
+            while (res.next()) {
+                li.add(res.getInt(1));
+            }
+            return li;
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static ArrayList<byte[]> loadImgHashes() {
+        String q = "select hashval from IMAGES";
+        ArrayList<byte[]> map = new ArrayList<byte[]>();
+        try {
+            ResultSet res = query(q);
+
+            while (res.next()) {
+                map.add(res.getBytes(1));
+            }
+            return map;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
     public static byte[] loadImage(int rowid) {
         String q = "select image, hashval from IMAGES where _rowid_ =" + rowid;
