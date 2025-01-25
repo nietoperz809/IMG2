@@ -198,10 +198,12 @@ public class GridMenuBar extends JMenuBar {
         });
         jm.add(jmi);
 
-        jmi = searchDupes(false, theGrid, "Search for double Items");
+        jmi = searchDupes ("Search for double Items");
         jm.add(jmi);
+/*
         jmi = searchDupes(true, theGrid, "Delete double Items");
         jm.add(jmi);
+*/
 
         jmi = new JMenuItem("video App");
         jmi.addActionListener(new AbstractAction() {
@@ -404,14 +406,14 @@ public class GridMenuBar extends JMenuBar {
 [11451, 11453]
      */
 
-    private JMenuItem searchDupes(boolean searchOnly, TheGrid theGrid, String text) {
+    private JMenuItem searchDupes (String text) {
         JMenuItem m3 = new JMenuItem(text);
         m3.addActionListener(new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 ArrayList<byte[]> map = DBHandler.loadImgHashes();
                 ArrayList<Integer> found = new ArrayList<>();
-                StringBuilder output = new StringBuilder();
+                //StringBuilder output = new StringBuilder();
                 for (int s=0; s<map.size(); s++) {
                     for (int n=s+1; n<map.size(); n++) {
                         if (Arrays.equals (map.get(n), map.get(s))) {
@@ -419,12 +421,19 @@ public class GridMenuBar extends JMenuBar {
                             if (found.containsAll(li))
                                 continue;
                             found.addAll(li);
-                            //System.out.println(li);
-                            output.append(li).append(" * ");
                         }
                     }
                 }
-                Tools.Info(output.toString());
+                StringBuilder sqlFound = new StringBuilder();
+                sqlFound.append("select name,_ROWID_,tag,accnum from IMAGES where ");
+                for (int i: found) {
+                    sqlFound.append("_rowid_=").append(i).append(" or ");
+                }
+                sqlFound.setLength (sqlFound.length()-4);
+                (new Thread(() -> {
+                    new TheGrid(sqlFound.toString(), "WORKER");
+                })).start();
+                //System.out.println(sqlFound.toString());
             }
         });
 

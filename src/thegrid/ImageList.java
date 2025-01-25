@@ -59,8 +59,8 @@ public class ImageList {
         return this.sql;
     }
 
-    private boolean rec = false;
-
+//    private boolean rec = false;
+//
 //    public void recoverThumbs() {
 //        if (rec) return;
 //        rec = true;

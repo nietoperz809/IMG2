@@ -6,16 +6,16 @@ import java.util.concurrent.BlockingQueue;
 
 public class DeferredFileDeleter {
     private static final BlockingQueue<File> __que = new ArrayBlockingQueue<>(100);
-    private static DeferredFileDeleter singleton;
+    //private static DeferredFileDeleter singleton;
 
-    public static DeferredFileDeleter getInst() {
-        if (singleton == null) {
-            singleton = new DeferredFileDeleter();
-        }
-        return singleton;
-    }
+//    public static DeferredFileDeleter getInst() {
+//        if (singleton == null) {
+//            singleton = new DeferredFileDeleter();
+//        }
+//        return singleton;
+//    }
 
-    private DeferredFileDeleter() {
+    static {
         Tools.runTask(() -> {
             while (true) {
                 try {

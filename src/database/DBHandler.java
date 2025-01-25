@@ -116,7 +116,7 @@ public class DBHandler {
      *
      * @return true if user clicked OK
      */
-    static boolean askForDel(String imgName) {
+    private static boolean askForDel(String imgName) {
         Object[] options = {"OK", "NO! NEVER!!"};
         return JOptionPane.showOptionDialog(null,
                 "Delete " + imgName + " from DB?",
@@ -198,20 +198,20 @@ public class DBHandler {
         return res;
     }
 
-    public static ArrayList<Integer> getImgRowids() {
-        ArrayList<Integer> li = new ArrayList<>();
-        String sql = "select _ROWID_ from IMAGES order by _ROWID_ asc";
-        try (ResultSet res = query(sql)) {
-            if (res == null)
-                return li;
-            while (res.next()) {
-                li.add(res.getInt(1));
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-        return li;
-    }
+//    public static ArrayList<Integer> getImgRowids() {
+//        ArrayList<Integer> li = new ArrayList<>();
+//        String sql = "select _ROWID_ from IMAGES order by _ROWID_ asc";
+//        try (ResultSet res = query(sql)) {
+//            if (res == null)
+//                return li;
+//            while (res.next()) {
+//                li.add(res.getInt(1));
+//            }
+//        } catch (SQLException e) {
+//            throw new RuntimeException(e);
+//        }
+//        return li;
+//    }
 
     public static List<NameID> getFileNames(String dbname) {
         String sql = "select name,_ROWID_,tag from " + dbname + " order by _ROWID_ asc";
@@ -396,7 +396,7 @@ public class DBHandler {
             }
             insertImageRecord(name, img);
             ic.justInserted(img, name);
-            DeferredFileDeleter.getInst().put(file);
+            DeferredFileDeleter.put(file);
             ret++;
         }
         connection.commit();
@@ -407,7 +407,6 @@ public class DBHandler {
      * Convert img into INT_RGB, generate thumbnail and put all int the tabke
      * @param name image name, can be any string
      * @param img th image
-     * @throws IOException if smth. gone wrong
      */
     public static void insertImageRecord(String name, BufferedImage img) throws IOException {
         BufferedImage big = ImageScaler.scaleExact(img,
@@ -778,7 +777,7 @@ public class DBHandler {
     }
 
     public static List<Integer> RowIDfromImgHash(byte[] hash) {
-        List<Integer> li = new ArrayList<Integer>();
+        List<Integer> li = new ArrayList<>();
         try {
             PreparedStatement prep = connection.prepareStatement(
                     "select _rowid_ from IMAGES where hashval=?");
@@ -796,14 +795,14 @@ public class DBHandler {
 
     public static ArrayList<byte[]> loadImgHashes() {
         String q = "select hashval from IMAGES";
-        ArrayList<byte[]> map = new ArrayList<byte[]>();
+        ArrayList<byte[]> list = new ArrayList<>();
         try {
             ResultSet res = query(q);
 
             while (res.next()) {
-                map.add(res.getBytes(1));
+                list.add(res.getBytes(1));
             }
-            return map;
+            return list;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
