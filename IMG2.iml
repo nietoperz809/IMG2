@@ -17,5 +17,14 @@
     <orderEntry type="library" name="jgoodies.forms" level="project" />
     <orderEntry type="library" name="net.java.dev.jna.platform" level="project" />
     <orderEntry type="library" name="sun.mail.javax" level="project" />
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/annotations-24.0.0.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
   </component>
 </module>
