@@ -14,13 +14,17 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ddb69741-e020-4d21-a32f-f00e79c6818a" name="Changes" comment="double finder opens new grid">
+    <list default="true" id="ddb69741-e020-4d21-a32f-f00e79c6818a" name="Changes" comment="bugfix in searchdupes">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/IMG2.iml" beforeDir="false" afterPath="$PROJECT_DIR$/IMG2.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/IMG2_jar/IMG2.jar" beforeDir="false" afterPath="$PROJECT_DIR$/IMG2_jar/IMG2.jar" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/buildinfo/BuildInfo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/buildinfo/BuildInfo.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/buildinfo/build.number" beforeDir="false" afterPath="$PROJECT_DIR$/src/buildinfo/build.number" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/common/ImgTools.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/common/ImgTools.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/database/DBHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/database/DBHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/httpserv/WebApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/httpserv/WebApp.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/thegrid/GridImage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/thegrid/GridImage.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/thegrid/GridMenuBar.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/thegrid/GridMenuBar.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/thegrid/TheGrid.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/thegrid/TheGrid.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -49,12 +53,12 @@
     &quot;state&quot;: &quot;OPEN&quot;
   }
 }</component>
-  <component name="GithubPullRequestsUISettings">{
-  &quot;selectedUrlAndAccountId&quot;: {
-    &quot;url&quot;: &quot;https://github.com/nietoperz809/IMG2&quot;,
-    &quot;accountId&quot;: &quot;8a0fcd97-d93e-4716-a413-e082f42b9365&quot;
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/nietoperz809/IMG2",
+    "accountId": "241bc538-b0cf-4ae9-852b-4d7ab6008efe"
   }
-}</component>
+}]]></component>
   <component name="HighlightingSettingsPerFile">
     <setting file="jar://$USER_HOME$/.ideaLibSources/nanohttpd-2.2.0-sources.jar!/fi/iki/elonen/NanoHTTPD.java" root0="FORCE_HIGHLIGHTING" />
   </component>
@@ -115,7 +119,7 @@
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.2",
     "run.code.analysis.last.selected.profile": "aDefault",
-    "settings.editor.selected.configurable": "reference.settingsdialog.IDE.editor.colors.Properties",
+    "settings.editor.selected.configurable": "reference.settingsdialog.textmate.bundles",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
@@ -598,7 +602,7 @@
       <option name="project" value="LOCAL" />
       <updated>1683976691765</updated>
     </task>
-    <option name="localTasksCounter" value="198" />
+    <option name="localTasksCounter" value="199" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -630,7 +634,6 @@
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_NEW_TODO" value="false" />
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="some enhancements regarding vid player" />
     <MESSAGE value="best vid player until now" />
     <MESSAGE value="VideoApp improved" />
     <MESSAGE value="Bugfix in Video App" />
@@ -655,7 +658,8 @@
     <MESSAGE value="dbhandler got static initializer" />
     <MESSAGE value="backup" />
     <MESSAGE value="double finder opens new grid" />
-    <option name="LAST_COMMIT_MESSAGE" value="double finder opens new grid" />
+    <MESSAGE value="bugfix in searchdupes" />
+    <option name="LAST_COMMIT_MESSAGE" value="bugfix in searchdupes" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

@@ -700,17 +700,16 @@ public class DBHandler {
 
     }
 
-    public static ThumbHash loadThumbnail(int rowid) {
+    public static byte[] loadThumbnail(int rowid) {
         String q = "select thumb from IMAGES where _rowid_ =" + rowid;
         try (ResultSet res = query(q)) {
             if (res.next()) {
                 byte[] bt = res.getBytes(1);
                 if (bt == null) {
                     createNewThumb(rowid);
-                    System.out.println("recreate thumb: "+rowid);
                     return loadThumbnail(rowid);
                 }
-                return new ThumbHash(bt);
+                return bt;
             }
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -794,7 +793,7 @@ public class DBHandler {
     }
 
     public static ArrayList<byte[]> loadImgHashes() {
-        String q = "select hashval from IMAGES";
+        String q = "select hashval from IMAGES where hashval is not null";
         ArrayList<byte[]> list = new ArrayList<>();
         try {
             ResultSet res = query(q);
@@ -866,21 +865,21 @@ public class DBHandler {
         }
     }
 
-    public static class ThumbHash {
-        public final BufferedImage img;
-        public final byte[] hash;
-        public final byte[] bt;
-
-        public ThumbHash(byte[] bytes) {
-            bt = bytes;
-            try {
-                img = ImgTools.byteArrayToImg(bytes);
-                MessageDigest md = MessageDigest.getInstance("MD5");
-                md.update(bytes);
-                hash = md.digest();
-            } catch (Exception e) {
-                throw new RuntimeException(e);
-            }
-        }
-    }
+//    public static class ThumbHash {
+//        public final BufferedImage img;
+//        public final byte[] hash;
+//        public final byte[] bt;
+//
+//        public ThumbHash(byte[] bytes) {
+//            bt = bytes;
+//            try {
+//                img = ImgTools.byteArrayToImg(bytes);
+//                MessageDigest md = MessageDigest.getInstance("MD5");
+//                md.update(bytes);
+//                hash = md.digest();
+//            } catch (Exception e) {
+//                throw new RuntimeException(e);
+//            }
+//        }
+//    }
 }

@@ -42,12 +42,8 @@ public class GridMenuBar extends JMenuBar {
                 for (GridImage gi : marked) {
                     int id = gi.getRowID();
                     byte[] b = DBHandler.loadImage(id);
-                    try {
-                        BufferedImage b2 = ImgTools.byteArrayToImg(b);
-                        ImgTools.saveImg2Disk(b2, id, outPath);
-                    } catch (IOException ex) {
-                        throw new RuntimeException(ex);
-                    }
+                    BufferedImage b2 = ImgTools.byteArrayToImg(b);
+                    ImgTools.saveImg2Disk(b2, id, outPath);
                 }
                 GridImage.unmarkAll();
             }
@@ -408,26 +404,26 @@ public class GridMenuBar extends JMenuBar {
         m3.addActionListener(new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                ArrayList<byte[]> map = DBHandler.loadImgHashes();
-                ArrayList<Integer> found = new ArrayList<>();
-                for (int s = 0; s < map.size(); s++) {
-                    byte[] bs = map.get(s);
-                    for (int n = s + 1; n < map.size(); n++) {
-                        byte[] bn = map.get(n);
+                ArrayList<byte[]> allHashes = DBHandler.loadImgHashes();
+                HashSet<Integer> foundSet = new HashSet<>();
+                for (int s = 0; s < allHashes.size(); s++) {
+                    byte[] bs = allHashes.get(s);
+                    for (int n = s + 1; n < allHashes.size(); n++) {
+                        byte[] bn = allHashes.get(n);
                         if (Arrays.equals(bs, bn)) {
-                            List<Integer> li = RowIDfromImgHash(map.get(s));
-                            if (found.containsAll(li))
-                                continue;
-                            found.addAll(li);
+                            List<Integer> li = RowIDfromImgHash(allHashes.get(s));
+                            foundSet.addAll(li);
                         }
                     }
                 }
                 // any found?
-                if (!found.isEmpty()) {
-
+                if (foundSet.isEmpty()) {
+                    Tools.Info("No Dupes found!");
+                }
+                else {
                     StringBuilder sqlFound = new StringBuilder();
                     sqlFound.append("select name,_ROWID_,tag,accnum from IMAGES where ");
-                    for (int i : found) {
+                    for (int i : foundSet) {
                         sqlFound.append("_rowid_=").append(i).append(" or ");
                     }
                     sqlFound.setLength(sqlFound.length() - 4);

@@ -268,9 +268,13 @@ public class ImgTools {
      * @return a BufferedImage object
      * @throws IOException if smth. gone wrong
      */
-    public static BufferedImage byteArrayToImg (byte[] arr) throws IOException {
+    public static BufferedImage byteArrayToImg (byte[] arr) {
         InputStream is = new ByteArrayInputStream(arr);
-        return ImageIO.read(is);
+        try {
+            return ImageIO.read(is);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public static BufferedImage sharpenImage(BufferedImage img) {

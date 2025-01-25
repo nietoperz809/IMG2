@@ -17,7 +17,7 @@ class GridImage extends JLabel {
     private static final LinkedList<GridImage> marked = new LinkedList<>();
     final static Color markedColor = Color.RED;
     final static Color unmarkedColor = null;
-    private final byte[] imgHash;
+    //private final byte[] imgHash;
     private DBHandler.NameID thisID;
     private JPanel rootPane;
 
@@ -35,9 +35,9 @@ class GridImage extends JLabel {
     }
 
 
-    public byte[] getHash() {
-        return imgHash;
-    }
+//    public byte[] getHash() {
+//        return imgHash;
+//    }
 
     public int getRowID() {
         return thisID.rowid();
@@ -104,7 +104,7 @@ class GridImage extends JLabel {
         super(new ImageIcon(iconImage));
         grid.imageL.add (new DBHandler.NameID(ImageName, grid.imageL.getLastRowid(), null)); //(ImageName);
         int index = grid.imageL.size()-1;
-        imgHash = ImgTools.imgHash((BufferedImage)iconImage);
+        //imgHash = ImgTools.imgHash((BufferedImage)iconImage);
         init (grid, index, rootPane);
     }
 
@@ -113,9 +113,9 @@ class GridImage extends JLabel {
      * @param currentIndex index of current image file
      * @param rootPane the Imagegrid itself
      */
-    GridImage(TheGrid grid, DBHandler.ThumbHash tbh, int currentIndex, JPanel rootPane) {
-        super(new ImageIcon(tbh.img));
-        imgHash = tbh.hash;
+    GridImage(TheGrid grid, byte[] tbh, int currentIndex, JPanel rootPane) {
+        super(new ImageIcon(ImgTools.byteArrayToImg(tbh)));
+        //imgHash = null;
         init (grid, currentIndex, rootPane);
     }
 }

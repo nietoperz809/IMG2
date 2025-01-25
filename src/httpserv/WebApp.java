@@ -159,8 +159,8 @@ public class WebApp extends NanoHTTPD {
         if (uri.equals("/")) {
             return sendDirectory();
         } else if (uri.endsWith(".tmb")) {
-            DBHandler.ThumbHash tbh = DBHandler.loadThumbnail(rowid);
-            return sendImageBytes(tbh.bt);
+            byte[] tbh = DBHandler.loadThumbnail(rowid);
+            return sendImageBytes(tbh);
         } else if (uri.endsWith(".lnk")) {
             System.out.println("send linkpage: "+rowid);
             return sendImagePage(rowid);

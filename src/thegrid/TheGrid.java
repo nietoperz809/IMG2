@@ -177,7 +177,7 @@ public class TheGrid extends MyFrame {
      */
     public void addImageLabel(int s) {
         int rowid = imageL.get(s).rowid();
-        DBHandler.ThumbHash tbh = null;
+        byte[] tbh = null;
         try {
             tbh = DBHandler.loadThumbnail(rowid);
         } catch (Exception e) {
