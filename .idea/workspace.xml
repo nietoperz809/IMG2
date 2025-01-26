@@ -14,16 +14,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ddb69741-e020-4d21-a32f-f00e79c6818a" name="Changes" comment="bugfix in searchdupes">
+    <list default="true" id="ddb69741-e020-4d21-a32f-f00e79c6818a" name="Changes" comment="removed thumbhash class">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/IMG2_jar/IMG2.jar" beforeDir="false" afterPath="$PROJECT_DIR$/IMG2_jar/IMG2.jar" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/buildinfo/BuildInfo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/buildinfo/BuildInfo.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/buildinfo/build.number" beforeDir="false" afterPath="$PROJECT_DIR$/src/buildinfo/build.number" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/common/ImgTools.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/common/ImgTools.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/database/DBHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/database/DBHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/httpserv/WebApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/httpserv/WebApp.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/thegrid/GridImage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/thegrid/GridImage.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/thegrid/GridMenuBar.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/thegrid/GridMenuBar.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/thegrid/TheGrid.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/thegrid/TheGrid.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -143,6 +139,7 @@
       <recent name="C:\peter.home\java\IMG2\src\common" />
     </key>
     <key name="MoveInnerDialog.RECENTS_KEY">
+      <recent name="database" />
       <recent name="thegrid" />
       <recent name="common" />
     </key>
@@ -602,7 +599,7 @@
       <option name="project" value="LOCAL" />
       <updated>1683976691765</updated>
     </task>
-    <option name="localTasksCounter" value="199" />
+    <option name="localTasksCounter" value="200" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -634,7 +631,6 @@
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_NEW_TODO" value="false" />
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="best vid player until now" />
     <MESSAGE value="VideoApp improved" />
     <MESSAGE value="Bugfix in Video App" />
     <MESSAGE value="right click on video list shows blob size" />
@@ -659,7 +655,8 @@
     <MESSAGE value="backup" />
     <MESSAGE value="double finder opens new grid" />
     <MESSAGE value="bugfix in searchdupes" />
-    <option name="LAST_COMMIT_MESSAGE" value="bugfix in searchdupes" />
+    <MESSAGE value="removed thumbhash class" />
+    <option name="LAST_COMMIT_MESSAGE" value="removed thumbhash class" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

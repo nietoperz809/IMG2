@@ -18,7 +18,6 @@ import java.util.ArrayList;
 import static common.ImgTools.byteArrayToImg;
 import static common.NumToText.*;
 import static common.Tools.extractResource;
-import static java.util.Objects.*;
 
 
 public class TheGrid extends MyFrame {
@@ -165,7 +164,7 @@ public class TheGrid extends MyFrame {
         scrollPane.getViewport().setView(rootPane);
         if (this.thisInstCount == 1)
             setTitle (getTitle()+ " " + BuildInfo.buildInfo +
-                    " -- "+info+" -- H2:"+DBHandler.getVersion());
+                    " -- "+info+" -- H2:"+DBHandler.getH2Version());
         else
             setTitle (imageL.getSql());
         setVisible(true);
@@ -177,16 +176,16 @@ public class TheGrid extends MyFrame {
      */
     public void addImageLabel(int s) {
         int rowid = imageL.get(s).rowid();
-        byte[] tbh = null;
+        byte[] thumbBytes = null;
         try {
-            tbh = DBHandler.loadThumbnail(rowid);
+            thumbBytes = DBHandler.loadThumbnail(rowid);
         } catch (Exception e) {
             System.err.println("thumb read fail: " + rowid);
 //            int id = imageL.get(s).rowid();
 //            DBHandler.createNewThumb(id);
 //            tbh = DBHandler.loadThumbnail(rowid);
         }
-        GridImage lab = new GridImage(this, tbh, s, rootPane);
+        GridImage lab = new GridImage(this, thumbBytes, s, rootPane);
 
         rootPane.add(lab);
         Instant end = Instant.now();

@@ -34,14 +34,14 @@ public class DBHandler {
     private static final String NO_PASS = "NoPass";
     private static final String DB_FILE = "mydb";
     private static final String DB_FILE_FULL = DB_FILE + ".mv.db";
-    private static String ROOT_DIR = "C:\\Databases\\";
+    private static String ROOT_DIR = "E:\\Databases\\";
     private static Connection connection;
     private static Statement statement;
     /*
         jdbc:h2:C:\peter.home\java\IMG2\datastore\mydb;CIPHER=AES
      */
     private static volatile boolean _backupIsRunning;
-    private static Future transferTask;
+    private static Future<?> transferTask;
 
     static {
         PersistString pers = new PersistString("pwddb", NO_PASS);
@@ -167,10 +167,10 @@ public class DBHandler {
         }
     }
 
-    public static String getVersion() {
+    public static String getH2Version() {
         String sql = "select H2VERSION()";
         try (ResultSet res = query(sql)) {
-            if (res.next())
+            if (Objects.requireNonNull(res).next())
                 return res.getString(1);
             return null;
         } catch (SQLException e) {
@@ -182,7 +182,7 @@ public class DBHandler {
         String sql = "select * from LOG order by ltime";
         ArrayList<LogMessage> al = new ArrayList<>();
         try (ResultSet res = query(sql)) {
-            while (res.next()) {
+            while (Objects.requireNonNull(res).next()) {
                 al.add(new LogMessage(res.getString(1),
                         res.getString(2)));
             }
@@ -273,16 +273,14 @@ public class DBHandler {
         deleteGifOrVideo("WEBP", rowid);
     }
 
-    public static boolean deleteGifOrVideo(String tablename, int rowid) {
+    public static void deleteGifOrVideo(String tablename, int rowid) {
         if (askForDel(String.valueOf(rowid))) {
-            return false;
+            return;
         }
         try {
             statement.execute("delete from "+tablename+" where _ROWID_ = " + rowid);
-            return true;
         } catch (SQLException e) {
             //throw new RuntimeException(e);
-            return false;
         }
     }
 
@@ -307,7 +305,7 @@ public class DBHandler {
         String strres = null;
         try {
             try (ResultSet res = query("select tag from IMAGES where _ROWID_ = " + rowid)) {
-                if (res.next()) {
+                if (Objects.requireNonNull(res).next()) {
                     strres = res.getString(1);
                 }
             }
@@ -321,7 +319,7 @@ public class DBHandler {
         TreeSet<String> ll = new TreeSet<>();
         try {
             try (ResultSet res = query("select tag from IMAGES")) {
-                while (res.next()) {
+                while (Objects.requireNonNull(res).next()) {
                     String s = res.getString(1);
                     if (s != null) {
                         TreeSet<String> l2 = Tools.SetFromCSVString(s);
@@ -447,7 +445,7 @@ public class DBHandler {
         try {
             img = ImgTools.removeAlpha(img);
             byte[] buff = ImgTools.imgToByteArray(img);
-            MessageDigest md5Maker = null;
+            MessageDigest md5Maker;
             try {
                 md5Maker = MessageDigest.getInstance("MD5");
             } catch (NoSuchAlgorithmException e) {
@@ -501,7 +499,7 @@ public class DBHandler {
      */
     private static void stat_insertImageRecord(byte[] img, byte[] thumb, String name) {
         PreparedStatement prep;
-        MessageDigest md5Maker = null;
+        MessageDigest md5Maker;
         try {
             md5Maker = MessageDigest.getInstance("MD5");
         } catch (NoSuchAlgorithmException e) {
@@ -657,8 +655,8 @@ public class DBHandler {
         fi.deleteOnExit();
         try (RandomAccessFile rafile = new RandomAccessFile(fi, "rw")) {
             MappedByteBuffer out = rafile.getChannel()
-                    .map(FileChannel.MapMode.READ_WRITE, 0, bt.get().length);
-            out.put(bt.get());
+                    .map(FileChannel.MapMode.READ_WRITE, 0, Objects.requireNonNull(bt.get()).length);
+            out.put(Objects.requireNonNull(bt.get()));
             out.load();
         }
         return fi;
@@ -703,7 +701,7 @@ public class DBHandler {
     public static byte[] loadThumbnail(int rowid) {
         String q = "select thumb from IMAGES where _rowid_ =" + rowid;
         try (ResultSet res = query(q)) {
-            if (res.next()) {
+            if (Objects.requireNonNull(res).next()) {
                 byte[] bt = res.getBytes(1);
                 if (bt == null) {
                     createNewThumb(rowid);
@@ -741,7 +739,7 @@ public class DBHandler {
     public static int getAccCounter (int rowid) {
         String q = "select ACCNUM from IMAGES where _rowid_ =" + rowid;
         try (ResultSet res = query(q)) {
-            if (res.next()) {
+            if (Objects.requireNonNull(res).next()) {
                 System.out.println("readACC: "+rowid);
                 int ret = res.getInt(1);
                 // init with 1 on first use
@@ -760,13 +758,14 @@ public class DBHandler {
     public static byte[] loadImgHash (int rowid) {
         String q = "select hashval from IMAGES where _rowid_ = " + rowid;
         try {
-            ResultSet res = query(q);
+            try (ResultSet res = query(q)) {
 
-            if (res.next()) {
-                byte[] xout;
-                xout = res.getBytes(1);
-                //System.out.println(rowid+"--"+Arrays.toString(xout));
-                return xout;
+                if (Objects.requireNonNull(res).next()) {
+                    byte[] xout;
+                    xout = res.getBytes(1);
+                    //System.out.println(rowid+"--"+Arrays.toString(xout));
+                    return xout;
+                }
             }
             System.out.println("no res");
         } catch (SQLException e) {
@@ -796,10 +795,10 @@ public class DBHandler {
         String q = "select hashval from IMAGES where hashval is not null";
         ArrayList<byte[]> list = new ArrayList<>();
         try {
-            ResultSet res = query(q);
-
-            while (res.next()) {
-                list.add(res.getBytes(1));
+            try (ResultSet res = query(q)) {
+                while (Objects.requireNonNull(res).next()) {
+                    list.add(res.getBytes(1));
+                }
             }
             return list;
         } catch (SQLException e) {
@@ -810,11 +809,11 @@ public class DBHandler {
     public static byte[] loadImage(int rowid) {
         String q = "select image, hashval from IMAGES where _rowid_ =" + rowid;
         try (ResultSet res = query(q)) {
-            if (res.next()) {
+            if (Objects.requireNonNull(res).next()) {
                 byte[] img = res.getBytes(1);
                 byte[] hash = res.getBytes(2);
                 if (hash == null) { // create hash if missing
-                    MessageDigest md5Maker = null;
+                    MessageDigest md5Maker;
                     try {
                         md5Maker = MessageDigest.getInstance("MD5");
                     } catch (NoSuchAlgorithmException e) {
@@ -845,10 +844,10 @@ public class DBHandler {
 //        }
 //    }
 //
-    public static void main(String[] args) {
-        for (int s=1;s<10;s++)
-            loadImgHash(s);
-    }
+//    public static void main(String[] args) {
+//        for (int s=1;s<10;s++)
+//            loadImgHash(s);
+//    }
 // / /////////////////////////
 
     public record NameID(String name, int rowid, String tag) {
