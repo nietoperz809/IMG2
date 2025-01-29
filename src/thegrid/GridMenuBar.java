@@ -418,7 +418,7 @@ public class GridMenuBar extends JMenuBar {
                 }
                 // any found?
                 if (foundSet.isEmpty()) {
-                    Tools.Info("No Dupes found!");
+                    Tools.Info("No Dupes found in "+allHashes.size()+" files!");
                 }
                 else {
                     StringBuilder sqlFound = new StringBuilder();

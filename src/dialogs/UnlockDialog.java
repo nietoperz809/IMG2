@@ -1,7 +1,17 @@
 package dialogs;
 
+import com.sun.jna.Native;
+import com.sun.jna.Pointer;
+import com.sun.jna.platform.win32.User32;
+import com.sun.jna.platform.win32.WinDef;
+import com.sun.jna.platform.win32.WinUser;
+import com.sun.jna.win32.StdCallLibrary;
+import common.Tools;
+
 import javax.swing.*;
 import java.awt.event.*;
+
+import static com.sun.jna.platform.win32.WinUser.*;
 
 public class UnlockDialog extends JDialog {
     private JPanel contentPane;
@@ -37,7 +47,20 @@ public class UnlockDialog extends JDialog {
         UnlockDialog dialog = new UnlockDialog(title);
         dialog.pack();
         dialog.setLocationRelativeTo(null);
+        Tools.dialogToTop(dialog);
         dialog.setVisible(true);
         return dialog.passwordField1.getText();
     }
+
+//    public static interface User32 extends StdCallLibrary
+//    {
+//
+//        final User32 instance = (User32) Native.loadLibrary ("user32", User32.class);
+//        WinDef.HWND FindWindowA(String className, String windowName);
+//        boolean BringWindowToTop(WinDef.HWND hw);
+//    }
+//
+//    public static void main(String[] args) {
+//        xmain ("hello");
+//    }
 }

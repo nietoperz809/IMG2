@@ -1,5 +1,6 @@
 package common;
 
+import com.sun.jna.Pointer;
 import com.sun.jna.platform.win32.Kernel32;
 import com.sun.jna.platform.win32.User32;
 import com.sun.jna.platform.win32.WinDef;
@@ -21,6 +22,8 @@ import java.util.TreeSet;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.FutureTask;
+
+import static com.sun.jna.platform.win32.WinUser.*;
 
 public class Tools {
 
@@ -56,6 +59,16 @@ public class Tools {
             //Kernel32.INSTANCE.FreeConsole(); // Detach from Console
         }
     }
+
+    public static boolean dialogToTop (JDialog target) {
+        WinDef.HWND ccc = new WinDef.HWND(new Pointer(-1));
+        String tit = target.getTitle();
+        WinDef.HWND hwnd = User32.INSTANCE.FindWindow(null, tit);
+        return com.sun.jna.platform.win32.User32.INSTANCE.SetWindowPos
+                (hwnd, ccc, 0, 0, 0, 0,
+                        SWP_NOMOVE | SWP_NOSIZE | SWP_NOACTIVATE);
+    }
+
 
     /**
      * Checks if a filename has one of n extensions

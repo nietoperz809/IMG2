@@ -14,12 +14,16 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ddb69741-e020-4d21-a32f-f00e79c6818a" name="Changes" comment="removed thumbhash class">
+    <list default="true" id="ddb69741-e020-4d21-a32f-f00e79c6818a" name="Changes" comment="backup">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/IMG2_jar/IMG2.jar" beforeDir="false" afterPath="$PROJECT_DIR$/IMG2_jar/IMG2.jar" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/buildinfo/BuildInfo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/buildinfo/BuildInfo.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/buildinfo/build.number" beforeDir="false" afterPath="$PROJECT_DIR$/src/buildinfo/build.number" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/common/ProgressBox.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/common/ProgressBox.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/common/Tools.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/common/Tools.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/database/DBHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/database/DBHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dialogs/UnlockDialog.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/dialogs/UnlockDialog.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/thegrid/GridMenuBar.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/thegrid/GridMenuBar.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/thegrid/TheGrid.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/thegrid/TheGrid.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -49,12 +53,12 @@
     &quot;state&quot;: &quot;OPEN&quot;
   }
 }</component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/nietoperz809/IMG2",
-    "accountId": "241bc538-b0cf-4ae9-852b-4d7ab6008efe"
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/nietoperz809/IMG2&quot;,
+    &quot;accountId&quot;: &quot;241bc538-b0cf-4ae9-852b-4d7ab6008efe&quot;
   }
-}]]></component>
+}</component>
   <component name="HighlightingSettingsPerFile">
     <setting file="jar://$USER_HOME$/.ideaLibSources/nanohttpd-2.2.0-sources.jar!/fi/iki/elonen/NanoHTTPD.java" root0="FORCE_HIGHLIGHTING" />
   </component>
@@ -80,8 +84,9 @@
     "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "Application.Console.executor": "Run",
     "Application.DBHandler.executor": "Run",
-    "Application.Main.executor": "Run",
+    "Application.Main.executor": "Debug",
     "Application.MonitorFrame.executor": "Run",
+    "Application.UnlockDialog.executor": "Debug",
     "Application.WebPDecoder.executor": "Run",
     "Application.web.executor": "Run",
     "Downloaded.Files.Path.Enabled": "true",
@@ -196,8 +201,8 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="MonitorFrame" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="dialogs.MonitorFrame" />
+    <configuration name="UnlockDialog" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="dialogs.UnlockDialog" />
       <module name="IMG2" />
       <extension name="coverage">
         <pattern>
@@ -225,19 +230,19 @@
     </configuration>
     <list>
       <item itemvalue="Application.Main" />
+      <item itemvalue="Application.UnlockDialog" />
       <item itemvalue="Application.Console" />
       <item itemvalue="Application.DBHandler" />
-      <item itemvalue="Application.MonitorFrame" />
       <item itemvalue="JAR Application.IMG2.jar" />
       <item itemvalue="Java Scratch.Scratch" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.Console" />
+        <item itemvalue="Application.UnlockDialog" />
         <item itemvalue="Application.DBHandler" />
+        <item itemvalue="Application.Console" />
         <item itemvalue="Java Scratch.Scratch" />
         <item itemvalue="JAR Application.IMG2.jar" />
-        <item itemvalue="Application.MonitorFrame" />
       </list>
     </recent_temporary>
   </component>
@@ -599,7 +604,7 @@
       <option name="project" value="LOCAL" />
       <updated>1683976691765</updated>
     </task>
-    <option name="localTasksCounter" value="200" />
+    <option name="localTasksCounter" value="201" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -652,11 +657,11 @@
     <MESSAGE value="changed file name in save ops" />
     <MESSAGE value="+ manual window" />
     <MESSAGE value="dbhandler got static initializer" />
-    <MESSAGE value="backup" />
     <MESSAGE value="double finder opens new grid" />
     <MESSAGE value="bugfix in searchdupes" />
     <MESSAGE value="removed thumbhash class" />
-    <option name="LAST_COMMIT_MESSAGE" value="removed thumbhash class" />
+    <MESSAGE value="backup" />
+    <option name="LAST_COMMIT_MESSAGE" value="backup" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -688,6 +693,11 @@
           <url>file://$PROJECT_DIR$/src/common/EmailUtil.java</url>
           <line>24</line>
           <option name="timeStamp" value="73" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/common/Tools.java</url>
+          <line>64</line>
+          <option name="timeStamp" value="78" />
         </line-breakpoint>
         <breakpoint type="java-exception">
           <properties class="java.lang.NullPointerException" package="java.lang" />

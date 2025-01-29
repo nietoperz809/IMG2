@@ -835,19 +835,18 @@ public class DBHandler {
     }
 
     ///   ///////////////////////
-//    public void make_all_hashes() { // 11626
-//        for (int s=0; s<11627; s++) {
-//            byte[] img = loadImage(s);
-//            if (s%100 == 0) {
-//                System.out.println(s);
-//            }
-//        }
-//    }
-//
-//    public static void main(String[] args) {
-//        for (int s=1;s<10;s++)
-//            loadImgHash(s);
-//    }
+    public static void make_all_hashes() { // 11626
+        for (int s=11627; s<11660; s++) {
+            byte[] img = loadImage(s);
+            if (s%100 == 0) {
+                System.out.println(s);
+            }
+        }
+    }
+
+    public static void main(String[] args) {
+        make_all_hashes();
+    }
 // / /////////////////////////
 
     public record NameID(String name, int rowid, String tag) {

@@ -71,6 +71,7 @@ public class TheGrid extends MyFrame {
         System.out.println("TheGrid constructor called");
         DBHandler.log("Images in DB: "+this.imageL.size());
         progress = new ProgressBox(this, this.imageL.size());
+        Tools.dialogToTop(progress);
         rootPane = new JPanel();
         scrollPane = new JScrollPane(rootPane);
         rootPane.setLayout(new GridLayout(0, 8, 1, 1));

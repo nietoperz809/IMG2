@@ -15,6 +15,7 @@ public class ProgressBox extends JDialog {
 
     public ProgressBox(MyFrame owner, int maxlen, int boxlen) {
         super(owner);
+        setTitle("progressbox");
         progressBar = new JProgressBar(0, maxlen);
         progressBar.setIndeterminate(false);
         progressBar.setStringPainted(true);
@@ -30,6 +31,7 @@ public class ProgressBox extends JDialog {
         setUndecorated(true);
         setSize(boxlen,30);
         setLocationRelativeTo(owner);
+
         setVisible(true);
     }
 
