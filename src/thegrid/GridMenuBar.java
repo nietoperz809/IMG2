@@ -15,7 +15,6 @@ import java.awt.datatransfer.DataFlavor;
 import java.awt.event.ActionEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.IOException;
 import java.util.*;
 import java.util.List;
 
@@ -97,7 +96,7 @@ public class GridMenuBar extends JMenuBar {
                 DBHandler.close();
                 try {
                     Tools.delay(600);
-                    TheGrid.restartApplication();
+                    Tools.restartApplication();
                 } catch (Exception ex) {
                     throw new RuntimeException(ex);
                 }

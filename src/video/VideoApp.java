@@ -7,6 +7,7 @@ import common.Tools;
 import database.DBHandler;
 import dialogs.LineInput;
 import dialogs.MonitorFrame;
+import thegrid.TheGrid;
 
 import javax.swing.*;
 import java.awt.*;
@@ -61,7 +62,7 @@ public class VideoApp extends JDialog {
         JMenuItem mi1 = new JMenuItem("MemMonitor");
         JMenuItem mi2 = new JMenuItem("End Process");
         mi1.addActionListener(e -> new MonitorFrame());
-        mi2.addActionListener(e -> System.exit(0));
+        mi2.addActionListener(e -> Tools.shutdown(this));
         menu.add(mi1);
         menu.add(mi2);
         mb.add(menu);

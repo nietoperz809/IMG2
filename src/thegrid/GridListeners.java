@@ -1,8 +1,10 @@
 package thegrid;
 
+import dialogs.TimedMessage;
 import common.Tools;
 import database.DBHandler;
 
+import javax.swing.*;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.Transferable;
 import java.awt.dnd.DnDConstants;
@@ -21,15 +23,13 @@ public class GridListeners implements KeyListener {
         g.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
+                super.windowClosing(e);
                 if (g.thisInstCount > 1)  // not the last grid?
                 {
                     g.dispose();
                     return;
                 }
-                DBHandler.log("--- TheGrid ended");
-                super.windowClosing(e);
-                DBHandler.close();
-                System.exit(1);
+                Tools.shutdown(theGrid);
             }
         });
         g.addKeyListener(this);

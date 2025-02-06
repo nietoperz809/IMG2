@@ -1,10 +1,7 @@
 package thegrid;
 
 import buildinfo.BuildInfo;
-import common.PersistString;
-import common.ProgressBox;
-import common.Sam;
-import common.Tools;
+import common.*;
 import database.DBHandler;
 
 import javax.swing.*;
@@ -13,7 +10,6 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.time.Duration;
 import java.time.Instant;
-import java.util.ArrayList;
 
 import static common.ImgTools.byteArrayToImg;
 import static common.NumToText.*;
@@ -63,15 +59,14 @@ public class TheGrid extends MyFrame {
 
 
     public TheGrid (String sql, String dbRoot) {
-
         instCount++;
         thisInstCount = instCount;
         setTitle(dbRoot);
         imageL.setSQL(sql);
-        System.out.println("TheGrid constructor called");
+        //System.out.println("TheGrid constructor called");
         DBHandler.log("Images in DB: "+this.imageL.size());
         progress = new ProgressBox(this, this.imageL.size());
-        Tools.dialogToTop(progress);
+        Win32.dialogToTop(progress);
         rootPane = new JPanel();
         scrollPane = new JScrollPane(rootPane);
         rootPane.setLayout(new GridLayout(0, 8, 1, 1));
@@ -103,7 +98,7 @@ public class TheGrid extends MyFrame {
 //                DBHandler.log("SHUTDOWN"));
 //        Runtime.getRuntime().addShutdownHook(hook);
 
-        Tools.hideConsoleWindow();
+        Win32.hideConsoleWindow();
 
         try {
             boolean askPwd = true;
@@ -122,29 +117,13 @@ public class TheGrid extends MyFrame {
                 Tools.AskforPWD();
 
             DBHandler.log("+++ TheGrid started");
+            Watchdog.start();
             new TheGrid (mainSQL.get(), dbRoot);
             System.out.println("end main");
         } catch (Exception e) {
             System.out.println("FAIL: " + e);
             DBHandler.log("FAIL: " + e);
         }
-    }
-
-    public static void restartApplication() throws Exception {
-        final String javaBin = System.getProperty("java.home") + File.separator + "bin" + File.separator + "java";
-        final File currentJar = new File(TheGrid.class.getProtectionDomain().getCodeSource().getLocation().toURI());
-
-        /* Build command: java -jar application.jar */
-        final ArrayList<String> command = new ArrayList<>();
-        command.add(javaBin);
-        command.add("-jar");
-        command.add(currentJar.getPath());
-        command.add ("dbdir:" + DBHandler.getDBRoot());
-        command.add ("nopwd");
-        
-        final ProcessBuilder builder = new ProcessBuilder(command);
-        builder.start();
-        System.exit(0);
     }
 
     public void addImageFilesToDatabase(File[] files) throws Exception {

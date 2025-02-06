@@ -1,10 +1,9 @@
 package common;
 
-import com.sun.jna.Pointer;
-import com.sun.jna.platform.win32.Kernel32;
-import com.sun.jna.platform.win32.User32;
-import com.sun.jna.platform.win32.WinDef;
+import database.DBHandler;
+import dialogs.TimedMessage;
 import dialogs.UnlockDialog;
+import thegrid.TheGrid;
 
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
@@ -16,14 +15,13 @@ import java.io.*;
 import java.net.URL;
 import java.nio.charset.Charset;
 import java.security.MessageDigest;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Objects;
 import java.util.TreeSet;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.FutureTask;
-
-import static com.sun.jna.platform.win32.WinUser.*;
 
 public class Tools {
 
@@ -39,34 +37,10 @@ public class Tools {
         return ft;
     }
 
-    public static boolean runningFromJAR()
+    public static boolean isRunningFromJAR()
     {
         URL path = Tools.class.getResource("Tools.class");
         return path.toString().startsWith("jar:");
-    }
-
-    /**
-     * Only works under MS Windoze
-     */
-    public static void hideConsoleWindow() {
-        if (System.getProperty("os.name").startsWith("Windows")) {
-
-            WinDef.HWND hw = Kernel32.INSTANCE.GetConsoleWindow();
-            System.out.println("console: " + hw);
-            if (hw != null) {
-                User32.INSTANCE.ShowWindow(hw, 0);
-            }
-            //Kernel32.INSTANCE.FreeConsole(); // Detach from Console
-        }
-    }
-
-    public static boolean dialogToTop (JDialog target) {
-        WinDef.HWND ccc = new WinDef.HWND(new Pointer(-1));
-        String tit = target.getTitle();
-        WinDef.HWND hwnd = User32.INSTANCE.FindWindow(null, tit);
-        return com.sun.jna.platform.win32.User32.INSTANCE.SetWindowPos
-                (hwnd, ccc, 0, 0, 0, 0,
-                        SWP_NOMOVE | SWP_NOSIZE | SWP_NOACTIVATE);
     }
 
 
@@ -263,4 +237,32 @@ public class Tools {
         }
     }
 
+    public static void shutdown (Window gr) {
+        JDialog dlg = TimedMessage.showMessageDialog (gr,"closing ..", "ImageBase",
+                3000);
+
+        DBHandler.log("--- TheGrid ended");
+        gr.setVisible(false);
+        DBHandler.close();
+        dlg.dispose();
+        System.exit(1);
+    }
+
+
+    public static void restartApplication() throws Exception {
+        final String javaBin = System.getProperty("java.home") + File.separator + "bin" + File.separator + "java";
+        final File currentJar = new File(TheGrid.class.getProtectionDomain().getCodeSource().getLocation().toURI());
+
+        /* Build command: java -jar application.jar */
+        final ArrayList<String> command = new ArrayList<>();
+        command.add(javaBin);
+        command.add("-jar");
+        command.add(currentJar.getPath());
+        command.add ("dbdir:" + DBHandler.getDBRoot());
+        command.add ("nopwd");
+
+        final ProcessBuilder builder = new ProcessBuilder(command);
+        builder.start();
+        System.exit(0);
+    }
 }

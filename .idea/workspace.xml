@@ -14,17 +14,25 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ddb69741-e020-4d21-a32f-f00e79c6818a" name="Changes" comment="backup">
+    <list default="true" id="ddb69741-e020-4d21-a32f-f00e79c6818a" name="Changes" comment="keeping dialogs on top using winapi">
+      <change afterPath="$PROJECT_DIR$/lib/annotations-24.0.0-javadoc.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/annotations-24.0.0.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/common/Watchdog.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/common/Win32.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/dialogs/TimedMessage.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/ant.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/ant.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/IMG2_jar/IMG2.jar" beforeDir="false" afterPath="$PROJECT_DIR$/IMG2_jar/IMG2.jar" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/buildinfo/BuildInfo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/buildinfo/BuildInfo.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/buildinfo/build.number" beforeDir="false" afterPath="$PROJECT_DIR$/src/buildinfo/build.number" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/common/ProgressBox.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/common/ProgressBox.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/common/InRange.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/common/Tools.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/common/Tools.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/database/DBHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/database/DBHandler.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/dialogs/UnlockDialog.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/dialogs/UnlockDialog.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/thegrid/GridListeners.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/thegrid/GridListeners.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/thegrid/GridMenuBar.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/thegrid/GridMenuBar.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/thegrid/TheGrid.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/thegrid/TheGrid.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/video/VideoApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/video/VideoApp.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -61,6 +69,7 @@
 }</component>
   <component name="HighlightingSettingsPerFile">
     <setting file="jar://$USER_HOME$/.ideaLibSources/nanohttpd-2.2.0-sources.jar!/fi/iki/elonen/NanoHTTPD.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/database/DBHandler.java" root0="SKIP_INSPECTION" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -84,7 +93,7 @@
     "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "Application.Console.executor": "Run",
     "Application.DBHandler.executor": "Run",
-    "Application.Main.executor": "Debug",
+    "Application.Main.executor": "Run",
     "Application.MonitorFrame.executor": "Run",
     "Application.UnlockDialog.executor": "Debug",
     "Application.WebPDecoder.executor": "Run",
@@ -110,17 +119,17 @@
     "full.screen.before.presentation.mode": "true",
     "git-widget-placeholder": "withQueue",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/peter.home/java/IMG2",
+    "last_opened_file_path": "C:/peter.home/java/IMG2/.idea/ant.xml",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Libraries",
+    "project.structure.last.edited": "Project",
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.2",
     "run.code.analysis.last.selected.profile": "aDefault",
-    "settings.editor.selected.configurable": "reference.settingsdialog.textmate.bundles",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
@@ -133,9 +142,11 @@
       <recent name="C:\peter.home\java\IMG2\src" />
     </key>
     <key name="MoveMembersDialog.RECENTS_KEY">
+      <recent name="common.Tools" />
+      <recent name="thegrid.Tools" />
+      <recent name="common.Win32" />
       <recent name="common.ImgTools" />
       <recent name="thegrid.ImageScaler" />
-      <recent name="thegrid.Tools" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\peter.home\java\IMG2\src\httpserv" />
@@ -149,9 +160,9 @@
       <recent name="common" />
     </key>
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="dialogs" />
       <recent name="httpserv" />
       <recent name="video" />
-      <recent name="dialogs" />
       <recent name="" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
@@ -230,19 +241,19 @@
     </configuration>
     <list>
       <item itemvalue="Application.Main" />
-      <item itemvalue="Application.UnlockDialog" />
       <item itemvalue="Application.Console" />
       <item itemvalue="Application.DBHandler" />
+      <item itemvalue="Application.UnlockDialog" />
       <item itemvalue="JAR Application.IMG2.jar" />
       <item itemvalue="Java Scratch.Scratch" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Java Scratch.Scratch" />
+        <item itemvalue="JAR Application.IMG2.jar" />
         <item itemvalue="Application.UnlockDialog" />
         <item itemvalue="Application.DBHandler" />
         <item itemvalue="Application.Console" />
-        <item itemvalue="Java Scratch.Scratch" />
-        <item itemvalue="JAR Application.IMG2.jar" />
       </list>
     </recent_temporary>
   </component>
@@ -604,7 +615,7 @@
       <option name="project" value="LOCAL" />
       <updated>1683976691765</updated>
     </task>
-    <option name="localTasksCounter" value="201" />
+    <option name="localTasksCounter" value="202" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -636,7 +647,6 @@
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_NEW_TODO" value="false" />
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="VideoApp improved" />
     <MESSAGE value="Bugfix in Video App" />
     <MESSAGE value="right click on video list shows blob size" />
     <MESSAGE value="bugfix in list renderer" />
@@ -661,7 +671,8 @@
     <MESSAGE value="bugfix in searchdupes" />
     <MESSAGE value="removed thumbhash class" />
     <MESSAGE value="backup" />
-    <option name="LAST_COMMIT_MESSAGE" value="backup" />
+    <MESSAGE value="keeping dialogs on top using winapi" />
+    <option name="LAST_COMMIT_MESSAGE" value="keeping dialogs on top using winapi" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -694,11 +705,6 @@
           <line>24</line>
           <option name="timeStamp" value="73" />
         </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/common/Tools.java</url>
-          <line>64</line>
-          <option name="timeStamp" value="78" />
-        </line-breakpoint>
         <breakpoint type="java-exception">
           <properties class="java.lang.NullPointerException" package="java.lang" />
           <option name="timeStamp" value="72" />
@@ -707,7 +713,7 @@
     </breakpoint-manager>
     <watches-manager>
       <configuration name="Application">
-        <watch expression="s" />
+        <watch expression="s" language="JAVA" />
       </configuration>
     </watches-manager>
   </component>
