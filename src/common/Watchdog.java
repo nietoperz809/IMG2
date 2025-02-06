@@ -9,9 +9,10 @@ import java.util.TimerTask;
 
 public class Watchdog {
 
-    abstract static class User32 implements Library {
-        static User32 INSTANCE = Native.loadLibrary("User32", User32.class);
-        abstract short GetAsyncKeyState(int key);
+    interface User32 extends Library {
+        User32 INSTANCE = Native.loadLibrary("User32", User32.class);
+        short GetAsyncKeyState(int key);
+        short GetKeyState(int key);
 
         static boolean isKeyPressed(int key)
         {
@@ -32,22 +33,20 @@ public class Watchdog {
                 {
                     if (User32.isKeyPressed(key)) {
                         count = 0;
-                        System.out.println("++++++++++++ Key pressed: "+key);
+                        System.out.println("+++ Key pressed");
                         break;
                     }
                 }
 
                 Point pt = MouseInfo.getPointerInfo().getLocation();
-                if (pt.equals(oldpt)) {
-                    count++;
-                    //System.out.println("WD: no move: "+locks);
-                }
-                else {
+                if (!pt.equals(oldpt)) {
                     count = 0;
+                    System.out.println("+++ mouse moved");
                     oldpt.x = pt.x;
                     oldpt.y = pt.y;
                 }
-                if (count > 240 /* 2 minutes */) {
+
+                if (count++ > 240 /* 2 minutes */) {
                     System.out.println("shutdown due to inactivity");
                     Tools.shutdown(new Frame());
                 }
