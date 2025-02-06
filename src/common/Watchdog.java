@@ -18,15 +18,14 @@ public class Watchdog {
         {
             return User32.INSTANCE.GetAsyncKeyState(key) == -32767;
         }
-
     }
 
     public static void start () {
-        final Timer timer = new Timer();
-        final Point oldpt = new Point(-1,-1);
+        //Timer timer = new Timer();
 
         TimerTask task1 = new TimerTask() {
-            private int count = 0;
+            int count = 0;
+            final Point oldpt = new Point(-1,-1);
 
             public void run() {
                 for (int key = 1; key < 256; key++)
@@ -53,6 +52,6 @@ public class Watchdog {
             }
         };
 
-        timer.schedule(task1, 0,500);
+        new Timer().schedule(task1, 0,500);
     }
 }
