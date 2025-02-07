@@ -1,10 +1,7 @@
 package thegrid;
 
-import dialogs.TimedMessage;
 import common.Tools;
-import database.DBHandler;
 
-import javax.swing.*;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.Transferable;
 import java.awt.dnd.DnDConstants;
@@ -71,7 +68,6 @@ public class GridListeners implements KeyListener {
         if (kc == KeyEvent.VK_N) {
             ImageView iv = new ImageView(theGrid, 0);
             theGrid.controller.add(iv);
-            //theGrid.controller.add(iv);
             iv.selectAnotherImage();
         } else {
             Tools.fastScroll(kc, theGrid.scrollPane.getViewport(), true);

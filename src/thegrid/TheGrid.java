@@ -6,6 +6,7 @@ import database.DBHandler;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseMotionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.time.Duration;
@@ -117,7 +118,6 @@ public class TheGrid extends MyFrame {
                 Tools.AskforPWD();
 
             DBHandler.log("+++ TheGrid started");
-            Watchdog.start();
             new TheGrid (mainSQL.get(), dbRoot);
             System.out.println("end main");
         } catch (Exception e) {

@@ -104,8 +104,6 @@ public class VideoApp extends JDialog {
         setAndSortJListContent();
 
         enableDrop();
-//        setResizable(false);
-//        setSize(800, 600);
 
         listControl.ensureIndexIsVisible(listControl.getSelectedIndex());
         listControl.setToolTipText("right click to get BLOB size, be patient");
