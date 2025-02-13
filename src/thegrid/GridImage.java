@@ -8,9 +8,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.image.BufferedImage;
 import java.util.LinkedList;
-import java.util.List;
 
 class GridImage extends JLabel {
 
@@ -24,10 +22,19 @@ class GridImage extends JLabel {
     static public void unmarkAll() {
         for (int i = 0; i < marked.size(); i++) {
             GridImage img = marked.get(i);
+            img.setOpaque(true);
             img.setBackground(unmarkedColor);
-            //img.repaint();
         }
         marked.clear();
+    }
+
+    static public void markAll (TheGrid grid) {
+        Component[] comp = grid.rootPane.getComponents();
+        for (Component c : comp) {
+            GridImage img = (GridImage)c;
+            img.setMarked();
+            img.repaint();
+        }
     }
 
     static public GridImage[] getMarked() {
@@ -45,6 +52,12 @@ class GridImage extends JLabel {
 
     public boolean isMarked() {
         return getBackground() == markedColor;
+    }
+
+    public void setMarked() {
+        setOpaque(true);
+        setBackground(markedColor);
+        marked.add (this);
     }
 
     private void init (TheGrid grid, int index, JPanel jp) {
@@ -81,8 +94,9 @@ class GridImage extends JLabel {
                             setBackground(unmarkedColor);
                             marked.remove(GridImage.this);
                         } else {
-                            setBackground(markedColor);
-                            marked.add(GridImage.this);
+                            GridImage.this.setMarked();
+                            //setBackground(markedColor);
+                            //marked.add(GridImage.this);
                         }
                         return;
                     }
@@ -102,7 +116,7 @@ class GridImage extends JLabel {
      */
     GridImage(TheGrid grid, Image iconImage, JPanel rootPane, String ImageName) throws Exception {
         super(new ImageIcon(iconImage));
-        grid.imageL.add (new DBHandler.NameID(ImageName, grid.imageL.getLastRowid(), null)); //(ImageName);
+        grid.imageL.addNameID(new DBHandler.NameID(ImageName, grid.imageL.getLastRowid(), null)); //(ImageName);
         int index = grid.imageL.size()-1;
         //imgHash = ImgTools.imgHash((BufferedImage)iconImage);
         init (grid, index, rootPane);

@@ -13,6 +13,8 @@
       <element id="extracted-dir" path="$PROJECT_DIR$/lib/Catalano.Image.jar" path-in-jar="/" />
       <element id="extracted-dir" path="$PROJECT_DIR$/lib/forms-1.2.1.jar" path-in-jar="/" />
       <element id="file-copy" path="$PROJECT_DIR$/resource/win32-x86-64/libwebp_animdecoder.dll" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/lib/zip4j-2.9.0-1.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/lib/annotations-24.0.0.jar" path-in-jar="/" />
     </root>
   </artifact>
 </component>

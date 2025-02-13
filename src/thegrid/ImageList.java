@@ -28,7 +28,7 @@ public class ImageList {
         return allFiles.size();
     }
 
-    public void add (DBHandler.NameID nid) {
+    public void addNameID(DBHandler.NameID nid) {
         allFiles.add(nid);
     }
 
@@ -58,16 +58,4 @@ public class ImageList {
     public String getSql() {
         return this.sql;
     }
-
-//    private boolean rec = false;
-//
-//    public void recoverThumbs() {
-//        if (rec) return;
-//        rec = true;
-//        System.out.println("StartThumbRecovery!");
-//        for (DBHandler.NameID elem : allFiles) {
-//            System.out.println(elem.rowid());
-//            DBHandler.getInst().createNewThumb(elem.rowid());
-//        }
-//    }
 }

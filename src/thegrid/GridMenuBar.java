@@ -19,10 +19,7 @@ import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.event.ActionEvent;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import java.io.*;
 import java.util.*;
 import java.util.List;
 import java.util.zip.ZipEntry;
@@ -33,6 +30,9 @@ import static java.util.Objects.requireNonNull;
 
 
 public class GridMenuBar extends JMenuBar {
+
+    private final TheGrid m_grid;
+
     GridImage[] getMarked() {
         GridImage[] marked = GridImage.getMarked();
         if (marked.length == 0) {
@@ -41,11 +41,31 @@ public class GridMenuBar extends JMenuBar {
         }
         return marked;
     }
-    public GridMenuBar(TheGrid theGrid) {
+
+    public GridMenuBar(final TheGrid theGrid) {
+        m_grid = theGrid;
         JMenu jm = new JMenu("Menu");
         JMenuItem jmi;
-
         JMenu menu2 = new JMenu("Marked ...");
+
+        jmi = new JMenuItem("Mark all");
+        jmi.addActionListener(new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                GridImage.markAll(m_grid);
+            }
+        });
+        menu2.add(jmi);
+
+        jmi = new JMenuItem("Unmark all");
+        jmi.addActionListener(new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                GridImage.unmarkAll();
+            }
+        });
+        menu2.add(jmi);
+
         jmi = new JMenuItem("Save to Disk");
         jmi.addActionListener(new AbstractAction() {
             @Override
@@ -64,6 +84,7 @@ public class GridMenuBar extends JMenuBar {
             }
         });
         menu2.add(jmi);
+
         jmi = new JMenuItem("Make Zip");
         jmi.addActionListener(new AbstractAction() {
             @Override
@@ -75,10 +96,11 @@ public class GridMenuBar extends JMenuBar {
                 zipParameters.setEncryptFiles(true);
                 zipParameters.setCompressionLevel(CompressionLevel.HIGHER);
                 zipParameters.setEncryptionMethod(EncryptionMethod.AES);
-
                 String outPath = Tools.chooseDir(GridMenuBar.this);
                 try {
-                    ZipFile zipFile = new ZipFile (outPath+File.separator + "images.zip", "imagebase".toCharArray());
+                    ZipFile zipFile = new ZipFile (outPath+File.separator +
+                            System.currentTimeMillis()+"images.zip",
+                            "imagebase".toCharArray());
                     for (GridImage gi : marked) {
                         int id = gi.getRowID();
                         BufferedImage b2 = ImgTools.byteArrayToImg(DBHandler.loadImage(id));
