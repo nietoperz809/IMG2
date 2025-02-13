@@ -24,7 +24,7 @@ public class ImgTools {
      * @param anum arbitrary ID
      * @param outPath path were the Img goes
      */
-    public static void saveImg2Disk (BufferedImage img, int anum, String outPath) {
+    public static String saveImg2Disk (BufferedImage img, int anum, String outPath) {
         outPath = outPath+File.separator +
                 anum + "-" + img.getWidth()+"•"+img.getHeight()
                 + ".jpg";
@@ -36,6 +36,7 @@ public class ImgTools {
             System.err.println("imgIO write fail "+ex);
             throw new RuntimeException(ex);
         }
+        return outPath;
     }
 
     private record TransferableImage(Image i) implements Transferable, ClipboardOwner {

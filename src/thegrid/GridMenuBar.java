@@ -4,6 +4,11 @@ import common.*;
 import database.DBHandler;
 import dialogs.*;
 import httpserv.WebApp;
+import net.lingala.zip4j.NativeStorage;
+import net.lingala.zip4j.ZipFile;
+import net.lingala.zip4j.model.ZipParameters;
+import net.lingala.zip4j.model.enums.CompressionLevel;
+import net.lingala.zip4j.model.enums.EncryptionMethod;
 import org.jetbrains.annotations.NotNull;
 import video.VideoApp;
 
@@ -66,19 +71,23 @@ public class GridMenuBar extends JMenuBar {
                 GridImage[] marked = getMarked();
                 if (marked == null)
                     return;
+                ZipParameters zipParameters = new ZipParameters();
+                zipParameters.setEncryptFiles(true);
+                zipParameters.setCompressionLevel(CompressionLevel.HIGHER);
+                zipParameters.setEncryptionMethod(EncryptionMethod.AES);
+
                 String outPath = Tools.chooseDir(GridMenuBar.this);
-                File f = new File(outPath+File.separator + "images.zip");
                 try {
-                    ZipOutputStream zout = new ZipOutputStream(new FileOutputStream(f));
+                    ZipFile zipFile = new ZipFile (outPath+File.separator + "images.zip", "imagebase".toCharArray());
                     for (GridImage gi : marked) {
-                        ZipEntry ze = new ZipEntry(System.currentTimeMillis()+".jpg");
-                        zout.putNextEntry(ze);
-                        byte[] b = DBHandler.loadImage(gi.getRowID());
-                        zout.write(b, 0, b.length);
-                        zout.closeEntry();
+                        int id = gi.getRowID();
+                        BufferedImage b2 = ImgTools.byteArrayToImg(DBHandler.loadImage(id));
+                        String imgFile = ImgTools.saveImg2Disk(b2, id, outPath);
+                        zipFile.addFile(imgFile,zipParameters);
+                        DeferredFileDeleter.put (new File(imgFile));
                     }
                     GridImage.unmarkAll();
-                    zout.close();
+                    zipFile.close();
                 } catch (IOException ex) {
                     throw new RuntimeException(ex);
                 }
