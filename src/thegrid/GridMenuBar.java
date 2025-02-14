@@ -34,7 +34,7 @@ public class GridMenuBar extends JMenuBar {
     private final TheGrid m_grid;
 
     GridImage[] getMarked() {
-        GridImage[] marked = GridImage.getMarked();
+        GridImage[] marked = GridImage.getMarked(m_grid);
         if (marked.length == 0) {
             Tools.Error("none element marked");
             return null;
@@ -52,7 +52,7 @@ public class GridMenuBar extends JMenuBar {
         jmi.addActionListener(new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                GridImage.markAll(m_grid);
+                GridImage.markAll(m_grid, true);
             }
         });
         menu2.add(jmi);
@@ -61,7 +61,16 @@ public class GridMenuBar extends JMenuBar {
         jmi.addActionListener(new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                GridImage.unmarkAll();
+                GridImage.markAll(m_grid, false);
+            }
+        });
+        menu2.add(jmi);
+
+        jmi = new JMenuItem("Toggle");
+        jmi.addActionListener(new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                GridImage.toggleMarks(m_grid);
             }
         });
         menu2.add(jmi);
@@ -80,7 +89,7 @@ public class GridMenuBar extends JMenuBar {
                     BufferedImage b2 = ImgTools.byteArrayToImg(b);
                     ImgTools.saveImg2Disk(b2, id, outPath);
                 }
-                GridImage.unmarkAll();
+                GridImage.markAll(m_grid, false);
             }
         });
         menu2.add(jmi);
@@ -108,7 +117,7 @@ public class GridMenuBar extends JMenuBar {
                         zipFile.addFile(imgFile,zipParameters);
                         DeferredFileDeleter.put (new File(imgFile));
                     }
-                    GridImage.unmarkAll();
+                    GridImage.markAll(m_grid, false);
                     zipFile.close();
                 } catch (IOException ex) {
                     throw new RuntimeException(ex);

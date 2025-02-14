@@ -8,36 +8,44 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 import java.util.LinkedList;
 
 class GridImage extends JLabel {
 
-    private static final LinkedList<GridImage> marked = new LinkedList<>();
+//    private static final LinkedList<GridImage> marked = new LinkedList<>();
     final static Color markedColor = Color.RED;
     final static Color unmarkedColor = null;
     //private final byte[] imgHash;
     private DBHandler.NameID thisID;
     private JPanel rootPane;
 
-    static public void unmarkAll() {
-        for (int i = 0; i < marked.size(); i++) {
-            GridImage img = marked.get(i);
-            img.setOpaque(true);
-            img.setBackground(unmarkedColor);
-        }
-        marked.clear();
-    }
-
-    static public void markAll (TheGrid grid) {
+    static public void markAll (TheGrid grid, boolean mark) {
         Component[] comp = grid.rootPane.getComponents();
         for (Component c : comp) {
             GridImage img = (GridImage)c;
-            img.setMarked();
+            img.setMarked(mark);
             img.repaint();
         }
     }
 
-    static public GridImage[] getMarked() {
+    static public void toggleMarks (TheGrid grid) {
+        Component[] comp = grid.rootPane.getComponents();
+        for (Component c : comp) {
+            GridImage img = (GridImage)c;
+            img.setMarked(!img.isMarked());
+            img.repaint();
+        }
+    }
+
+    static public GridImage[] getMarked(TheGrid grid) {
+        ArrayList<GridImage> marked = new ArrayList<>();
+        Component[] comp = grid.rootPane.getComponents();
+        for (Component c : comp) {
+            GridImage img = (GridImage)c;
+            if (img.isMarked())
+                marked.add(img);
+        }
         return marked.toArray(new GridImage[0]);
     }
 
@@ -54,10 +62,12 @@ class GridImage extends JLabel {
         return getBackground() == markedColor;
     }
 
-    public void setMarked() {
+    public void setMarked(boolean mark) {
         setOpaque(true);
-        setBackground(markedColor);
-        marked.add (this);
+        if (mark)
+            setBackground (markedColor);
+        else
+            setBackground (unmarkedColor);
     }
 
     private void init (TheGrid grid, int index, JPanel jp) {
@@ -92,16 +102,15 @@ class GridImage extends JLabel {
                         setOpaque(true);
                         if (getBackground() == markedColor) {
                             setBackground(unmarkedColor);
-                            marked.remove(GridImage.this);
                         } else {
-                            GridImage.this.setMarked();
+                            GridImage.this.setMarked(true);
                             //setBackground(markedColor);
                             //marked.add(GridImage.this);
                         }
                         return;
                     }
                     ImageView iv = new ImageView(grid, index);
-                    unmarkAll();
+                    markAll(grid, false);
                     grid.controller.add(iv);
                 }
             }
