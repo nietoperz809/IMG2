@@ -99,7 +99,7 @@ public class GridMenuBar extends JMenuBar {
                 String outPath = Tools.chooseDir(GridMenuBar.this);
                 try {
                     ZipFile zipFile = new ZipFile (outPath+File.separator +
-                            System.currentTimeMillis()+"images.zip",
+                            System.currentTimeMillis()+"-images.rar",
                             "imagebase".toCharArray());
                     for (GridImage gi : marked) {
                         int id = gi.getRowID();

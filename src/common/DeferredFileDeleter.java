@@ -26,6 +26,10 @@ public class DeferredFileDeleter {
     }
 
     public static void put(File f) {
+        if (__delQue.contains(f)) {
+            System.out.println(f+" already queued");
+            return;
+        }
         try {
             __delQue.put(f);
         } catch (InterruptedException e) {
