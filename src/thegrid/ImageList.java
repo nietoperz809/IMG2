@@ -6,18 +6,24 @@ import static java.util.Objects.requireNonNull;
 
 public class ImageList {
 
+    public static final String mainSQL = "select * from (select name,_ROWID_,tag,accnum from IMAGES) order by _rowid_ desc";
     private String sql;
+    private TheGrid grid;
 
     public ImageList() {
     }
 
     // select name,_ROWID_,tag,accnum from IMAGES where tag = 'samen'
 
+    // select * from (select name,_ROWID_,tag,accnum from IMAGES) order by _rowid_ desc
+
     public java.util.List<DBHandler.NameID> allFiles;
 
     public void refresh() {
-        allFiles = DBHandler.loadImageInfosTopDown(this.sql);
-        //recoverThumbs();
+//        if (grid.thisInstCount == 1)
+//            allFiles = DBHandler.loadImageInfosTopDown(this.sql);
+//        else
+            allFiles = DBHandler.loadImageInfos(this.sql);
     }
 
     public DBHandler.NameID get (int n) {
@@ -50,8 +56,9 @@ public class ImageList {
         return -1;
     }
 
-    public void setSQL(String sql) {
+    public void setSQL(String sql, TheGrid theGrid) {
         this.sql = sql;
+        grid = theGrid;
         refresh();
     }
 

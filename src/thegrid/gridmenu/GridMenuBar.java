@@ -5,6 +5,7 @@ import database.DBHandler;
 import dialogs.*;
 import httpserv.WebApp;
 import org.jetbrains.annotations.NotNull;
+import thegrid.ImageList;
 import thegrid.TheGrid;
 import video.VideoApp;
 
@@ -88,7 +89,7 @@ public class GridMenuBar extends JMenuBar {
         jmi.addActionListener(new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String sql = LineInput.xmain(TheGrid.mainSQL.get().substring(0, 42),
+                String sql = LineInput.xmain("select * from (select name,_ROWID_,tag,accnum from IMAGES) order by _rowid_ dec",
                         "direct SQL", Color.BLUE);
                 if (!sql.isEmpty()) {
                     boolean b = DBHandler.execSQL(sql);
@@ -103,7 +104,7 @@ public class GridMenuBar extends JMenuBar {
             @Override
             public void actionPerformed(ActionEvent e) {
                 (new Thread(() -> {
-                    String sql = LineInput.xmain(TheGrid.mainSQL.get().substring(0, 42),
+                    String sql = LineInput.xmain("select * from (select name,_ROWID_,tag,accnum from IMAGES) order by _rowid_ dec",
                             "SQL", Color.BLUE);
                     if (!sql.isEmpty())
                         new TheGrid(sql, "child ");
@@ -203,14 +204,18 @@ public class GridMenuBar extends JMenuBar {
         });
         jm.add(jmi);
 
-        jmi = new JMenuItem("set Main SQL");
+        jmi = new JMenuItem("Another Grid");
         jmi.addActionListener(new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String newSql = LineInput.xmain(TheGrid.mainSQL.get(),
+                String newSql = LineInput.xmain(ImageList.mainSQL,
                         "newSQL", Color.BLUE);
-                if (!newSql.isEmpty())
-                    TheGrid.mainSQL.set(newSql);
+                if (!newSql.isEmpty()) {
+                    (new Thread(() -> {
+                        new TheGrid(newSql, "WORKER");
+                    })).start();
+                }
+                //TheGrid.mainSQL.set(newSql);
             }
         });
         jm.add(jmi);

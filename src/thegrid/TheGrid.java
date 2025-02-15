@@ -20,9 +20,9 @@ import static common.Tools.extractResource;
 public class TheGrid extends MyFrame {
     private static int instCount = 0;
     public int thisInstCount;
-    public static final PersistString mainSQL =
-            new PersistString("mainSQL",
-                    "select name,_ROWID_,tag,accnum from IMAGES order by accnum desc");
+//    public static final PersistString mainSQL =
+//            new PersistString("mainSQL",
+//                    "select * from (select name,_ROWID_,tag,accnum from IMAGES) order by _rowid_ dec");
     public final ImageList imageL = new ImageList();
     //public static TheGrid instance;
     public final ImageViewController controller = new ImageViewController();
@@ -63,7 +63,7 @@ public class TheGrid extends MyFrame {
         instCount++;
         thisInstCount = instCount;
         setTitle(dbRoot);
-        imageL.setSQL(sql);
+        imageL.setSQL(sql, this);
         //System.out.println("TheGrid constructor called");
         DBHandler.log("Images in DB: "+this.imageL.size());
         progress = new ProgressBox(this, this.imageL.size());
@@ -118,7 +118,7 @@ public class TheGrid extends MyFrame {
                 Tools.AskforPWD();
 
             DBHandler.log("+++ TheGrid started");
-            new TheGrid (mainSQL.get(), dbRoot);
+            new TheGrid (ImageList.mainSQL, dbRoot);
             System.out.println("end main");
         } catch (Exception e) {
             System.out.println("FAIL: " + e);

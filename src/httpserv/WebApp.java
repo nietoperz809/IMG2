@@ -9,6 +9,7 @@
 package httpserv;
 
 import database.DBHandler;
+import thegrid.ImageList;
 import thegrid.TheGrid;
 import thegrid.UniqueRng;
 
@@ -41,7 +42,7 @@ public class WebApp extends NanoHTTPD {
      */
     public WebApp() {
         super(80);
-        allFiles = DBHandler.loadImageInfosTopDown(TheGrid.mainSQL.get().substring(0,42));
+        allFiles = DBHandler.loadImageInfos (ImageList.mainSQL);
         ring = new UniqueRng(allFiles.size(), false);
 
         try {

@@ -27,10 +27,7 @@ import static common.ImgTools.byteArrayToImg;
 import static common.Tools.extractResource;
 
 public class DBHandler {
-    /**
-     * rowid reverse comparator
-     */
-    static final Comparator<NameID> comp = Comparator.comparing(NameID::rowid).reversed();
+
     private static final String NO_PASS = "NoPass";
     private static final String DB_FILE = "mydb";
     private static final String DB_FILE_FULL = DB_FILE + ".mv.db";
@@ -192,43 +189,33 @@ public class DBHandler {
         return al;
     }
 
-    public static List<NameID> loadImageInfosTopDown(String eSQL) {
-        List<NameID> res = getNames (Objects.requireNonNull(eSQL));
-        res.sort(comp);
-        return res;
+    public static List<NameID> loadImageInfos(String eSQL) {
+        return getNames (Objects.requireNonNull(eSQL));
     }
 
-//    public static ArrayList<Integer> getImgRowids() {
-//        ArrayList<Integer> li = new ArrayList<>();
-//        String sql = "select _ROWID_ from IMAGES order by _ROWID_ asc";
-//        try (ResultSet res = query(sql)) {
-//            if (res == null)
-//                return li;
-//            while (res.next()) {
-//                li.add(res.getInt(1));
-//            }
-//        } catch (SQLException e) {
-//            throw new RuntimeException(e);
-//        }
-//        return li;
+//    public static List<NameID> loadImageInfosTopDown(String eSQL) {
+//        System.out.println("loadList: "+eSQL);
+//        List<NameID> res = loadImageInfos(eSQL);
+//        res.sort(comp);
+//        return res;
 //    }
 
-    public static List<NameID> getFileNames(String dbname) {
+    public static List<NameID> getAnimatedFileNames(String dbname) {
         String sql = "select name,_ROWID_,tag from " + dbname + " order by _ROWID_ asc";
         return getNames(sql);
     }
 
     public static List<NameID> getVideoFileNames() {
 
-        return getFileNames("VIDEOS");
+        return getAnimatedFileNames("VIDEOS");
     }
 
     public static List<NameID> getGifFileNames() {
-        return getFileNames("GIFS");
+        return getAnimatedFileNames("GIFS");
     }
 
     public static List<NameID> getWebPFileNames() {
-        return getFileNames("WEBP");
+        return getAnimatedFileNames("WEBP");
     }
 
     private static synchronized List<NameID> getNames(String sql) {
@@ -863,21 +850,4 @@ public class DBHandler {
         }
     }
 
-//    public static class ThumbHash {
-//        public final BufferedImage img;
-//        public final byte[] hash;
-//        public final byte[] bt;
-//
-//        public ThumbHash(byte[] bytes) {
-//            bt = bytes;
-//            try {
-//                img = ImgTools.byteArrayToImg(bytes);
-//                MessageDigest md = MessageDigest.getInstance("MD5");
-//                md.update(bytes);
-//                hash = md.digest();
-//            } catch (Exception e) {
-//                throw new RuntimeException(e);
-//            }
-//        }
-//    }
 }
