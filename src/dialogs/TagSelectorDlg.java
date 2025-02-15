@@ -1,9 +1,9 @@
 package dialogs;
 
 import database.DBHandler;
+import thegrid.TheGrid;
 
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.TreeSet;
@@ -15,7 +15,7 @@ public class TagSelectorDlg extends JDialog {
     private JRadioButton radioAND;
     private JRadioButton radioOR;
     private JButton cancelButton;
-    private JPanel buttPanel;
+    //private JPanel buttPanel;
     private boolean cancelled = false;
     private boolean andMode = true;
 
@@ -32,10 +32,10 @@ public class TagSelectorDlg extends JDialog {
             }
         });
 
-        buttonOK.addActionListener(e -> onOK());
-        cancelButton.addActionListener(e -> onCancel());
-        radioAND.addActionListener(e -> andMode = true);
-        radioOR.addActionListener(e -> andMode = false);
+        buttonOK.addActionListener(_ -> onOK());
+        cancelButton.addActionListener(_ -> onCancel());
+        radioAND.addActionListener(_ -> andMode = true);
+        radioOR.addActionListener(_ -> andMode = false);
     }
 
     public static JList<String> open() {
@@ -61,5 +61,23 @@ public class TagSelectorDlg extends JDialog {
         TreeSet<String> tags = DBHandler.getImageTagList();
         list1 = new JList<>(tags.toArray(new String[0]));
         //list1.setPreferredSize(new Dimension(300,300));
+    }
+
+    public static void worker_for_tagList() {
+        JList<String> jlist = open();
+        if (jlist == null) // cancelled
+            return;
+        var list = jlist.getSelectedValuesList();
+        boolean andMode = jlist.isOpaque();
+        (new Thread(() -> {
+            StringBuilder sql = new StringBuilder("select name,_ROWID_,tag,accnum from IMAGES where");
+            for (int s = 0; s < list.size(); s++) {
+                if (s > 0)
+                    sql.append(andMode ? " and" : " or");
+                sql.append(" tag like " + "'%").append(list.get(s)).append("%'");
+            }
+            System.out.println(sql);
+            new TheGrid(sql.toString(), "WORKER");
+        })).start();
     }
 }

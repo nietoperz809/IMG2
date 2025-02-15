@@ -11,12 +11,9 @@ import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
-class GridImage extends JLabel {
-
-//    private static final LinkedList<GridImage> marked = new LinkedList<>();
+public class GridImage extends JLabel {
     final static Color markedColor = Color.RED;
     final static Color unmarkedColor = null;
-    //private final byte[] imgHash;
     private DBHandler.NameID thisID;
     private JPanel rootPane;
 
@@ -125,7 +122,7 @@ class GridImage extends JLabel {
      */
     GridImage(TheGrid grid, Image iconImage, JPanel rootPane, String ImageName) throws Exception {
         super(new ImageIcon(iconImage));
-        grid.imageL.addNameID(new DBHandler.NameID(ImageName, grid.imageL.getLastRowid(), null)); //(ImageName);
+        grid.imageL.addNameID(new DBHandler.NameID(ImageName, grid.imageL.getLastRowid(), null));
         int index = grid.imageL.size()-1;
         //imgHash = ImgTools.imgHash((BufferedImage)iconImage);
         init (grid, index, rootPane);

@@ -1,15 +1,11 @@
-package thegrid;
+package thegrid.gridmenu;
 
 import common.*;
 import database.DBHandler;
 import dialogs.*;
 import httpserv.WebApp;
-import net.lingala.zip4j.NativeStorage;
-import net.lingala.zip4j.ZipFile;
-import net.lingala.zip4j.model.ZipParameters;
-import net.lingala.zip4j.model.enums.CompressionLevel;
-import net.lingala.zip4j.model.enums.EncryptionMethod;
 import org.jetbrains.annotations.NotNull;
+import thegrid.TheGrid;
 import video.VideoApp;
 
 import javax.swing.*;
@@ -18,12 +14,9 @@ import java.awt.*;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.event.ActionEvent;
-import java.awt.image.BufferedImage;
 import java.io.*;
 import java.util.*;
 import java.util.List;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipOutputStream;
 
 import static database.DBHandler.RowIDfromImgHash;
 import static java.util.Objects.requireNonNull;
@@ -31,101 +24,11 @@ import static java.util.Objects.requireNonNull;
 
 public class GridMenuBar extends JMenuBar {
 
-    private final TheGrid m_grid;
-
-    GridImage[] getMarked() {
-        GridImage[] marked = GridImage.getMarked(m_grid);
-        if (marked.length == 0) {
-            Tools.Error("none element marked");
-            return null;
-        }
-        return marked;
-    }
-
     public GridMenuBar(final TheGrid theGrid) {
-        m_grid = theGrid;
         JMenu jm = new JMenu("Menu");
         JMenuItem jmi;
-        JMenu menu2 = new JMenu("Marked ...");
 
-        jmi = new JMenuItem("Mark all");
-        jmi.addActionListener(new AbstractAction() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                GridImage.markAll(m_grid, true);
-            }
-        });
-        menu2.add(jmi);
-
-        jmi = new JMenuItem("Unmark all");
-        jmi.addActionListener(new AbstractAction() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                GridImage.markAll(m_grid, false);
-            }
-        });
-        menu2.add(jmi);
-
-        jmi = new JMenuItem("Toggle");
-        jmi.addActionListener(new AbstractAction() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                GridImage.toggleMarks(m_grid);
-            }
-        });
-        menu2.add(jmi);
-
-        jmi = new JMenuItem("Save to Disk");
-        jmi.addActionListener(new AbstractAction() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                GridImage[] marked = getMarked();
-                if (marked == null)
-                    return;
-                String outPath = Tools.chooseDir(GridMenuBar.this);
-                for (GridImage gi : marked) {
-                    int id = gi.getRowID();
-                    byte[] b = DBHandler.loadImage(id);
-                    BufferedImage b2 = ImgTools.byteArrayToImg(b);
-                    ImgTools.saveImg2Disk(b2, id, outPath);
-                }
-                GridImage.markAll(m_grid, false);
-            }
-        });
-        menu2.add(jmi);
-
-        jmi = new JMenuItem("Make Zip");
-        jmi.addActionListener(new AbstractAction() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                GridImage[] marked = getMarked();
-                if (marked == null)
-                    return;
-                ZipParameters zipParameters = new ZipParameters();
-                zipParameters.setEncryptFiles(true);
-                zipParameters.setCompressionLevel(CompressionLevel.HIGHER);
-                zipParameters.setEncryptionMethod(EncryptionMethod.AES);
-                String outPath = Tools.chooseDir(GridMenuBar.this);
-                try {
-                    ZipFile zipFile = new ZipFile (outPath+File.separator +
-                            System.currentTimeMillis()+"-images.rar",
-                            "imagebase".toCharArray());
-                    for (GridImage gi : marked) {
-                        int id = gi.getRowID();
-                        BufferedImage b2 = ImgTools.byteArrayToImg(DBHandler.loadImage(id));
-                        String imgFile = ImgTools.saveImg2Disk(b2, id, outPath);
-                        zipFile.addFile(imgFile,zipParameters);
-                        DeferredFileDeleter.put (new File(imgFile));
-                    }
-                    GridImage.markAll(m_grid, false);
-                    zipFile.close();
-                } catch (IOException ex) {
-                    throw new RuntimeException(ex);
-                }
-            }
-        });
-        menu2.add(jmi);
-        jm.add(menu2);
+        jm.add (new SubMenuMarked(theGrid));
 
         jmi = new JMenuItem("Instructions ...");
         jmi.addActionListener(new AbstractAction() {
@@ -271,8 +174,7 @@ public class GridMenuBar extends JMenuBar {
         });
         jm.add(jmi);
 
-        jmi = searchDupes("Search for duplicates");
-        jm.add(jmi);
+        jm.add(searchDupes());
 
         jmi = new JMenuItem("video App");
         jmi.addActionListener(new AbstractAction() {
@@ -287,7 +189,7 @@ public class GridMenuBar extends JMenuBar {
         jmi.addActionListener(new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                worker_for_tagList();
+                TagSelectorDlg.worker_for_tagList();
             }
         });
         jm.add(jmi);
@@ -347,8 +249,8 @@ public class GridMenuBar extends JMenuBar {
         theGrid.setJMenuBar(this);
     }
 
-    private @NotNull JMenuItem searchDupes(String text) {
-        JMenuItem m3 = new JMenuItem(text);
+    private JMenuItem searchDupes() {
+        JMenuItem m3 = new JMenuItem("Search for duplicates");
         m3.addActionListener(new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -386,21 +288,21 @@ public class GridMenuBar extends JMenuBar {
         return m3;
     }
 
-    private void worker_for_tagList() {
-        JList<String> jlist = TagSelectorDlg.open();
-        if (jlist == null) // cancelled
-            return;
-        var list = jlist.getSelectedValuesList();
-        boolean andMode = jlist.isOpaque();
-        (new Thread(() -> {
-            StringBuilder sql = new StringBuilder("select name,_ROWID_,tag,accnum from IMAGES where");
-            for (int s = 0; s < list.size(); s++) {
-                if (s > 0)
-                    sql.append(andMode ? " and" : " or");
-                sql.append(" tag like " + "'%").append(list.get(s)).append("%'");
-            }
-            System.out.println(sql);
-            new TheGrid(sql.toString(), "WORKER");
-        })).start();
-    }
+//    private void worker_for_tagList() {
+//        JList<String> jlist = TagSelectorDlg.open();
+//        if (jlist == null) // cancelled
+//            return;
+//        var list = jlist.getSelectedValuesList();
+//        boolean andMode = jlist.isOpaque();
+//        (new Thread(() -> {
+//            StringBuilder sql = new StringBuilder("select name,_ROWID_,tag,accnum from IMAGES where");
+//            for (int s = 0; s < list.size(); s++) {
+//                if (s > 0)
+//                    sql.append(andMode ? " and" : " or");
+//                sql.append(" tag like " + "'%").append(list.get(s)).append("%'");
+//            }
+//            System.out.println(sql);
+//            new TheGrid(sql.toString(), "WORKER");
+//        })).start();
+//    }
 }

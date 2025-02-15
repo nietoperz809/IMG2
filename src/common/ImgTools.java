@@ -1,6 +1,7 @@
 package common;
 
 import com.luciad.imageio.webp.WebPReadParam;
+import org.jetbrains.annotations.NotNull;
 
 import javax.imageio.ImageIO;
 import javax.imageio.ImageReader;
@@ -41,7 +42,7 @@ public class ImgTools {
 
     private record TransferableImage(Image i) implements Transferable, ClipboardOwner {
         @Override
-        public Object getTransferData(DataFlavor flavor)
+        public @NotNull Object getTransferData(DataFlavor flavor)
                 throws UnsupportedFlavorException {
             if (flavor.equals(DataFlavor.imageFlavor) && i != null) {
                 return i;
