@@ -14,15 +14,13 @@ import javax.sound.sampled.Clip;
 import javax.sound.sampled.Line;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.List;
 import java.awt.event.KeyEvent;
 import java.io.*;
 import java.net.URL;
 import java.nio.charset.Charset;
 import java.security.MessageDigest;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Objects;
-import java.util.TreeSet;
+import java.util.*;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.FutureTask;
@@ -40,13 +38,21 @@ public class Tools {
         return (FutureTask<?>) globalExecutor.submit(r);
     }
 
-    public static boolean isRunningFromJAR()
-    {
-        URL path = Tools.class.getResource("Tools.class");
-        return path.toString().startsWith("jar:");
-    }
+//    public static boolean isRunningFromJAR()
+//    {
+//        URL path = Tools.class.getResource("Tools.class");
+//        return path.toString().startsWith("jar:");
+//    }
 
-
+//    public static ArrayList<Object> convertObjectToList(Object obj) {
+//        ArrayList<Object> list = new ArrayList<>();
+//        if (obj.getClass().isArray()) {
+//            list = (ArrayList<Object>) Arrays.asList((Object[])obj);
+//        } else if (obj instanceof Collection) {
+//            list = new ArrayList<>((Collection<?>)obj);
+//        }
+//        return list;
+//    }
     /**
      * Checks if a filename has one of n extensions
      *
