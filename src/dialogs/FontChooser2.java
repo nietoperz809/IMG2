@@ -191,14 +191,16 @@ public class FontChooser2 extends JDialog
         }
     }
 
-    public void adjustDisplay (Font f)
-    {
-        resultFont = f;
-        bold.setState(f.isBold());
-        italic.setState(f.isItalic());
-        findAndSelect(fontNameChoice, f.getName());
-        findAndSelect(fontSizeChoice, "" + f.getSize());
-    }
+// --Commented out by Inspection START (2/17/2025 3:01 AM):
+//    public void adjustDisplay (Font f)
+//    {
+//        resultFont = f;
+//        bold.setState(f.isBold());
+//        italic.setState(f.isItalic());
+//        findAndSelect(fontNameChoice, f.getName());
+//        findAndSelect(fontSizeChoice, "" + f.getSize());
+//    }
+// --Commented out by Inspection STOP (2/17/2025 3:01 AM)
 
 // --Commented out by Inspection START (3/2/2018 7:49 PM):
 //    /** Retrieve the selected font name. */

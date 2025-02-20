@@ -158,14 +158,18 @@ public class ImgPanel extends JPanel {
         }
     }
 
-    public void scaleUp (float factor) {
-        offset.x /= factor;
-        offset.y /= factor;
-    }
+// --Commented out by Inspection START (2/17/2025 3:02 AM):
+//    public void scaleUp (float factor) {
+//        offset.x /= factor;
+//        offset.y /= factor;
+//    }
+// --Commented out by Inspection STOP (2/17/2025 3:02 AM)
 
-    public void scaleDown (float factor) {
-        offset.x *= factor;
-        offset.y *= factor;
-    }
+// --Commented out by Inspection START (2/17/2025 3:02 AM):
+//    public void scaleDown (float factor) {
+//        offset.x *= factor;
+//        offset.y *= factor;
+//    }
+// --Commented out by Inspection STOP (2/17/2025 3:02 AM)
 
 }

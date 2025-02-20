@@ -11,8 +11,6 @@ import java.awt.image.BufferedImage;
 public class RegionSelectorListener extends MouseAdapter {
     final ImageView theView;
     final ImgPanel imgPanel;
-    private final float A;
-    private final float B;
     Rectangle box = null;
     Graphics2D g2d;
     Point pressed  = null;
@@ -22,8 +20,8 @@ public class RegionSelectorListener extends MouseAdapter {
 
     public RegionSelectorListener(BufferedImage img, ImgPanel thePanel, ImageView p) {
         theView = p;
-        A = img.getHeight();
-        B = img.getWidth();
+        float a = img.getHeight();
+        float b = img.getWidth();
         this.imgPanel = thePanel;
         parent = p;
         thePanel.addMouseListener(this);

@@ -19,7 +19,6 @@ import java.awt.event.*;
 import java.awt.image.BufferedImage;
 import java.awt.image.RescaleOp;
 import java.io.IOException;
-import java.util.Objects;
 
 
 public class ImageView extends JFrame implements MouseWheelListener {

@@ -14,7 +14,6 @@ import static java.awt.Color.*;
 import static java.awt.Font.PLAIN;
 import static java.lang.Long.parseLong;
 import static java.lang.Runtime.getRuntime;
-import static java.lang.String.valueOf;
 import static java.lang.System.arraycopy;
 import static java.lang.Thread.sleep;
 
@@ -136,7 +135,6 @@ public class MemoryMonitor extends JPanel
         private final Line2D graphLine = new Line2D.Float();
         private final Color graphColor = new Color(46, 139, 87);
         private final Color mfColor = new Color(0, 100, 0);
-        private String usedStr;
         private Future running = null;
 
         class ResizeListener extends ComponentAdapter {
@@ -205,8 +203,8 @@ public class MemoryMonitor extends JPanel
             // .. Draw allocated and used strings ..
             big.setColor(GREEN);
             big.drawString((int) totalMemory / 1024 + "K allocated", 4.0f, (float) ascent + 0.5f);
-            usedStr = ((int) (totalMemory - freeMemory)) / 1024
-                      + "K used";
+            String usedStr = ((int) (totalMemory - freeMemory)) / 1024
+                    + "K used";
             big.drawString(usedStr, 4, h - descent);
 
             // Calculate remaining size

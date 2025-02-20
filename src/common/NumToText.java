@@ -87,14 +87,13 @@ public class NumToText {
         // nnnnnnnnnXXX
         int thousands = Integer.parseInt(snumber.substring(9, 12));
 
-        String tradBillions = switch (billions) {
+        String result = switch (billions) {
             case 0 -> "";
             case 1 -> convertLessThanOneThousand(billions)
                     + " billion ";
             default -> convertLessThanOneThousand(billions)
                     + " billion ";
         };
-        String result = tradBillions;
 
         String tradMillions = switch (millions) {
             case 0 -> "";

@@ -7,7 +7,8 @@ import common.Tools;
 import database.DBHandler;
 import dialogs.LineInput;
 import dialogs.MonitorFrame;
-import thegrid.TheGrid;
+import net.lingala.zip4j.ZipFile;
+import net.lingala.zip4j.model.ZipParameters;
 
 import javax.swing.*;
 import java.awt.*;
@@ -22,8 +23,10 @@ import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;
+import java.io.IOException;
 import java.lang.ref.SoftReference;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -61,8 +64,8 @@ public class VideoApp extends JDialog {
         JMenu menu = new JMenu("Options");
         JMenuItem mi1 = new JMenuItem("MemMonitor");
         JMenuItem mi2 = new JMenuItem("End Process");
-        mi1.addActionListener(e -> new MonitorFrame());
-        mi2.addActionListener(e -> Tools.shutdown(this));
+        mi1.addActionListener(_ -> new MonitorFrame());
+        mi2.addActionListener(_ -> Tools.shutdown(this));
         menu.add(mi1);
         menu.add(mi2);
         mb.add(menu);
@@ -84,9 +87,9 @@ public class VideoApp extends JDialog {
         setContentPane(contentPane);
         getRootPane().setDefaultButton(buttonPlay);
 
-        buttonPlay.addActionListener(e -> CancelOldAndPlayNew());
+        buttonPlay.addActionListener(_ -> CancelOldAndPlayNew());
 
-        buttonCancel.addActionListener(e -> {
+        buttonCancel.addActionListener(_ -> {
             checkBoxautoNew.setSelected(false);  // stop video show
             onCancel();
         });
@@ -108,7 +111,7 @@ public class VideoApp extends JDialog {
         listControl.ensureIndexIsVisible(listControl.getSelectedIndex());
         listControl.setToolTipText("right click to get BLOB size, be patient");
 
-        deleteButton.addActionListener(e -> {
+        deleteButton.addActionListener(_ -> {
             DBHandler.NameID nameid = listControl.getSelectedValue();
             if (!Tools.Question("Really delete " + nameid.name() + "?")) {
                 return;
@@ -124,30 +127,17 @@ public class VideoApp extends JDialog {
             repaint();
         });
 
-        exportButton.addActionListener(actionEvent -> {
-            DBHandler.NameID nameid = listControl.getSelectedValue();
-            try {
-                JFileChooser fileChooser = new JFileChooser();
-                fileChooser.setSelectedFile(new File(nameid.name()));
-                int option = fileChooser.showSaveDialog(VideoApp.this);
-                if (option == JFileChooser.APPROVE_OPTION) {
-                    File f = fileChooser.getSelectedFile();
-                    SoftReference<byte[]> bt;
-                    if (gifList.contains(nameid)) {
-                        bt = DBHandler.loadGifBytes(nameid);
-                    } else if (webpList.contains(nameid)) {
-                        bt = DBHandler.loadWEBPBytes(nameid);
-                    } else {
-                        bt = DBHandler.loadVideoBytes(nameid);
-                    }
-                    Files.write(f.toPath(), bt.get());
-                }
-            } catch (Exception e) {
-                throw new RuntimeException(e);
+        exportButton.addActionListener(_ -> {
+            final List<DBHandler.NameID> selectedValuesList = listControl.getSelectedValuesList();
+            if (selectedValuesList.size() == 1) {
+                saveSingle (selectedValuesList.getFirst());
+            }
+            else {
+                saveMulti (selectedValuesList);
             }
         });
 
-        renameButton.addActionListener(actionEvent -> {
+        renameButton.addActionListener(_ -> {
             DBHandler.NameID nameid = listControl.getSelectedValue();
             String res = LineInput.xmain(nameid.name(), "NewName", Color.orange);
             if (res.isEmpty())
@@ -164,9 +154,9 @@ public class VideoApp extends JDialog {
 
         listControl.setCellRenderer(new MyCellRenderer(this));
 
-        buttonMix.addActionListener(e -> mix());
+        buttonMix.addActionListener(_ -> mix());
 
-        filterButton.addActionListener(e -> {
+        filterButton.addActionListener(_ -> {
             String input = Tools.getInput("search for ...");
             if (input == null || input.isEmpty())
                 return;
@@ -180,7 +170,7 @@ public class VideoApp extends JDialog {
             listToListControl(filteredList);
         });
 
-        restoreButton.addActionListener(e -> listToListControl(entireList));
+        restoreButton.addActionListener(_ -> listToListControl(entireList));
 
         /*
          * Right mouseclick on listcontrol
@@ -206,6 +196,64 @@ public class VideoApp extends JDialog {
                 }
             }
         });
+    }
+
+    private SoftReference<byte[]> getVideoBytes (DBHandler.NameID nameid) {
+        try {
+            if (gifList.contains(nameid)) {
+                return DBHandler.loadGifBytes(nameid);
+            } else if (webpList.contains(nameid)) {
+                return DBHandler.loadWEBPBytes(nameid);
+            }
+            return DBHandler.loadVideoBytes(nameid);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private void saveMulti (List<DBHandler.NameID> selectedValuesList) {
+        ZipParameters zipParameters = Tools.getStandardZipParams();
+        String outPath = Tools.chooseDir(this);
+        System.out.println(outPath);
+        ZipFile zipFile = new ZipFile (outPath + File.separator +
+                System.currentTimeMillis()+"-animations.rar",
+                "imagebase".toCharArray());
+        //zipFile.
+        String tmpdir = System.getProperty("java.io.tmpdir");
+        try {
+            for (DBHandler.NameID nid : selectedValuesList) {
+                String filename = tmpdir + File.separator+nid.name();
+                if (videoList.contains(nid)) {
+                    if (!filename.endsWith(".mp4)")) {
+                        filename = filename + ".mp4";
+                    }
+                }
+                SoftReference<byte[]> bt = getVideoBytes (nid);
+                Files.write (Path.of(filename), bt.get());
+                zipFile.addFile(filename, zipParameters);
+                DeferredFileDeleter.put (filename);
+            }
+            zipFile.close();
+            Sam.speak("ZIP file created!");
+        } catch (IOException e) {
+            System.out.println(e);
+            throw new RuntimeException(e);
+        }
+    }
+
+    private void saveSingle (DBHandler.NameID nameid) {
+        try {
+            JFileChooser fileChooser = new JFileChooser();
+            fileChooser.setSelectedFile(new File(nameid.name()));
+            int option = fileChooser.showSaveDialog(VideoApp.this);
+            if (option == JFileChooser.APPROVE_OPTION) {
+                File f = fileChooser.getSelectedFile();
+                SoftReference<byte[]> bt = getVideoBytes (nameid);
+                Files.write(f.toPath(), bt.get());
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     /**

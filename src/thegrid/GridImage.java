@@ -9,7 +9,6 @@ import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
-import java.util.LinkedList;
 
 public class GridImage extends JLabel {
     final static Color markedColor = Color.RED;
@@ -120,7 +119,7 @@ public class GridImage extends JLabel {
      * @param rootPane the Imagegrid itself
      * @param ImageName name of the new Image
      */
-    GridImage(TheGrid grid, Image iconImage, JPanel rootPane, String ImageName) throws Exception {
+    GridImage(TheGrid grid, Image iconImage, JPanel rootPane, String ImageName) {
         super(new ImageIcon(iconImage));
         grid.imageL.addNameID(new DBHandler.NameID(ImageName, grid.imageL.getLastRowid(), null));
         int index = grid.imageL.size()-1;

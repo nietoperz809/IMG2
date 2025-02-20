@@ -10,7 +10,6 @@ package httpserv;
 
 import database.DBHandler;
 import thegrid.ImageList;
-import thegrid.TheGrid;
 import thegrid.UniqueRng;
 
 import java.io.ByteArrayInputStream;

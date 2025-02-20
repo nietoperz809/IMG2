@@ -193,20 +193,12 @@ public class DBHandler {
         return getNames (Objects.requireNonNull(eSQL));
     }
 
-//    public static List<NameID> loadImageInfosTopDown(String eSQL) {
-//        System.out.println("loadList: "+eSQL);
-//        List<NameID> res = loadImageInfos(eSQL);
-//        res.sort(comp);
-//        return res;
-//    }
-
     public static List<NameID> getAnimatedFileNames(String dbname) {
         String sql = "select name,_ROWID_,tag from " + dbname + " order by _ROWID_ asc";
         return getNames(sql);
     }
 
     public static List<NameID> getVideoFileNames() {
-
         return getAnimatedFileNames("VIDEOS");
     }
 
@@ -224,9 +216,9 @@ public class DBHandler {
             if (res == null)
                 return al;
             while (res.next()) {
-                al.add(new NameID(res.getString(1),
-                        res.getInt(2),
-                        res.getString(3)));
+                al.add(new NameID(res.getString(1), // name
+                        res.getInt(2),              // _rowid_
+                        res.getString(3)));         // tag
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -235,10 +227,7 @@ public class DBHandler {
         return al;
     }
 
-    public static boolean deleteImage(int rowid) {
-        if (askForDel(String.valueOf(rowid))) {
-            return false;
-        }
+    public static boolean deleteImageSilently (int rowid) {
         try {
             statement.execute("delete from IMAGES where _ROWID_ = " + rowid);
             return true;
@@ -246,6 +235,13 @@ public class DBHandler {
             //throw new RuntimeException(e);
             return false;
         }
+    }
+
+    public static boolean deleteImage(int rowid) {
+        if (askForDel(String.valueOf(rowid))) {
+            return false;
+        }
+        return deleteImageSilently(rowid);
     }
 
     public static void deleteVideo(int rowid) {
@@ -302,7 +298,7 @@ public class DBHandler {
         return strres;
     }
 
-    public static TreeSet<String> getImageTagList() {
+    public static synchronized TreeSet<String> getImageTagList() {
         TreeSet<String> ll = new TreeSet<>();
         try {
             try (ResultSet res = query("select tag from IMAGES")) {
@@ -685,7 +681,7 @@ public class DBHandler {
 
     }
 
-    public static byte[] loadThumbnail(int rowid) {
+    public static synchronized byte[] loadThumbnail(int rowid) {
         String q = "select thumb from IMAGES where _rowid_ =" + rowid;
         try (ResultSet res = query(q)) {
             if (Objects.requireNonNull(res).next()) {
@@ -702,7 +698,7 @@ public class DBHandler {
         return null;
     }
 
-    public static void incAccCounter (int rowid) {
+    public static synchronized void incAccCounter (int rowid) {
         String sql = "update IMAGES set ACCNUM = (ACCNUM + 1) where _rowid_ =" + rowid;
         try {
             statement.execute (sql);
@@ -712,7 +708,7 @@ public class DBHandler {
         }
     }
 
-    public static void setAccCounter (int rowid, int val) {
+    public static synchronized void setAccCounter (int rowid, int val) {
         String sql = "update IMAGES set ACCNUM = "+ val + " where _rowid_ =" + rowid;
         try {
             statement.execute (sql);
@@ -722,8 +718,7 @@ public class DBHandler {
         }
     }
 
-
-    public static int getAccCounter (int rowid) {
+    public static synchronized int getAccCounter (int rowid) {
         String q = "select ACCNUM from IMAGES where _rowid_ =" + rowid;
         try (ResultSet res = query(q)) {
             if (Objects.requireNonNull(res).next()) {
@@ -742,24 +737,24 @@ public class DBHandler {
         return -1;
     }
 
-    public static byte[] loadImgHash (int rowid) {
-        String q = "select hashval from IMAGES where _rowid_ = " + rowid;
-        try {
-            try (ResultSet res = query(q)) {
-
-                if (Objects.requireNonNull(res).next()) {
-                    byte[] xout;
-                    xout = res.getBytes(1);
-                    //System.out.println(rowid+"--"+Arrays.toString(xout));
-                    return xout;
-                }
-            }
-            System.out.println("no res");
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-        return null;
-    }
+//    public static byte[] loadImgHash (int rowid) {
+//        String q = "select hashval from IMAGES where _rowid_ = " + rowid;
+//        try {
+//            try (ResultSet res = query(q)) {
+//
+//                if (Objects.requireNonNull(res).next()) {
+//                    byte[] xout;
+//                    xout = res.getBytes(1);
+//                    //System.out.println(rowid+"--"+Arrays.toString(xout));
+//                    return xout;
+//                }
+//            }
+//            System.out.println("no res");
+//        } catch (SQLException e) {
+//            throw new RuntimeException(e);
+//        }
+//        return null;
+//    }
 
     public static List<Integer> RowIDfromImgHash(byte[] hash) {
         List<Integer> li = new ArrayList<>();
@@ -793,7 +788,7 @@ public class DBHandler {
         }
     }
 
-    public static byte[] loadImage(int rowid) {
+    public static synchronized byte[] loadImage(int rowid) {
         String q = "select image, hashval from IMAGES where _rowid_ =" + rowid;
         try (ResultSet res = query(q)) {
             if (Objects.requireNonNull(res).next()) {

@@ -7,7 +7,7 @@ import java.awt.event.ActionListener;
 
 public class TimedMessage implements ActionListener
 {
-    private JDialog dialog;
+    private final JDialog dialog;
 
     private TimedMessage(JDialog dialog)
     {

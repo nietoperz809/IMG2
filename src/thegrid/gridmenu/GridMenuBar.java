@@ -4,7 +4,6 @@ import common.*;
 import database.DBHandler;
 import dialogs.*;
 import httpserv.WebApp;
-import org.jetbrains.annotations.NotNull;
 import thegrid.ImageList;
 import thegrid.TheGrid;
 import video.VideoApp;
@@ -20,7 +19,6 @@ import java.util.*;
 import java.util.List;
 
 import static database.DBHandler.RowIDfromImgHash;
-import static java.util.Objects.requireNonNull;
 
 
 public class GridMenuBar extends JMenuBar {
@@ -292,22 +290,4 @@ public class GridMenuBar extends JMenuBar {
 
         return m3;
     }
-
-//    private void worker_for_tagList() {
-//        JList<String> jlist = TagSelectorDlg.open();
-//        if (jlist == null) // cancelled
-//            return;
-//        var list = jlist.getSelectedValuesList();
-//        boolean andMode = jlist.isOpaque();
-//        (new Thread(() -> {
-//            StringBuilder sql = new StringBuilder("select name,_ROWID_,tag,accnum from IMAGES where");
-//            for (int s = 0; s < list.size(); s++) {
-//                if (s > 0)
-//                    sql.append(andMode ? " and" : " or");
-//                sql.append(" tag like " + "'%").append(list.get(s)).append("%'");
-//            }
-//            System.out.println(sql);
-//            new TheGrid(sql.toString(), "WORKER");
-//        })).start();
-//    }
 }

@@ -3,7 +3,11 @@ package common;
 import database.DBHandler;
 import dialogs.TimedMessage;
 import dialogs.UnlockDialog;
+import net.lingala.zip4j.model.ZipParameters;
+import net.lingala.zip4j.model.enums.CompressionLevel;
+import net.lingala.zip4j.model.enums.EncryptionMethod;
 import thegrid.TheGrid;
+import thegrid.gridmenu.SubMenuMarked;
 
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
@@ -32,9 +36,8 @@ public class Tools {
 //    }
 
     public static FutureTask<?> runTask(Runnable r) {
-        FutureTask<?> ft = (FutureTask<?>) globalExecutor.submit(r);
         //System.out.println(ft);
-        return ft;
+        return (FutureTask<?>) globalExecutor.submit(r);
     }
 
     public static boolean isRunningFromJAR()
@@ -180,6 +183,13 @@ public class Tools {
         //Runtime.getRuntime().runFinalization();
     }
 
+    public static ZipParameters getStandardZipParams() {
+        ZipParameters zipParameters = new ZipParameters();
+        zipParameters.setEncryptFiles(true);
+        zipParameters.setCompressionLevel(CompressionLevel.HIGHER);
+        zipParameters.setEncryptionMethod(EncryptionMethod.AES);
+        return zipParameters;
+    }
 
     public static String chooseDir(Component parent) {
         JFileChooser f = new JFileChooser();

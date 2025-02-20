@@ -25,6 +25,10 @@ public class DeferredFileDeleter {
         });
     }
 
+    public static void put(String s ) {
+        put(new File(s));
+    }
+
     public static void put(File f) {
         if (__delQue.contains(f)) {
             System.out.println(f+" already queued");

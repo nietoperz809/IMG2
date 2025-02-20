@@ -243,14 +243,16 @@ public class ImgTools {
         return img;
     }
 
-    public static byte[] imgHash (BufferedImage in) throws Exception {
-        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-        ImageIO.write(in, "jpg", outputStream);
-        byte[] data = outputStream.toByteArray();
-        MessageDigest md = MessageDigest.getInstance("MD5");
-        md.update(data);
-        return md.digest();
-    }
+// --Commented out by Inspection START (2/17/2025 3:02 AM):
+//    public static byte[] imgHash (BufferedImage in) throws Exception {
+//        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+//        ImageIO.write(in, "jpg", outputStream);
+//        byte[] data = outputStream.toByteArray();
+//        MessageDigest md = MessageDigest.getInstance("MD5");
+//        md.update(data);
+//        return md.digest();
+//    }
+// --Commented out by Inspection STOP (2/17/2025 3:02 AM)
 
     /**
      * Converts Image to byte array

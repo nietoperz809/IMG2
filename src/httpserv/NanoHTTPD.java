@@ -407,7 +407,7 @@ public abstract class NanoHTTPD {
         }
 
         @Override
-        public OutputStream open() throws Exception {
+        public OutputStream open() {
             return this.fstream;
         }
     }
@@ -492,9 +492,9 @@ public abstract class NanoHTTPD {
      */
     public static class SecureServerSocketFactory implements ServerSocketFactory {
 
-        private SSLServerSocketFactory sslServerSocketFactory;
+        private final SSLServerSocketFactory sslServerSocketFactory;
 
-        private String[] sslProtocols;
+        private final String[] sslProtocols;
 
         public SecureServerSocketFactory(SSLServerSocketFactory sslServerSocketFactory, String[] sslProtocols) {
             this.sslServerSocketFactory = sslServerSocketFactory;
@@ -562,7 +562,7 @@ public abstract class NanoHTTPD {
 
         private String queryParameterString;
 
-        private String remoteIp;
+        private final String remoteIp;
 
         private String protocolVersion;
 
@@ -1282,7 +1282,7 @@ public abstract class NanoHTTPD {
          */
         private InputStream data;
 
-        private long contentLength;
+        private final long contentLength;
 
         /**
          * Headers for the HTTP response. Use addHeader() to add lines.
@@ -1590,11 +1590,11 @@ public abstract class NanoHTTPD {
      */
     public interface TempFile {
 
-        public void delete() throws Exception;
+        void delete() throws Exception;
 
-        public String getName();
+        String getName();
 
-        public OutputStream open() throws Exception;
+        OutputStream open();
     }
 
     /**
@@ -1609,7 +1609,7 @@ public abstract class NanoHTTPD {
 
         void clear();
 
-        public TempFile createTempFile(String filename_hint) throws Exception;
+        TempFile createTempFile(String filename_hint) throws Exception;
     }
 
     /**
@@ -1617,7 +1617,7 @@ public abstract class NanoHTTPD {
      */
     public interface TempFileManagerFactory {
 
-        public TempFileManager create();
+        TempFileManager create();
     }
 
     /**
@@ -1625,7 +1625,7 @@ public abstract class NanoHTTPD {
      */
     public interface ServerSocketFactory {
 
-        public ServerSocket create() throws IOException;
+        ServerSocket create() throws IOException;
 
     }
 
@@ -1694,7 +1694,7 @@ public abstract class NanoHTTPD {
         } catch (IOException e) {
             LOG.log(Level.INFO, "no mime types available at " + resourceName);
         }
-    };
+    }
 
     /**
      * Creates an SSLSocketFactory for HTTPS. Pass a loaded KeyStore and an
@@ -1761,7 +1761,7 @@ public abstract class NanoHTTPD {
         return mime == null ? "application/octet-stream" : mime;
     }
 
-    private static final void safeClose(Object closeable) {
+    private static void safeClose(Object closeable) {
         try {
             if (closeable != null) {
                 if (closeable instanceof Closeable) {

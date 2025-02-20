@@ -2,13 +2,10 @@ package thegrid;
 
 import database.DBHandler;
 
-import static java.util.Objects.requireNonNull;
-
 public class ImageList {
 
     public static final String mainSQL = "select * from (select name,_ROWID_,tag,accnum from IMAGES) order by _rowid_ desc";
     private String sql;
-    private TheGrid grid;
 
     public ImageList() {
     }
@@ -58,7 +55,6 @@ public class ImageList {
 
     public void setSQL(String sql, TheGrid theGrid) {
         this.sql = sql;
-        grid = theGrid;
         refresh();
     }
 

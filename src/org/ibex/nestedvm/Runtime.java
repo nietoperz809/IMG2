@@ -99,7 +99,7 @@ public abstract class Runtime implements UsermodeConstants,Registers,Cloneable
     /** Subclasses should actually execute program in this method. They should continue 
         executing until state != RUNNING. Only syscall() can modify state. It is safe 
         to only check the state attribute after a call to syscall() */
-    protected abstract void _execute() throws ExecutionException;
+    protected abstract void _execute();
     
     /** Subclasses should return the address of the symbol <i>symbol</i> or -1 it it doesn't exits in this method 
         This method is only required if the call() function is used */
@@ -444,9 +444,9 @@ public abstract class Runtime implements UsermodeConstants,Registers,Cloneable
     }
     
     /** Created a new non-empty writable page at page number <i>page</i> */
-    private final int[] initPage(int page) { return initPage(page,false); }
+    private int[] initPage(int page) { return initPage(page,false); }
     /** Created a new non-empty page at page number <i>page</i>. If <i>ro</i> is set the page will be read-only */
-    private final int[] initPage(int page, boolean ro) {
+    private int[] initPage(int page, boolean ro) {
         int[] buf = new int[(1<<pageShift)>>>2];
         writePages[page] = ro ? null : buf;
         readPages[page] = buf;
@@ -460,7 +460,7 @@ public abstract class Runtime implements UsermodeConstants,Registers,Cloneable
         return exitStatus;
     }
         
-    private int addStringArray(String[] strings, int topAddr) throws FaultException {
+    private int addStringArray(String[] strings, int topAddr) {
         int count = strings.length;
         int total = 0; /* null last table entry  */
         for(int i=0;i<count;i++) total += strings[i].length() + 1;
@@ -512,17 +512,8 @@ public abstract class Runtime implements UsermodeConstants,Registers,Cloneable
     
     /** Calls _execute() (subclass's execute()) and catches exceptions */
     private void __execute() {
-        try {
-            _execute();
-        } catch(FaultException e) {
-            if(STDERR_DIAG) e.printStackTrace();
-            exit(128+11,true); // SIGSEGV
-            exitException = e;
-        } catch(ExecutionException e) {
-            if(STDERR_DIAG) e.printStackTrace();
-            exit(128+4,true); // SIGILL
-            exitException = e;
-        }
+        _execute();
+
     }
     
     /** Executes the process until the PAUSE syscall is invoked or the process exits. Returns true if the process exited. */
@@ -569,12 +560,8 @@ public abstract class Runtime implements UsermodeConstants,Registers,Cloneable
         if(args == null) args = new String[]{getClass().getName()};
         
         sp = top = writePages.length*(1<<pageShift);
-        try {
-            sp = argsAddr = addStringArray(args,sp);
-            sp = envAddr = addStringArray(createEnv(environ),sp);
-        } catch(FaultException e) {
-            throw new IllegalArgumentException("args/environ too big");
-        }
+        sp = argsAddr = addStringArray(args,sp);
+        sp = envAddr = addStringArray(createEnv(environ),sp);
         sp &= ~15;
         if(top - sp > ARG_MAX) throw new IllegalArgumentException("args/environ too big");
 
@@ -978,7 +965,7 @@ public abstract class Runtime implements UsermodeConstants,Registers,Cloneable
     private int sys_getpid() { return getPid(); }
     int getPid() { return 1; }
     
-    public interface CallJavaCB { public int call(int a, int b, int c, int d); }
+    public interface CallJavaCB { int call(int a, int b, int c, int d); }
     
     private int sys_calljava(int a, int b, int c, int d) {
         if(state != RUNNING) throw new IllegalStateException("wound up calling sys_calljava while not in RUNNING");
@@ -1028,7 +1015,7 @@ public abstract class Runtime implements UsermodeConstants,Registers,Cloneable
         return 0;
     }
        
-    final int sys_fcntl(int fdn, int cmd, int arg) throws FaultException {
+    final int sys_fcntl(int fdn, int cmd, int arg) {
         int i;
             
         if(fdn < 0 || fdn >= OPEN_MAX) return -EBADFD;
@@ -1082,9 +1069,8 @@ public abstract class Runtime implements UsermodeConstants,Registers,Cloneable
         @see Runtime#state state */
     protected final int syscall(int syscall, int a, int b, int c, int d, int e, int f) {
         try {
-            int n = _syscall(syscall,a,b,c,d,e,f);
             //if(n<0) throw new ErrnoException(-n);
-            return n;
+            return _syscall(syscall,a,b,c,d,e,f);
         } catch(ErrnoException ex) {
             //System.err.println("While executing syscall: " + syscall + ":");
             //if(syscall == SYS_open) try { System.err.println("Failed to open " + cstring(a) + " errno " + ex.errno); } catch(Exception e2) { }

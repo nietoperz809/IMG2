@@ -51,6 +51,19 @@ public class SubMenuMarked extends JMenu {
         });
         add(jmi);
 
+        jmi = new JMenuItem("Delete from DB");
+        jmi.addActionListener(new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                GridImage[] marked = GridImage.getMarked(grid);
+                for (GridImage gi : marked) {
+                    int id = gi.getRowID();
+                    DBHandler.deleteImageSilently(id);
+                }
+            }
+        });
+        add(jmi);
+
         jmi = new JMenuItem("Save to Disk");
         jmi.addActionListener(new AbstractAction() {
             @Override
@@ -72,10 +85,7 @@ public class SubMenuMarked extends JMenu {
         jmi.addActionListener(new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                ZipParameters zipParameters = new ZipParameters();
-                zipParameters.setEncryptFiles(true);
-                zipParameters.setCompressionLevel(CompressionLevel.HIGHER);
-                zipParameters.setEncryptionMethod(EncryptionMethod.AES);
+                ZipParameters zipParameters = Tools.getStandardZipParams();
                 String outPath = Tools.chooseDir(SubMenuMarked.this);
                 try {
                     ZipFile zipFile = new ZipFile (outPath+ File.separator +
