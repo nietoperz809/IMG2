@@ -3,6 +3,7 @@ package thegrid;
 import buildinfo.BuildInfo;
 import common.*;
 import database.DBHandler;
+import dialogs.ProgressBox;
 import thegrid.gridmenu.GridMenuBar;
 
 import javax.swing.*;

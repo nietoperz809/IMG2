@@ -267,7 +267,15 @@ public class DBHandler {
         }
     }
 
-    public static void setTag(int rowid, String... tag) {
+    public static void setTag(int rowid, String tag) {
+        try {
+            statement.execute("update IMAGES set tag = '"+ tag +"' where _ROWID_ = " + rowid);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static void setTags(int rowid, String... tag) {
         if (tag.length == 0)
             return;
         StringBuilder sb = new StringBuilder();
@@ -277,14 +285,10 @@ public class DBHandler {
             if ((tag.length > 1) && (s != tag.length-1))
                 sb.append(',');
         }
-        try {
-            statement.execute("update IMAGES set tag = '"+ sb +"' where _ROWID_ = " + rowid);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+        setTag (rowid, sb.toString());
     }
 
-    public static String getTag(int rowid) {
+    public static String getTags(int rowid) {
         String strres = null;
         try {
             try (ResultSet res = query("select tag from IMAGES where _ROWID_ = " + rowid)) {

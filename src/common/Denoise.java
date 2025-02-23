@@ -54,24 +54,6 @@ public class Denoise {
     }
 
     /**
-     * Set the image path
-     */
-
-
-    /**
-     * Get the Image path
-     */
-
-//    /**
-//     * Get a buffered Image
-//     * @return
-//     */
-//    public BufferedImage getBufferedImage() {
-//        // TODO return the image
-//        return image;
-//    }
-
-    /**
      * Return the image object
      */
     public BufferedImage getImage(){

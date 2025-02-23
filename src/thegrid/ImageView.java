@@ -186,7 +186,7 @@ public class ImageView extends JFrame implements MouseWheelListener {
 
                 case KeyEvent.VK_A -> {
                     int rowid = grid.imageL.get(ring2.get()).rowid();
-                    String tag = LineInput.tagList(DBHandler.getTag(rowid), "Tag:", Color.YELLOW)
+                    String tag = LineInput.tagList(DBHandler.getTags(rowid), "Tag:", Color.YELLOW)
                             .trim().toLowerCase();
                     if (!tag.isEmpty())
                         DBHandler.setTag(rowid, tag);

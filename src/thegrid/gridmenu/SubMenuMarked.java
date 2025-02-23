@@ -4,12 +4,14 @@ import common.DeferredFileDeleter;
 import common.ImgTools;
 import common.Tools;
 import database.DBHandler;
+import dialogs.LineInput;
 import net.lingala.zip4j.ZipFile;
 import net.lingala.zip4j.model.ZipParameters;
 import thegrid.GridImage;
 import thegrid.TheGrid;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -55,6 +57,20 @@ public class SubMenuMarked extends JMenu {
                         byte[] b = DBHandler.loadImage(id);
                         BufferedImage b2 = ImgTools.byteArrayToImg(b);
                         ImgTools.saveImg2Disk(b2, id, outPath);
+                    }
+                    GridImage.markAll(grid, false);
+                });
+
+        addItem("Set same tags",
+                _ -> {
+                    GridImage[] marked = GridImage.getMarked(grid);
+                    String tag = LineInput.tagList("", "Tag:", Color.YELLOW)
+                            .trim().toLowerCase();
+                    if (tag.isEmpty())
+                        return;
+                    for (GridImage gi : marked) {
+                        int id = gi.getRowID();
+                        DBHandler.setTag(id, tag);
                     }
                     GridImage.markAll(grid, false);
                 });

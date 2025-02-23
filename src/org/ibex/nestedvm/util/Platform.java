@@ -12,10 +12,7 @@ import java.net.UnknownHostException;
 import java.nio.channels.FileLock;
 import java.nio.channels.OverlappingFileLockException;
 import java.text.DateFormatSymbols;
-import java.util.Enumeration;
-import java.util.Hashtable;
-import java.util.Locale;
-import java.util.TimeZone;
+import java.util.*;
 
 /*
  GCCLASS_HINT: org.ibex.nestedvm.util.Platform.<clinit> org.ibex.nestedvm.util.Platform$Jdk11.<init>
@@ -34,7 +31,7 @@ public abstract class Platform {
             if(getProperty("java.vm.name").equals("SableVM"))
                 version = 1.2f;
             else
-                version = Float.valueOf(getProperty("java.specification.version")).floatValue();
+                version = Float.parseFloat(Objects.requireNonNull(getProperty("java.specification.version")));
         } catch(Exception e) {
             System.err.println("WARNING: " + e + " while trying to find jvm version -  assuming 1.1");
             version = 1.1f;
