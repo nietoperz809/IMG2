@@ -16,6 +16,7 @@ import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.TreeSet;
 
 public class SubMenuMarked extends JMenu {
 
@@ -61,16 +62,19 @@ public class SubMenuMarked extends JMenu {
                     GridImage.markAll(grid, false);
                 });
 
-        addItem("Set same tags",
+        addItem("Add tags",
                 _ -> {
                     GridImage[] marked = GridImage.getMarked(grid);
-                    String tag = LineInput.tagList("", "Tag:", Color.YELLOW)
-                            .trim().toLowerCase();
-                    if (tag.isEmpty())
+                    String tagsnew = LineInput.tagList("", "Tag:", Color.YELLOW);
+                    if (tagsnew.isEmpty())
                         return;
+                    TreeSet<String> tnew = Tools.SetFromCSVString(tagsnew);
                     for (GridImage gi : marked) {
                         int id = gi.getRowID();
-                        DBHandler.setTag(id, tag);
+                        String tags = DBHandler.getTags(id);
+                        TreeSet<String> tset = Tools.SetFromCSVString(tags);
+                        tset.addAll(tnew);
+                        DBHandler.setTag(id, Tools.CsvStringFromSet(tset));
                     }
                     GridImage.markAll(grid, false);
                 });

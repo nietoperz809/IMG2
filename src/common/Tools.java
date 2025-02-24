@@ -76,6 +76,8 @@ public class Tools {
     }
 
     public static java.util.TreeSet<String> SetFromCSVString(String csv) {
+        if (csv == null)
+            return new TreeSet<>(); // return empty treeset if input is null
         String[] arr = csv.split(",");
         TreeSet<String> ll = new TreeSet<>();
         for (int n = 0; n < arr.length; n++) {

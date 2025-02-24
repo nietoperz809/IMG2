@@ -108,13 +108,13 @@ public class AnimPlayerBox implements PlayerBox {
             if (autoclose)
                 stop();
             //Tools.gc_now();
-            System.out.println("end thread");
+            //System.out.println("end thread");
         });
 
         decoderTask = Tools.runTask(() -> {
             while (true) {
                 decoder.decodeFile(file.getAbsolutePath(), __que);
-                System.out.println("all frames decoded!");
+                //System.out.println("all frames decoded!");
                 if (autoclose) {
                     try {
                         __que.put(stopSymbol);

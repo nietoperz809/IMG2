@@ -275,18 +275,18 @@ public class DBHandler {
         }
     }
 
-    public static void setTags(int rowid, String... tag) {
-        if (tag.length == 0)
-            return;
-        StringBuilder sb = new StringBuilder();
-        for (int s=0; s<tag.length; s++)
-        {
-            sb.append(tag[s]);
-            if ((tag.length > 1) && (s != tag.length-1))
-                sb.append(',');
-        }
-        setTag (rowid, sb.toString());
-    }
+//    public static void setTags(int rowid, String... tag) {
+//        if (tag.length == 0)
+//            return;
+//        StringBuilder sb = new StringBuilder();
+//        for (int s=0; s<tag.length; s++)
+//        {
+//            sb.append(tag[s]);
+//            if ((tag.length > 1) && (s != tag.length-1))
+//                sb.append(',');
+//        }
+//        setTag (rowid, sb.toString());
+//    }
 
     public static String getTags(int rowid) {
         String strres = null;

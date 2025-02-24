@@ -85,7 +85,7 @@ public class LineInput extends JDialog {
     }
 
     public static String tagList(String init, String lab, Color col) {
-        return xmain(init, lab, col, null, true);
+        return xmain(init, lab, col, null, true).trim().toLowerCase();
     }
 
     public static int onlyPosNumber(String init, String lab, Color col) {
