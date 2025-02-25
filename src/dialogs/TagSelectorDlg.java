@@ -60,7 +60,7 @@ public class TagSelectorDlg extends JDialog {
     private void createUIComponents() {
         TreeSet<String> tags = DBHandler.getImageTagList();
         list1 = new JList<>(tags.toArray(new String[0]));
-        //list1.setPreferredSize(new Dimension(300,300));
+        list1.setCellRenderer (new MyListCellRenderer());
     }
 
     public static void worker_for_tagList() {
