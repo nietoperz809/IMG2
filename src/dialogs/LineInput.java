@@ -3,12 +3,40 @@ package dialogs;
 import database.DBHandler;
 
 import javax.swing.*;
+import javax.swing.border.Border;
 import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.util.TreeSet;
 
 import static common.Tools.*;
+
+class MyListCellRenderer extends JLabel implements ListCellRenderer<String>{
+
+    public MyListCellRenderer() {
+        setOpaque(true);
+    }
+
+    @Override
+    public Component getListCellRendererComponent(JList<? extends String> list, String value,
+                                                  int index, boolean isSelected, boolean cellHasFocus) {
+        setText(value);
+        setBorder(new LineBorder(Color.BLUE));
+
+        Color background;
+        Color foreground;
+        if (isSelected) {
+            background = Color.RED;
+            foreground = Color.WHITE;
+        } else {
+            background = Color.WHITE;
+            foreground = Color.BLACK;
+        };
+        setBackground(background);
+        setForeground(foreground);
+        return this;
+    }
+}
 
 public class LineInput extends JDialog {
     private JPanel contentPane;
@@ -108,6 +136,7 @@ public class LineInput extends JDialog {
     private void createUIComponents() {
         TreeSet<String> tags = DBHandler.getImageTagList();
         list1 = new JList<>(tags.toArray(new String[0]));
+        list1.setCellRenderer (new MyListCellRenderer());
         innerPanel = new JPanel();
     }
 }
