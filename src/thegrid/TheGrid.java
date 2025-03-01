@@ -21,15 +21,10 @@ import static common.Tools.extractResource;
 public class TheGrid extends MyFrame {
     private static int instCount = 0;
     public int thisInstCount;
-//    public static final PersistString mainSQL =
-//            new PersistString("mainSQL",
-//                    "select * from (select name,_ROWID_,tag,accnum from IMAGES) order by _rowid_ dec");
     public final ImageList imageL = new ImageList();
-    //public static TheGrid instance;
     public final ImageViewController controller = new ImageViewController();
     public final JPanel rootPane;
     public final JScrollPane scrollPane;
-    //private java.util.List<DBHandler.NameID> allFiles;
     private final ProgressBox progress;
     private final Instant startTime;
     private int imageCount;
@@ -76,7 +71,7 @@ public class TheGrid extends MyFrame {
         setSize(1050, 800);
         setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         setLocationRelativeTo(null);
-        rootPane.setToolTipText(imageL.size() + " Images, press 'a' to add more");
+        //rootPane.setToolTipText(imageL.size() + " Images, press 'a' to add more");
         new GridListeners(this);
         new GridMenuBar(this);
         // Action ...

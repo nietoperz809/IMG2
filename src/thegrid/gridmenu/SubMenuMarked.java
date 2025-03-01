@@ -28,6 +28,7 @@ public class SubMenuMarked extends JMenu {
 
     public SubMenuMarked (final TheGrid grid) {
         super ("Marked ...");
+        final GridImage[] marked = GridImage.getMarked(grid);
 
         addItem("Mark all",
                 _ -> GridImage.markAll(grid, true));
@@ -38,11 +39,8 @@ public class SubMenuMarked extends JMenu {
         addItem("Toggle",
                 _ -> GridImage.toggleMarks(grid));
 
-        addItem("Toggle",
-                _ -> GridImage.toggleMarks(grid));
-
         addItem("Delete from DB", _ -> {
-            GridImage[] marked = GridImage.getMarked(grid);
+            //GridImage[] marked = GridImage.getMarked(grid);
             for (GridImage gi : marked) {
                 int id = gi.getRowID();
                 DBHandler.deleteImageSilently(id);
@@ -51,7 +49,7 @@ public class SubMenuMarked extends JMenu {
 
         addItem("Save to Disk",
                 _ -> {
-                    GridImage[] marked = GridImage.getMarked(grid);
+                    //GridImage[] marked = GridImage.getMarked(grid);
                     String outPath = Tools.chooseDir(SubMenuMarked.this);
                     for (GridImage gi : marked) {
                         int id = gi.getRowID();
@@ -64,7 +62,7 @@ public class SubMenuMarked extends JMenu {
 
         addItem("Add tags",
                 _ -> {
-                    GridImage[] marked = GridImage.getMarked(grid);
+                    //GridImage[] marked = GridImage.getMarked(grid);
                     String tagsnew = LineInput.tagList("", "Tag:", Color.YELLOW);
                     if (tagsnew.isEmpty())
                         return;
@@ -87,7 +85,7 @@ public class SubMenuMarked extends JMenu {
                         ZipFile zipFile = new ZipFile (outPath+ File.separator +
                                 System.currentTimeMillis()+"-images.rar",
                                 "imagebase".toCharArray());
-                        GridImage[] marked = GridImage.getMarked(grid);
+                        //GridImage[] marked = GridImage.getMarked(grid);
                         for (GridImage gi : marked) {
                             int id = gi.getRowID();
                             BufferedImage b2 = ImgTools.byteArrayToImg(DBHandler.loadImage(id));
