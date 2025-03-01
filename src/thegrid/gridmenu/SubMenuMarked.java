@@ -41,10 +41,14 @@ public class SubMenuMarked extends JMenu {
 
         addItem("Delete from DB", _ -> {
             final GridImage[] marked = GridImage.getMarked(grid);
+            final JPanel jp = grid.rootPane;
             for (GridImage gi : marked) {
                 int id = gi.getRowID();
                 DBHandler.deleteImageSilently(id);
+                jp.remove(gi);
             }
+            jp.doLayout();
+            jp.repaint();
             Sam.speak(marked.length+"files deleted.");
         });
 

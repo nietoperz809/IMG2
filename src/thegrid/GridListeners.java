@@ -30,7 +30,6 @@ public class GridListeners implements KeyListener {
             }
         });
         g.addKeyListener(this);
-
     }
 
     private void enableDrop() {
