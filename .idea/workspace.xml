@@ -14,14 +14,16 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ddb69741-e020-4d21-a32f-f00e79c6818a" name="Changes" comment="wrote AddItem func">
+    <list default="true" id="ddb69741-e020-4d21-a32f-f00e79c6818a" name="Changes" comment="update">
+      <change beforePath="$PROJECT_DIR$/.idea/artifacts/IMG2_jar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/artifacts/IMG2_jar.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IMG2.iml" beforeDir="false" afterPath="$PROJECT_DIR$/IMG2.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/IMG2_jar/IMG2.jar" beforeDir="false" afterPath="$PROJECT_DIR$/IMG2_jar/IMG2.jar" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/buildinfo/BuildInfo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/buildinfo/BuildInfo.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/buildinfo/build.number" beforeDir="false" afterPath="$PROJECT_DIR$/src/buildinfo/build.number" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/common/Tools.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/common/Tools.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/thegrid/gridmenu/GridMenuBar.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/thegrid/gridmenu/GridMenuBar.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/thegrid/gridmenu/SubMenuMarked.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/thegrid/gridmenu/SubMenuMarked.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/database/DBHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/database/DBHandler.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -87,7 +89,7 @@
     "ASKED_ADD_EXTERNAL_FILES": "true",
     "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "Application.Console.executor": "Run",
-    "Application.DBHandler.executor": "Run",
+    "Application.DBHandler.executor": "Debug",
     "Application.Main.executor": "Run",
     "Application.MonitorFrame.executor": "Run",
     "Application.UnlockDialog.executor": "Debug",
@@ -113,7 +115,7 @@
     "full.screen.before.presentation.mode": "true",
     "git-widget-placeholder": "withQueue",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/peter.home/java/IMG2/.idea/ant.xml",
+    "last_opened_file_path": "C:/peter.home/java/IMG2",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -121,7 +123,7 @@
     "nodejs_package_manager_path": "npm",
     "project.structure.last.edited": "Artifacts",
     "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.2",
+    "project.structure.side.proportion": "0.60229445",
     "run.code.analysis.last.selected.profile": "aDefault",
     "settings.editor.selected.configurable": "editor.preferences.fonts.default",
     "vue.rearranger.settings.migration": "true"
@@ -129,11 +131,11 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\peter.home\java\IMG2" />
       <recent name="C:\peter.home\java\IMG2\src\dialogs" />
       <recent name="C:\peter.home\java\IMG2\resource" />
       <recent name="C:\peter.home\java\IMG2\lib" />
       <recent name="C:\peter.home\java\IMG2\src\Imaging" />
-      <recent name="C:\peter.home\java\IMG2\src" />
     </key>
     <key name="MoveMembersDialog.RECENTS_KEY">
       <recent name="common.Tools" />
@@ -244,10 +246,10 @@
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.DBHandler" />
         <item itemvalue="Java Scratch.Scratch" />
         <item itemvalue="JAR Application.IMG2.jar" />
         <item itemvalue="Application.UnlockDialog" />
-        <item itemvalue="Application.DBHandler" />
         <item itemvalue="Application.Console" />
       </list>
     </recent_temporary>
@@ -610,7 +612,7 @@
       <option name="project" value="LOCAL" />
       <updated>1683976691765</updated>
     </task>
-    <option name="localTasksCounter" value="218" />
+    <option name="localTasksCounter" value="227" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -672,13 +674,6 @@
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_NEW_TODO" value="false" />
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="relatively stable version" />
-    <MESSAGE value="latest release" />
-    <MESSAGE value="some improvements" />
-    <MESSAGE value="list packed to display entire content" />
-    <MESSAGE value="diaplay raw img dimensions in title bar" />
-    <MESSAGE value="changed file name in save ops" />
-    <MESSAGE value="+ manual window" />
     <MESSAGE value="dbhandler got static initializer" />
     <MESSAGE value="double finder opens new grid" />
     <MESSAGE value="bugfix in searchdupes" />
@@ -697,7 +692,14 @@
     <MESSAGE value="some enhancements" />
     <MESSAGE value="lib folder update" />
     <MESSAGE value="wrote AddItem func" />
-    <option name="LAST_COMMIT_MESSAGE" value="wrote AddItem func" />
+    <MESSAGE value="set same tag on selected imgs (over menu)" />
+    <MESSAGE value="new menuitem &quot;add tags&quot;" />
+    <MESSAGE value="custom cellrenderer für taglist" />
+    <MESSAGE value="save" />
+    <MESSAGE value="bugfix in submenu" />
+    <MESSAGE value="pushed JAR" />
+    <MESSAGE value="update" />
+    <option name="LAST_COMMIT_MESSAGE" value="update" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -719,11 +721,6 @@
             <option name="WATCH_EXIT" value="false" />
           </properties>
           <option name="timeStamp" value="3" />
-        </line-breakpoint>
-        <line-breakpoint type="java-line">
-          <url>file://$PROJECT_DIR$/src/httpserv/WebApp.java</url>
-          <line>133</line>
-          <option name="timeStamp" value="25" />
         </line-breakpoint>
         <line-breakpoint type="java-line">
           <url>file://$PROJECT_DIR$/src/common/EmailUtil.java</url>
