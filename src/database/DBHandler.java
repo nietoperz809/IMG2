@@ -71,8 +71,6 @@ public class DBHandler {
             statement.execute(sql);
             sql = "alter table WEBP add if not exists BLOBSiZE INT";
             statement.execute(sql);
-            sql = "alter table IMAGES add if not exists HASHVAL blob(16)";
-            statement.execute(sql);
             sql = "alter table IMAGES add if not exists IMGHASH JAVA_OBJECT";
             statement.execute(sql);
 
@@ -90,6 +88,11 @@ public class DBHandler {
             sql = "create table if not exists WEBP " +
                     "(WEBPDATA blob, NAME varchar(200), HASHVAL blob(16), TAG varchar(128))";
             statement.execute(sql);
+
+//            sql = "alter table IMAGES drop column hashval";
+//            statement.execute(sql);
+
+
             sql = "alter table IMAGES add if not exists TAG varchar(128)";
             statement.execute(sql);
             sql = "alter table IMAGES add if not exists ACCNUM integer";
@@ -437,21 +440,13 @@ public class DBHandler {
         try {
             img = ImgTools.removeAlpha(img);
             byte[] buff = ImgTools.imgToByteArray(img);
-            MessageDigest md5Maker;
             HashingAlgorithm hasher = new PerceptiveHash(32);
             Hash hash0 = hasher.hash(img);
-            try {
-                md5Maker = MessageDigest.getInstance("MD5");
-            } catch (NoSuchAlgorithmException e) {
-                throw new RuntimeException(e);
-            }
-            md5Maker.update(buff);
             PreparedStatement prep;
             prep = connection.prepareStatement(
-                    "update IMAGES set image=?,hashval=?,imghash=? where _rowid_ = " + id);
+                    "update IMAGES set image=?,imghash=? where _rowid_ = " + id);
             prep.setBytes(1, buff);
-            prep.setBytes(2, md5Maker.digest());
-            prep.setObject(3, hash0);
+            prep.setObject(2, hash0);
             prep.execute();
             connection.commit();
         } catch (Exception e) {
@@ -505,12 +500,11 @@ public class DBHandler {
         Hash hash0 = hasher.hash(byteArrayToImg(img));
         try {
             prep = connection.prepareStatement(
-                    "insert into IMAGES (image,thumb,name,hashval,imghash) values (?,?,?,?,?)");
+                    "insert into IMAGES (image,thumb,name,imghash) values (?,?,?,?)");
             prep.setBytes(1, img);
             prep.setBytes(2, thumb);
             prep.setString(3, name);
-            prep.setBytes(4, md5Maker.digest());
-            prep.setObject(5, hash0);
+            prep.setObject(4, hash0);
             prep.execute();
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -753,49 +747,23 @@ public class DBHandler {
         return -1;
     }
 
-//    public static byte[] loadImgHash (int rowid) {
-//        String q = "select hashval from IMAGES where _rowid_ = " + rowid;
-//        try {
-//            try (ResultSet res = query(q)) {
-//
-//                if (Objects.requireNonNull(res).next()) {
-//                    byte[] xout;
-//                    xout = res.getBytes(1);
-//                    //System.out.println(rowid+"--"+Arrays.toString(xout));
-//                    return xout;
-//                }
-//            }
-//            System.out.println("no res");
-//        } catch (SQLException e) {
-//            throw new RuntimeException(e);
-//        }
-//        return null;
-//    }
-
-    public static List<Integer> RowIDfromImgHash(byte[] hash) {
-        List<Integer> li = new ArrayList<>();
-        try {
-            PreparedStatement prep = connection.prepareStatement(
-                    "select _rowid_ from IMAGES where hashval=?");
-            prep.setBytes(1, hash);
-            ResultSet res = prep.executeQuery();
-            while (res.next()) {
-                li.add(res.getInt(1));
-            }
-            return li;
-
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
+    public static class HashId {
+        public Hash hash;
+        public int rowID;
+        public HashId (Hash h, int r) {
+            hash = h;
+            rowID = r;
         }
     }
 
-    public static ArrayList<byte[]> loadImgHashes() {
-        String q = "select hashval from IMAGES where hashval is not null";
-        ArrayList<byte[]> list = new ArrayList<>();
+    public static ArrayList<HashId> loadPerceptiveImgHashes() {
+        String q = "select imghash,_rowid_ from IMAGES where imghash is not null";
+        ArrayList<HashId> list = new ArrayList<>();
         try {
             try (ResultSet res = query(q)) {
                 while (Objects.requireNonNull(res).next()) {
-                    list.add(res.getBytes(1));
+                    HashId hid = new HashId((Hash)res.getObject(1), res.getInt(2));
+                    list.add(hid);
                 }
             }
             return list;
@@ -805,22 +773,18 @@ public class DBHandler {
     }
 
     public static synchronized byte[] loadImage(int rowid) {
-        String q = "select image, hashval from IMAGES where _rowid_ =" + rowid;
+        String q = "select image, imghash from IMAGES where _rowid_ =" + rowid;
         try (ResultSet res = query(q)) {
             if (Objects.requireNonNull(res).next()) {
                 byte[] img = res.getBytes(1);
-                byte[] hash = res.getBytes(2);
+                Hash hash = (Hash)res.getObject(2);
                 if (hash == null) { // create hash if missing
-                    MessageDigest md5Maker;
-                    try {
-                        md5Maker = MessageDigest.getInstance("MD5");
-                    } catch (NoSuchAlgorithmException e) {
-                        throw new RuntimeException(e);
-                    }
-                    md5Maker.update(img);
+                    BufferedImage bi = byteArrayToImg(img);
+                    HashingAlgorithm hasher = new PerceptiveHash(32);
+                    hash = hasher.hash(bi);
                     PreparedStatement prep = connection.prepareStatement(
-                            "update IMAGES set hashval=? where _rowid_ = " + rowid);
-                    prep.setBytes(1, md5Maker.digest());
+                            "update IMAGES set imghash=? where _rowid_ = " + rowid);
+                    prep.setObject(1, hash);
                     prep.execute();
                 }
                 return img;
@@ -830,6 +794,20 @@ public class DBHandler {
             throw new RuntimeException(e);
         }
         return null;
+    }
+
+    public static Hash getPerceptiveHash(int rowid) {
+        try (ResultSet res = query("select imghash from images where _rowid_ = " + rowid)) {
+            try {
+                assert res != null;
+                res.next();
+                return (Hash) res.getObject(1);
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     ///   ///////////////////////

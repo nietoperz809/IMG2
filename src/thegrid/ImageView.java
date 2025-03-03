@@ -11,6 +11,7 @@ import Catalano.Imaging.Filters.HistogramEqualization;
 import Catalano.Imaging.IApplyInPlace;
 import common.*;
 import database.DBHandler;
+import dev.brachtendorf.jimagehash.hash.Hash;
 import dialogs.LineInput;
 
 import javax.swing.*;
@@ -19,6 +20,8 @@ import java.awt.event.*;
 import java.awt.image.BufferedImage;
 import java.awt.image.RescaleOp;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashSet;
 
 
 public class ImageView extends JFrame implements MouseWheelListener {
@@ -196,6 +199,25 @@ public class ImageView extends JFrame implements MouseWheelListener {
                     Denoise d = new Denoise(img);
                     BufferedImage out = d.perform_denoise();
                     imgPanel.setImage(out);
+                }
+
+                case KeyEvent.VK_V -> { // similarities
+                    int rowid = grid.imageL.get(ring2.get()).rowid();
+                    Hash thisHash = DBHandler.getPerceptiveHash(rowid);
+                    ArrayList<DBHandler.HashId> hlist = DBHandler.loadPerceptiveImgHashes();
+                    HashSet<Integer> foundSet = new HashSet<>();
+                    for (DBHandler.HashId h : hlist) {
+                        if (!h.hash.equals(thisHash)) {
+                            double similarityScore = thisHash.normalizedHammingDistance(h.hash);
+                            if (similarityScore < 0.2) {
+                                foundSet.add(h.rowID);
+                            }
+                        }
+                    }
+                    if (!foundSet.isEmpty()){
+                        String xx = Tools.buildQueryForGrid(foundSet);
+                        (new Thread(() -> new TheGrid(xx, "WORKER"))).start();
+                    }
                 }
 
                 case KeyEvent.VK_6 -> applyInplaceFilter(new Dilatation());

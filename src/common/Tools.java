@@ -7,17 +7,14 @@ import net.lingala.zip4j.model.ZipParameters;
 import net.lingala.zip4j.model.enums.CompressionLevel;
 import net.lingala.zip4j.model.enums.EncryptionMethod;
 import thegrid.TheGrid;
-import thegrid.gridmenu.SubMenuMarked;
 
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import javax.sound.sampled.Line;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.List;
 import java.awt.event.KeyEvent;
 import java.io.*;
-import java.net.URL;
 import java.nio.charset.Charset;
 import java.security.MessageDigest;
 import java.util.*;
@@ -266,7 +263,6 @@ public class Tools {
         System.exit(1);
     }
 
-
     public static void restartApplication() throws Exception {
         final String javaBin = System.getProperty("java.home") + File.separator + "bin" + File.separator + "java";
         final File currentJar = new File(TheGrid.class.getProtectionDomain().getCodeSource().getLocation().toURI());
@@ -282,5 +278,15 @@ public class Tools {
         final ProcessBuilder builder = new ProcessBuilder(command);
         builder.start();
         System.exit(0);
+    }
+
+    public static String buildQueryForGrid (HashSet<Integer> foundSet) {
+        StringBuilder sqlFound = new StringBuilder();
+        sqlFound.append("select name,_ROWID_,tag,accnum from IMAGES where ");
+        for (int i : foundSet) {
+            sqlFound.append("_rowid_=").append(i).append(" or ");
+        }
+        sqlFound.setLength(sqlFound.length() - 4);
+        return sqlFound.toString();
     }
 }

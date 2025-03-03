@@ -2,6 +2,7 @@ package thegrid.gridmenu;
 
 import common.*;
 import database.DBHandler;
+import dev.brachtendorf.jimagehash.hash.Hash;
 import dialogs.*;
 import httpserv.WebApp;
 import thegrid.ImageList;
@@ -19,7 +20,7 @@ import java.io.*;
 import java.util.*;
 import java.util.List;
 
-import static database.DBHandler.RowIDfromImgHash;
+//import static database.DBHandler.RowIDfromImgHash;
 
 
 public class GridMenuBar extends JMenuBar {
@@ -84,7 +85,7 @@ public class GridMenuBar extends JMenuBar {
         jm.add(jmi);
 
         jmi = new JMenuItem("Dispose all open views ...");
-        jmi.addActionListener(_ -> theGrid.controller.killAll());
+        jmi.addActionListener(_ -> theGrid.controller.killAllViews());
         jm.add(jmi);
 
         jmi = new JMenuItem("Add more pictures ...");
@@ -189,15 +190,17 @@ public class GridMenuBar extends JMenuBar {
     private JMenuItem searchDupes() {
         JMenuItem m3 = new JMenuItem("Search for duplicates");
         m3.addActionListener(_ -> {
-            ArrayList<byte[]> allHashes = DBHandler.loadImgHashes();
+            ArrayList<DBHandler.HashId> allHashes = DBHandler.loadPerceptiveImgHashes();
             HashSet<Integer> foundSet = new HashSet<>();
             for (int s = 0; s < allHashes.size(); s++) {
-                byte[] bs = allHashes.get(s);
+                DBHandler.HashId bs = allHashes.get(s);
                 for (int n = s + 1; n < allHashes.size(); n++) {
-                    byte[] bn = allHashes.get(n);
-                    if (Arrays.equals(bs, bn)) {
-                        List<Integer> li = RowIDfromImgHash(allHashes.get(s));
-                        foundSet.addAll(li);
+                    DBHandler.HashId bn = allHashes.get(n);
+                    //if (bs.hash.normalizedHammingDistance(bn.hash) < 1e-99)
+                    if (bs.hash.hammingDistance(bn.hash) == 1)
+                    {
+                        foundSet.add(bs.rowID);
+                        foundSet.add(bn.rowID);
                     }
                 }
             }
@@ -206,13 +209,8 @@ public class GridMenuBar extends JMenuBar {
                 Tools.Info("No Dupes found in "+allHashes.size()+" files!");
             }
             else {
-                StringBuilder sqlFound = new StringBuilder();
-                sqlFound.append("select name,_ROWID_,tag,accnum from IMAGES where ");
-                for (int i : foundSet) {
-                    sqlFound.append("_rowid_=").append(i).append(" or ");
-                }
-                sqlFound.setLength(sqlFound.length() - 4);
-                (new Thread(() -> new TheGrid(sqlFound.toString(), "WORKER"))).start();
+                String xx = Tools.buildQueryForGrid(foundSet);
+                (new Thread(() -> new TheGrid(xx, "WORKER"))).start();
             }
             //System.out.println(sqlFound.toString());
         });

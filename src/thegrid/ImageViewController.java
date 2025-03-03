@@ -16,7 +16,7 @@ public class ImageViewController {
         _list.remove(iv);
     }
 
-    public void killAll() {
+    public void killAllViews() {
         ArrayList<ImageView> cl = (ArrayList<ImageView>) _list.clone();
         for (ImageView iv: cl) {
             iv.dispose();
