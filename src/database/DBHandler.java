@@ -88,11 +88,8 @@ public class DBHandler {
             sql = "create table if not exists WEBP " +
                     "(WEBPDATA blob, NAME varchar(200), HASHVAL blob(16), TAG varchar(128))";
             statement.execute(sql);
-
 //            sql = "alter table IMAGES drop column hashval";
 //            statement.execute(sql);
-
-
             sql = "alter table IMAGES add if not exists TAG varchar(128)";
             statement.execute(sql);
             sql = "alter table IMAGES add if not exists ACCNUM integer";
