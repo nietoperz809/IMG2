@@ -187,7 +187,7 @@ public class ImageView extends JFrame implements MouseWheelListener {
 
                 case KeyEvent.VK_ESCAPE -> dispose();
 
-                case KeyEvent.VK_A -> {
+                case KeyEvent.VK_A -> {  // Tags
                     int rowid = grid.imageL.get(ring2.get()).rowid();
                     String tag = LineInput.tagList(DBHandler.getTags(rowid), "Tag:", Color.YELLOW);
                     if (!tag.isEmpty())
@@ -217,6 +217,8 @@ public class ImageView extends JFrame implements MouseWheelListener {
                     if (!foundSet.isEmpty()){
                         String xx = Tools.buildQueryForGrid(foundSet);
                         (new Thread(() -> new TheGrid(xx, "WORKER"))).start();
+                    } else {
+                        Tools.Info("No similarities found!");
                     }
                 }
 

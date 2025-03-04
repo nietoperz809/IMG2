@@ -14,6 +14,16 @@ import java.io.File;
 public class GridListeners implements KeyListener {
     private final TheGrid theGrid;
 
+    private void dispose(boolean shutdown_allowed) {
+        if (theGrid.thisInstCount > 1)  // not the last grid?
+        {
+            theGrid.dispose();
+            return;
+        }
+        if (shutdown_allowed)
+            Tools.shutdown(theGrid);
+    }
+
     public GridListeners (TheGrid g) {
         theGrid = g;
         enableDrop();
@@ -21,12 +31,7 @@ public class GridListeners implements KeyListener {
             @Override
             public void windowClosing(WindowEvent e) {
                 super.windowClosing(e);
-                if (g.thisInstCount > 1)  // not the last grid?
-                {
-                    g.dispose();
-                    return;
-                }
-                Tools.shutdown(theGrid);
+                dispose(true);
             }
         });
         g.addKeyListener(this);
@@ -64,7 +69,10 @@ public class GridListeners implements KeyListener {
     @Override
     public void keyPressed(KeyEvent e) {
         int kc = e.getKeyCode();
-        if (kc == KeyEvent.VK_N) {
+        if (kc == KeyEvent.VK_ESCAPE) {
+            dispose(false);
+        }
+        else if (kc == KeyEvent.VK_N) {
             ImageView iv = new ImageView(theGrid, 0);
             theGrid.controller.add(iv);
             iv.selectAnotherImage();

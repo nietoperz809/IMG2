@@ -486,14 +486,7 @@ public class DBHandler {
      */
     private static void stat_insertImageRecord(byte[] img, byte[] thumb, String name) {
         PreparedStatement prep;
-        MessageDigest md5Maker;
         HashingAlgorithm hasher = new PerceptiveHash(32);
-        try {
-            md5Maker = MessageDigest.getInstance("MD5");
-        } catch (NoSuchAlgorithmException e) {
-            throw new RuntimeException(e);
-        }
-        md5Maker.update(img);
         Hash hash0 = hasher.hash(byteArrayToImg(img));
         try {
             prep = connection.prepareStatement(
