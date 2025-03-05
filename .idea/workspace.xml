@@ -14,12 +14,28 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ddb69741-e020-4d21-a32f-f00e79c6818a" name="Changes" comment="removed old hash stuff">
+    <list default="true" id="ddb69741-e020-4d21-a32f-f00e79c6818a" name="Changes" comment="adding libs">
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/IMG2_jar/IMG2.jar" beforeDir="false" afterPath="$PROJECT_DIR$/IMG2_jar/IMG2.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/JImageHash-1.0.0-javadoc.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/JLargeArrays-1.5-javadoc.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/JTransforms-3.1-javadoc.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/UtilityCode-2.0.1-javadoc.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/annotations-24.0.0-javadoc.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/commons-math3-3.5-javadoc.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/forms-1.2.1-javadoc.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/h2-2.1.214-javadoc.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/javafx-base-11.0.2-javadoc.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/javafx-graphics-11.0.2-javadoc.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/javafx-swing-11.0.2-javadoc.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/javax.mail-1.5.5-javadoc.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/jna-5.6.0-javadoc.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/jna-platform-5.6.0-javadoc.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/nanohttpd-2.2.0-javadoc.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/pcg-java-10-1.0.1-javadoc.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/zip4j-2.11.5-javadoc.jar" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/buildinfo/BuildInfo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/buildinfo/BuildInfo.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/buildinfo/build.number" beforeDir="false" afterPath="$PROJECT_DIR$/src/buildinfo/build.number" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/database/DBHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/database/DBHandler.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -80,51 +96,53 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
-    &quot;ASKED_SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;Application.Console.executor&quot;: &quot;Run&quot;,
-    &quot;Application.DBHandler.executor&quot;: &quot;Debug&quot;,
-    &quot;Application.Main.executor&quot;: &quot;Run&quot;,
-    &quot;Application.MonitorFrame.executor&quot;: &quot;Run&quot;,
-    &quot;Application.UnlockDialog.executor&quot;: &quot;Debug&quot;,
-    &quot;Application.WebPDecoder.executor&quot;: &quot;Run&quot;,
-    &quot;Application.web.executor&quot;: &quot;Run&quot;,
-    &quot;Downloaded.Files.Path.Enabled&quot;: &quot;true&quot;,
-    &quot;GenerateAntBuildDialog.backupFiles&quot;: &quot;true&quot;,
-    &quot;GenerateAntBuildDialog.enableUiFormCompile&quot;: &quot;true&quot;,
-    &quot;GenerateAntBuildDialog.forceTargetJdk&quot;: &quot;true&quot;,
-    &quot;GenerateAntBuildDialog.outputFileNameProperty&quot;: &quot;img2.iml&quot;,
-    &quot;JAR Application.IMG2.jar.executor&quot;: &quot;Run&quot;,
-    &quot;Java Scratch.Scratch.executor&quot;: &quot;Run&quot;,
-    &quot;Repository.Attach.Annotations&quot;: &quot;false&quot;,
-    &quot;Repository.Attach.JavaDocs&quot;: &quot;true&quot;,
-    &quot;Repository.Attach.Sources&quot;: &quot;false&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;UI_DESIGNER_EDITOR_MODE.PaletteManager.SHOW&quot;: &quot;true&quot;,
-    &quot;UI_DESIGNER_EDITOR_MODE.PaletteManager.WIDTH&quot;: &quot;187&quot;,
-    &quot;UI_DESIGNER_EDITOR_MODE.UIDesignerToolWindowManager.SHOW&quot;: &quot;true&quot;,
-    &quot;UI_DESIGNER_EDITOR_MODE.UIDesignerToolWindowManager.WIDTH&quot;: &quot;439&quot;,
-    &quot;full.screen.before.presentation.mode&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;withQueue&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/peter.home/java/IMG2&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Artifacts&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.60229445&quot;,
-    &quot;run.code.analysis.last.selected.profile&quot;: &quot;aDefault&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;editor.preferences.fonts.default&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_ADD_EXTERNAL_FILES": "true",
+    "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "Application.Console.executor": "Run",
+    "Application.DBHandler.executor": "Debug",
+    "Application.GUIConsole.executor": "Run",
+    "Application.Main.executor": "Run",
+    "Application.MonitorFrame.executor": "Run",
+    "Application.UnlockDialog.executor": "Debug",
+    "Application.WebPDecoder.executor": "Run",
+    "Application.web.executor": "Run",
+    "Downloaded.Files.Path.Enabled": "true",
+    "GenerateAntBuildDialog.backupFiles": "true",
+    "GenerateAntBuildDialog.enableUiFormCompile": "true",
+    "GenerateAntBuildDialog.forceTargetJdk": "true",
+    "GenerateAntBuildDialog.outputFileNameProperty": "img2.iml",
+    "JAR Application.IMG2.jar.executor": "Run",
+    "JAR Application.javafx-graphics-11.0.2-javadoc.jar.executor": "Run",
+    "Java Scratch.Scratch.executor": "Run",
+    "Repository.Attach.Annotations": "false",
+    "Repository.Attach.JavaDocs": "true",
+    "Repository.Attach.Sources": "false",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "UI_DESIGNER_EDITOR_MODE.PaletteManager.SHOW": "true",
+    "UI_DESIGNER_EDITOR_MODE.PaletteManager.WIDTH": "187",
+    "UI_DESIGNER_EDITOR_MODE.UIDesignerToolWindowManager.SHOW": "true",
+    "UI_DESIGNER_EDITOR_MODE.UIDesignerToolWindowManager.WIDTH": "439",
+    "full.screen.before.presentation.mode": "true",
+    "git-widget-placeholder": "withQueue",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/peter.home/java/IMG2",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Artifacts",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.60229445",
+    "run.code.analysis.last.selected.profile": "aDefault",
+    "settings.editor.selected.configurable": "editor.preferences.fonts.default",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\peter.home\java\IMG2" />
@@ -169,13 +187,13 @@
       <command value="breadcrumb" />
     </option>
   </component>
-  <component name="RunManager" selected="Application.Main">
-    <configuration name="Console" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="org.h2.tools.Console" />
+  <component name="RunManager" selected="JAR Application.javafx-graphics-11.0.2-javadoc.jar">
+    <configuration name="DBHandler" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="database.DBHandler" />
       <module name="IMG2" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="org.h2.tools.*" />
+          <option name="PATTERN" value="database.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -183,12 +201,12 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="DBHandler" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="database.DBHandler" />
+    <configuration name="GUIConsole" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="org.h2.tools.GUIConsole" />
       <module name="IMG2" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="database.*" />
+          <option name="PATTERN" value="org.h2.tools.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -205,24 +223,15 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="UnlockDialog" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="dialogs.UnlockDialog" />
-      <module name="IMG2" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="dialogs.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <configuration name="IMG2.jar" type="JarApplication" temporary="true">
       <option name="JAR_PATH" value="$PROJECT_DIR$/IMG2_jar/IMG2.jar" />
       <option name="VM_PARAMETERS" value="-Xmx6g" />
       <option name="PROGRAM_PARAMETERS" value="dbdir:D:\Databases\" />
       <option name="ALTERNATIVE_JRE_PATH" />
+      <method v="2" />
+    </configuration>
+    <configuration name="javafx-graphics-11.0.2-javadoc.jar" type="JarApplication" temporary="true">
+      <option name="JAR_PATH" value="$PROJECT_DIR$/lib/javafx-graphics-11.0.2-javadoc.jar" />
       <method v="2" />
     </configuration>
     <configuration name="Scratch" type="Java Scratch" temporary="true" nameIsGenerated="true">
@@ -234,19 +243,19 @@
     </configuration>
     <list>
       <item itemvalue="Application.Main" />
-      <item itemvalue="Application.Console" />
+      <item itemvalue="Application.GUIConsole" />
       <item itemvalue="Application.DBHandler" />
-      <item itemvalue="Application.UnlockDialog" />
+      <item itemvalue="JAR Application.javafx-graphics-11.0.2-javadoc.jar" />
       <item itemvalue="JAR Application.IMG2.jar" />
       <item itemvalue="Java Scratch.Scratch" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="JAR Application.javafx-graphics-11.0.2-javadoc.jar" />
+        <item itemvalue="Application.GUIConsole" />
         <item itemvalue="Application.DBHandler" />
         <item itemvalue="Java Scratch.Scratch" />
         <item itemvalue="JAR Application.IMG2.jar" />
-        <item itemvalue="Application.UnlockDialog" />
-        <item itemvalue="Application.Console" />
       </list>
     </recent_temporary>
   </component>
@@ -608,7 +617,7 @@
       <option name="project" value="LOCAL" />
       <updated>1683976691765</updated>
     </task>
-    <option name="localTasksCounter" value="229" />
+    <option name="localTasksCounter" value="235" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -670,14 +679,9 @@
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_NEW_TODO" value="false" />
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="bugfix in searchdupes" />
-    <MESSAGE value="removed thumbhash class" />
-    <MESSAGE value="keeping dialogs on top using winapi" />
-    <MESSAGE value="introduced Watchdog" />
     <MESSAGE value="watchdog removed" />
     <MESSAGE value="+ simple zipper" />
     <MESSAGE value="can create encrypted zips" />
-    <MESSAGE value="backup" />
     <MESSAGE value="newest" />
     <MESSAGE value="changed marker code" />
     <MESSAGE value="moved things around" />
@@ -695,7 +699,12 @@
     <MESSAGE value="update" />
     <MESSAGE value="added perceptual image hash" />
     <MESSAGE value="removed old hash stuff" />
-    <option name="LAST_COMMIT_MESSAGE" value="removed old hash stuff" />
+    <MESSAGE value="backup" />
+    <MESSAGE value="esc closes grid" />
+    <MESSAGE value="using icon image in hash compare (vk-v)" />
+    <MESSAGE value="new jar" />
+    <MESSAGE value="adding libs" />
+    <option name="LAST_COMMIT_MESSAGE" value="adding libs" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -733,11 +742,6 @@
         </breakpoint>
       </breakpoints>
     </breakpoint-manager>
-    <watches-manager>
-      <configuration name="Application">
-        <watch expression="found.get(0)" />
-      </configuration>
-    </watches-manager>
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
