@@ -12,6 +12,8 @@ import Catalano.Imaging.IApplyInPlace;
 import common.*;
 import database.DBHandler;
 import dev.brachtendorf.jimagehash.hash.Hash;
+import dev.brachtendorf.jimagehash.hashAlgorithms.HashingAlgorithm;
+import dev.brachtendorf.jimagehash.hashAlgorithms.PerceptiveHash;
 import dialogs.LineInput;
 
 import javax.swing.*;
@@ -202,8 +204,9 @@ public class ImageView extends JFrame implements MouseWheelListener {
                 }
 
                 case KeyEvent.VK_V -> { // similarities
-                    int rowid = grid.imageL.get(ring2.get()).rowid();
-                    Hash thisHash = DBHandler.getPerceptiveHash(rowid);
+                    BufferedImage img = getIconImg();
+                    HashingAlgorithm hasher = new PerceptiveHash(32);
+                    Hash thisHash = hasher.hash(img);
                     ArrayList<DBHandler.HashId> hlist = DBHandler.loadPerceptiveImgHashes();
                     HashSet<Integer> foundSet = new HashSet<>();
                     for (DBHandler.HashId h : hlist) {

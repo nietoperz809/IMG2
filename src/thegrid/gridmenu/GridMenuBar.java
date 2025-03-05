@@ -5,6 +5,7 @@ import database.DBHandler;
 import dev.brachtendorf.jimagehash.hash.Hash;
 import dialogs.*;
 import httpserv.WebApp;
+import org.h2.tools.GUIConsole;
 import thegrid.ImageList;
 import thegrid.TheGrid;
 import video.VideoApp;
@@ -17,6 +18,7 @@ import java.awt.datatransfer.DataFlavor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.*;
+import java.sql.SQLException;
 import java.util.*;
 import java.util.List;
 
@@ -143,6 +145,16 @@ public class GridMenuBar extends JMenuBar {
 
         jmi = new JMenuItem("view Log");
         jmi.addActionListener(_ -> LogBox.xmain());
+        jm.add(jmi);
+
+        jmi = new JMenuItem("SQL Console");
+        jmi.addActionListener(_ -> {
+            try {
+                GUIConsole.main();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        });
         jm.add(jmi);
 
         jmi = new JMenuItem("Another Grid");
