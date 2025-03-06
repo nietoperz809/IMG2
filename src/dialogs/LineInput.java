@@ -29,16 +29,18 @@ public class LineInput extends JDialog {
         list1.clearSelection();
         set2.remove("");
         textField1.setText(CsvStringFromSet(set2));
+        System.out.println(textField1.getText());
     }
 
     public LineInput(Color col) {
 
         buttonOK.addActionListener(e -> {
             if (innerPanel.isVisible()) {
-                textField1.setText(adjustCSVString(textField1.getText()));
-                if (!list1.getSelectedValuesList().isEmpty()) {
+                String str = adjustCSVString(textField1.getText());
+                textField1.setText(str);
+                //if (!list1.getSelectedValuesList().isEmpty()) {
                     listToText();
-                }
+                //}
             }
             dispose();
         });
