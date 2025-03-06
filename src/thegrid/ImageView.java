@@ -204,15 +204,15 @@ public class ImageView extends JFrame implements MouseWheelListener {
                 }
 
                 case KeyEvent.VK_V -> { // similarities
-                    BufferedImage img = getIconImg();
+                    int this_rowid = grid.imageL.get(ring2.get()).rowid();
                     HashingAlgorithm hasher = new PerceptiveHash(32);
-                    Hash thisHash = hasher.hash(img);
+                    Hash this_Hash = hasher.hash(getIconImg());
                     ArrayList<DBHandler.HashId> hlist = DBHandler.loadPerceptiveImgHashes();
                     HashSet<Integer> foundSet = new HashSet<>();
                     for (DBHandler.HashId h : hlist) {
-                        if (!h.hash.equals(thisHash)) {
-                            double similarityScore = thisHash.normalizedHammingDistance(h.hash);
-                            if (similarityScore < 0.2) {
+                        if (!h.hash.equals(this_Hash)) {
+                            double similarityScore = this_Hash.normalizedHammingDistance(h.hash);
+                            if (similarityScore < 0.2 && h.rowID != this_rowid) {
                                 foundSet.add(h.rowID);
                             }
                         }
