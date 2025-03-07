@@ -5,6 +5,8 @@ import database.DBHandler;
 import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.border.LineBorder;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.util.TreeSet;
@@ -18,15 +20,16 @@ public class LineInput extends JDialog {
     private JButton xButton;
     private JList<String> list1;
     private JScrollPane scroller;
-    private JButton addTags;
+    //private JButton addTags;
     private JButton buttonOK;
     private JPanel innerPanel;
     private JPanel upperPanel;
+    private String init;
 
     private void listToText() {
         TreeSet<String> set2 = SetFromCSVString(textField1.getText());
         set2.addAll(list1.getSelectedValuesList());
-        list1.clearSelection();
+        //list1.clearSelection();
         set2.remove("");
         textField1.setText(CsvStringFromSet(set2));
         System.out.println(textField1.getText());
@@ -45,7 +48,7 @@ public class LineInput extends JDialog {
             dispose();
         });
 
-        addTags.addActionListener(e -> listToText());
+        list1.addListSelectionListener(e -> listToText());
 
         setContentPane(contentPane);
         contentPane.registerKeyboardAction(e -> onCancel(),
@@ -72,6 +75,7 @@ public class LineInput extends JDialog {
             dialog.innerPanel.setVisible(false);
         }
         dialog.setSize(new Dimension(len, 50));
+        dialog.init = init;
         dialog.textField1.setText(init);
         dialog.textField1.setToolTipText(tooltip);
         dialog.label.setText(lab);
@@ -104,7 +108,7 @@ public class LineInput extends JDialog {
     }
 
     private void onCancel() {
-        textField1.setText(null);
+        textField1.setText(init);
         dispose();
     }
 
