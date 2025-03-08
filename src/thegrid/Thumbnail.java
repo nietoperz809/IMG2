@@ -8,9 +8,10 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
-public class GridImage extends JLabel {
+public class Thumbnail extends JLabel {
     final static Color markedColor = Color.RED;
     final static Color unmarkedColor = null;
     private DBHandler.NameID thisID;
@@ -19,7 +20,7 @@ public class GridImage extends JLabel {
     static public void markAll (TheGrid grid, boolean mark) {
         Component[] comp = grid.rootPane.getComponents();
         for (Component c : comp) {
-            GridImage img = (GridImage)c;
+            Thumbnail img = (Thumbnail)c;
             img.setMarked(mark);
             img.repaint();
         }
@@ -28,21 +29,21 @@ public class GridImage extends JLabel {
     static public void toggleMarks (TheGrid grid) {
         Component[] comp = grid.rootPane.getComponents();
         for (Component c : comp) {
-            GridImage img = (GridImage)c;
+            Thumbnail img = (Thumbnail)c;
             img.setMarked(!img.isMarked());
             img.repaint();
         }
     }
 
-    static public GridImage[] getMarked(TheGrid grid) {
-        ArrayList<GridImage> marked = new ArrayList<>();
+    static public Thumbnail[] getMarked(TheGrid grid) {
+        ArrayList<Thumbnail> marked = new ArrayList<>();
         Component[] comp = grid.rootPane.getComponents();
         for (Component c : comp) {
-            GridImage img = (GridImage)c;
+            Thumbnail img = (Thumbnail)c;
             if (img.isMarked())
                 marked.add(img);
         }
-        return marked.toArray(new GridImage[0]);
+        return marked.toArray(new Thumbnail[0]);
     }
 
 
@@ -69,8 +70,6 @@ public class GridImage extends JLabel {
     private void init (TheGrid grid, int index, JPanel jp) {
         rootPane = jp;
         thisID = grid.imageL.get(index);
-        setToolTipText (thisID.name()+
-                " right mouse button to delete\n shift&rmb to renew thumb");
         setVerticalTextPosition(JLabel.BOTTOM);
         setHorizontalTextPosition(JLabel.CENTER);
         setText (String.valueOf(thisID.rowid()));
@@ -86,7 +85,7 @@ public class GridImage extends JLabel {
                     }
                     if (Tools.Question("Really delete "+thisID.rowid()+"?")) {
                         if (DBHandler.deleteImage(thisID.rowid())) {
-                            rootPane.remove(GridImage.this);
+                            rootPane.remove(Thumbnail.this);
                             rootPane.doLayout();
                             rootPane.repaint();
                         }
@@ -99,7 +98,7 @@ public class GridImage extends JLabel {
                         if (getBackground() == markedColor) {
                             setBackground(unmarkedColor);
                         } else {
-                            GridImage.this.setMarked(true);
+                            Thumbnail.this.setMarked(true);
                             //setBackground(markedColor);
                             //marked.add(GridImage.this);
                         }
@@ -119,7 +118,7 @@ public class GridImage extends JLabel {
      * @param rootPane the Imagegrid itself
      * @param ImageName name of the new Image
      */
-    GridImage(TheGrid grid, Image iconImage, JPanel rootPane, String ImageName) {
+    Thumbnail(TheGrid grid, Image iconImage, JPanel rootPane, String ImageName) {
         super(new ImageIcon(iconImage));
         grid.imageL.addNameID(new DBHandler.NameID(ImageName, grid.imageL.getLastRowid(), null));
         int index = grid.imageL.size()-1;
@@ -132,7 +131,7 @@ public class GridImage extends JLabel {
      * @param currentIndex index of current image file
      * @param rootPane the Imagegrid itself
      */
-    GridImage(TheGrid grid, byte[] tbh, int currentIndex, JPanel rootPane) {
+    Thumbnail(TheGrid grid, byte[] tbh, int currentIndex, JPanel rootPane) {
         super(new ImageIcon(ImgTools.byteArrayToImg(tbh)));
         //imgHash = null;
         init (grid, currentIndex, rootPane);

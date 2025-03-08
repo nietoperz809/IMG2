@@ -126,7 +126,7 @@ public class TheGrid extends MyFrame {
         int numadd = DBHandler.MoveImageFilesToDB(files, (img, name) -> {
             BufferedImage thumbnailImage = ImageScaler.scaleExact(img,
                     new Dimension(100, 100));
-            GridImage lab = new GridImage(this, thumbnailImage, rootPane, name);
+            Thumbnail lab = new Thumbnail(this, thumbnailImage, rootPane, name);
             rootPane.add(lab);
         });
         rootPane.doLayout();
@@ -157,11 +157,8 @@ public class TheGrid extends MyFrame {
             thumbBytes = DBHandler.loadThumbnail(rowid);
         } catch (Exception e) {
             System.err.println("thumb read fail: " + rowid);
-//            int id = imageL.get(s).rowid();
-//            DBHandler.createNewThumb(id);
-//            tbh = DBHandler.loadThumbnail(rowid);
         }
-        GridImage lab = new GridImage(this, thumbBytes, s, rootPane);
+        Thumbnail lab = new Thumbnail(this, thumbBytes, s, rootPane);
 
         rootPane.add(lab);
         Instant end = Instant.now();

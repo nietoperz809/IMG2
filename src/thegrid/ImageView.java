@@ -273,7 +273,6 @@ public class ImageView extends JFrame implements MouseWheelListener {
         }
     }
 
-
     public ImageView (TheGrid grid, int idx) {
         this.grid = grid;
         shuffledRing = new UniqueRng (grid.imageL.size());
@@ -285,7 +284,7 @@ public class ImageView extends JFrame implements MouseWheelListener {
         BufferedImage img = loadImgFromStore(true);
         assert img != null;
         imgPanel = new ImgPanel(grid,img, this);
-        setTitle(toString());
+        showInfo();
         new RegionSelectorListener(img, imgPanel, this);
         setContentPane(imgPanel);
         setExtendedState(JFrame.MAXIMIZED_BOTH);
@@ -442,10 +441,15 @@ public class ImageView extends JFrame implements MouseWheelListener {
         imgPanel.setImage(img);
     }
 
+    private void showInfo() {
+        imgPanel.setToolTipText(toString());
+        setTitle(toString());
+    }
+
     private void setImg() {
         BufferedImage bimg = loadImgFromStore(true);
         imgPanel.setImage(bimg);
-        setTitle(toString());
+        showInfo();
     }
 
     private BufferedImage loadImgFromStore(boolean doInc) {

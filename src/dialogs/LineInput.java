@@ -3,10 +3,7 @@ package dialogs;
 import database.DBHandler;
 
 import javax.swing.*;
-import javax.swing.border.Border;
 import javax.swing.border.LineBorder;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.util.TreeSet;
@@ -20,11 +17,10 @@ public class LineInput extends JDialog {
     private JButton xButton;
     private JList<String> list1;
     private JScrollPane scroller;
-    //private JButton addTags;
     private JButton buttonOK;
     private JPanel innerPanel;
     private JPanel upperPanel;
-    private String init;
+    private String initText;
 
     private void listToText() {
         TreeSet<String> set2 = SetFromCSVString(textField1.getText());
@@ -75,7 +71,7 @@ public class LineInput extends JDialog {
             dialog.innerPanel.setVisible(false);
         }
         dialog.setSize(new Dimension(len, 50));
-        dialog.init = init;
+        dialog.initText = init;
         dialog.textField1.setText(init);
         dialog.textField1.setToolTipText(tooltip);
         dialog.label.setText(lab);
@@ -108,7 +104,7 @@ public class LineInput extends JDialog {
     }
 
     private void onCancel() {
-        textField1.setText(init);
+        textField1.setText (initText);
         dispose();
     }
 
@@ -116,6 +112,6 @@ public class LineInput extends JDialog {
         TreeSet<String> tags = DBHandler.getImageTagList();
         list1 = new JList<>(tags.toArray(new String[0]));
         list1.setCellRenderer (new MyListCellRenderer());
-        innerPanel = new JPanel();
+        //innerPanel = new JPanel();
     }
 }

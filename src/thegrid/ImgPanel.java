@@ -42,25 +42,25 @@ public class ImgPanel extends JPanel {
         setSize(img.getWidth(), img.getHeight());
     }
 
-    /**
-     * set TT Location
-     * @param event  the <code>MouseEvent</code> that caused the
-     *          <code>ToolTipManager</code> to show the tooltip
-     * @return Point to set the TT
-     */
-    @Override
-    public Point getToolTipLocation(MouseEvent event) {
-        if (thisJT == null)
-            return null;
-        return new Point(this.getWidth() - thisJT.getWidth(),
-                this.getHeight() - thisJT.getHeight());
-    }
+//    /**
+//     * set TT Location
+//     * @param event  the <code>MouseEvent</code> that caused the
+//     *          <code>ToolTipManager</code> to show the tooltip
+//     * @return Point to set the TT
+//     */
+//    @Override
+//    public Point getToolTipLocation(MouseEvent event) {
+//        if (thisJT == null)
+//            return null;
+//        return new Point(this.getWidth() - thisJT.getWidth(),
+//                this.getHeight() - thisJT.getHeight());
+//    }
 
-    @Override
-    public JToolTip createToolTip() {
-        thisJT = super.createToolTip();
-        return thisJT;
-    }
+//    @Override
+//    public JToolTip createToolTip() {
+//        thisJT = super.createToolTip();
+//        return thisJT;
+//    }
 
     public BufferedImage getImage() {
         return image;
