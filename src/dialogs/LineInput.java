@@ -6,6 +6,7 @@ import javax.swing.*;
 import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.util.Arrays;
 import java.util.TreeSet;
 
 import static common.Tools.*;
@@ -24,8 +25,14 @@ public class LineInput extends JDialog {
 
     private void listToText() {
         TreeSet<String> set2 = SetFromCSVString(textField1.getText());
+
+        //set2.addAll(list1.getSelectedValuesList());
+        TreeSet<String> intersection = new TreeSet<>(set2);
+        intersection.retainAll(list1.getSelectedValuesList());
         set2.addAll(list1.getSelectedValuesList());
-        //list1.clearSelection();
+        intersection.retainAll(list1.getSelectedValuesList());
+        set2.removeAll(intersection);
+
         set2.remove("");
         textField1.setText(CsvStringFromSet(set2));
         System.out.println(textField1.getText());
@@ -37,14 +44,15 @@ public class LineInput extends JDialog {
             if (innerPanel.isVisible()) {
                 String str = adjustCSVString(textField1.getText());
                 textField1.setText(str);
-                //if (!list1.getSelectedValuesList().isEmpty()) {
-                    listToText();
-                //}
             }
             dispose();
         });
 
-        list1.addListSelectionListener(e -> listToText());
+        list1.addListSelectionListener(e -> {
+            if (e.getValueIsAdjusting()) {
+                listToText();
+            }
+        });
 
         setContentPane(contentPane);
         contentPane.registerKeyboardAction(e -> onCancel(),
