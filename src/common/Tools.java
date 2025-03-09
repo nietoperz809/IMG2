@@ -72,6 +72,17 @@ public class Tools {
         return CsvStringFromSet(set);
     }
 
+    public static TreeSet<String> combineSpecial (TreeSet<String> s1, Collection<String> s2) {
+        for (String s : s2) {
+            if (s1.contains(s)) {
+                s1.remove(s);
+            } else {
+                s1.add(s);
+            }
+        }
+        return s1;
+    }
+
     public static java.util.TreeSet<String> SetFromCSVString(String csv) {
         if (csv == null)
             return new TreeSet<>(); // return empty treeset if input is null

@@ -1,5 +1,6 @@
 package dialogs;
 
+import common.Tools;
 import database.DBHandler;
 
 import javax.swing.*;
@@ -25,13 +26,14 @@ public class LineInput extends JDialog {
 
     private void listToText() {
         TreeSet<String> set2 = SetFromCSVString(textField1.getText());
+        System.out.println("listToText");
+        Tools.combineSpecial(set2, list1.getSelectedValuesList());
 
-        //set2.addAll(list1.getSelectedValuesList());
-        TreeSet<String> intersection = new TreeSet<>(set2);
-        intersection.retainAll(list1.getSelectedValuesList());
-        set2.addAll(list1.getSelectedValuesList());
-        intersection.retainAll(list1.getSelectedValuesList());
-        set2.removeAll(intersection);
+//        TreeSet<String> intersection = new TreeSet<>(set2);
+//        intersection.retainAll(list1.getSelectedValuesList());
+//        set2.addAll(list1.getSelectedValuesList());
+//        intersection.retainAll(list1.getSelectedValuesList());
+//        set2.removeAll(intersection);
 
         set2.remove("");
         textField1.setText(CsvStringFromSet(set2));
@@ -51,6 +53,7 @@ public class LineInput extends JDialog {
         list1.addListSelectionListener(e -> {
             if (e.getValueIsAdjusting()) {
                 listToText();
+                SwingUtilities.invokeLater(() -> list1.clearSelection());
             }
         });
 

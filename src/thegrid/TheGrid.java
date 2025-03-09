@@ -162,7 +162,8 @@ public class TheGrid extends MyFrame {
 
         rootPane.add(lab);
         Instant end = Instant.now();
-        String info = "Loaded " + (++imageCount) + " Thumbs in " + Duration.between(startTime, end).toMillis() / 1000 + " Seconds";
+        String info = "Loaded " + (++imageCount) + " Thumbs in " +
+                Duration.between(startTime, end).toSeconds() + " Seconds";
         progress.setTextAndValue(info, imageCount);
         if (imageCount >= imageL.size()) {
             stopThumbViewFill(info);
