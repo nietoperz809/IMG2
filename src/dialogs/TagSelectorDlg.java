@@ -15,7 +15,6 @@ public class TagSelectorDlg extends JDialog {
     private JRadioButton radioAND;
     private JRadioButton radioOR;
     private JButton cancelButton;
-    //private JPanel buttPanel;
     private boolean cancelled = false;
     private boolean andMode = true;
 

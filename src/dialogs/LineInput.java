@@ -26,15 +26,7 @@ public class LineInput extends JDialog {
 
     private void listToText() {
         TreeSet<String> set2 = SetFromCSVString(textField1.getText());
-        System.out.println("listToText");
         Tools.combineSpecial(set2, list1.getSelectedValuesList());
-
-//        TreeSet<String> intersection = new TreeSet<>(set2);
-//        intersection.retainAll(list1.getSelectedValuesList());
-//        set2.addAll(list1.getSelectedValuesList());
-//        intersection.retainAll(list1.getSelectedValuesList());
-//        set2.removeAll(intersection);
-
         set2.remove("");
         textField1.setText(CsvStringFromSet(set2));
         System.out.println(textField1.getText());
@@ -53,17 +45,18 @@ public class LineInput extends JDialog {
         list1.addListSelectionListener(e -> {
             if (e.getValueIsAdjusting()) {
                 listToText();
-                SwingUtilities.invokeLater(() -> list1.clearSelection());
+            } else {
+                list1.clearSelection();
             }
         });
 
         setContentPane(contentPane);
-        contentPane.registerKeyboardAction(e -> onCancel(),
+        contentPane.registerKeyboardAction(_ -> onCancel(),
                 KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
 
-        textField1.addActionListener(actionEvent -> dispose());
+        textField1.addActionListener(_ -> dispose());
 
-        xButton.addActionListener(e -> onCancel());
+        xButton.addActionListener(_ -> onCancel());
 
         setModal(true);
         setUndecorated(true);
@@ -86,11 +79,8 @@ public class LineInput extends JDialog {
         dialog.textField1.setText(init);
         dialog.textField1.setToolTipText(tooltip);
         dialog.label.setText(lab);
-        //dialog.pack();
         if (hasTagList) {
             dialog.setUndecorated(false);
-            //dialog.setSize(len + 50, 300);
-            //dialog.repaint();
             dialog.pack();
         }
         dialog.setLocationRelativeTo(null);
