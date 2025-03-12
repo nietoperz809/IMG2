@@ -105,7 +105,11 @@ public class LineInput extends JDialog {
     }
 
     private void onCancel() {
-        textField1.setText (initText);
+        if (label.getText().equals("newSQL")) {
+            textField1.setText ("");
+        } else {
+            textField1.setText(initText); // restore initial tag list
+        }
         dispose();
     }
 

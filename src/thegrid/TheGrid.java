@@ -59,7 +59,7 @@ public class TheGrid extends MyFrame {
         instCount++;
         thisInstCount = instCount;
         setTitle(dbRoot);
-        imageL.setSQL(sql, this);
+        imageL.setSQL(sql);
         //System.out.println("TheGrid constructor called");
         DBHandler.log("Images in DB: "+this.imageL.size());
         progress = new ProgressBox(this, this.imageL.size());

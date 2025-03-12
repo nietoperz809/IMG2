@@ -27,8 +27,7 @@ public class ImgTools {
      */
     public static String saveImg2Disk (BufferedImage img, int anum, String outPath) {
         outPath = outPath+File.separator +
-                anum + "-" + img.getWidth()+"•"+img.getHeight()
-                + ".jpg";
+                RandomWord.generateWord(-1)+"("+anum +")"+".jpg";
         try {
             boolean success = ImageIO.write(img, "jpg", new File(outPath));
             if (!success)

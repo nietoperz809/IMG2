@@ -53,7 +53,7 @@ public class ImageList {
         return -1;
     }
 
-    public void setSQL(String sql, TheGrid theGrid) {
+    public void setSQL(String sql) {
         this.sql = sql;
         refresh();
     }

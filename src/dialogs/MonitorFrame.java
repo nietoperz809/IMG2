@@ -12,7 +12,6 @@ public class MonitorFrame extends javax.swing.JDialog {
 
     private final MemoryMonitor memo = new MemoryMonitor();
 
-
     public MonitorFrame() {
         setTitle("Memory Monitor");
 
@@ -35,7 +34,7 @@ public class MonitorFrame extends javax.swing.JDialog {
     }
 
     public static void main(String[] args) {
-        var m = new MonitorFrame();
+        new MonitorFrame();
     }
 
 }

@@ -2,7 +2,6 @@ package thegrid.gridmenu;
 
 import common.*;
 import database.DBHandler;
-import dev.brachtendorf.jimagehash.hash.Hash;
 import dialogs.*;
 import httpserv.WebApp;
 import org.h2.tools.GUIConsole;
@@ -133,7 +132,7 @@ public class GridMenuBar extends JMenuBar {
         jmi.addActionListener(_ -> DBHandler.backup());
         jm.add(jmi);
 
-        jm.add(searchDupes());
+        //jm.add(searchDupes());
 
         jmi = new JMenuItem("video App");
         jmi.addActionListener(_ -> VideoApp.open(theGrid));
@@ -159,12 +158,10 @@ public class GridMenuBar extends JMenuBar {
 
         jmi = new JMenuItem("Another Grid");
         jmi.addActionListener(_ -> {
-            String newSql = LineInput.xmain(ImageList.mainSQL,
-                    "newSQL", Color.BLUE);
+            String newSql = LineInput.xmain (theGrid.imageL.getSql(),"newSQL", Color.BLUE);
             if (!newSql.isEmpty()) {
                 (new Thread(() -> new TheGrid(newSql, "WORKER"))).start();
             }
-            //TheGrid.mainSQL.set(newSql);
         });
         jm.add(jmi);
 
@@ -199,34 +196,35 @@ public class GridMenuBar extends JMenuBar {
         theGrid.setJMenuBar(this);
     }
 
-    private JMenuItem searchDupes() {
-        JMenuItem m3 = new JMenuItem("Search for duplicates");
-        m3.addActionListener(_ -> {
-            ArrayList<DBHandler.HashId> allHashes = DBHandler.loadPerceptiveImgHashes();
-            HashSet<Integer> foundSet = new HashSet<>();
-            for (int s = 0; s < allHashes.size(); s++) {
-                DBHandler.HashId bs = allHashes.get(s);
-                for (int n = s + 1; n < allHashes.size(); n++) {
-                    DBHandler.HashId bn = allHashes.get(n);
-                    //if (bs.hash.normalizedHammingDistance(bn.hash) < 1e-99)
-                    if (bs.hash.hammingDistance(bn.hash) == 1)
-                    {
-                        foundSet.add(bs.rowID);
-                        foundSet.add(bn.rowID);
-                    }
-                }
-            }
-            // any found?
-            if (foundSet.isEmpty()) {
-                Tools.Info("No Dupes found in "+allHashes.size()+" files!");
-            }
-            else {
-                String xx = Tools.buildQueryForGrid(foundSet);
-                (new Thread(() -> new TheGrid(xx, "WORKER"))).start();
-            }
-            //System.out.println(sqlFound.toString());
-        });
-
-        return m3;
-    }
+//    private JMenuItem searchDupes() {
+//        JMenuItem m3 = new JMenuItem("Search for duplicates");
+//        m3.addActionListener(_ -> {
+//            ArrayList<DBHandler.HashId> allHashes = DBHandler.loadPerceptiveImgHashes();
+//            HashSet<Integer> foundSet = new HashSet<>();
+//            for (int s = 0; s < allHashes.size(); s++) {
+//                DBHandler.HashId bs = allHashes.get(s);
+//                for (int n = s + 1; n < allHashes.size(); n++) {
+//                    DBHandler.HashId bn = allHashes.get(n);
+//                    if (bs.hash.normalizedHammingDistance(bn.hash) < 1e-99)
+//                    //if (bs.hash.getHashValue().equals(bn.hash.getHashValue()))
+//                    //if (bs.hash.hammingDistance(bn.hash) == 1)
+//                    {
+//                        foundSet.add(bs.rowID);
+//                        foundSet.add(bn.rowID);
+//                    }
+//                }
+//            }
+//            // any found?
+//            if (foundSet.isEmpty()) {
+//                Tools.Info("No Dupes found in "+allHashes.size()+" files!");
+//            }
+//            else {
+//                String xx = Tools.buildQueryForGrid(foundSet);
+//                (new Thread(() -> new TheGrid(xx, "WORKER"))).start();
+//            }
+//            //System.out.println(sqlFound.toString());
+//        });
+//
+//        return m3;
+//    }
 }
