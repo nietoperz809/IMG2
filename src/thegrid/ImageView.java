@@ -1,19 +1,9 @@
 package thegrid;
 
 import Catalano.Imaging.FastBitmap;
-import Catalano.Imaging.Filters.Artistic.HeatMap;
-import Catalano.Imaging.Filters.Artistic.OilPainting;
-import Catalano.Imaging.Filters.Artistic.SpecularBloom;
-import Catalano.Imaging.Filters.Dilatation;
-import Catalano.Imaging.Filters.Erosion;
-import Catalano.Imaging.Filters.FastVariance;
-import Catalano.Imaging.Filters.HistogramEqualization;
 import Catalano.Imaging.IApplyInPlace;
 import common.*;
 import database.DBHandler;
-import dev.brachtendorf.jimagehash.hash.Hash;
-import dev.brachtendorf.jimagehash.hashAlgorithms.HashingAlgorithm;
-import dev.brachtendorf.jimagehash.hashAlgorithms.PerceptiveHash;
 import dialogs.LineInput;
 
 import javax.swing.*;
@@ -21,18 +11,13 @@ import java.awt.*;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
 import java.awt.image.RescaleOp;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashSet;
 
 
 public class ImageView extends JFrame implements MouseWheelListener {
-    private final ImgPanel imgPanel;
-    private final UniqueRng ring2;
-    private final UniqueRng shuffledRing;
-    private final TheGrid grid;
-
-    private Timer timer = null;
+    protected final ImgPanel imgPanel;
+    final UniqueRng indexRing;
+    final UniqueRng shuffledRing;
+    final TheGrid grid;
 
     @Override
     public void dispose() {
@@ -40,246 +25,14 @@ public class ImageView extends JFrame implements MouseWheelListener {
         grid.controller.remove (this);
     }
 
-    class KA extends KeyAdapter {
-        private long keyTime;
-
-        private boolean slowDownKeyEvents() {
-            long t = System.currentTimeMillis();
-            long diff = t - keyTime;
-            if (diff < 300)
-                return false;
-            else
-                keyTime = t;
-            return true;
-        }
-
-        public void keyPressed (KeyEvent e) {
-            int ev = e.getKeyCode();
-            switch (ev) {
-                case KeyEvent.VK_UP -> {
-                    imgPanel.scrollDown();
-                    return;
-                }
-                case KeyEvent.VK_DOWN -> {
-                    imgPanel.scrollUp();
-                    return;
-                }
-                case KeyEvent.VK_LEFT -> {
-                    imgPanel.scrollRight();
-                    return;
-                }
-                case KeyEvent.VK_RIGHT -> {
-                    imgPanel.scrollLeft();
-                    return;
-                }
-                case KeyEvent.VK_CONTROL -> {
-                    return;
-                }
-            }
-            if (!slowDownKeyEvents())
-                return;
-            switch (ev) {
-                case KeyEvent.VK_PAGE_DOWN -> setNextImage();
-                case KeyEvent.VK_PAGE_UP -> setBeforeImage();
-                case KeyEvent.VK_PLUS -> {
-                    float factor = 1.5f;
-                    //imgPanel.scaleUp (factor);
-                    scaleIconImg(factor);
-                }
-                case KeyEvent.VK_MINUS -> {
-                    float factor = 0.9f;
-                    //imgPanel.scaleDown(factor);
-                    scaleIconImg(factor);
-                }
-
-                case KeyEvent.VK_J -> {
-                    int id = grid.imageL.get(ring2.get()).rowid();
-                    String init = ""+DBHandler.getAccCounter(id);
-                    int res = LineInput.onlyPosNumber(init, "new acc counter for: "+id,
-                    Color.orange);
-                    DBHandler.setAccCounter(id, res);
-                }
-
-                case KeyEvent.VK_R -> {
-                    BufferedImage img = getIconImg();
-                    img = ImgTools.rotateClockwise90(img);
-                    imgPanel.setImage(img);
-                }
-
-                case KeyEvent.VK_M -> {
-                    BufferedImage img = getIconImg();
-                    img = ImgTools.flip(img);
-                    imgPanel.setImage(img);
-                }
-
-                case KeyEvent.VK_W -> {
-                    imgPanel.clearOffset();
-                    adjustOn('w');
-                }
-
-                case KeyEvent.VK_T -> {
-                    ring2.set(shuffledRing.getNext());
-                    setImg();
-                    imgPanel.clearOffset();
-                    adjustOn('h');
-                }
-
-                case KeyEvent.VK_Z -> {
-                    if (e.isControlDown()) {
-                        imgPanel.undo();
-                        return;
-                    }
-                    ring2.set(shuffledRing.getPrev());
-                    setImg();
-                    imgPanel.clearOffset();
-                    adjustOn('h');
-                }
-
-                case KeyEvent.VK_S -> {
-                    if (timer == null) {
-                        timer = new Timer(10000, e1 -> {
-                            ring2.set(shuffledRing.getNext());
-                            setImg();
-                            imgPanel.clearOffset();
-                            adjustOn('h');
-                        });
-                        timer.setRepeats(true);
-                        timer.setInitialDelay(0);
-                        timer.start();
-                    } else {
-                        timer.stop();
-                        timer = null;
-                        setTitle("Slideshow STOPPED "+ ImageView.this);
-                    }
-                }
-
-                case KeyEvent.VK_1 -> {
-                    BufferedImage img = getIconImg();
-                    img = ImgTools.gammaCorrection(img, 0.7f);
-                    imgPanel.setImage(img);
-                }
-
-                case KeyEvent.VK_2 -> {
-                    BufferedImage img = getIconImg();
-                    img = ImgTools.gammaCorrection(img, 1f/0.7f);
-                    imgPanel.setImage(img);
-                }
-
-                case KeyEvent.VK_D -> {
-                    if (Tools.Question("Delete image from DB?")) {
-                        DBHandler.deleteImage(grid.imageL.get(ring2.get()).rowid());
-                    }
-                }
-
-                case KeyEvent.VK_H -> {
-                    imgPanel.clearOffset();
-                    adjustOn('h');
-                }
-
-                case KeyEvent.VK_3 -> changeContrast(1.1f);
-                case KeyEvent.VK_4 -> changeContrast(0.9f);
-                case KeyEvent.VK_X -> sharpenImage();
-                case KeyEvent.VK_F -> saveAsFile(true);
-                case KeyEvent.VK_G -> saveAsFile(false);
-
-                case KeyEvent.VK_L -> {
-                    imgPanel.clearOffset();
-                    setImg();
-                }
-
-                case KeyEvent.VK_ESCAPE -> dispose();
-
-                case KeyEvent.VK_A -> {  // Tags
-                    int rowid = grid.imageL.get(ring2.get()).rowid();
-                    String tag = LineInput.tagList(DBHandler.getTags(rowid), "Tag:", Color.YELLOW);
-                    DBHandler.setTag(rowid, tag);
-                }
-
-                case KeyEvent.VK_5 -> { // denoise
-                    BufferedImage img = getIconImg();
-                    Denoise d = new Denoise(img);
-                    BufferedImage out = d.perform_denoise();
-                    imgPanel.setImage(out);
-                }
-
-                case KeyEvent.VK_V -> { // similarities
-                    int this_rowid = grid.imageL.get(ring2.get()).rowid();
-                    HashingAlgorithm hasher = new PerceptiveHash(32);
-                    Hash this_Hash = hasher.hash(getIconImg());
-                    ArrayList<DBHandler.HashId> hlist = DBHandler.loadPerceptiveImgHashes();
-                    HashSet<Integer> foundSet = new HashSet<>();
-                    for (DBHandler.HashId h : hlist) {
-                        if (!h.hash.equals(this_Hash)) {
-                            double similarityScore = this_Hash.normalizedHammingDistance(h.hash);
-                            if (similarityScore < 0.2 && h.rowID != this_rowid) {
-                                foundSet.add(h.rowID);
-                            }
-                        }
-                    }
-                    if (!foundSet.isEmpty()){
-                        String xx = Tools.buildQueryForGrid(foundSet);
-                        (new Thread(() -> new TheGrid(xx, "WORKER"))).start();
-                    } else {
-                        Tools.Info("No similarities found!");
-                    }
-                }
-
-                case KeyEvent.VK_6 -> applyInplaceFilter(new Dilatation());
-                case KeyEvent.VK_7 -> applyInplaceFilter(new OilPainting());
-                case KeyEvent.VK_8 -> applyInplaceFilter(new Erosion());
-                case KeyEvent.VK_9 -> applyInplaceFilter(new SpecularBloom());
-                case KeyEvent.VK_0 -> applyInplaceFilter(new HistogramEqualization());
-                case KeyEvent.VK_B -> applyInplaceFilter(new FastVariance());
-
-                case KeyEvent.VK_Y -> {   //  heatmap
-                    FastBitmap fb = IconToFastBitmap();
-                    HeatMap bl = new HeatMap();
-                    if (e.isControlDown())
-                        bl.setInvert(true);
-                    bl.applyInPlace(fb);
-                    imgPanel.setImage(fb);
-                }
-
-                case KeyEvent.VK_N -> selectAnotherImage();
-
-                case KeyEvent.VK_C -> {
-                    if (e.isControlDown()) {
-                        BufferedImage img = getIconImg();
-                        ImgTools.imageToClipboard(img);
-                    } else {
-                        int id = grid.imageL.get(ring2.get()).rowid();
-                        if (Tools.Question("Replace image #" + id)) {
-                            BufferedImage img = getIconImg();
-                            DBHandler.changeBigImg(img, id);
-                        }
-                    }
-                }
-
-                case KeyEvent.VK_I -> {
-                    String name = "?";
-                    name = LineInput.xmain(name, "New Entry:", Color.RED);
-                    if (name.equals("?") || name.isEmpty())
-                        return;
-                    BufferedImage img = getIconImg();
-                    try {
-                        DBHandler.insertImageRecord(name, img);
-                    } catch (IOException ex) {
-                        throw new RuntimeException(ex);
-                    }
-                }
-
-                default -> Sam.speak("Key not used.");
-            }
-        }
-    }
-
     public ImageView (TheGrid grid, int idx) {
         this.grid = grid;
         shuffledRing = new UniqueRng (grid.imageL.size());
-        ring2 = new UniqueRng (grid.imageL.size(), false);
-        ring2.set (idx);
+        indexRing = new UniqueRng (grid.imageL.size(), false);
+        indexRing.set (idx);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        addKeyListener(new KA());
+        ImgViewKeyHandler kh = new ImgViewKeyHandler(this);
+        addKeyListener(kh);
         addMouseWheelListener(this);
         BufferedImage img = loadImgFromStore(true);
         assert img != null;
@@ -293,24 +46,22 @@ public class ImageView extends JFrame implements MouseWheelListener {
         addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosed(WindowEvent e) {
-                if (timer != null && timer.isRunning()) {
-                    timer.stop();
-                }
+                kh.stopTimer();
             }
         });
     }
 
-    private BufferedImage getIconImg() {
+    BufferedImage getIconImg() {
         return imgPanel.getImage();
     }
 
 
-    private void sharpenImage() {
+    void sharpenImage() {
         BufferedImage img = ImgTools.sharpenImage(getIconImg());
         imgPanel.setImage(img);
     }
 
-    private void changeContrast (float val) {
+    void changeContrast(float val) {
         BufferedImage img = getIconImg();
         RescaleOp op = new RescaleOp (val, 0, null);
         img = op.filter(img, img);
@@ -318,7 +69,7 @@ public class ImageView extends JFrame implements MouseWheelListener {
     }
 
 
-    private void saveAsFile (boolean orig) {
+    void saveAsFile(boolean orig) {
         String outPath = Tools.chooseDir(this);
         saveImageAsFile (orig, outPath);
     }
@@ -329,7 +80,7 @@ public class ImageView extends JFrame implements MouseWheelListener {
 
     public void saveImageAsFile (boolean orig, String outPath) {
         if (outPath != null) {
-            int rowid = grid.imageL.get(ring2.get()).rowid();
+            int rowid = grid.imageL.get(indexRing.get()).rowid();
             BufferedImage img;
 
             if (orig)
@@ -346,25 +97,25 @@ public class ImageView extends JFrame implements MouseWheelListener {
         }
     }
 
-    private void setNextImage() {
-        ring2.getNext();
+    void setNextImage() {
+        indexRing.getNext();
         setImg();
         imgPanel.clearOffset();
         adjustOn('h');
     }
 
-    private void setBeforeImage() {
-        ring2.getPrev();
+    void setBeforeImage() {
+        indexRing.getPrev();
         setImg();
         imgPanel.clearOffset();
         adjustOn('h');
     }
 
-    private FastBitmap IconToFastBitmap() {
+    FastBitmap IconToFastBitmap() {
         return new FastBitmap(getIconImg());
     }
 
-    private void applyInplaceFilter (IApplyInPlace bl) {
+    void applyInplaceFilter(IApplyInPlace bl) {
         FastBitmap fb = IconToFastBitmap();
         bl.applyInPlace(fb);
         imgPanel.setImage(fb);
@@ -395,7 +146,7 @@ public class ImageView extends JFrame implements MouseWheelListener {
                 if (n == -1)
                     return;
         }
-        ring2.set(n);
+        indexRing.set(n);
         showByIdx();
     }
 
@@ -408,9 +159,9 @@ public class ImageView extends JFrame implements MouseWheelListener {
     }
 
     public String toString() {
-        var v = grid.imageL.get(ring2.get());
+        var v = grid.imageL.get(indexRing.get());
         BufferedImage bi = loadImgFromStore(false);
-        return "IDX:" + ring2.get() + " ROWID:" +
+        return "IDX:" + indexRing.get() + " ROWID:" +
                 v.rowid() + " TAG:" + v.tag() +
                 " -- x/y: "+bi.getWidth()+"/"+bi.getHeight()+
                 " -- ACC: "+DBHandler.getAccCounter(v.rowid());
@@ -421,7 +172,7 @@ public class ImageView extends JFrame implements MouseWheelListener {
         setImg();
     }
 
-    private void adjustOn(char which) {
+    void adjustOn(char which) {
         BufferedImage img = getIconImg();
         assert img != null;
         int newWidth, newHeight;
@@ -446,7 +197,7 @@ public class ImageView extends JFrame implements MouseWheelListener {
         setTitle(toString());
     }
 
-    private void setImg() {
+    void setImg() {
         BufferedImage bimg = loadImgFromStore(true);
         imgPanel.setImage(bimg);
         showInfo();
@@ -454,10 +205,11 @@ public class ImageView extends JFrame implements MouseWheelListener {
 
     private BufferedImage loadImgFromStore(boolean doInc) {
         try {
-            int id = grid.imageL.get(ring2.get()).rowid();
+            int id = grid.imageL.get(indexRing.get()).rowid();
+//            Thumbnail tn1 = (Thumbnail) grid.rootPane.getComponent(ring2.get());
+//            int id = Integer.parseInt(tn1.getText());
             if (doInc)
                 DBHandler.incAccCounter(id);
-            //System.out.println("accC:"+v.getAccCounter(id));
             byte[] b = DBHandler.loadImage(id);
             if (b == null) {
                 System.out.println("loadImgFromStore-1 fail!!!");
@@ -474,7 +226,7 @@ public class ImageView extends JFrame implements MouseWheelListener {
         }
     }
 
-    private void scaleIconImg (float factor) {
+    void scaleIconImg(float factor) {
         BufferedImage img = ImageScaler.scaleImg(getIconImg(), factor);
         imgPanel.setImage(img);
     }

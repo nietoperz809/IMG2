@@ -99,8 +99,6 @@ public class Thumbnail extends JLabel {
                             setBackground(unmarkedColor);
                         } else {
                             Thumbnail.this.setMarked(true);
-                            //setBackground(markedColor);
-                            //marked.add(GridImage.this);
                         }
                         return;
                     }
