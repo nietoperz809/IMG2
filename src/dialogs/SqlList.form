@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="dialogs.SqlList">
+  <grid id="27dc6" binding="panel1" default-binding="true" layout-manager="BorderLayout" hgap="0" vgap="0">
+    <constraints>
+      <xy x="56" y="30" width="500" height="526"/>
+    </constraints>
+    <properties>
+      <preferredSize width="600" height="500"/>
+    </properties>
+    <border type="etched"/>
+    <children>
+      <grid id="eba6c" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="1">
+        <constraints border-constraint="South"/>
+        <properties/>
+        <border type="none"/>
+        <children>
+          <component id="426f2" class="javax.swing.JButton" binding="button1" default-binding="true">
+            <constraints/>
+            <properties>
+              <text value="Button"/>
+            </properties>
+          </component>
+        </children>
+      </grid>
+      <grid id="20ea7" layout-manager="BorderLayout" hgap="0" vgap="0">
+        <constraints border-constraint="Center"/>
+        <properties/>
+        <border type="bevel-raised"/>
+        <children>
+          <component id="680e2" class="javax.swing.JList" binding="list1" default-binding="true">
+            <constraints border-constraint="Center"/>
+            <properties>
+              <model>
+                <item value="laladzhn"/>
+                <item value="jkjzg"/>
+                <item value="nbhtg"/>
+              </model>
+            </properties>
+          </component>
+        </children>
+      </grid>
+    </children>
+  </grid>
+</form>

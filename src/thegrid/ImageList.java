@@ -17,10 +17,14 @@ public class ImageList {
     public java.util.List<DBHandler.NameID> allFiles;
 
     public void refresh() {
-//        if (grid.thisInstCount == 1)
-//            allFiles = DBHandler.loadImageInfosTopDown(this.sql);
-//        else
-            allFiles = DBHandler.loadImageInfos(this.sql);
+        allFiles = DBHandler.loadImageInfos(this.sql);
+        if (!allFiles.isEmpty()) {
+            try {
+                DBHandler.putQuery(sql);
+            } catch (Exception e) {
+                System.out.println("sql already stored");
+            }
+        }
     }
 
     public DBHandler.NameID get (int n) {

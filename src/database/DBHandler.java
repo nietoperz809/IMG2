@@ -74,6 +74,9 @@ public class DBHandler {
             sql = "alter table IMAGES add if not exists IMGHASH JAVA_OBJECT";
             statement.execute(sql);
 
+            sql= "create table if not exists QUERIES (entry varchar(256) UNIQUE)";
+            statement.execute(sql);
+
             sql = "create table if not exists LOG " +
                     "(ltime timestamp GENERATED ALWAYS AS CURRENT_TIMESTAMP, entry varchar(256))";
             statement.execute(sql);
@@ -179,6 +182,24 @@ public class DBHandler {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public static void putQuery (String str) {
+        String sql = "insert into QUERIES values ('"+str+"')";
+        execSQL(sql);
+    }
+
+    public static ArrayList<String> getQueries() {
+        String sql = "select * from QUERIES";
+        ArrayList<String> al = new ArrayList<>();
+        try (ResultSet res = query(sql)) {
+            while (Objects.requireNonNull(res).next()) {
+                al.add(res.getString(1));
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return al;
     }
 
     public static ArrayList<LogMessage> getLog() {
