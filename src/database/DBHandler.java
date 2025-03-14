@@ -189,6 +189,11 @@ public class DBHandler {
         execSQL(sql);
     }
 
+    public static void deleteQuery(Object str) {
+        String sql = "delete from QUERIES where entry = '"+str+"'";
+        execSQL(sql);
+    }
+
     public static ArrayList<String> getQueries() {
         String sql = "select * from QUERIES";
         ArrayList<String> al = new ArrayList<>();

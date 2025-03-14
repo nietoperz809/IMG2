@@ -158,10 +158,11 @@ public class GridMenuBar extends JMenuBar {
 
         jmi = new JMenuItem("Another Grid");
         jmi.addActionListener(_ -> {
-            String newSql = LineInput.xmain (theGrid.imageL.getSql(),"newSQL", Color.BLUE);
-            if (!newSql.isEmpty()) {
-                (new Thread(() -> new TheGrid(newSql, "WORKER"))).start();
-            }
+            SqlList.xmain();
+//            String newSql = LineInput.xmain (theGrid.imageL.getSql(),"newSQL", Color.BLUE);
+//            if (!newSql.isEmpty()) {
+//                (new Thread(() -> new TheGrid(newSql, "WORKER"))).start();
+//            }
         });
         jm.add(jmi);
 

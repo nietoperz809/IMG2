@@ -22,22 +22,12 @@
           </component>
         </children>
       </grid>
-      <scrollpane id="9b65a">
-        <constraints border-constraint="Center"/>
-        <properties/>
-        <border type="none"/>
-        <children>
-          <component id="1aad2" class="javax.swing.JList" binding="list1" default-binding="true">
-            <constraints/>
-            <properties>
-              <model>
-                <item value="kaka"/>
-                <item value="jaja"/>
-              </model>
-            </properties>
-          </component>
-        </children>
-      </scrollpane>
+      <component id="8b413" class="javax.swing.JComboBox" binding="combo1">
+        <constraints border-constraint="North"/>
+        <properties>
+          <editable value="true"/>
+        </properties>
+      </component>
     </children>
   </grid>
 </form>
