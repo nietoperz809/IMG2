@@ -22,23 +22,22 @@
           </component>
         </children>
       </grid>
-      <grid id="20ea7" layout-manager="BorderLayout" hgap="0" vgap="0">
+      <scrollpane id="9b65a">
         <constraints border-constraint="Center"/>
         <properties/>
-        <border type="bevel-raised"/>
+        <border type="none"/>
         <children>
-          <component id="680e2" class="javax.swing.JList" binding="list1" default-binding="true">
-            <constraints border-constraint="Center"/>
+          <component id="1aad2" class="javax.swing.JList" binding="list1" default-binding="true">
+            <constraints/>
             <properties>
               <model>
-                <item value="laladzhn"/>
-                <item value="jkjzg"/>
-                <item value="nbhtg"/>
+                <item value="kaka"/>
+                <item value="jaja"/>
               </model>
             </properties>
           </component>
         </children>
-      </grid>
+      </scrollpane>
     </children>
   </grid>
 </form>
