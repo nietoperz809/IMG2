@@ -208,10 +208,10 @@ class ImgViewKeyHandler extends KeyAdapter {
                 ArrayList<DBHandler.HashId> hlist = DBHandler.loadPerceptiveImgHashes();
                 HashSet<Integer> foundSet = new HashSet<>();
                 for (DBHandler.HashId h : hlist) {
-                    if (!h.hash.equals(this_Hash)) {
-                        double similarityScore = this_Hash.normalizedHammingDistance(h.hash);
-                        if (similarityScore < 0.2 && h.rowID != this_rowid) {
-                            foundSet.add(h.rowID);
+                    if (!h.hash().equals(this_Hash)) {
+                        double similarityScore = this_Hash.normalizedHammingDistance(h.hash());
+                        if (similarityScore < 0.2 && h.rowID() != this_rowid) {
+                            foundSet.add(h.rowID());
                         }
                     }
                 }

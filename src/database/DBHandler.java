@@ -386,13 +386,27 @@ public class DBHandler {
      * @param img th image
      */
     public static void insertImageRecord(String name, BufferedImage img) throws IOException {
-        BufferedImage big = ImageScaler.scaleExact(img,
-                new Dimension(img.getWidth(), img.getWidth()));
-        byte[] buff = ImgTools.imgToByteArray(big);
+//        BufferedImage big = ImageScaler.scaleExact(img,
+//                new Dimension(img.getWidth(), img.getWidth()));
+        byte[] buff = ImgTools.imgToByteArray(img);
         BufferedImage thumbnailImage = ImageScaler.scaleExact(img,
                 new Dimension(100, 100));
         byte[] buff2 = ImgTools.imgToByteArray(thumbnailImage);
-        stat_insertImageRecord(buff, buff2, name);
+        //stat_insertImageRecord(buff, buff2, name);
+        PreparedStatement prep;
+        HashingAlgorithm hasher = new PerceptiveHash(32);
+        Hash hash0 = hasher.hash(byteArrayToImg(buff));
+        try {
+            prep = connection.prepareStatement(
+                    "insert into IMAGES (image,thumb,name,imghash) values (?,?,?,?)");
+            prep.setBytes(1, buff);
+            prep.setBytes(2, buff2);
+            prep.setString(3, name);
+            prep.setObject(4, hash0);
+            prep.execute();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public static void createNewThumb(int id) {
@@ -435,28 +449,22 @@ public class DBHandler {
         }
     }
 
-    /**
-     * Put raw data into IMAGES table
-     * @param img image as byte array
-     * @param thumb thumbnail as byte array
-     * @param name record name
-     */
-    private static void stat_insertImageRecord(byte[] img, byte[] thumb, String name) {
-        PreparedStatement prep;
-        HashingAlgorithm hasher = new PerceptiveHash(32);
-        Hash hash0 = hasher.hash(byteArrayToImg(img));
-        try {
-            prep = connection.prepareStatement(
-                    "insert into IMAGES (image,thumb,name,imghash) values (?,?,?,?)");
-            prep.setBytes(1, img);
-            prep.setBytes(2, thumb);
-            prep.setString(3, name);
-            prep.setObject(4, hash0);
-            prep.execute();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
+//    private static void stat_insertImageRecord(byte[] img, byte[] thumb, String name) {
+//        PreparedStatement prep;
+//        HashingAlgorithm hasher = new PerceptiveHash(32);
+//        Hash hash0 = hasher.hash(byteArrayToImg(img));
+//        try {
+//            prep = connection.prepareStatement(
+//                    "insert into IMAGES (image,thumb,name,imghash) values (?,?,?,?)");
+//            prep.setBytes(1, img);
+//            prep.setBytes(2, thumb);
+//            prep.setString(3, name);
+//            prep.setObject(4, hash0);
+//            prep.execute();
+//        } catch (SQLException e) {
+//            throw new RuntimeException(e);
+//        }
+//    }
 
     public static String querySingleValue(String sql) {
         ResultSet res = query(sql);
@@ -603,15 +611,6 @@ public class DBHandler {
         return -1;
     }
 
-    public static class HashId {
-        public Hash hash;
-        public int rowID;
-        public HashId (Hash h, int r) {
-            hash = h;
-            rowID = r;
-        }
-    }
-
     public static ArrayList<HashId> loadPerceptiveImgHashes() {
         String q = "select imghash,_rowid_ from IMAGES where imghash is not null";
         ArrayList<HashId> list = new ArrayList<>();
@@ -694,6 +693,9 @@ public class DBHandler {
         public String toString() {
             return time + " : " + entry + "\n";
         }
+    }
+
+    public record HashId (Hash hash, int rowID) {
     }
 }
 

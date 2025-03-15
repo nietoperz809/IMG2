@@ -1,5 +1,6 @@
 package database;
 
+import java.nio.charset.StandardCharsets;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -16,7 +17,7 @@ public class SqlListFunctions extends DBHandler {
             while (res.next()) {
                 byte[] bt = res.getBytes(1);
                 int rowid = res.getInt(2);
-                al.add (new GridQuery(new String(bt),rowid));
+                al.add (new GridQuery(new String(bt, StandardCharsets.UTF_8),rowid));
             }
             res.close();
             return al;
@@ -27,15 +28,12 @@ public class SqlListFunctions extends DBHandler {
     }
 
     public static void putQuery (String str) {
-        PreparedStatement prep;
-        try {
-            prep = connection.prepareStatement(
-                    "merge into QUERIES(entry) key(entry) values (?)");
-            prep.setBytes(1, str.getBytes());
+        String sql = "merge into QUERIES(entry) key(entry) values (?)";
+        try (PreparedStatement prep = connection.prepareStatement(sql)) {
+            prep.setBytes(1, str.getBytes(StandardCharsets.UTF_8));
             prep.execute();
         } catch (SQLException e) {
-            System.out.println(e);
-            throw new RuntimeException(e);
+            throw new RuntimeException (e);
         }
     }
 
