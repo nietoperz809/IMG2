@@ -12,8 +12,6 @@ import java.lang.ref.SoftReference;
 import java.nio.MappedByteBuffer;
 import java.nio.channels.FileChannel;
 import java.nio.file.*;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.sql.*;
 import java.text.SimpleDateFormat;
 import java.time.Duration;
@@ -74,7 +72,7 @@ public class DBHandler {
             sql = "alter table IMAGES add if not exists IMGHASH JAVA_OBJECT";
             statement.execute(sql);
 
-            sql= "create table if not exists QUERIES (entry varchar(256) UNIQUE)";
+            sql= "create table if not exists QUERIES (entry blob(512))";
             statement.execute(sql);
 
             sql = "create table if not exists LOG " +
@@ -91,8 +89,6 @@ public class DBHandler {
             sql = "create table if not exists WEBP " +
                     "(WEBPDATA blob, NAME varchar(200), HASHVAL blob(16), TAG varchar(128))";
             statement.execute(sql);
-//            sql = "alter table IMAGES drop column hashval";
-//            statement.execute(sql);
             sql = "alter table IMAGES add if not exists TAG varchar(128)";
             statement.execute(sql);
             sql = "alter table IMAGES add if not exists ACCNUM integer";
@@ -185,26 +181,41 @@ public class DBHandler {
     }
 
     public static void putQuery (String str) {
-        String sql = "insert into QUERIES values ('"+str+"')";
-        execSQL(sql);
-    }
-
-    public static void deleteQuery(Object str) {
-        String sql = "delete from QUERIES where entry = '"+str+"'";
-        execSQL(sql);
-    }
-
-    public static ArrayList<String> getQueries() {
-        String sql = "select * from QUERIES";
-        ArrayList<String> al = new ArrayList<>();
-        try (ResultSet res = query(sql)) {
-            while (Objects.requireNonNull(res).next()) {
-                al.add(res.getString(1));
-            }
+        PreparedStatement prep;
+        try {
+            prep = connection.prepareStatement(
+                    "merge into QUERIES(entry) key(entry) values (?)");
+            prep.setBytes(1, str.getBytes());
+            prep.execute();
         } catch (SQLException e) {
+            System.out.println(e);
             throw new RuntimeException(e);
         }
-        return al;
+    }
+
+    public static void deleteQuery (int rowid) {
+        String sql = "delete from QUERIES where _rowid_ = " + rowid;
+        execSQL(sql);
+    }
+
+    public static ArrayList<GridQuery> getQueries() {
+        ArrayList<GridQuery> al = new ArrayList<>();
+        try {
+            ResultSet res = query("select entry,_rowid_ from queries");
+            if (res == null)
+                throw new RuntimeException("no query results");
+            while (res.next()) {
+                byte[] bt = res.getBytes(1);
+                int rid = res.getInt(2);
+                GridQuery gq = new GridQuery(new String(bt),rid);
+                al.add (gq);
+            }
+            res.close();
+            return al;
+        } catch (SQLException e) {
+            System.out.println(e);
+            throw new RuntimeException(e);
+        }
     }
 
     public static ArrayList<LogMessage> getLog() {
@@ -449,8 +460,6 @@ public class DBHandler {
             PreparedStatement prep;
             prep = connection.prepareStatement(
                     "update IMAGES set thumb=? where _rowid_ = " + id);
-            // "update IMAGES set thumb=? where thumb = null and _rowid_ = "+id);
-
             prep.setBytes(1, buff);
             prep.execute();
             //connection.commit();
@@ -586,7 +595,6 @@ public class DBHandler {
     }
 
     public static SoftReference<byte[]> loadBytes(String sql) throws Exception {
-        //String filename = nid.name.replace("'", "''");
         ResultSet res = query(sql);
         if (res == null)
             throw new RuntimeException("no query results");
@@ -868,4 +876,10 @@ public class DBHandler {
         }
     }
 
+    public record GridQuery (String entry, int rowid) {
+        @Override
+        public String toString() {
+            return rowid + "--" + entry;
+        }
+    }
 }

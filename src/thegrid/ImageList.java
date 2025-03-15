@@ -18,13 +18,6 @@ public class ImageList {
 
     public void refresh() {
         allFiles = DBHandler.loadImageInfos(this.sql);
-        if (!allFiles.isEmpty()) {
-            try {
-                DBHandler.putQuery(sql);
-            } catch (Exception e) {
-                System.out.println("sql already stored");
-            }
-        }
     }
 
     public DBHandler.NameID get (int n) {

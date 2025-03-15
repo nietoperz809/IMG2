@@ -1,13 +1,10 @@
 package dialogs;
 
+import common.Sam;
 import database.DBHandler;
 import thegrid.TheGrid;
 
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 
 public class SqlList {
@@ -19,24 +16,24 @@ public class SqlList {
         combo1.setToolTipText("CTRL+LeftMouse to delete selected row");
 
         combo1.addActionListener(e -> {
-            if (e.getModifiers() == 18) {
-                DBHandler.deleteQuery (combo1.getSelectedItem());
+            String s = (String)combo1.getSelectedItem();
+            String[] parts = s.split("--");
+            if (e.getModifiers() == 18) { // ctrl+mouse
+                DBHandler.deleteQuery (Integer.parseInt(parts[0]));
+                Sam.speak("Row removed!");
                 populateList();
-                return;
-            }
-            if (e.getActionCommand().equals("comboBoxEdited")) {
-                (new Thread(() -> new TheGrid((String)combo1.getSelectedItem(),
-                        "WORKER"))).start();
+            } else if (e.getActionCommand().equals("comboBoxEdited")) {
+                (new Thread(() -> new TheGrid(parts[1],"WORKER"))).start();
                 host.dispose();
             }
         });
     }
 
     public void populateList() {
-        ArrayList<String> al = DBHandler.getQueries();
+        ArrayList<DBHandler.GridQuery> al = DBHandler.getQueries();
         DefaultComboBoxModel<String> lm = new DefaultComboBoxModel<>();
-        for (String s : al) {
-            lm.addElement(s);
+        for (DBHandler.GridQuery s : al) {
+            lm.addElement(s.toString());
         }
         combo1.setModel(lm);
     }

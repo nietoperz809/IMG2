@@ -58,6 +58,11 @@ public class TheGrid extends MyFrame {
     public TheGrid (String sql, String dbRoot) {
         instCount++;
         thisInstCount = instCount;
+        try {
+            DBHandler.putQuery(sql);
+        } catch (Exception e) {
+            System.out.println("sql already stored");
+        }
         setTitle(dbRoot);
         imageL.setSQL(sql);
         //System.out.println("TheGrid constructor called");
