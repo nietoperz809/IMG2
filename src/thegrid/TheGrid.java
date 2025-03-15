@@ -16,6 +16,7 @@ import java.time.Instant;
 import static common.ImgTools.byteArrayToImg;
 import static common.NumToText.*;
 import static common.Tools.extractResource;
+import static database.SqlListFunctions.putQuery;
 
 
 public class TheGrid extends MyFrame {
@@ -59,7 +60,7 @@ public class TheGrid extends MyFrame {
         instCount++;
         thisInstCount = instCount;
         try {
-            DBHandler.putQuery(sql);
+            putQuery(sql);
         } catch (Exception e) {
             System.out.println("sql already stored");
         }

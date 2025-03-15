@@ -8,6 +8,9 @@ import javax.swing.*;
 import java.util.ArrayList;
 import java.util.Objects;
 
+import static database.SqlListFunctions.deleteQuery;
+import static database.SqlListFunctions.getQueries;
+
 public class SqlList {
     private JPanel panel1;
     private JButton button1;
@@ -19,7 +22,7 @@ public class SqlList {
         combo1.addActionListener(e -> {
             DBHandler.GridQuery gq = DBHandler.GridQuery.fromString((String) Objects.requireNonNull(combo1.getSelectedItem()));
             if (e.getModifiers() == 18) { // ctrl+mouse
-                DBHandler.deleteQuery (gq.rowid());
+                deleteQuery (gq.rowid());
                 Sam.speak("Row removed!");
                 populateList();
             } else if (e.getActionCommand().equals("comboBoxEdited")) {
@@ -30,7 +33,7 @@ public class SqlList {
     }
 
     public void populateList() {
-        ArrayList<DBHandler.GridQuery> al = DBHandler.getQueries();
+        ArrayList<DBHandler.GridQuery> al = getQueries();
         DefaultComboBoxModel<String> lm = new DefaultComboBoxModel<>();
         for (DBHandler.GridQuery s : al) {
             lm.addElement(s.toString());

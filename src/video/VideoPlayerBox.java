@@ -14,6 +14,8 @@ import java.io.File;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
+import static database.VideoFunctions.transferVideoIntoFile;
+
 public class VideoPlayerBox implements PlayerBox {
     private static final Lock lock = new ReentrantLock();
     private final JScrollBar sbar;
@@ -70,7 +72,7 @@ public class VideoPlayerBox implements PlayerBox {
         try {
             speed = new UpDown(new float[]{0.01f, 0.1f, 0.3f, 1.0f, 2.0f, 3.0f, 5.0f}, 3);
             sbar.setValue(0);
-            File tempFile = DBHandler.transferVideoIntoFile(nid);
+            File tempFile = transferVideoIntoFile(nid);
             System.out.println(tempFile);
             mpc = new EmbeddedMediaPlayerComponent();
             playerFrame = new JFrame();
@@ -126,9 +128,7 @@ public class VideoPlayerBox implements PlayerBox {
                             lock.unlock();
                         }
                         case 'r' -> controls.skipTime(-1000);
-                        case 'f' -> {
-                            controls.skipTime(1000);
-                        }
+                        case 'f' -> controls.skipTime(1000);
                         case '+' -> {
                             controls.setRate(speed.up());
                             playerFrame.setTitle (Float.toString(speed.current()));

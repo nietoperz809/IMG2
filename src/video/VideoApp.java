@@ -5,6 +5,7 @@ import common.NumToText;
 import common.Sam;
 import common.Tools;
 import database.DBHandler;
+import database.VideoFunctions;
 import dialogs.LineInput;
 import dialogs.MonitorFrame;
 import net.lingala.zip4j.ZipFile;
@@ -34,6 +35,7 @@ import java.util.List;
 import java.util.Locale;
 
 import static common.Sam.speak;
+import static database.VideoFunctions.*;
 
 public class VideoApp extends JDialog {
     private final List<DBHandler.NameID> entireList = new ArrayList<>();
@@ -143,11 +145,11 @@ public class VideoApp extends JDialog {
             if (res.isEmpty())
                 return;
             if (gifList.contains(nameid)) {
-                DBHandler.changeGifName(res, nameid.rowid());
+                changeGifName(res, nameid.rowid());
             } else if (webpList.contains(nameid)) {
-                DBHandler.changeWebpName(res, nameid.rowid());
+                changeWebpName(res, nameid.rowid());
             } else {
-                DBHandler.changeVideoName(res, nameid.rowid());
+                changeVideoName(res, nameid.rowid());
             }
             setAndSortJListContent();
         });
@@ -184,11 +186,11 @@ public class VideoApp extends JDialog {
                     DBHandler.NameID nid = listControl.getSelectedValue();
                     String len = null;
                     if (videoList.contains(nid))
-                        len = DBHandler.getVideoBlobLen(nid);
+                        len = getVideoBlobLen(nid);
                     else if (gifList.contains(nid))
-                        len = DBHandler.getGifBlobLen(nid);
+                        len = getGifBlobLen(nid);
                     else if (webpList.contains(nid))
-                        len = DBHandler.getWEBPBlobLen(nid);
+                        len = getWEBPBlobLen(nid);
                     Sam.speak(NumToText.convert(len) + " Bites");
                     String flen = NumberFormat.getNumberInstance(Locale.GERMAN)
                             .format(Double.parseDouble(len));
@@ -201,11 +203,11 @@ public class VideoApp extends JDialog {
     private SoftReference<byte[]> getVideoBytes (DBHandler.NameID nameid) {
         try {
             if (gifList.contains(nameid)) {
-                return DBHandler.loadGifBytes(nameid);
+                return loadGifBytes(nameid);
             } else if (webpList.contains(nameid)) {
-                return DBHandler.loadWEBPBytes(nameid);
+                return loadWEBPBytes(nameid);
             }
-            return DBHandler.loadVideoBytes(nameid);
+            return loadVideoBytes(nameid);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -305,14 +307,14 @@ public class VideoApp extends JDialog {
             nid = listControl.getSelectedValue();
         }
         if (gifList.contains(nid)) try {
-            File f = DBHandler.transferGifIntoFile(nid);
+            File f = transferGifIntoFile(nid);
             playerBox = new AnimPlayerBox(f, this,
                     new GifDecoder(), checkBoxAC.isSelected());
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
         else if (webpList.contains(nid)) try {
-            File f = DBHandler.transferwEBPIntoFile(nid);
+            File f = transferwEBPIntoFile(nid);
             playerBox = new AnimPlayerBox(f, this,
                     new WebPDecoder(), checkBoxAC.isSelected());
         } catch (Exception e) {
@@ -397,13 +399,13 @@ public class VideoApp extends JDialog {
                             java.util.List<File> files = (java.util.List<File>) transferable.getTransferData(flavor);
                             for (File f : files) {
                                 if (Tools.isGIF(f.getPath())) {
-                                    DBHandler.addGifFile(f);
+                                    VideoFunctions.addGifFile(f);
                                     speak("GIF file added");
                                 } else if (Tools.isWEBP(f.getPath())) {
-                                    DBHandler.addWebPFile(f);
+                                    VideoFunctions.addWebPFile(f);
                                     speak("WEBP file added");
                                 } else {
-                                    DBHandler.addVideoFile(f);
+                                    VideoFunctions.addVideoFile(f);
                                     speak("Regular video added");
                                 }
                                 DeferredFileDeleter.put(f);

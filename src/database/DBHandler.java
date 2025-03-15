@@ -11,7 +11,6 @@ import java.io.*;
 import java.lang.ref.SoftReference;
 import java.nio.MappedByteBuffer;
 import java.nio.channels.FileChannel;
-import java.nio.file.*;
 import java.sql.*;
 import java.text.SimpleDateFormat;
 import java.time.Duration;
@@ -28,6 +27,7 @@ import dev.brachtendorf.jimagehash.hashAlgorithms.PerceptiveHash;
 
 import static common.ImgTools.byteArrayToImg;
 import static common.Tools.extractResource;
+import static database.VideoFunctions.*;
 
 public class DBHandler {
 
@@ -35,8 +35,8 @@ public class DBHandler {
     private static final String DB_FILE = "mydb";
     private static final String DB_FILE_FULL = DB_FILE + ".mv.db";
     private static String ROOT_DIR = "E:\\Databases\\";
-    private static Connection connection;
-    private static Statement statement;
+    static Connection connection;
+    static Statement statement;
     /*
         jdbc:h2:C:\peter.home\java\IMG2\datastore\mydb;CIPHER=AES
      */
@@ -180,43 +180,6 @@ public class DBHandler {
         }
     }
 
-    public static void putQuery (String str) {
-        PreparedStatement prep;
-        try {
-            prep = connection.prepareStatement(
-                    "merge into QUERIES(entry) key(entry) values (?)");
-            prep.setBytes(1, str.getBytes());
-            prep.execute();
-        } catch (SQLException e) {
-            System.out.println(e);
-            throw new RuntimeException(e);
-        }
-    }
-
-    public static void deleteQuery (int rowid) {
-        String sql = "delete from QUERIES where _rowid_ = " + rowid;
-        execSQL(sql);
-    }
-
-    public static ArrayList<GridQuery> getQueries() {
-        ArrayList<GridQuery> al = new ArrayList<>();
-        try {
-            ResultSet res = query("select entry,_rowid_ from queries");
-            if (res == null)
-                throw new RuntimeException("no query results");
-            while (res.next()) {
-                byte[] bt = res.getBytes(1);
-                int rowid = res.getInt(2);
-                al.add (new GridQuery(new String(bt),rowid));
-            }
-            res.close();
-            return al;
-        } catch (SQLException e) {
-            System.out.println(e);
-            throw new RuntimeException(e);
-        }
-    }
-
     public static ArrayList<LogMessage> getLog() {
         String sql = "select * from LOG order by ltime";
         ArrayList<LogMessage> al = new ArrayList<>();
@@ -316,19 +279,6 @@ public class DBHandler {
             throw new RuntimeException(e);
         }
     }
-
-//    public static void setTags(int rowid, String... tag) {
-//        if (tag.length == 0)
-//            return;
-//        StringBuilder sb = new StringBuilder();
-//        for (int s=0; s<tag.length; s++)
-//        {
-//            sb.append(tag[s]);
-//            if ((tag.length > 1) && (s != tag.length-1))
-//                sb.append(',');
-//        }
-//        setTag (rowid, sb.toString());
-//    }
 
     public static String getTags(int rowid) {
         String strres = null;
@@ -485,33 +435,6 @@ public class DBHandler {
         }
     }
 
-    public static void addVideoFile(File file) {
-        try {
-            byte[] fileContent = Files.readAllBytes(file.toPath());
-            insertVideoRecord(fileContent, file.getName());
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    public static void addGifFile(File file) {
-        try {
-            byte[] fileContent = Files.readAllBytes(file.toPath());
-            insertGifRecord(fileContent, file.getName());
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    public static void addWebPFile(File file) {
-        try {
-            byte[] fileContent = Files.readAllBytes(file.toPath());
-            insertWEBPRecord(fileContent, file.getName());
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-    }
-
     /**
      * Put raw data into IMAGES table
      * @param img image as byte array
@@ -529,48 +452,6 @@ public class DBHandler {
             prep.setBytes(2, thumb);
             prep.setString(3, name);
             prep.setObject(4, hash0);
-            prep.execute();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    private static void insertVideoRecord(byte[] vid, String name) {
-        PreparedStatement prep;
-        try {
-            prep = connection.prepareStatement(
-                    "insert into VIDEOS (vid,name,blobsize) values (?,?,?)");
-            prep.setBytes(1, vid);
-            prep.setString(2, name);
-            prep.setString(3, String.valueOf(vid.length));
-            prep.execute();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    private static void insertGifRecord(byte[] gif, String name) {
-        PreparedStatement prep;
-        try {
-            prep = connection.prepareStatement(
-                    "insert into GiFS (gifdata,name,blobsize) values (?,?,?)");
-            prep.setBytes(1, gif);
-            prep.setString(2, name);
-            prep.setString(3, String.valueOf(gif.length));
-            prep.execute();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    private static void insertWEBPRecord(byte[] webp, String name) {
-        PreparedStatement prep;
-        try {
-            prep = connection.prepareStatement(
-                    "insert into WEBP (webpdata,name,blobsize) values (?,?,?)");
-            prep.setBytes(1, webp);
-            prep.setString(2, name);
-            prep.setString(3, String.valueOf(webp.length));
             prep.execute();
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -614,29 +495,6 @@ public class DBHandler {
         return s;
     }
 
-    public static SoftReference<byte[]> loadVideoBytes(NameID nid) throws Exception {
-        return loadBytes("select VID from VIDEOS where _ROWID_='" + nid.rowid + "'");
-    }
-
-    public static SoftReference<byte[]> loadGifBytes(NameID nid) throws Exception {
-        return loadBytes("select GIFDATA from GIFS where _ROWID_='" + nid.rowid + "'");
-    }
-
-    public static SoftReference<byte[]> loadWEBPBytes(NameID nid) throws Exception {
-        return loadBytes("select WEBPDATA from WEBP where _ROWID_='" + nid.rowid + "'");
-    }
-
-    public static String getVideoBlobLen(NameID nid) {
-        return queryBlobLen(nid, "VIDEOS", "VID");
-    }
-
-    public static String getGifBlobLen(NameID nid) {
-        return queryBlobLen(nid, "GIFS", "GIFDATA");
-    }
-
-    public static String getWEBPBlobLen(NameID nid) {
-        return queryBlobLen(nid, "WEBP", "WEBPDATA");
-    }
 
     public static void cancelFileTransfer() {
         transferTask.cancel(true);
@@ -678,31 +536,6 @@ public class DBHandler {
         return fi;
     }
 
-
-    public static File transferGifIntoFile(NameID nid) throws Exception {
-        return transferIntoFile(nid, "GIF");
-    }
-
-    public static File transferwEBPIntoFile(NameID nid) throws Exception {
-        return transferIntoFile(nid, "WEBP");
-    }
-
-
-    public static File transferVideoIntoFile(NameID nid) throws Exception {
-        return transferIntoFile(nid, "VID");
-    }
-
-    public static void changeVideoName(String name, int rowid) {
-        changeName("VIDEOS", name, rowid);
-    }
-
-    public static void changeGifName(String name, int rowid) {
-        changeName("GIFS", name, rowid);
-    }
-
-    public static void changeWebpName(String name, int rowid) {
-        changeName("WEBP", name, rowid);
-    }
 
     public static void changeName(String table, String name, int rowid) {
         String sql = "update " + table + " set name ='" + name + "' where _rowid_ =" + rowid;
