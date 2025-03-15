@@ -6,6 +6,7 @@ import thegrid.TheGrid;
 
 import javax.swing.*;
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class SqlList {
     private JPanel panel1;
@@ -16,14 +17,13 @@ public class SqlList {
         combo1.setToolTipText("CTRL+LeftMouse to delete selected row");
 
         combo1.addActionListener(e -> {
-            String s = (String)combo1.getSelectedItem();
-            String[] parts = s.split("--");
+            DBHandler.GridQuery gq = DBHandler.GridQuery.fromString((String) Objects.requireNonNull(combo1.getSelectedItem()));
             if (e.getModifiers() == 18) { // ctrl+mouse
-                DBHandler.deleteQuery (Integer.parseInt(parts[0]));
+                DBHandler.deleteQuery (gq.rowid());
                 Sam.speak("Row removed!");
                 populateList();
             } else if (e.getActionCommand().equals("comboBoxEdited")) {
-                (new Thread(() -> new TheGrid(parts[1],"WORKER"))).start();
+                (new Thread(() -> new TheGrid(gq.sql(),"WORKER"))).start();
                 host.dispose();
             }
         });

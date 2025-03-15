@@ -1067,7 +1067,7 @@ public abstract class NanoHTTPD {
                             decodeParms(postLine, this.parms);
                         } else if (postLine.length() != 0) {
                             // Special case for raw POST data => create a
-                            // special files entry "postData" with raw content
+                            // special files sql "postData" with raw content
                             // data
                             files.put("postData", postLine);
                         }

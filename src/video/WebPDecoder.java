@@ -454,7 +454,7 @@ public class WebPDecoder implements AnimDecoder {
 
         /*
         [webp/demux.h]
-            // Internal, version-checked, entry point.
+            // Internal, version-checked, sql point.
             WEBP_EXTERN WebPAnimDecoder* WebPAnimDecoderNewInternal(
                 const WebPData*, const WebPAnimDecoderOptions*, int);
 

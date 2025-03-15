@@ -42,7 +42,7 @@ public abstract class Runtime implements UsermodeConstants,Registers,Cloneable
     /** The last address the executable uses (other than the heap/stack) */
     protected abstract int heapStart();
         
-    /** The program's entry point */
+    /** The program's sql point */
     protected abstract int entryPoint();
 
     /** The location of the _user_info block (or 0 is there is none) */
@@ -462,7 +462,7 @@ public abstract class Runtime implements UsermodeConstants,Registers,Cloneable
         
     private int addStringArray(String[] strings, int topAddr) {
         int count = strings.length;
-        int total = 0; /* null last table entry  */
+        int total = 0; /* null last table sql  */
         for(int i=0;i<count;i++) total += strings[i].length() + 1;
         total += (count+1)*4;
         int start = (topAddr - total)&~3;
@@ -501,7 +501,7 @@ public abstract class Runtime implements UsermodeConstants,Registers,Cloneable
         } catch(FaultException e) { throw new RuntimeException(e.toString()); }
     }
     
-    /** Returns the word in the _user_info table entry <i>index</i>
+    /** Returns the word in the _user_info table sql <i>index</i>
         @see Runtime#setUserInfo(int,int) setUserInfo */
     public int getUserInfo(int index) {
         if(index < 0 || index >= userInfoSize()/4) throw new IndexOutOfBoundsException("setUserInfo called with index >= " + (userInfoSize()/4));
@@ -682,7 +682,7 @@ public abstract class Runtime implements UsermodeConstants,Registers,Cloneable
         return cpustate.r[V1];
     }
         
-    /** Allocated an entry in the FileDescriptor table for <i>fd</i> and returns the number.
+    /** Allocated an sql in the FileDescriptor table for <i>fd</i> and returns the number.
         Returns -1 if the table is full. This can be used by subclasses to use custom file
         descriptors */
     public final int addFD(FD fd)

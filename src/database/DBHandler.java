@@ -72,11 +72,11 @@ public class DBHandler {
             sql = "alter table IMAGES add if not exists IMGHASH JAVA_OBJECT";
             statement.execute(sql);
 
-            sql= "create table if not exists QUERIES (entry blob(512))";
+            sql= "create table if not exists QUERIES (sql blob(512))";
             statement.execute(sql);
 
             sql = "create table if not exists LOG " +
-                    "(ltime timestamp GENERATED ALWAYS AS CURRENT_TIMESTAMP, entry varchar(256))";
+                    "(ltime timestamp GENERATED ALWAYS AS CURRENT_TIMESTAMP, sql varchar(256))";
             statement.execute(sql);
             // create video table
             sql = "create table if not exists VIDEOS " +
@@ -155,7 +155,7 @@ public class DBHandler {
 
     public static void log(String str) {
 //        try {
-//            statement.execute("insert into LOG(entry) values ('"+str+"')");
+//            statement.execute("insert into LOG(sql) values ('"+str+"')");
 //        } catch (SQLException e) {
 //            throw new RuntimeException(e);
 //        }
@@ -206,9 +206,8 @@ public class DBHandler {
                 throw new RuntimeException("no query results");
             while (res.next()) {
                 byte[] bt = res.getBytes(1);
-                int rid = res.getInt(2);
-                GridQuery gq = new GridQuery(new String(bt),rid);
-                al.add (gq);
+                int rowid = res.getInt(2);
+                al.add (new GridQuery(new String(bt),rowid));
             }
             res.close();
             return al;
@@ -606,7 +605,7 @@ public class DBHandler {
         throw new RuntimeException("no query results");
     }
 
-    public static String queryBlobLen(DBHandler.NameID nid, String table, String blobentry) {
+    public static String queryBlobLen(NameID nid, String table, String blobentry) {
         String s = querySingleValue("select BLOBSIZE from " + table + " where _ROWID_='" + nid.rowid + "'");
         if (s == null) {
             s = querySingleValue("select LENGTH(" + blobentry + ") from " + table + " where _ROWID_='" + nid.rowid + "'");
@@ -615,27 +614,27 @@ public class DBHandler {
         return s;
     }
 
-    public static SoftReference<byte[]> loadVideoBytes(DBHandler.NameID nid) throws Exception {
+    public static SoftReference<byte[]> loadVideoBytes(NameID nid) throws Exception {
         return loadBytes("select VID from VIDEOS where _ROWID_='" + nid.rowid + "'");
     }
 
-    public static SoftReference<byte[]> loadGifBytes(DBHandler.NameID nid) throws Exception {
+    public static SoftReference<byte[]> loadGifBytes(NameID nid) throws Exception {
         return loadBytes("select GIFDATA from GIFS where _ROWID_='" + nid.rowid + "'");
     }
 
-    public static SoftReference<byte[]> loadWEBPBytes(DBHandler.NameID nid) throws Exception {
+    public static SoftReference<byte[]> loadWEBPBytes(NameID nid) throws Exception {
         return loadBytes("select WEBPDATA from WEBP where _ROWID_='" + nid.rowid + "'");
     }
 
-    public static String getVideoBlobLen(DBHandler.NameID nid) {
+    public static String getVideoBlobLen(NameID nid) {
         return queryBlobLen(nid, "VIDEOS", "VID");
     }
 
-    public static String getGifBlobLen(DBHandler.NameID nid) {
+    public static String getGifBlobLen(NameID nid) {
         return queryBlobLen(nid, "GIFS", "GIFDATA");
     }
 
-    public static String getWEBPBlobLen(DBHandler.NameID nid) {
+    public static String getWEBPBlobLen(NameID nid) {
         return queryBlobLen(nid, "WEBP", "WEBPDATA");
     }
 
@@ -643,7 +642,7 @@ public class DBHandler {
         transferTask.cancel(true);
     }
 
-    public static File transferIntoFile(DBHandler.NameID nid, String type) throws Exception {
+    public static File transferIntoFile(NameID nid, String type) throws Exception {
         AtomicReference<File> f = new AtomicReference<>();
         transferTask = Tools.runTask(() -> {
             try {
@@ -661,7 +660,7 @@ public class DBHandler {
      * @return file name of file on disk
      * @throws Exception if smth gone wrong
      */
-    private static File transferIntoFileInternal(DBHandler.NameID nid, String type) throws Exception {
+    private static File transferIntoFileInternal(NameID nid, String type) throws Exception {
         SoftReference<byte[]> bt = switch (type) {
             case "GIF" -> loadGifBytes(nid);
             case "WEBP" -> loadWEBPBytes(nid);
@@ -680,16 +679,16 @@ public class DBHandler {
     }
 
 
-    public static File transferGifIntoFile(DBHandler.NameID nid) throws Exception {
+    public static File transferGifIntoFile(NameID nid) throws Exception {
         return transferIntoFile(nid, "GIF");
     }
 
-    public static File transferwEBPIntoFile(DBHandler.NameID nid) throws Exception {
+    public static File transferwEBPIntoFile(NameID nid) throws Exception {
         return transferIntoFile(nid, "WEBP");
     }
 
 
-    public static File transferVideoIntoFile(DBHandler.NameID nid) throws Exception {
+    public static File transferVideoIntoFile(NameID nid) throws Exception {
         return transferIntoFile(nid, "VID");
     }
 
@@ -820,52 +819,40 @@ public class DBHandler {
         return null;
     }
 
-    public static Hash getPerceptiveHash(int rowid) {
-        try (ResultSet res = query("select imghash from images where _rowid_ = " + rowid)) {
-            try {
-                assert res != null;
-                res.next();
-                return (Hash) res.getObject(1);
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
+//    public static Hash getPerceptiveHash(int rowid) {
+//        try (ResultSet res = query("select imghash from images where _rowid_ = " + rowid)) {
+//            try {
+//                assert res != null;
+//                res.next();
+//                return (Hash) res.getObject(1);
+//            } catch (SQLException e) {
+//                throw new RuntimeException(e);
+//            }
+//        } catch (SQLException e) {
+//            throw new RuntimeException(e);
+//        }
+//    }
 
-    ///   ///////////////////////
-/*
-    public static void main(String[] args) throws Exception {
-        ResultSet res = query("select _rowid_ from images where imghash is null");
-        HashingAlgorithm hasher = new PerceptiveHash(32);
-        ArrayList<Integer> al = new ArrayList<>();
-        while (res.next()) {
-            al.add(res.getInt(1));
-        }
-        Collections.sort(al);
-        for (Integer rowid : al) {
-            res = query("select image from images where _rowid_ = " + rowid);
-            res.next();
-            BufferedImage img = byteArrayToImg(res.getBytes(1));
-            if (img != null) {
-                Hash hash0 = hasher.hash(img);
-                PreparedStatement prep = connection.prepareStatement(
-                        "update IMAGES set imghash=? where _rowid_ = " + rowid);
-                prep.setObject(1, hash0);
-                prep.execute();
-            }
-            if (rowid%100 == 0)
-                System.out.println(rowid);
-        }
-    }
-*/
-// / /////////////////////////
+    ///////////////////////////////// Friends
 
     public record NameID(String name, int rowid, String tag) {
         @Override
         public String toString() {
             return name + " : (" + rowid + ") ";
+        }
+    }
+
+    public record GridQuery(String sql, int rowid) {
+        static final String DELIM = "--";
+
+        @Override
+        public String toString() {
+            return rowid + DELIM + sql;
+        }
+
+        public static GridQuery fromString(String str) {
+            String[] parts = str.split(DELIM);
+            return new GridQuery(parts[1], Integer.parseInt(parts[0]));
         }
     }
 
@@ -875,11 +862,5 @@ public class DBHandler {
             return time + " : " + entry + "\n";
         }
     }
-
-    public record GridQuery (String entry, int rowid) {
-        @Override
-        public String toString() {
-            return rowid + "--" + entry;
-        }
-    }
 }
+
