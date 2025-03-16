@@ -5,6 +5,7 @@ import java.lang.ref.SoftReference;
 import java.nio.file.Files;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.List;
 
 public class VideoFunctions extends DBHandler{
     public static void addVideoFile(File file) {
@@ -108,7 +109,6 @@ public class VideoFunctions extends DBHandler{
         return transferIntoFile(nid, "WEBP");
     }
 
-
     public static File transferVideoIntoFile(NameID nid) throws Exception {
         return transferIntoFile(nid, "VID");
     }
@@ -125,4 +125,20 @@ public class VideoFunctions extends DBHandler{
         changeName("WEBP", name, rowid);
     }
 
+    public static List<NameID> getAnimatedFileNames(String dbname) {
+        String sql = "select name,_ROWID_,tag from " + dbname + " order by _ROWID_ asc";
+        return getNames(sql);
+    }
+
+    public static List<NameID> getVideoFileNames() {
+        return getAnimatedFileNames("VIDEOS");
+    }
+
+    public static List<NameID> getGifFileNames() {
+        return getAnimatedFileNames("GIFS");
+    }
+
+    public static List<NameID> getWebPFileNames() {
+        return getAnimatedFileNames("WEBP");
+    }
 }

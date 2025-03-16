@@ -348,7 +348,7 @@ public class VideoApp extends JDialog {
     }
 
     private void listToListControl(List<DBHandler.NameID> list) {
-        DefaultListModel lm = new DefaultListModel<>();
+        DefaultListModel<DBHandler.NameID> lm = new DefaultListModel<>();
         lm.addAll(list);
         listControl.setModel(lm);
         listControl.repaint();
@@ -359,12 +359,12 @@ public class VideoApp extends JDialog {
      */
     private void setAndSortJListContent() {
         entireList.clear();
-        videoList = DBHandler.getVideoFileNames();
+        videoList = getVideoFileNames();
         //------------------
         //String test = DBHandler.getVideoBlobLen(videoList.get(0));
         //------------------
-        gifList = DBHandler.getGifFileNames();
-        webpList = DBHandler.getWebPFileNames();
+        gifList = getGifFileNames();
+        webpList = getWebPFileNames();
         entireList.addAll(videoList);
         entireList.addAll(gifList);
         entireList.addAll(webpList);

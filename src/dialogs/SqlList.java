@@ -17,7 +17,10 @@ public class SqlList {
     private JComboBox<String> combo1;
 
     public SqlList(JFrame host) {
-        combo1.setToolTipText("CTRL+LeftMouse to delete selected row");
+        combo1.setToolTipText("<HTML>"+
+                "CTRL+LeftMouse -- delete selected row<br>"+
+                "Enter -- execute SQL"+
+                "</HTML>");
 
         combo1.addActionListener(e -> {
             DBHandler.GridQuery gq = DBHandler.GridQuery.fromString((String) Objects.requireNonNull(combo1.getSelectedItem()));

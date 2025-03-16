@@ -72,7 +72,7 @@ public class DBHandler {
             sql = "alter table IMAGES add if not exists IMGHASH JAVA_OBJECT";
             statement.execute(sql);
 
-            sql= "create table if not exists QUERIES (sql blob(512))";
+            sql= "create table if not exists QUERIES (sql varbinary(512) primary key)";
             statement.execute(sql);
 
             sql = "create table if not exists LOG " +
@@ -198,24 +198,7 @@ public class DBHandler {
         return getNames(Objects.requireNonNull(eSQL));
     }
 
-    public static List<NameID> getAnimatedFileNames(String dbname) {
-        String sql = "select name,_ROWID_,tag from " + dbname + " order by _ROWID_ asc";
-        return getNames(sql);
-    }
-
-    public static List<NameID> getVideoFileNames() {
-        return getAnimatedFileNames("VIDEOS");
-    }
-
-    public static List<NameID> getGifFileNames() {
-        return getAnimatedFileNames("GIFS");
-    }
-
-    public static List<NameID> getWebPFileNames() {
-        return getAnimatedFileNames("WEBP");
-    }
-
-    private static synchronized List<NameID> getNames(String sql) {
+    static synchronized List<NameID> getNames(String sql) {
         ArrayList<NameID> al = new ArrayList<>();
         try (ResultSet res = query(sql)) {
             if (res == null)

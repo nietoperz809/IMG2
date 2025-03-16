@@ -11,7 +11,7 @@ public class SqlListFunctions extends DBHandler {
     public static ArrayList<GridQuery> getQueries() {
         ArrayList<GridQuery> al = new ArrayList<>();
         try {
-            ResultSet res = query("select entry,_rowid_ from queries");
+            ResultSet res = query("select sql,_rowid_ from queries");
             if (res == null)
                 throw new RuntimeException("no query results");
             while (res.next()) {
@@ -28,7 +28,7 @@ public class SqlListFunctions extends DBHandler {
     }
 
     public static void putQuery (String str) {
-        String sql = "merge into QUERIES(entry) key(entry) values (?)";
+        String sql = "merge into QUERIES(sql) key(sql) values (?)";
         try (PreparedStatement prep = connection.prepareStatement(sql)) {
             prep.setBytes(1, str.getBytes(StandardCharsets.UTF_8));
             prep.execute();
