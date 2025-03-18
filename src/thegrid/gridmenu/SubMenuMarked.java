@@ -1,9 +1,6 @@
 package thegrid.gridmenu;
 
-import common.DeferredFileDeleter;
-import common.ImgTools;
-import common.Sam;
-import common.Tools;
+import common.*;
 import database.DBHandler;
 import dialogs.LineInput;
 import net.lingala.zip4j.ZipFile;
@@ -71,13 +68,13 @@ public class SubMenuMarked extends JMenu {
                     String tagsnew = LineInput.tagList("", "Tag:", Color.YELLOW);
                     if (tagsnew.isEmpty())
                         return;
-                    TreeSet<String> tnew = Tools.SetFromCSVString(tagsnew);
+                    TreeSet<String> tnew = Csv.SetFromCSVString(tagsnew);
                     for (Thumbnail gi : marked) {
                         int id = gi.getRowID();
                         String tags = DBHandler.getTags(id);
-                        TreeSet<String> tset = Tools.SetFromCSVString(tags);
+                        TreeSet<String> tset = Csv.SetFromCSVString(tags);
                         tset.addAll(tnew);
-                        DBHandler.setTag(id, Tools.CsvStringFromSet(tset));
+                        DBHandler.setTag(id, Csv.CsvStringFromSet(tset));
                     }
                     Thumbnail.markAll(grid, false);
                 });

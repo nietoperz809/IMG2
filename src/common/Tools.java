@@ -67,51 +67,6 @@ public class Tools {
         return false;
     }
 
-    public static String adjustCSVString(String in) {
-        TreeSet<String> set = SetFromCSVString(in);
-        return CsvStringFromSet(set);
-    }
-
-    /**
-     *
-     * @param s1 Source (will be changed)
-     * @param s2 elements already in s1 are deleted, all others are added
-     */
-    public static void combineSpecial (TreeSet<String> s1, Collection<String> s2) {
-        for (String s : s2) {
-            if (s1.contains(s)) {
-                s1.remove(s);
-            } else {
-                s1.add(s);
-            }
-        }
-    }
-
-    public static java.util.TreeSet<String> SetFromCSVString(String csv) {
-        if (csv == null)
-            return new TreeSet<>(); // return empty treeset if input is null
-        String[] arr = csv.split(",");
-        TreeSet<String> ll = new TreeSet<>();
-        for (int n = 0; n < arr.length; n++) {
-            arr[n] = arr[n].trim();
-            if (arr[n].length() > 1) // ignore single-char strings
-                ll.add(arr[n]);
-        }
-        return ll;
-    }
-
-    public static String CsvStringFromSet(TreeSet<String> ll) {
-        StringBuilder sb = new StringBuilder();
-        for (String s : ll) {
-            sb.append(s).append(", ");
-        }
-        String s2 = sb.toString();
-        if (s2.endsWith(", ")) {
-            s2 = s2.substring(0, s2.length() - 2);
-        }
-        return s2;
-    }
-
     public static Color getComplementaryColor(Color color) {
         int R = 255 - color.getRed();
         int G = 255 - color.getGreen();

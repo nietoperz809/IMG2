@@ -284,7 +284,7 @@ public class DBHandler {
                 while (Objects.requireNonNull(res).next()) {
                     String s = res.getString(1);
                     if (s != null) {
-                        TreeSet<String> l2 = Tools.SetFromCSVString(s);
+                        TreeSet<String> l2 = Csv.SetFromCSVString(s);
                         ll.addAll(l2);
                     }
                 }

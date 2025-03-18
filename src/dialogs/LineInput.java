@@ -1,16 +1,13 @@
 package dialogs;
 
-import common.Tools;
+import common.Csv;
 import database.DBHandler;
 
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.awt.event.KeyEvent;
-import java.util.Arrays;
 import java.util.TreeSet;
-
-import static common.Tools.*;
 
 public class LineInput extends JDialog {
     private JPanel contentPane;
@@ -25,10 +22,10 @@ public class LineInput extends JDialog {
     private String initText;
 
     private void listToText() {
-        TreeSet<String> set2 = SetFromCSVString(textField1.getText());
-        Tools.combineSpecial(set2, list1.getSelectedValuesList());
+        TreeSet<String> set2 = Csv.SetFromCSVString(textField1.getText());
+        Csv.combineSpecial(set2, list1.getSelectedValuesList());
         set2.remove("");
-        textField1.setText(CsvStringFromSet(set2));
+        textField1.setText(Csv.CsvStringFromSet(set2));
         System.out.println(textField1.getText());
     }
 
@@ -36,7 +33,7 @@ public class LineInput extends JDialog {
 
         buttonOK.addActionListener(e -> {
             if (innerPanel.isVisible()) {
-                String str = adjustCSVString(textField1.getText());
+                String str = Csv.normalizeCSVString(textField1.getText());
                 textField1.setText(str);
             }
             dispose();
@@ -117,6 +114,5 @@ public class LineInput extends JDialog {
         TreeSet<String> tags = DBHandler.getImageTagList();
         list1 = new JList<>(tags.toArray(new String[0]));
         list1.setCellRenderer (new MyListCellRenderer());
-        //innerPanel = new JPanel();
     }
 }
