@@ -15,7 +15,7 @@ public class Win32 {
 
     static {
         if (!System.getProperty("os.name").startsWith("Windows")) {
-            Tools.Error("Please run this only on your windows box\n" +
+            MsgBox.Error("Please run this only on your windows box\n" +
                     "App will close now");
             System.exit(-1);
         }

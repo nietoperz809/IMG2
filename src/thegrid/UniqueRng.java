@@ -29,7 +29,6 @@ public class UniqueRng {
 
     /**
      * Get next element
-     * @return
      */
     public int getNext() {
         idx++;
@@ -40,7 +39,6 @@ public class UniqueRng {
 
     /**
      * Get previous element
-     * @return
      */
     public int getPrev() {
         idx--;

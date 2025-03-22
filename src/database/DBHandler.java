@@ -2,7 +2,7 @@ package database;
 
 import common.*;
 import dialogs.UnlockDialog;
-import thegrid.ImageScaler;
+import common.ImageScaler;
 
 import javax.swing.*;
 import java.awt.*;
@@ -99,7 +99,7 @@ public class DBHandler {
         } catch (SQLException e) {
             Sam.speak("Failed to connect to data base!");
             pers.reset();
-            Tools.Error(e.toString());
+            MsgBox.Error(e.toString());
             System.exit(-1);
         }
     }
@@ -327,7 +327,7 @@ public class DBHandler {
                 _backupIsRunning = false;
                 Instant end = Instant.now();
                 String msg = "DB backup took: " + Duration.between(startTime, end).toSeconds() + " Seconds";
-                Tools.Info(msg);
+                MsgBox.Info(msg);
                 System.out.println("done!");
                 try {
                     Objects.requireNonNull(out).close();
@@ -628,8 +628,8 @@ public class DBHandler {
                 return img;
             }
         } catch (SQLException e) {
-            //System.out.println(e);
-            throw new RuntimeException(e);
+            System.out.println(e);
+            //throw new RuntimeException(e);
         }
         return null;
     }

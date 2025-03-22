@@ -19,7 +19,6 @@ public class ImgPanel extends JPanel {
     private BufferedImage image;
     public Point2D.Float offset = new Point2D.Float();
 
-    JToolTip thisJT;
     final ImageView theView;
 
     public static final int SCROLLAMOUNT = 10;
@@ -41,26 +40,6 @@ public class ImgPanel extends JPanel {
         theView = parent;
         setSize(img.getWidth(), img.getHeight());
     }
-
-//    /**
-//     * set TT Location
-//     * @param event  the <code>MouseEvent</code> that caused the
-//     *          <code>ToolTipManager</code> to show the tooltip
-//     * @return Point to set the TT
-//     */
-//    @Override
-//    public Point getToolTipLocation(MouseEvent event) {
-//        if (thisJT == null)
-//            return null;
-//        return new Point(this.getWidth() - thisJT.getWidth(),
-//                this.getHeight() - thisJT.getHeight());
-//    }
-
-//    @Override
-//    public JToolTip createToolTip() {
-//        thisJT = super.createToolTip();
-//        return thisJT;
-//    }
 
     public BufferedImage getImage() {
         return image;
@@ -157,19 +136,4 @@ public class ImgPanel extends JPanel {
             SwingUtilities.invokeLater(this::repaint);
         }
     }
-
-// --Commented out by Inspection START (2/17/2025 3:02 AM):
-//    public void scaleUp (float factor) {
-//        offset.x /= factor;
-//        offset.y /= factor;
-//    }
-// --Commented out by Inspection STOP (2/17/2025 3:02 AM)
-
-// --Commented out by Inspection START (2/17/2025 3:02 AM):
-//    public void scaleDown (float factor) {
-//        offset.x *= factor;
-//        offset.y *= factor;
-//    }
-// --Commented out by Inspection STOP (2/17/2025 3:02 AM)
-
 }

@@ -3,6 +3,7 @@ package thegrid;
 import Catalano.Imaging.FastBitmap;
 import Catalano.Imaging.IApplyInPlace;
 import common.*;
+import common.ImageScaler;
 import database.DBHandler;
 import dialogs.LineInput;
 
@@ -11,6 +12,8 @@ import java.awt.*;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
 import java.awt.image.RescaleOp;
+
+import static common.MsgBox.chooseDir;
 
 
 public class ImageView extends JFrame implements MouseWheelListener {
@@ -68,15 +71,12 @@ public class ImageView extends JFrame implements MouseWheelListener {
         imgPanel.setImage(img);
     }
 
-
     void saveAsFile(boolean orig) {
-        String outPath = Tools.chooseDir(this);
+        String outPath = chooseDir(this);
         saveImageAsFile (orig, outPath);
     }
 
-
     private long imgSavetime;
-
 
     public void saveImageAsFile (boolean orig, String outPath) {
         if (outPath != null) {
@@ -188,7 +188,7 @@ public class ImageView extends JFrame implements MouseWheelListener {
             newHeight = (int) ((float) img.getHeight() / fact);
         }
         Dimension d = new Dimension(newWidth, newHeight);
-        img = ImageScaler.scaleDirect(img, d);
+        img = common.ImageScaler.scaleDirect(img, d);
         imgPanel.setImage(img);
     }
 
@@ -206,8 +206,6 @@ public class ImageView extends JFrame implements MouseWheelListener {
     private BufferedImage loadImgFromStore(boolean doInc) {
         try {
             int id = grid.imageL.get(indexRing.get()).rowid();
-//            Thumbnail tn1 = (Thumbnail) grid.rootPane.getComponent(ring2.get());
-//            int id = Integer.parseInt(tn1.getText());
             if (doInc)
                 DBHandler.incAccCounter(id);
             byte[] b = DBHandler.loadImage(id);

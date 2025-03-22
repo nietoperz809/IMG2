@@ -52,7 +52,7 @@ public class SubMenuMarked extends JMenu {
         addItem("Save to Disk",
                 _ -> {
                     final Thumbnail[] marked = Thumbnail.getMarked(grid);
-                    String outPath = Tools.chooseDir(SubMenuMarked.this);
+                    String outPath = MsgBox.chooseDir(SubMenuMarked.this);
                     for (Thumbnail gi : marked) {
                         int id = gi.getRowID();
                         byte[] b = DBHandler.loadImage(id);
@@ -82,7 +82,7 @@ public class SubMenuMarked extends JMenu {
         addItem("Make Zip",
                 _ -> {
                     ZipParameters zipParameters = Tools.getStandardZipParams();
-                    String outPath = Tools.chooseDir(SubMenuMarked.this);
+                    String outPath = MsgBox.chooseDir(SubMenuMarked.this);
                     try {
                         ZipFile zipFile = new ZipFile (outPath+ File.separator +
                                 System.currentTimeMillis()+"-images.rar",

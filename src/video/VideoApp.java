@@ -1,9 +1,6 @@
 package video;
 
-import common.DeferredFileDeleter;
-import common.NumToText;
-import common.Sam;
-import common.Tools;
+import common.*;
 import database.DBHandler;
 import database.VideoFunctions;
 import dialogs.LineInput;
@@ -78,7 +75,7 @@ public class VideoApp extends JDialog {
         outputDirLabel.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                snapDir = Tools.chooseDir(VideoApp.this);
+                snapDir = MsgBox.chooseDir(VideoApp.this);
                 if (snapDir == null)
                     snapDir = System.getProperty("java.io.tmpdir");
                 snapDir += File.separator;
@@ -115,7 +112,7 @@ public class VideoApp extends JDialog {
 
         deleteButton.addActionListener(_ -> {
             DBHandler.NameID nameid = listControl.getSelectedValue();
-            if (!Tools.Question("Really delete " + nameid.name() + "?")) {
+            if (!MsgBox.Question("Really delete " + nameid.name() + "?")) {
                 return;
             }
             if (gifList.contains(nameid)) {
@@ -159,7 +156,7 @@ public class VideoApp extends JDialog {
         buttonMix.addActionListener(_ -> mix());
 
         filterButton.addActionListener(_ -> {
-            String input = Tools.getInput("search for ...");
+            String input = MsgBox.getInput("search for ...");
             if (input == null || input.isEmpty())
                 return;
             input = input.toLowerCase();
@@ -194,7 +191,7 @@ public class VideoApp extends JDialog {
                     Sam.speak(NumToText.convert(len) + " Bites");
                     String flen = NumberFormat.getNumberInstance(Locale.GERMAN)
                             .format(Double.parseDouble(len));
-                    Tools.Info("Bloblen: " + flen + " Bytes");
+                    MsgBox.Info("Bloblen: " + flen + " Bytes");
                 }
             }
         });
@@ -215,7 +212,7 @@ public class VideoApp extends JDialog {
 
     private void saveMulti (List<DBHandler.NameID> selectedValuesList) {
         ZipParameters zipParameters = Tools.getStandardZipParams();
-        String outPath = Tools.chooseDir(this);
+        String outPath = MsgBox.chooseDir(this);
         System.out.println(outPath);
         ZipFile zipFile = new ZipFile (outPath + File.separator +
                 System.currentTimeMillis()+"-animations.rar",

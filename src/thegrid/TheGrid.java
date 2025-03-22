@@ -2,6 +2,7 @@ package thegrid;
 
 import buildinfo.BuildInfo;
 import common.*;
+import common.ImageScaler;
 import database.DBHandler;
 import dialogs.ProgressBox;
 import thegrid.gridmenu.GridMenuBar;
@@ -14,6 +15,7 @@ import java.time.Duration;
 import java.time.Instant;
 
 import static common.ImgTools.byteArrayToImg;
+import static common.MsgBox.AskforPWD;
 import static common.NumToText.*;
 import static common.Tools.extractResource;
 import static database.SqlListFunctions.putQuery;
@@ -116,8 +118,9 @@ public class TheGrid extends MyFrame {
                     askPwd = false;
                 }
             }
-            if (askPwd)
-                Tools.AskforPWD();
+            if (askPwd) {
+                AskforPWD();
+            }
 
             DBHandler.log("+++ TheGrid started");
             new TheGrid (ImageList.mainSQL, dbRoot);

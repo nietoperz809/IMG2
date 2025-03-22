@@ -10,10 +10,6 @@ public class ImageList {
     public ImageList() {
     }
 
-    // select name,_ROWID_,tag,accnum from IMAGES where tag = 'samen'
-
-    // select * from (select name,_ROWID_,tag,accnum from IMAGES) order by _rowid_ desc
-
     public java.util.List<DBHandler.NameID> allFiles;
 
     public void refresh() {

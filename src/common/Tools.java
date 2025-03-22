@@ -2,7 +2,6 @@ package common;
 
 import database.DBHandler;
 import dialogs.TimedMessage;
-import dialogs.UnlockDialog;
 import net.lingala.zip4j.model.ZipParameters;
 import net.lingala.zip4j.model.enums.CompressionLevel;
 import net.lingala.zip4j.model.enums.EncryptionMethod;
@@ -15,8 +14,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.io.*;
-import java.nio.charset.Charset;
-import java.security.MessageDigest;
 import java.util.*;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -73,7 +70,6 @@ public class Tools {
         int B = 255 - color.getBlue();
         int A = color.getAlpha();
         return new Color(R, G, B, A);
-        //return R + (G << 8) + ( B << 16) + ( A << 24);
     }
 
     public static boolean isGIF(String filename) {
@@ -82,34 +78,6 @@ public class Tools {
 
     public static boolean isWEBP(String filename) {
         return hasExtension(filename, ".webp");
-    }
-
-    public static void Error(String msg) {
-        JOptionPane.showMessageDialog(null, msg, "Error",
-                JOptionPane.ERROR_MESSAGE);
-    }
-
-    public static void Info(String msg) {
-        JOptionPane.showMessageDialog(null, msg, "Info",
-                JOptionPane.PLAIN_MESSAGE);
-    }
-
-    public static boolean Question(String msg) {
-        Object response = JOptionPane.showInputDialog(null,
-                msg,
-                "Please select", JOptionPane.QUESTION_MESSAGE,
-                null, new String[]{"No", "Yes"}, "No");
-        if (response == null)
-            return false;
-        return response.equals("Yes");
-    }
-
-    public static String getInput(String msg) {
-        Object response = JOptionPane.showInputDialog(null,
-                msg,
-                "Please select", JOptionPane.QUESTION_MESSAGE,
-                null, null, "");
-        return (String) response;
     }
 
     /**
@@ -166,19 +134,6 @@ public class Tools {
         return zipParameters;
     }
 
-    public static String chooseDir(Component parent) {
-        JFileChooser f = new JFileChooser();
-        PersistString ps = new PersistString("Common.lastDirectory", System.getProperty("user.home"));
-        String lastDirectory = ps.get();
-        f.setSelectedFile(new File(lastDirectory));
-        f.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-        if (f.showOpenDialog(parent) == JFileChooser.APPROVE_OPTION) {
-            String dir = f.getSelectedFile().getAbsolutePath();
-            return ps.set(dir);
-        }
-        return null;
-    }
-
     static public byte[] extractResource(String name) throws Exception {
         InputStream is = ClassLoader.getSystemResourceAsStream(name);
 
@@ -207,18 +162,6 @@ public class Tools {
             Thread.sleep(ms);
         } catch (InterruptedException ioe) {
             System.out.println("intExc");
-        }
-    }
-
-    public static void AskforPWD() throws Exception {
-        byte[] bt = UnlockDialog.xmain("PWD?").getBytes(Charset.defaultCharset());
-        MessageDigest md = MessageDigest.getInstance("MD5");
-        byte[] theMD5digest = md.digest(bt);
-        byte[] shouldBe = {46, -123, 13, -68, 98, 92, -32, -104, -55, 20, 57, 79, -73, 120, 116, 50};
-        if (!Arrays.equals(theMD5digest,shouldBe)) {
-            Sam.speak(".Access denied!");
-            Thread.sleep(3000);
-            System.exit(0);
         }
     }
 

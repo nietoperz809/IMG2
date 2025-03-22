@@ -14,7 +14,6 @@ import java.awt.image.BufferedImage;
 import java.awt.image.ConvolveOp;
 import java.awt.image.Kernel;
 import java.io.*;
-import java.security.MessageDigest;
 
 import static common.Tools.hasExtension;
 
@@ -160,7 +159,7 @@ public class ImgTools {
 
     public static BufferedImage loadImageFromFile (String name) throws IOException {
         if (Tools.isGIF (name)) {
-            Tools.Info ("Please put animated gifs in video app");
+            MsgBox.Info ("Please put animated gifs in video app");
             return ImageIO.read(new File (name));
         } else if (hasExtension(name, ".webp")) {
             // Obtain a WebP ImageReader instance

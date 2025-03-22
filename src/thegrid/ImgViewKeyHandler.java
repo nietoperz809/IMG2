@@ -8,10 +8,7 @@ import Catalano.Imaging.Filters.Dilatation;
 import Catalano.Imaging.Filters.Erosion;
 import Catalano.Imaging.Filters.FastVariance;
 import Catalano.Imaging.Filters.HistogramEqualization;
-import common.Denoise;
-import common.ImgTools;
-import common.Sam;
-import common.Tools;
+import common.*;
 import database.DBHandler;
 import dev.brachtendorf.jimagehash.hash.Hash;
 import dev.brachtendorf.jimagehash.hashAlgorithms.HashingAlgorithm;
@@ -165,7 +162,7 @@ class ImgViewKeyHandler extends KeyAdapter {
             }
 
             case KeyEvent.VK_D -> {
-                if (Tools.Question("Delete image from DB?")) {
+                if (MsgBox.Question("Delete image from DB?")) {
                     DBHandler.deleteImage(imageView.grid.imageL.get(imageView.indexRing.get()).rowid());
                 }
             }
@@ -219,7 +216,7 @@ class ImgViewKeyHandler extends KeyAdapter {
                     String xx = Tools.buildQueryForGrid(foundSet);
                     (new Thread(() -> new TheGrid(xx, "WORKER"))).start();
                 } else {
-                    Tools.Info("No similarities found!");
+                    MsgBox.Info("No similarities found!");
                 }
             }
 
@@ -247,7 +244,7 @@ class ImgViewKeyHandler extends KeyAdapter {
                     ImgTools.imageToClipboard(img);
                 } else {
                     int id = imageView.grid.imageL.get(imageView.indexRing.get()).rowid();
-                    if (Tools.Question("Replace image #" + id)) {
+                    if (MsgBox.Question("Replace image #" + id)) {
                         BufferedImage img = imageView.getIconImg();
                         DBHandler.changeBigImg(img, id);
                     }

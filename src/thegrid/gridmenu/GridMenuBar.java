@@ -5,7 +5,6 @@ import database.DBHandler;
 import dialogs.*;
 import httpserv.WebApp;
 import org.h2.tools.GUIConsole;
-import thegrid.ImageList;
 import thegrid.TheGrid;
 import video.VideoApp;
 
@@ -188,7 +187,7 @@ public class GridMenuBar extends JMenuBar {
                 theGrid.setHistoryPath(null);
                 return;
             }
-            String dir = Tools.chooseDir(theGrid);
+            String dir = MsgBox.chooseDir(theGrid);
             theGrid.setHistoryPath(dir);
         });
         jm.add(jmi2);

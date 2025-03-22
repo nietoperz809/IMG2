@@ -1,4 +1,4 @@
-package thegrid;
+package common;
 
 import java.awt.*;
 import java.awt.geom.AffineTransform;

@@ -1,7 +1,7 @@
 package thegrid;
 
 import common.ImgTools;
-import common.Tools;
+import common.MsgBox;
 import database.DBHandler;
 
 import javax.swing.*;
@@ -79,10 +79,10 @@ public class Thumbnail extends JLabel {
                 if (e.getButton() == MouseEvent.BUTTON3) { // right click
                     if (e.isShiftDown()) {
                         DBHandler.createNewThumb(thisID.rowid());
-                        Tools.Info("New thumbnail created for: "+thisID.rowid());
+                        MsgBox.Info("New thumbnail created for: "+thisID.rowid());
                         return;
                     }
-                    if (Tools.Question("Really delete "+thisID.rowid()+"?")) {
+                    if (MsgBox.Question("Really delete "+thisID.rowid()+"?")) {
                         if (DBHandler.deleteImage(thisID.rowid())) {
                             rootPane.remove(Thumbnail.this);
                             rootPane.doLayout();
