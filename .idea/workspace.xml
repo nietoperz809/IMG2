@@ -14,15 +14,17 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ddb69741-e020-4d21-a32f-f00e79c6818a" name="Changes" comment="update">
-      <change beforePath="$PROJECT_DIR$/.idea/artifacts/IMG2_jar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/artifacts/IMG2_jar.xml" afterDir="false" />
+    <list default="true" id="ddb69741-e020-4d21-a32f-f00e79c6818a" name="Changes" comment="backup">
+      <change afterPath="$PROJECT_DIR$/src/database/AccessCounter.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/IMG2_jar/IMG2.jar" beforeDir="false" afterPath="$PROJECT_DIR$/IMG2_jar/IMG2.jar" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/buildinfo/BuildInfo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/buildinfo/BuildInfo.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/buildinfo/build.number" beforeDir="false" afterPath="$PROJECT_DIR$/src/buildinfo/build.number" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/dialogs/LineInput.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/dialogs/LineInput.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/dialogs/TagSelectorDlg.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/dialogs/TagSelectorDlg.form" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/dialogs/TagSelectorDlg.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/dialogs/TagSelectorDlg.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/database/DBHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/database/DBHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/thegrid/GridListeners.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/thegrid/GridListeners.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/thegrid/ImageView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/thegrid/ImageView.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/thegrid/ImgViewKeyHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/thegrid/ImgViewKeyHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/thegrid/TheGrid.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/thegrid/TheGrid.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -92,6 +94,8 @@
     "Application.GUIConsole.executor": "Run",
     "Application.Main.executor": "Run",
     "Application.MonitorFrame.executor": "Run",
+    "Application.RandomWord.executor": "Run",
+    "Application.SqlList.executor": "Run",
     "Application.UnlockDialog.executor": "Debug",
     "Application.WebPDecoder.executor": "Run",
     "Application.web.executor": "Run",
@@ -112,7 +116,7 @@
     "UI_DESIGNER_EDITOR_MODE.PaletteManager.SHOW": "true",
     "UI_DESIGNER_EDITOR_MODE.PaletteManager.WIDTH": "187",
     "UI_DESIGNER_EDITOR_MODE.UIDesignerToolWindowManager.SHOW": "true",
-    "UI_DESIGNER_EDITOR_MODE.UIDesignerToolWindowManager.WIDTH": "375",
+    "UI_DESIGNER_EDITOR_MODE.UIDesignerToolWindowManager.WIDTH": "201",
     "full.screen.before.presentation.mode": "true",
     "git-widget-placeholder": "withQueue",
     "kotlin-language-version-configured": "true",
@@ -126,8 +130,13 @@
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.60229445",
     "run.code.analysis.last.selected.profile": "aDefault",
-    "settings.editor.selected.configurable": "settings.sync",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
     "vue.rearranger.settings.migration": "true"
+  },
+  "keyToStringList": {
+    "com.intellij.ide.scratch.ScratchImplUtil$2/New Scratch File": [
+      "JAVA"
+    ]
   }
 }]]></component>
   <component name="RecentsManager">
@@ -139,11 +148,11 @@
       <recent name="C:\peter.home\java\IMG2\src\Imaging" />
     </key>
     <key name="MoveMembersDialog.RECENTS_KEY">
+      <recent name="database.AccessCounter" />
+      <recent name="common.MsgBox" />
+      <recent name="common.Csv" />
+      <recent name="database.VideoFunctions" />
       <recent name="common.Tools" />
-      <recent name="thegrid.Tools" />
-      <recent name="common.Win32" />
-      <recent name="common.ImgTools" />
-      <recent name="thegrid.ImageScaler" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\peter.home\java\IMG2\src\httpserv" />
@@ -157,6 +166,7 @@
       <recent name="common" />
     </key>
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="common" />
       <recent name="dialogs" />
       <recent name="httpserv" />
       <recent name="video" />
@@ -175,19 +185,6 @@
     </option>
   </component>
   <component name="RunManager" selected="Application.Main">
-    <configuration name="DBHandler" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="database.DBHandler" />
-      <module name="IMG2" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="database.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <configuration name="GUIConsole" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="org.h2.tools.GUIConsole" />
       <module name="IMG2" />
@@ -210,12 +207,31 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="IMG2.jar" type="JarApplication" temporary="true">
-      <option name="JAR_PATH" value="$PROJECT_DIR$/IMG2_jar/IMG2.jar" />
-      <option name="VM_PARAMETERS" value="-Xmx6g" />
-      <option name="PROGRAM_PARAMETERS" value="dbdir:D:\Databases\" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <method v="2" />
+    <configuration name="RandomWord" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="common.RandomWord" />
+      <module name="IMG2" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="common.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="SqlList" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="dialogs.SqlList" />
+      <module name="IMG2" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="dialogs.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
     </configuration>
     <configuration name="javafx-graphics-11.0.2-javadoc.jar" type="JarApplication" temporary="true">
       <option name="JAR_PATH" value="$PROJECT_DIR$/lib/javafx-graphics-11.0.2-javadoc.jar" />
@@ -230,19 +246,19 @@
     </configuration>
     <list>
       <item itemvalue="Application.Main" />
+      <item itemvalue="Application.RandomWord" />
+      <item itemvalue="Application.SqlList" />
       <item itemvalue="Application.GUIConsole" />
-      <item itemvalue="Application.DBHandler" />
       <item itemvalue="JAR Application.javafx-graphics-11.0.2-javadoc.jar" />
-      <item itemvalue="JAR Application.IMG2.jar" />
       <item itemvalue="Java Scratch.Scratch" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.SqlList" />
+        <item itemvalue="Application.RandomWord" />
+        <item itemvalue="Java Scratch.Scratch" />
         <item itemvalue="JAR Application.javafx-graphics-11.0.2-javadoc.jar" />
         <item itemvalue="Application.GUIConsole" />
-        <item itemvalue="Application.DBHandler" />
-        <item itemvalue="Java Scratch.Scratch" />
-        <item itemvalue="JAR Application.IMG2.jar" />
       </list>
     </recent_temporary>
   </component>
@@ -604,7 +620,7 @@
       <option name="project" value="LOCAL" />
       <updated>1683976691765</updated>
     </task>
-    <option name="localTasksCounter" value="243" />
+    <option name="localTasksCounter" value="257" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -666,20 +682,12 @@
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_NEW_TODO" value="false" />
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="better sql handling, reverse list comparator no more necessary" />
-    <MESSAGE value="update html" />
-    <MESSAGE value="some enhancements" />
-    <MESSAGE value="lib folder update" />
-    <MESSAGE value="wrote AddItem func" />
-    <MESSAGE value="set same tag on selected imgs (over menu)" />
-    <MESSAGE value="new menuitem &quot;add tags&quot;" />
     <MESSAGE value="custom cellrenderer für taglist" />
     <MESSAGE value="save" />
     <MESSAGE value="bugfix in submenu" />
     <MESSAGE value="pushed JAR" />
     <MESSAGE value="added perceptual image hash" />
     <MESSAGE value="removed old hash stuff" />
-    <MESSAGE value="backup" />
     <MESSAGE value="esc closes grid" />
     <MESSAGE value="using icon image in hash compare (vk-v)" />
     <MESSAGE value="new jar" />
@@ -691,7 +699,15 @@
     <MESSAGE value="backup, minor changes" />
     <MESSAGE value="change ListToText behaviour" />
     <MESSAGE value="update" />
-    <option name="LAST_COMMIT_MESSAGE" value="update" />
+    <MESSAGE value="bugfixed" />
+    <MESSAGE value="extracted key adapter" />
+    <MESSAGE value="added query table" />
+    <MESSAGE value="working sql list!" />
+    <MESSAGE value="improved sql list" />
+    <MESSAGE value="some enhancements" />
+    <MESSAGE value="moved things around" />
+    <MESSAGE value="backup" />
+    <option name="LAST_COMMIT_MESSAGE" value="backup" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -718,11 +734,6 @@
           <url>file://$PROJECT_DIR$/src/common/EmailUtil.java</url>
           <line>21</line>
           <option name="timeStamp" value="73" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/thegrid/ImageView.java</url>
-          <line>205</line>
-          <option name="timeStamp" value="75" />
         </line-breakpoint>
         <breakpoint type="java-exception">
           <properties class="java.lang.NullPointerException" package="java.lang" />
