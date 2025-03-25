@@ -9,6 +9,7 @@ import Catalano.Imaging.Filters.Erosion;
 import Catalano.Imaging.Filters.FastVariance;
 import Catalano.Imaging.Filters.HistogramEqualization;
 import common.*;
+import database.AccessCounter;
 import database.DBHandler;
 import dev.brachtendorf.jimagehash.hash.Hash;
 import dev.brachtendorf.jimagehash.hashAlgorithms.HashingAlgorithm;
@@ -90,10 +91,10 @@ class ImgViewKeyHandler extends KeyAdapter {
 
             case KeyEvent.VK_J -> {
                 int id = imageView.grid.imageL.get(imageView.indexRing.get()).rowid();
-                String init = "" + DBHandler.getAccCounter(id);
+                String init = "" + AccessCounter.getAccCounter(id);
                 int res = LineInput.onlyPosNumber(init, "new acc counter for: " + id,
                         Color.orange);
-                DBHandler.setAccCounter(id, res);
+                AccessCounter.setAccCounter(id, res);
             }
 
             case KeyEvent.VK_R -> {
@@ -236,7 +237,7 @@ class ImgViewKeyHandler extends KeyAdapter {
                 imageView.imgPanel.setImage(fb);
             }
 
-            case KeyEvent.VK_N -> imageView.selectAnotherImage();
+            case KeyEvent.VK_N -> imageView.selectAnotherImage(-1);
 
             case KeyEvent.VK_C -> {
                 if (e.isControlDown()) {

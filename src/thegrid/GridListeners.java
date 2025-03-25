@@ -73,9 +73,10 @@ public class GridListeners implements KeyListener {
             dispose(false);
         }
         else if (kc == KeyEvent.VK_N) {
-            ImageView iv = new ImageView(theGrid, 0);
-            theGrid.controller.add(iv);
-            iv.selectAnotherImage();
+            TheGrid tg = TheGrid.getMainGrid();
+            ImageView iv = new ImageView(tg, 0);
+            tg.controller.add(iv);
+            iv.selectAnotherImage(-1);
         } else {
             Tools.fastScroll(kc, theGrid.scrollPane.getViewport(), true);
         }

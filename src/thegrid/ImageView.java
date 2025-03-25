@@ -4,6 +4,7 @@ import Catalano.Imaging.FastBitmap;
 import Catalano.Imaging.IApplyInPlace;
 import common.*;
 import common.ImageScaler;
+import database.AccessCounter;
 import database.DBHandler;
 import dialogs.LineInput;
 
@@ -25,21 +26,21 @@ public class ImageView extends JFrame implements MouseWheelListener {
     @Override
     public void dispose() {
         super.dispose();
-        grid.controller.remove (this);
+        grid.controller.remove(this);
     }
 
-    public ImageView (TheGrid grid, int idx) {
+    public ImageView(TheGrid grid, int idx) {
         this.grid = grid;
-        shuffledRing = new UniqueRng (grid.imageL.size());
-        indexRing = new UniqueRng (grid.imageL.size(), false);
-        indexRing.set (idx);
+        shuffledRing = new UniqueRng(grid.imageL.size());
+        indexRing = new UniqueRng(grid.imageL.size(), false);
+        indexRing.set(idx);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         ImgViewKeyHandler kh = new ImgViewKeyHandler(this);
         addKeyListener(kh);
         addMouseWheelListener(this);
         BufferedImage img = loadImgFromStore(true);
         assert img != null;
-        imgPanel = new ImgPanel(grid,img, this);
+        imgPanel = new ImgPanel(grid, img, this);
         showInfo();
         new RegionSelectorListener(img, imgPanel, this);
         setContentPane(imgPanel);
@@ -66,19 +67,19 @@ public class ImageView extends JFrame implements MouseWheelListener {
 
     void changeContrast(float val) {
         BufferedImage img = getIconImg();
-        RescaleOp op = new RescaleOp (val, 0, null);
+        RescaleOp op = new RescaleOp(val, 0, null);
         img = op.filter(img, img);
         imgPanel.setImage(img);
     }
 
     void saveAsFile(boolean orig) {
         String outPath = chooseDir(this);
-        saveImageAsFile (orig, outPath);
+        saveImageAsFile(orig, outPath);
     }
 
     private long imgSavetime;
 
-    public void saveImageAsFile (boolean orig, String outPath) {
+    public void saveImageAsFile(boolean orig, String outPath) {
         if (outPath != null) {
             int rowid = grid.imageL.get(indexRing.get()).rowid();
             BufferedImage img;
@@ -121,30 +122,35 @@ public class ImageView extends JFrame implements MouseWheelListener {
         imgPanel.setImage(fb);
     }
 
-    public void selectAnotherImage() {
-        String str = LineInput.xmain("?", "Goto:", Color.GREEN,
-                "rowid or 'last/first' keyword",false);
-        if (str.startsWith("?")) {
-            str = str.substring(1);
-        }
+    public void selectAnotherImage(int rowid_in) {
         int n;
-        switch (str) {
-            case "first":
-                n = 0;
-                break;
-            case "last":
-                n = grid.imageL.IndexByRowID(-1);
-                break;
-            default:
-                int rowid;
-                try {
-                    rowid = Integer.parseInt(str);
-                } catch (NumberFormatException ex) {
-                    return;
-                }
-                n = grid.imageL.IndexByRowID(rowid);
-                if (n == -1)
-                    return;
+        if (rowid_in == -1) {
+            String str = LineInput.xmain("?", "Goto:", Color.GREEN,
+                    "rowid or 'last/first' keyword", false);
+            if (str.startsWith("?")) {
+                str = str.substring(1);
+            }
+            switch (str) {
+                case "first":
+                    n = 0;
+                    break;
+                case "last":
+                    n = grid.imageL.IndexByRowID(-1);
+                    break;
+                default:
+                    int rowid;
+                    try {
+                        rowid = Integer.parseInt(str);
+                    } catch (NumberFormatException ex) {
+                        return;
+                    }
+                    n = grid.imageL.IndexByRowID(rowid);
+                    if (n == -1)
+                        return;
+            }
+        }
+        else {
+            n = rowid_in;
         }
         indexRing.set(n);
         showByIdx();
@@ -163,8 +169,8 @@ public class ImageView extends JFrame implements MouseWheelListener {
         BufferedImage bi = loadImgFromStore(false);
         return "IDX:" + indexRing.get() + " ROWID:" +
                 v.rowid() + " TAG:" + v.tag() +
-                " -- x/y: "+bi.getWidth()+"/"+bi.getHeight()+
-                " -- ACC: "+DBHandler.getAccCounter(v.rowid());
+                " -- x/y: " + bi.getWidth() + "/" + bi.getHeight() +
+                " -- ACC: " + AccessCounter.getAccCounter(v.rowid());
     }
 
     private void showByIdx() {
@@ -181,8 +187,7 @@ public class ImageView extends JFrame implements MouseWheelListener {
             newHeight = getHeight() - in.top - in.bottom;
             float fact = (float) img.getHeight() / (float) newHeight;
             newWidth = (int) ((float) img.getWidth() / fact);
-        }
-        else {
+        } else {
             newWidth = imgPanel.getWidth();
             float fact = (float) img.getWidth() / (float) newWidth;
             newHeight = (int) ((float) img.getHeight() / fact);
@@ -207,13 +212,13 @@ public class ImageView extends JFrame implements MouseWheelListener {
         try {
             int id = grid.imageL.get(indexRing.get()).rowid();
             if (doInc)
-                DBHandler.incAccCounter(id);
+                AccessCounter.incAccCounter(id);
             byte[] b = DBHandler.loadImage(id);
             if (b == null) {
                 System.out.println("loadImgFromStore-1 fail!!!");
                 return TheGrid.failImg;
             }
-            BufferedImage b2 = ImgTools.byteArrayToImg (b);
+            BufferedImage b2 = ImgTools.byteArrayToImg(b);
             if (b2 == null) {
                 System.out.println("loadImgFromStore-2 fail!!!");
                 return TheGrid.failImg;

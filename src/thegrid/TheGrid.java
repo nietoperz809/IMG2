@@ -23,6 +23,7 @@ import static database.SqlListFunctions.putQuery;
 
 public class TheGrid extends MyFrame {
     private static int instCount = 0;
+    private static TheGrid mainGrid;
     public int thisInstCount;
     public final ImageList imageL = new ImageList();
     public final ImageViewController controller = new ImageViewController();
@@ -33,6 +34,10 @@ public class TheGrid extends MyFrame {
     private int imageCount;
     private boolean stopFill = false;
     private String historyPath = null;
+
+    public static TheGrid getMainGrid() {
+        return mainGrid;
+    }
 
     public String getHistoryPath() {
         return historyPath;
@@ -59,6 +64,8 @@ public class TheGrid extends MyFrame {
 
 
     public TheGrid (String sql, String dbRoot) {
+        if (instCount == 0)
+            mainGrid = this;
         instCount++;
         thisInstCount = instCount;
         try {
