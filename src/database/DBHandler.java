@@ -28,20 +28,20 @@ import dev.brachtendorf.jimagehash.hashAlgorithms.PerceptiveHash;
 import static common.ImgTools.byteArrayToImg;
 import static common.Tools.extractResource;
 import static database.VideoFunctions.*;
+import static java.lang.System.*;
 
 public class DBHandler {
-
-    private static final String NO_PASS = "NoPass";
-    private static final String DB_FILE = "mydb";
-    private static final String DB_FILE_FULL = DB_FILE + ".mv.db";
-    private static String ROOT_DIR = "E:\\Databases\\";
+    static final String NO_PASS = "NoPass";
+    static final String DB_FILE = "mydb";
+    static final String DB_FILE_FULL = DB_FILE + ".mv.db";
+    static String RootDirectory = "E:\\Databases\\";
     static Connection connection;
     static Statement statement;
     /*
         jdbc:h2:C:\peter.home\java\IMG2\datastore\mydb;CIPHER=AES
      */
-    private static volatile boolean _backupIsRunning;
-    private static Future<?> transferTask;
+    static volatile boolean _backupIsRunning;
+    static Future<?> transferTask;
 
     static {
         PersistString pers = new PersistString("pwddb", NO_PASS);
@@ -53,13 +53,13 @@ public class DBHandler {
             } else {
                 aes_pwd = pers.get();
             }
-            String url = "jdbc:h2:" + ROOT_DIR + DB_FILE + ";CIPHER=AES";
+            String url = "jdbc:h2:" + RootDirectory + DB_FILE + ";CIPHER=AES";
             String user = "LALA";
             String pwd = aes_pwd + " dumm";
-            System.out.println("-------------------------");
-            System.out.println(url);
-            System.out.println(user + " -- " + pwd);
-            System.out.println("-------------------------");
+            out.println("-------------------------");
+            out.println(url);
+            out.println(user + " -- " + pwd);
+            out.println("-------------------------");
             connection = DriverManager.getConnection(url, user, pwd);
             statement = connection.createStatement();
             String sql;
@@ -100,16 +100,16 @@ public class DBHandler {
             Sam.speak("Failed to connect to data base!");
             pers.reset();
             MsgBox.Error(e.toString());
-            System.exit(-1);
+            exit(-1);
         }
     }
 
     public static String getDBRoot() {
-        return ROOT_DIR;
+        return RootDirectory;
     }
 
     public static void setDBRoot(String s) {
-        ROOT_DIR = s;
+        RootDirectory = s;
         log("DBROOT set to:" + s);
     }
 
@@ -298,8 +298,8 @@ public class DBHandler {
     public static void backup() {
         final String timeStamp = new SimpleDateFormat("yyyy-MM-dd HH-mm-ss")
                 .format(new java.util.Date());
-        final String dest = ROOT_DIR + timeStamp + ".backup";
-        final String src = ROOT_DIR + DB_FILE_FULL;
+        final String dest = RootDirectory + timeStamp + ".backup";
+        final String src = RootDirectory + DB_FILE_FULL;
 
         close();
 
@@ -351,7 +351,7 @@ public class DBHandler {
             String name = UUID.randomUUID().toString();
             BufferedImage img = ImgTools.loadImageFromFile(file.getPath());
             if (img == null) {
-                System.err.println("no image");
+                err.println("no image");
                 continue;
             }
             insertImageRecord(name, img);
@@ -369,13 +369,10 @@ public class DBHandler {
      * @param img th image
      */
     public static void insertImageRecord(String name, BufferedImage img) throws IOException {
-//        BufferedImage big = ImageScaler.scaleExact(img,
-//                new Dimension(img.getWidth(), img.getWidth()));
         byte[] buff = ImgTools.imgToByteArray(img);
         BufferedImage thumbnailImage = ImageScaler.scaleExact(img,
                 new Dimension(100, 100));
         byte[] buff2 = ImgTools.imgToByteArray(thumbnailImage);
-        //stat_insertImageRecord(buff, buff2, name);
         PreparedStatement prep;
         HashingAlgorithm hasher = new PerceptiveHash(32);
         Hash hash0 = hasher.hash(byteArrayToImg(buff));
@@ -397,7 +394,7 @@ public class DBHandler {
             byte[] bigbytes = loadImage(id);
             BufferedImage bigImg = ImgTools.byteArrayToImg(bigbytes);
             if (bigImg == null) {
-                System.out.println("bigimg load fail: " + id);
+                out.println("bigimg load fail: " + id);
                 bigImg = byteArrayToImg(extractResource("fail.png"));
             }
             BufferedImage thumbnailImage = ImageScaler.scaleExact(bigImg,
@@ -408,7 +405,6 @@ public class DBHandler {
                     "update IMAGES set thumb=? where _rowid_ = " + id);
             prep.setBytes(1, buff);
             prep.execute();
-            //connection.commit();
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -431,23 +427,6 @@ public class DBHandler {
             throw new RuntimeException(e);
         }
     }
-
-//    private static void stat_insertImageRecord(byte[] img, byte[] thumb, String name) {
-//        PreparedStatement prep;
-//        HashingAlgorithm hasher = new PerceptiveHash(32);
-//        Hash hash0 = hasher.hash(byteArrayToImg(img));
-//        try {
-//            prep = connection.prepareStatement(
-//                    "insert into IMAGES (image,thumb,name,imghash) values (?,?,?,?)");
-//            prep.setBytes(1, img);
-//            prep.setBytes(2, thumb);
-//            prep.setString(3, name);
-//            prep.setObject(4, hash0);
-//            prep.execute();
-//        } catch (SQLException e) {
-//            throw new RuntimeException(e);
-//        }
-//    }
 
     public static String querySingleValue(String sql) {
         ResultSet res = query(sql);
@@ -486,7 +465,6 @@ public class DBHandler {
         return s;
     }
 
-
     public static void cancelFileTransfer() {
         transferTask.cancel(true);
     }
@@ -516,7 +494,7 @@ public class DBHandler {
             default ->  // regular vid
                     loadVideoBytes(nid);
         };
-        File fi = new File(System.getProperty("java.io.tmpdir") + File.separator + "tempfile-" + "myra.dat");
+        File fi = new File(getProperty("java.io.tmpdir") + File.separator + "tempfile-" + "myra.dat");
         fi.deleteOnExit();
         try (RandomAccessFile rafile = new RandomAccessFile(fi, "rw")) {
             MappedByteBuffer out = rafile.getChannel()
@@ -555,45 +533,6 @@ public class DBHandler {
         return null;
     }
 
-    public static synchronized void incAccCounter(int rowid) {
-        String sql = "update IMAGES set ACCNUM = (ACCNUM + 1) where _rowid_ =" + rowid;
-        try {
-            statement.execute(sql);
-            connection.commit();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    public static synchronized void setAccCounter(int rowid, int val) {
-        String sql = "update IMAGES set ACCNUM = " + val + " where _rowid_ =" + rowid;
-        try {
-            statement.execute(sql);
-            connection.commit();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    public static synchronized int getAccCounter(int rowid) {
-        String q = "select ACCNUM from IMAGES where _rowid_ =" + rowid;
-        try (ResultSet res = query(q)) {
-            if (Objects.requireNonNull(res).next()) {
-                System.out.println("readACC: " + rowid);
-                int ret = res.getInt(1);
-                // init with 1 on first use
-                if (ret == 0) {
-                    setAccCounter(rowid, 1);
-                    return 1;
-                }
-                return ret;
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-        return -1;
-    }
-
     public static ArrayList<HashId> loadPerceptiveImgHashes() {
         String q = "select imghash,_rowid_ from IMAGES where imghash is not null";
         ArrayList<HashId> list = new ArrayList<>();
@@ -628,25 +567,11 @@ public class DBHandler {
                 return img;
             }
         } catch (SQLException e) {
-            System.out.println(e);
+            out.println(e);
             //throw new RuntimeException(e);
         }
         return null;
     }
-
-//    public static Hash getPerceptiveHash(int rowid) {
-//        try (ResultSet res = query("select imghash from images where _rowid_ = " + rowid)) {
-//            try {
-//                assert res != null;
-//                res.next();
-//                return (Hash) res.getObject(1);
-//            } catch (SQLException e) {
-//                throw new RuntimeException(e);
-//            }
-//        } catch (SQLException e) {
-//            throw new RuntimeException(e);
-//        }
-//    }
 
     ///////////////////////////////// Friends
 
