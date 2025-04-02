@@ -92,6 +92,14 @@ public class ImgPanel extends JPanel {
         g.drawString(txt, pos.x, pos.y);
     }
 
+    public void center(Point2D.Double p) {
+        double w1 = getWidth()/2.0;
+        double w2 = (float)p.getX()/2.0;
+        double h1 = getHeight()/2.0;
+        double h2 = p.getY()/2.0;
+        offset.x = (float) (w1-w2);
+        offset.y = (float) (h1-h2);
+    }
 
     public void clearOffset() {
         offset = new Point2D.Float();

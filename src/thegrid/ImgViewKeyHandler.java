@@ -20,6 +20,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -79,14 +80,14 @@ class ImgViewKeyHandler extends KeyAdapter {
             case KeyEvent.VK_PAGE_DOWN -> imageView.setNextImage();
             case KeyEvent.VK_PAGE_UP -> imageView.setBeforeImage();
             case KeyEvent.VK_PLUS -> {
-                float factor = 1.5f;
-                //imgPanel.scaleUp (factor);
-                imageView.scaleIconImg(factor);
+                double factor = 1.5f;
+                Point2D.Double p = imageView.scaleIconImg(factor, true);
+                imageView.imgPanel.center(p);
             }
             case KeyEvent.VK_MINUS -> {
-                float factor = 0.9f;
-                //imgPanel.scaleDown(factor);
-                imageView.scaleIconImg(factor);
+                double factor = 1.5f;
+                Point2D.Double p = imageView.scaleIconImg(factor, false);
+                imageView.imgPanel.center(p);
             }
 
             case KeyEvent.VK_J -> {
@@ -101,6 +102,7 @@ class ImgViewKeyHandler extends KeyAdapter {
                 BufferedImage img = imageView.getIconImg();
                 img = ImgTools.rotateClockwise90(img);
                 imageView.imgPanel.setImage(img);
+                imageView.imgPanel.clearOffset();
             }
 
             case KeyEvent.VK_M -> { // mirror

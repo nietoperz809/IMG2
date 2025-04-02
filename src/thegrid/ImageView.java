@@ -11,6 +11,7 @@ import dialogs.LineInput;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
 import java.awt.image.RescaleOp;
 
@@ -229,9 +230,10 @@ public class ImageView extends JFrame implements MouseWheelListener {
         }
     }
 
-    void scaleIconImg(float factor) {
-        BufferedImage img = ImageScaler.scaleImg(getIconImg(), factor);
+    Point2D.Double scaleIconImg(double factor, boolean up) {
+        BufferedImage img = ImageScaler.scaleImg(getIconImg(), factor, up);
         imgPanel.setImage(img);
+        return new Point2D.Double(img.getWidth(), img.getHeight());
     }
 
     public void zoomIn(Rectangle r) {

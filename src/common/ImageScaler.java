@@ -57,7 +57,9 @@ public class ImageScaler {
         return Math.max(dim.width / (float) width, dim.height / (float) height);
     }
 
-    public static BufferedImage scaleImg(BufferedImage img, float scale) {
+    public static BufferedImage scaleImg(BufferedImage img, double scale, boolean up) {
+        if (!up)
+            scale = 1.0/scale;
         int w = (int)(img.getWidth()*scale);
         int h = (int)(img.getHeight()*scale);
         BufferedImage after = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
