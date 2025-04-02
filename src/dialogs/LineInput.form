@@ -17,7 +17,7 @@
         <properties/>
         <border type="none"/>
         <children>
-          <scrollpane id="8d3ab" binding="scroller">
+          <scrollpane id="8d3ab">
             <constraints>
               <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
               <forms defaultalign-horz="false" defaultalign-vert="false"/>
@@ -52,7 +52,7 @@
         <properties/>
         <border type="none"/>
         <children>
-          <grid id="d3b95" binding="upperPanel" layout-manager="FormLayout">
+          <grid id="d3b95" layout-manager="FormLayout">
             <rowspec value="top:p:grow"/>
             <colspec value="fill:max(d;4px):noGrow"/>
             <colspec value="left:4dlu:noGrow"/>

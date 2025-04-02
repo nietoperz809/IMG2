@@ -15,6 +15,7 @@ import dev.brachtendorf.jimagehash.hash.Hash;
 import dev.brachtendorf.jimagehash.hashAlgorithms.HashingAlgorithm;
 import dev.brachtendorf.jimagehash.hashAlgorithms.PerceptiveHash;
 import dialogs.LineInput;
+import dialogs.RGBScroll;
 
 import javax.swing.*;
 import java.awt.*;
@@ -162,6 +163,11 @@ class ImgViewKeyHandler extends KeyAdapter {
                 BufferedImage img = imageView.getIconImg();
                 img = ImgTools.gammaCorrection(img, 1f / 0.7f);
                 imageView.imgPanel.setImage(img);
+            }
+
+            case KeyEvent.VK_P -> {
+                BufferedImage img = imageView.getIconImg();
+                RGBScroll.xmain(img, imageView.imgPanel);
             }
 
             case KeyEvent.VK_D -> {

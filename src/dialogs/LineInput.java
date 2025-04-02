@@ -15,10 +15,8 @@ public class LineInput extends JDialog {
     private JLabel label;
     private JButton xButton;
     private JList<String> list1;
-    private JScrollPane scroller;
     private JButton buttonOK;
     private JPanel innerPanel;
-    private JPanel upperPanel;
     private String initText;
 
     private void listToText() {
