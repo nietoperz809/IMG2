@@ -103,7 +103,7 @@ class ImgViewKeyHandler extends KeyAdapter {
                 imageView.imgPanel.setImage(img);
             }
 
-            case KeyEvent.VK_M -> {
+            case KeyEvent.VK_M -> { // mirror
                 BufferedImage img = imageView.getIconImg();
                 img = ImgTools.flip(img);
                 imageView.imgPanel.setImage(img);
@@ -132,7 +132,7 @@ class ImgViewKeyHandler extends KeyAdapter {
                 imageView.adjustOn('h');
             }
 
-            case KeyEvent.VK_S -> {
+            case KeyEvent.VK_S -> { // slideshow
                 if (timer == null) {
                     timer = new Timer(10000, e1 -> {
                         imageView.indexRing.set(imageView.shuffledRing.getNext());
@@ -197,6 +197,13 @@ class ImgViewKeyHandler extends KeyAdapter {
                 Denoise d = new Denoise(img);
                 BufferedImage out = d.perform_denoise();
                 imageView.imgPanel.setImage(out);
+            }
+
+            case KeyEvent.VK_K -> { // +-10
+                int this_rowid = imageView.grid.imageL.get(imageView.indexRing.get()).rowid();
+                String sql = "select name,_ROWID_,tag,accnum from IMAGES where _rowid_ <= " +
+                        (this_rowid+10) + " and _rowid_ >=" + (this_rowid-10);
+                (new Thread(() -> new TheGrid(sql, "WORKER"))).start();
             }
 
             case KeyEvent.VK_V -> { // similarities

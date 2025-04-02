@@ -24,6 +24,7 @@ import static database.SqlListFunctions.putQuery;
 public class TheGrid extends MyFrame {
     private static int instCount = 0;
     private static TheGrid mainGrid;
+    static ImageView mainView;
     public int thisInstCount;
     public final ImageList imageL = new ImageList();
     public final ImageViewController controller = new ImageViewController();

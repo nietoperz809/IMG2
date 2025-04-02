@@ -4,6 +4,5 @@
     <buildFile url="file://$PROJECT_DIR$/src/buildinfo/buildnum.xml">
       <executeOn event="beforeCompilation" target="UpdateBuildnum" />
     </buildFile>
-    <buildFile url="file://$PROJECT_DIR$/.idea/ant.xml" />
   </component>
 </project>
