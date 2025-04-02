@@ -134,7 +134,7 @@ class ImgViewKeyHandler extends KeyAdapter {
 
             case KeyEvent.VK_S -> { // slideshow
                 if (timer == null) {
-                    timer = new Timer(10000, e1 -> {
+                    timer = new Timer(10000, _ -> {
                         imageView.indexRing.set(imageView.shuffledRing.getNext());
                         imageView.setImg();
                         imageView.imgPanel.clearOffset();
