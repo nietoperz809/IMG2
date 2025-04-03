@@ -9,10 +9,7 @@ import javax.imageio.stream.FileImageInputStream;
 import java.awt.*;
 import java.awt.datatransfer.*;
 import java.awt.geom.AffineTransform;
-import java.awt.image.AffineTransformOp;
-import java.awt.image.BufferedImage;
-import java.awt.image.ConvolveOp;
-import java.awt.image.Kernel;
+import java.awt.image.*;
 import java.io.*;
 
 import static common.Tools.hasExtension;
@@ -88,6 +85,11 @@ public class ImgTools {
         TransferableImage trans = new TransferableImage( bi );
         Clipboard c = Toolkit.getDefaultToolkit().getSystemClipboard();
         c.setContents( trans, trans );
+    }
+
+    public static BufferedImage contrast (BufferedImage img, float val) {
+        RescaleOp op = new RescaleOp(val, 0, null);
+        return op.filter(img, img);
     }
 
     public static BufferedImage gammaCorrection(BufferedImage original, float gamma) {

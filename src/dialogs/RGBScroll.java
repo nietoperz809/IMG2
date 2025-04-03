@@ -1,36 +1,34 @@
 package dialogs;
 
 import Catalano.Imaging.FastBitmap;
+import common.ImgTools;
 import thegrid.ImgPanel;
 
 import javax.swing.*;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
+import java.awt.image.RescaleOp;
 
 public class RGBScroll extends JDialog {
     private JPanel contentPane;
     private JSlider sliderRed;
     private JSlider sliderGreen;
     private JSlider sliderBlue;
+    private JSlider sliderAlpha;
     private FastBitmap image;
+    private FastBitmap copy;
     private ImgPanel panel;
 
     public void setImage (BufferedImage img, ImgPanel imgPanel) {
         panel = imgPanel;
         image = new FastBitmap(img);
+        copy = new FastBitmap(img);
     }
 
     public RGBScroll() {
         setContentPane(contentPane);
         setModal(true);
         setUndecorated(true);
-
-        sliderRed.setMaximum(255);
-        sliderRed.setMinimum(1);
-        sliderGreen.setMaximum(255);
-        sliderGreen.setMinimum(1);
-        sliderBlue.setMaximum(255);
-        sliderBlue.setMinimum(1);
 
         // call onCancel() when cross is clicked
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
@@ -49,7 +47,7 @@ public class RGBScroll extends JDialog {
             public void mouseReleased(MouseEvent e) {
                 int v = sliderRed.getValue();
                 for (int s=0; s<image.getRGBData().length; s++)
-                    image.setRed (s, v);
+                    image.setRed (s, (v+copy.getRed(s))/2);
                 panel.setImage(image);
             }
         });
@@ -59,7 +57,7 @@ public class RGBScroll extends JDialog {
             public void mouseReleased(MouseEvent e) {
                 int v = sliderGreen.getValue();
                 for (int s=0; s<image.getRGBData().length; s++)
-                    image.setGreen (s, v);
+                    image.setGreen (s, (v+copy.getGreen(s))/2);
                 panel.setImage(image);
             }
         });
@@ -69,8 +67,19 @@ public class RGBScroll extends JDialog {
             public void mouseReleased(MouseEvent e) {
                 int v = sliderBlue.getValue();
                 for (int s=0; s<image.getRGBData().length; s++)
-                    image.setBlue (s, v);
+                    image.setBlue (s, (v+copy.getBlue(s))/2);
                 panel.setImage(image);
+            }
+        });
+
+        sliderAlpha.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                int v = sliderAlpha.getValue();
+                float val = 2f*v/255;
+                BufferedImage buf = image.toBufferedImage();
+                buf = ImgTools.contrast(buf, val);
+                panel.setImage(buf);
             }
         });
     }

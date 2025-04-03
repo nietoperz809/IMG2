@@ -7,8 +7,6 @@
       <element id="extracted-dir" path="$PROJECT_DIR$/lib/h2-2.1.214.jar" path-in-jar="/" />
       <element id="extracted-dir" path="$PROJECT_DIR$/../../../Libraries/Java/vlcj-4.7.1/jna-5.2.0.jar" path-in-jar="/" />
       <element id="extracted-dir" path="$PROJECT_DIR$/../../../Libraries/Java/vlcj-4.7.1/jna-platform-5.2.0.jar" path-in-jar="/" />
-      <element id="extracted-dir" path="$PROJECT_DIR$/../../../Libraries/Java/vlcj-4.7.1/vlcj-4.7.1.jar" path-in-jar="/" />
-      <element id="extracted-dir" path="$PROJECT_DIR$/../../../Libraries/Java/vlcj-4.7.1/vlcj-natives-4.1.0.jar" path-in-jar="/" />
       <element id="extracted-dir" path="$PROJECT_DIR$/lib/nanohttpd-2.2.0.jar" path-in-jar="/" />
       <element id="extracted-dir" path="$PROJECT_DIR$/lib/Catalano.Image.jar" path-in-jar="/" />
       <element id="extracted-dir" path="$PROJECT_DIR$/lib/forms-1.2.1.jar" path-in-jar="/" />
@@ -39,6 +37,10 @@
       <element id="extracted-dir" path="$PROJECT_DIR$/lib/JTransforms-3.1-with-dependencies.jar" path-in-jar="/" />
       <element id="extracted-dir" path="$PROJECT_DIR$/lib/commons-math3-3.5.jar" path-in-jar="/" />
       <element id="extracted-dir" path="$PROJECT_DIR$/lib/JLargeArrays-1.5.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/lib/vlcj-4.8.0.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/lib/vlcj-natives-4.8.0.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/lib/jna-5.12.1.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/lib/jna-platform-5.12.1.jar" path-in-jar="/" />
     </root>
   </artifact>
 </component>

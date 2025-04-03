@@ -12,5 +12,6 @@
     <orderEntry type="library" name="lib" level="project" />
     <orderEntry type="library" name="IMG2" level="project" />
     <orderEntry type="library" name="dev.brachtendorf.JImageHash" level="project" />
+    <orderEntry type="library" name="uk.co.caprica.vlcj" level="project" />
   </component>
 </module>

@@ -68,8 +68,7 @@ public class ImageView extends JFrame implements MouseWheelListener {
 
     void changeContrast(float val) {
         BufferedImage img = getIconImg();
-        RescaleOp op = new RescaleOp(val, 0, null);
-        img = op.filter(img, img);
+        img = ImgTools.contrast(img, val);
         imgPanel.setImage(img);
     }
 
