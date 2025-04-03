@@ -25,21 +25,21 @@ public class Csv {
     }
 
     public static TreeSet<String> SetFromCSVString(String csv) {
+        TreeSet<String> tset = new TreeSet<>();
         if (csv == null)
-            return new TreeSet<>(); // return empty treeset if input is null
+            return tset; // return empty treeset if input is null
         String[] arr = csv.split(",");
-        TreeSet<String> ll = new TreeSet<>();
         for (int n = 0; n < arr.length; n++) {
             arr[n] = arr[n].trim();
             if (arr[n].length() > 1) // ignore single-char strings
-                ll.add(arr[n]);
+                tset.add(arr[n]);
         }
-        return ll;
+        return tset;
     }
 
-    public static String CsvStringFromSet(TreeSet<String> ll) {
+    public static String CsvStringFromSet(TreeSet<String> tset) {
         StringBuilder sb = new StringBuilder();
-        for (String s : ll) {
+        for (String s : tset) {
             sb.append(s).append(", ");
         }
         String s2 = sb.toString();
