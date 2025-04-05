@@ -16,6 +16,7 @@ import dev.brachtendorf.jimagehash.hashAlgorithms.HashingAlgorithm;
 import dev.brachtendorf.jimagehash.hashAlgorithms.PerceptiveHash;
 import dialogs.LineInput;
 import dialogs.RGBScroll;
+import dialogs.SliderBox;
 
 import javax.swing.*;
 import java.awt.*;
@@ -155,15 +156,16 @@ class ImgViewKeyHandler extends KeyAdapter {
 
             case KeyEvent.VK_1 -> {
                 BufferedImage img = imageView.getIconImg();
-                img = ImgTools.gammaCorrection(img, 0.7f);
+                float gamma = SliderBox.xmain();
+                img = ImgTools.gammaCorrection(img, gamma);
                 imageView.imgPanel.setImage(img);
             }
 
-            case KeyEvent.VK_2 -> {
-                BufferedImage img = imageView.getIconImg();
-                img = ImgTools.gammaCorrection(img, 1f / 0.7f);
-                imageView.imgPanel.setImage(img);
-            }
+//            case KeyEvent.VK_2 -> {
+//                BufferedImage img = imageView.getIconImg();
+//                img = ImgTools.gammaCorrection(img, 1f / 0.7f); // ~1.5
+//                imageView.imgPanel.setImage(img);
+//            }
 
             case KeyEvent.VK_P -> {
                 BufferedImage img = imageView.getIconImg();
