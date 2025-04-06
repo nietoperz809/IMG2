@@ -10,7 +10,7 @@ public class AccessCounter extends DBHandler {
 
     public static synchronized void incAccCounter(int rowid) {
         Integer val = cache.get(rowid);
-        if (val != null
+        if (val != null)
             cache.put(rowid, val+1);
         String sql = "update IMAGES set ACCNUM = (ACCNUM + 1) where _rowid_ =" + rowid;
         try {

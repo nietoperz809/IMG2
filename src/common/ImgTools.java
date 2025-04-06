@@ -122,7 +122,6 @@ public class ImgTools {
                 gamma_cor.setRGB(i, j, newPixel);
 
             }
-
         }
         return gamma_cor;
     }

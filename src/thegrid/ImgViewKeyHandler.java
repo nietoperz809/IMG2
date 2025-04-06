@@ -1,13 +1,10 @@
 package thegrid;
 
 import Catalano.Imaging.FastBitmap;
+import Catalano.Imaging.Filters.*;
 import Catalano.Imaging.Filters.Artistic.HeatMap;
 import Catalano.Imaging.Filters.Artistic.OilPainting;
 import Catalano.Imaging.Filters.Artistic.SpecularBloom;
-import Catalano.Imaging.Filters.Dilatation;
-import Catalano.Imaging.Filters.Erosion;
-import Catalano.Imaging.Filters.FastVariance;
-import Catalano.Imaging.Filters.HistogramEqualization;
 import common.*;
 import database.AccessCounter;
 import database.DBHandler;
@@ -113,19 +110,19 @@ class ImgViewKeyHandler extends KeyAdapter {
                 imageView.imgPanel.setImage(img);
             }
 
-            case KeyEvent.VK_W -> {
+            case KeyEvent.VK_W -> { // adjust on width
                 imageView.imgPanel.clearOffset();
                 imageView.adjustOn('w');
             }
 
-            case KeyEvent.VK_T -> {
+            case KeyEvent.VK_T -> { // next img
                 imageView.indexRing.set(imageView.shuffledRing.getNext());
                 imageView.setImg();
                 imageView.imgPanel.clearOffset();
                 imageView.adjustOn('h');
             }
 
-            case KeyEvent.VK_Z -> {
+            case KeyEvent.VK_Z -> { // prev img, ctrlZ -> undo
                 if (e.isControlDown()) {
                     imageView.imgPanel.undo();
                     return;
@@ -154,25 +151,31 @@ class ImgViewKeyHandler extends KeyAdapter {
                 }
             }
 
-            case KeyEvent.VK_1 -> {
+            case KeyEvent.VK_1 -> { // gamma
                 BufferedImage img = imageView.getIconImg();
-                float gamma = SliderBox.xmain();
+                float gamma = SliderBox.xmain("Gamma",
+                        0.4f, 2.0f, 255);
                 img = ImgTools.gammaCorrection(img, gamma);
                 imageView.imgPanel.setImage(img);
             }
 
-//            case KeyEvent.VK_2 -> {
-//                BufferedImage img = imageView.getIconImg();
-//                img = ImgTools.gammaCorrection(img, 1f / 0.7f); // ~1.5
-//                imageView.imgPanel.setImage(img);
-//            }
+            case KeyEvent.VK_2 -> { // contrast correction
+                BufferedImage img = imageView.getIconImg();
+                FastBitmap fb = new FastBitmap(img);
+                int factor = (int)SliderBox.xmain("Contrast",
+                        -127f, 127f, 256);
+                ContrastCorrection cc = new ContrastCorrection();
+                cc.setFactor(factor);
+                cc.applyInPlace(fb);
+                imageView.imgPanel.setImage(fb.toBufferedImage());
+            }
 
-            case KeyEvent.VK_P -> {
+            case KeyEvent.VK_P -> { // special effect
                 BufferedImage img = imageView.getIconImg();
                 RGBScroll.xmain(img, imageView.imgPanel);
             }
 
-            case KeyEvent.VK_D -> {
+            case KeyEvent.VK_D -> { // delete
                 if (MsgBox.Question("Delete image from DB?")) {
                     DBHandler.deleteImage(imageView.grid.imageL.get(imageView.indexRing.get()).rowid());
                 }
@@ -183,8 +186,22 @@ class ImgViewKeyHandler extends KeyAdapter {
                 imageView.adjustOn('h');
             }
 
-            case KeyEvent.VK_3 -> imageView.changeContrast(1.1f);
-            case KeyEvent.VK_4 -> imageView.changeContrast(0.9f);
+            case KeyEvent.VK_3 -> {
+                float factor = SliderBox.xmain("Luminance",
+                        0.5f, 1.5f, 256);
+                imageView.changeContrast(factor);
+            }
+
+            case KeyEvent.VK_4 -> {
+                BufferedImage img = imageView.getIconImg();
+                FastBitmap fb = new FastBitmap(img);
+                int factor = (int)SliderBox.xmain("BrightnessCorrection",
+                        -255f, 255f, 256);
+                BrightnessCorrection bc = new BrightnessCorrection(factor);
+                bc.applyInPlace(fb);
+                imageView.imgPanel.setImage(fb.toBufferedImage());
+            }
+
             case KeyEvent.VK_X -> imageView.sharpenImage();
             case KeyEvent.VK_F -> imageView.saveAsFile(true);
             case KeyEvent.VK_G -> imageView.saveAsFile(false);

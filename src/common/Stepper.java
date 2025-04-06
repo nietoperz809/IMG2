@@ -17,7 +17,11 @@ public class Stepper {
     public float get (int n) {
         if (n < 0) n = 0;
         else if (n > steps) n = steps;
-        return from + n*st;
+        return from + n * st;
+    }
+
+    public int getSteps() {
+        return steps;
     }
 
     public static void main(String[] args) {

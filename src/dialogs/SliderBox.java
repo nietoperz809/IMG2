@@ -11,13 +11,14 @@ public class SliderBox extends JDialog {
     private JPanel contentPane;
     private JSlider theSlider;
     private JLabel valueLabel;
-    private final Stepper stepper = new Stepper (0.01f, 2.0f, 255);
+    private final Stepper stepper; // = new Stepper (0.4f, 2.0f, 255);
     private float lastStep = 1.0f;
 
-    public SliderBox() {
+    public SliderBox(Stepper stp) {
+        stepper = stp;
+        theSlider.setValue(stp.getSteps()/2);
         setContentPane(contentPane);
         setModal(true);
-        setUndecorated(true);
 
         // call onCancel() when cross is clicked
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
@@ -49,15 +50,16 @@ public class SliderBox extends JDialog {
     }
 
     public static void main(String[] args) {
-        SliderBox dialog = new SliderBox();
+        SliderBox dialog = new SliderBox(null);
         dialog.pack();
         dialog.setLocationRelativeTo(null);
         dialog.setVisible(true);
         System.exit(0);
     }
 
-    public static float xmain() {
-        SliderBox dialog = new SliderBox();
+    public static float xmain (String name, float from, float to, int steps) {
+        SliderBox dialog = new SliderBox(new Stepper(from, to, steps));
+        dialog.setTitle(name);
         dialog.pack();
         dialog.setLocationRelativeTo(null);
         dialog.setVisible(true);
