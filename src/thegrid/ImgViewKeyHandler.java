@@ -1,10 +1,10 @@
 package thegrid;
 
 import Catalano.Imaging.FastBitmap;
-import Catalano.Imaging.Filters.*;
 import Catalano.Imaging.Filters.Artistic.HeatMap;
 import Catalano.Imaging.Filters.Artistic.OilPainting;
 import Catalano.Imaging.Filters.Artistic.SpecularBloom;
+import Catalano.Imaging.Filters.*;
 import common.*;
 import database.AccessCounter;
 import database.DBHandler;
@@ -27,8 +27,8 @@ import java.util.HashSet;
 
 class ImgViewKeyHandler extends KeyAdapter {
     private final ImageView imageView;
-    private long keyTime;
     Timer timer = null;
+    private long keyTime;
 
     public ImgViewKeyHandler(ImageView imageView) {
         this.imageView = imageView;
@@ -160,14 +160,12 @@ class ImgViewKeyHandler extends KeyAdapter {
             }
 
             case KeyEvent.VK_2 -> { // contrast correction
-                BufferedImage img = imageView.getIconImg();
-                FastBitmap fb = new FastBitmap(img);
+                FastBitmap fb = imageView.getIconAsFastBitmap();
                 int factor = (int)SliderBox.xmain("Contrast",
-                        -127f, 127f, 256);
-                ContrastCorrection cc = new ContrastCorrection();
-                cc.setFactor(factor);
+                        -127f, 127f, 255);
+                ContrastCorrection cc = new ContrastCorrection(factor);
                 cc.applyInPlace(fb);
-                imageView.imgPanel.setImage(fb.toBufferedImage());
+                imageView.imgPanel.setImage(fb);
             }
 
             case KeyEvent.VK_P -> { // special effect
@@ -188,18 +186,17 @@ class ImgViewKeyHandler extends KeyAdapter {
 
             case KeyEvent.VK_3 -> {
                 float factor = SliderBox.xmain("Luminance",
-                        0.5f, 1.5f, 256);
+                        0.5f, 1.5f, 255);
                 imageView.changeContrast(factor);
             }
 
             case KeyEvent.VK_4 -> {
-                BufferedImage img = imageView.getIconImg();
-                FastBitmap fb = new FastBitmap(img);
+                FastBitmap fb = imageView.getIconAsFastBitmap();
                 int factor = (int)SliderBox.xmain("BrightnessCorrection",
-                        -255f, 255f, 256);
+                        -255f, 255f, 255);
                 BrightnessCorrection bc = new BrightnessCorrection(factor);
                 bc.applyInPlace(fb);
-                imageView.imgPanel.setImage(fb.toBufferedImage());
+                imageView.imgPanel.setImage(fb);
             }
 
             case KeyEvent.VK_X -> imageView.sharpenImage();
@@ -255,18 +252,38 @@ class ImgViewKeyHandler extends KeyAdapter {
                 }
             }
 
-            case KeyEvent.VK_6 -> imageView.applyInplaceFilter(new Dilatation());
-            case KeyEvent.VK_7 -> imageView.applyInplaceFilter(new OilPainting());
-            case KeyEvent.VK_8 -> imageView.applyInplaceFilter(new Erosion());
-            case KeyEvent.VK_9 -> imageView.applyInplaceFilter(new SpecularBloom());
+            case KeyEvent.VK_6 -> {
+                int rad = (int)SliderBox.xmain("Dilatation",
+                        1f, 13f, 256);
+                imageView.applyInplaceFilter(new Dilatation(rad));
+            }
+
+            case KeyEvent.VK_7 -> {
+                int rad = (int)SliderBox.xmain("OilPainting",
+                        1f, 20f, 256);
+                imageView.applyInplaceFilter(new OilPainting(rad));
+            }
+
+            case KeyEvent.VK_8 -> {
+                int rad = (int)SliderBox.xmain("Erosion",
+                        1f, 20f, 256);
+                imageView.applyInplaceFilter(new Erosion(rad));
+            }
+
+            case KeyEvent.VK_9 -> {
+                int r = (int)SliderBox.xmain("SpecularBloom",1f,20f,255);
+                imageView.applyInplaceFilter(new SpecularBloom(20, r));
+            }
             case KeyEvent.VK_0 -> imageView.applyInplaceFilter(new HistogramEqualization());
-            case KeyEvent.VK_B -> imageView.applyInplaceFilter(new FastVariance());
+            case KeyEvent.VK_B -> {
+                int r = (int)SliderBox.xmain("FastVariance",1f,20f,255);
+                imageView.applyInplaceFilter(new FastVariance(r));
+            }
 
             case KeyEvent.VK_Y -> {   //  heatmap
-                FastBitmap fb = imageView.IconToFastBitmap();
-                HeatMap bl = new HeatMap();
-                if (e.isControlDown())
-                    bl.setInvert(true);
+                FastBitmap fb = imageView.getIconAsFastBitmap();
+                boolean inv = SliderBox.xmain("Heatmap",0f,1f,2) == 1f;
+                HeatMap bl = new HeatMap(inv);
                 bl.applyInPlace(fb);
                 imageView.imgPanel.setImage(fb);
             }

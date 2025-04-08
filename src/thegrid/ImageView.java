@@ -13,7 +13,6 @@ import java.awt.*;
 import java.awt.event.*;
 import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
-import java.awt.image.RescaleOp;
 
 import static common.MsgBox.chooseDir;
 
@@ -112,12 +111,12 @@ public class ImageView extends JFrame implements MouseWheelListener {
         adjustOn('h');
     }
 
-    FastBitmap IconToFastBitmap() {
+    FastBitmap getIconAsFastBitmap() {
         return new FastBitmap(getIconImg());
     }
 
     void applyInplaceFilter(IApplyInPlace bl) {
-        FastBitmap fb = IconToFastBitmap();
+        FastBitmap fb = getIconAsFastBitmap();
         bl.applyInPlace(fb);
         imgPanel.setImage(fb);
     }

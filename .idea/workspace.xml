@@ -14,16 +14,15 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ddb69741-e020-4d21-a32f-f00e79c6818a" name="Changes" comment="introduced cache">
+    <list default="true" id="ddb69741-e020-4d21-a32f-f00e79c6818a" name="Changes" comment="backup">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/IMG2_jar/IMG2.jar" beforeDir="false" afterPath="$PROJECT_DIR$/IMG2_jar/IMG2.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resource/manual.html" beforeDir="false" afterPath="$PROJECT_DIR$/resource/manual.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/buildinfo/BuildInfo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/buildinfo/BuildInfo.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/buildinfo/build.number" beforeDir="false" afterPath="$PROJECT_DIR$/src/buildinfo/build.number" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/common/ImgTools.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/common/ImgTools.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/common/Stepper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/common/Stepper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/database/AccessCounter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/database/AccessCounter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/dialogs/SliderBox.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/dialogs/SliderBox.form" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/dialogs/SliderBox.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/dialogs/SliderBox.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/thegrid/ImageView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/thegrid/ImageView.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/thegrid/ImgViewKeyHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/thegrid/ImgViewKeyHandler.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -629,7 +628,7 @@
       <option name="project" value="LOCAL" />
       <updated>1683976691765</updated>
     </task>
-    <option name="localTasksCounter" value="269" />
+    <option name="localTasksCounter" value="270" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -712,11 +711,11 @@
     <MESSAGE value="moved things around" />
     <MESSAGE value="added vk_k key (+-10)" />
     <MESSAGE value="release version" />
-    <MESSAGE value="backup" />
     <MESSAGE value="+test (junit)" />
     <MESSAGE value="release" />
     <MESSAGE value="introduced cache" />
-    <option name="LAST_COMMIT_MESSAGE" value="introduced cache" />
+    <MESSAGE value="backup" />
+    <option name="LAST_COMMIT_MESSAGE" value="backup" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

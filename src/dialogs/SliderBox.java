@@ -6,6 +6,7 @@ import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import java.awt.event.*;
+import java.text.DecimalFormat;
 
 public class SliderBox extends JDialog {
     private JPanel contentPane;
@@ -13,6 +14,7 @@ public class SliderBox extends JDialog {
     private JLabel valueLabel;
     private final Stepper stepper; // = new Stepper (0.4f, 2.0f, 255);
     private float lastStep = 1.0f;
+    private DecimalFormat df = new DecimalFormat("#.##");
 
     public SliderBox(Stepper stp) {
         stepper = stp;
@@ -40,21 +42,22 @@ public class SliderBox extends JDialog {
 
         theSlider.addChangeListener(_ -> {
             lastStep = stepper.get(theSlider.getValue());
-            valueLabel.setText(""+lastStep);
+            valueLabel.setText(df.format(lastStep));
         });
     }
 
     private void onCancel() {
+        //throw new RuntimeException("break");
         // add your code here if necessary
         dispose();
     }
 
     public static void main(String[] args) {
-        SliderBox dialog = new SliderBox(null);
-        dialog.pack();
-        dialog.setLocationRelativeTo(null);
-        dialog.setVisible(true);
-        System.exit(0);
+//        SliderBox dialog = new SliderBox(null);
+//        dialog.pack();
+//        dialog.setLocationRelativeTo(null);
+//        dialog.setVisible(true);
+//        System.exit(0);
     }
 
     public static float xmain (String name, float from, float to, int steps) {

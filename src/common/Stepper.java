@@ -15,8 +15,9 @@ public class Stepper {
     }
 
     public float get (int n) {
-        if (n < 0) n = 0;
-        else if (n > steps) n = steps;
+        n = Math.clamp(n, 0, steps);
+//        if (n < 0) n = 0;
+//        else if (n > steps) n = steps;
         return from + n * st;
     }
 
