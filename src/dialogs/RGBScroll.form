@@ -16,10 +16,6 @@
         <rowspec value="center:max(d;4px):noGrow"/>
         <rowspec value="top:4dlu:noGrow"/>
         <rowspec value="center:max(d;4px):noGrow"/>
-        <rowspec value="top:4dlu:noGrow"/>
-        <rowspec value="center:max(d;4px):noGrow"/>
-        <rowspec value="top:4dlu:noGrow"/>
-        <rowspec value="center:max(d;4px):noGrow"/>
         <colspec value="fill:d:grow"/>
         <constraints>
           <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false">
@@ -73,56 +69,12 @@
               <value value="0"/>
             </properties>
           </component>
-          <component id="64d1e" class="javax.swing.JSlider" binding="sliderAlpha">
-            <constraints>
-              <grid row="6" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
-              <forms defaultalign-horz="false"/>
-            </constraints>
-            <properties>
-              <maximum value="255"/>
-              <value value="0"/>
-            </properties>
-          </component>
-          <grid id="f0942" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="1">
-            <constraints>
-              <grid row="8" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
-              <forms/>
-            </constraints>
-            <properties/>
-            <border type="none"/>
-            <children>
-              <component id="57da5" class="javax.swing.JRadioButton" binding="rbAnd">
-                <constraints/>
-                <properties>
-                  <text value="And"/>
-                </properties>
-              </component>
-              <component id="616f4" class="javax.swing.JRadioButton" binding="rbOr">
-                <constraints/>
-                <properties>
-                  <text value="Or"/>
-                </properties>
-              </component>
-              <component id="7b042" class="javax.swing.JRadioButton" binding="rbXor">
-                <constraints/>
-                <properties>
-                  <text value="Xor"/>
-                </properties>
-              </component>
-              <component id="80fb1" class="javax.swing.JRadioButton" binding="rbPlus">
-                <constraints/>
-                <properties>
-                  <text value="Plus"/>
-                </properties>
-              </component>
-            </children>
-          </grid>
         </children>
       </grid>
     </children>
   </grid>
   <buttonGroups>
-    <group name="buttonGroup1" bound="true">
+    <group name="nixx">
       <member id="57da5"/>
       <member id="616f4"/>
       <member id="7b042"/>

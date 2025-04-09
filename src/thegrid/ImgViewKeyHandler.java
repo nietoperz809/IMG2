@@ -5,6 +5,9 @@ import Catalano.Imaging.Filters.Artistic.HeatMap;
 import Catalano.Imaging.Filters.Artistic.OilPainting;
 import Catalano.Imaging.Filters.Artistic.SpecularBloom;
 import Catalano.Imaging.Filters.*;
+import com.jhlabs.image.ContrastFilter;
+import com.jhlabs.image.DiffuseFilter;
+import com.jhlabs.image.HSBAdjustFilter;
 import common.*;
 import database.AccessCounter;
 import database.DBHandler;
@@ -230,6 +233,39 @@ class ImgViewKeyHandler extends KeyAdapter {
                 (new Thread(() -> new TheGrid(sql, "WORKER"))).start();
             }
 
+            case KeyEvent.VK_F1 -> { // Grayscale
+                FastBitmap fb = imageView.getIconAsFastBitmap();
+                if (fb.isGrayscale())
+                    return;
+                fb.toGrayscale();
+                imageView.imgPanel.setImage(fb);
+            }
+
+            case KeyEvent.VK_F2 -> { // Grayscale & forward fourier
+                FastBitmap fb = imageView.getIconAsFastBitmap();
+                if (!fb.isGrayscale())
+                   fb.toGrayscale();
+                FourierTransform ft = new FourierTransform(fb);
+                ft.Forward();
+                fb = ft.toFastBitmap();
+                imageView.imgPanel.setImage(fb);
+            }
+
+            case KeyEvent.VK_F3 -> { // Diffuse
+                BufferedImage img = imageView.getIconImg();
+                DiffuseFilter d = new DiffuseFilter();
+                BufferedImage ret = d.filter(img, null);
+                imageView.imgPanel.setImage(ret);
+            }
+
+            case KeyEvent.VK_F4 -> { // HSB
+                BufferedImage img = imageView.getIconImg();
+                HSBAdjustFilter c = new HSBAdjustFilter(0.5f, 0.5f, 1.0f);
+                BufferedImage ret = c.filter(img, null);
+                imageView.imgPanel.setImage(ret);
+            }
+
+
             case KeyEvent.VK_V -> { // similarities
                 int this_rowid = imageView.grid.imageL.get(imageView.indexRing.get()).rowid();
                 HashingAlgorithm hasher = new PerceptiveHash(32);
@@ -320,3 +356,6 @@ class ImgViewKeyHandler extends KeyAdapter {
         }
     }
 }
+
+/////////////////////////////////////////
+
