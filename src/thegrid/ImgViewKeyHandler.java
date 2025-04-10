@@ -5,15 +5,14 @@ import Catalano.Imaging.Filters.Artistic.HeatMap;
 import Catalano.Imaging.Filters.Artistic.OilPainting;
 import Catalano.Imaging.Filters.Artistic.SpecularBloom;
 import Catalano.Imaging.Filters.*;
-import com.jhlabs.image.ContrastFilter;
-import com.jhlabs.image.DiffuseFilter;
-import com.jhlabs.image.HSBAdjustFilter;
+import com.jhlabs.image.*;
 import common.*;
 import database.AccessCounter;
 import database.DBHandler;
 import dev.brachtendorf.jimagehash.hash.Hash;
 import dev.brachtendorf.jimagehash.hashAlgorithms.HashingAlgorithm;
 import dev.brachtendorf.jimagehash.hashAlgorithms.PerceptiveHash;
+import dialogs.ConBright;
 import dialogs.LineInput;
 import dialogs.RGBScroll;
 import dialogs.SliderBox;
@@ -162,18 +161,14 @@ class ImgViewKeyHandler extends KeyAdapter {
                 imageView.imgPanel.setImage(img);
             }
 
-            case KeyEvent.VK_2 -> { // contrast correction
-                FastBitmap fb = imageView.getIconAsFastBitmap();
-                int factor = (int)SliderBox.xmain("Contrast",
-                        -127f, 127f, 255);
-                ContrastCorrection cc = new ContrastCorrection(factor);
-                cc.applyInPlace(fb);
-                imageView.imgPanel.setImage(fb);
-            }
-
             case KeyEvent.VK_P -> { // special effect
                 BufferedImage img = imageView.getIconImg();
                 RGBScroll.xmain(img, imageView.imgPanel);
+            }
+
+            case KeyEvent.VK_2 -> { // contrast, brightness
+                BufferedImage img = imageView.getIconImg();
+                ConBright.xmain(img, imageView.imgPanel);
             }
 
             case KeyEvent.VK_D -> { // delete
@@ -258,13 +253,19 @@ class ImgViewKeyHandler extends KeyAdapter {
                 imageView.imgPanel.setImage(ret);
             }
 
-            case KeyEvent.VK_F4 -> { // HSB
+            case KeyEvent.VK_F4 -> { // Equalize
                 BufferedImage img = imageView.getIconImg();
-                HSBAdjustFilter c = new HSBAdjustFilter(0.5f, 0.5f, 1.0f);
+                EqualizeFilter c = new EqualizeFilter();
                 BufferedImage ret = c.filter(img, null);
                 imageView.imgPanel.setImage(ret);
             }
 
+            case KeyEvent.VK_I -> { // Invert
+                BufferedImage img = imageView.getIconImg();
+                InvertFilter d = new InvertFilter();
+                BufferedImage ret = d.filter(img, null);
+                imageView.imgPanel.setImage(ret);
+            }
 
             case KeyEvent.VK_V -> { // similarities
                 int this_rowid = imageView.grid.imageL.get(imageView.indexRing.get()).rowid();
@@ -339,18 +340,18 @@ class ImgViewKeyHandler extends KeyAdapter {
                 }
             }
 
-            case KeyEvent.VK_I -> {
-                String name = "?";
-                name = LineInput.xmain(name, "New Entry:", Color.RED);
-                if (name.equals("?") || name.isEmpty())
-                    return;
-                BufferedImage img = imageView.getIconImg();
-                try {
-                    DBHandler.insertImageRecord(name, img);
-                } catch (IOException ex) {
-                    throw new RuntimeException(ex);
-                }
-            }
+//            case KeyEvent.VK_I -> {
+//                String name = "?";
+//                name = LineInput.xmain(name, "New Entry:", Color.RED);
+//                if (name.equals("?") || name.isEmpty())
+//                    return;
+//                BufferedImage img = imageView.getIconImg();
+//                try {
+//                    DBHandler.insertImageRecord(name, img);
+//                } catch (IOException ex) {
+//                    throw new RuntimeException(ex);
+//                }
+//            }
 
             default -> Sam.speak("Key not used.");
         }
