@@ -14,247 +14,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ddb69741-e020-4d21-a32f-f00e79c6818a" name="Changes" comment="release 4.25">
-      <change afterPath="$PROJECT_DIR$/.idea/.name" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/jarRepositories.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Catalano_Image.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/IMG2.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/dev_brachtendorf_JImageHash.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/h2_2_3_232.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/jgoodies_forms.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/lib.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/net_java_dev_jna_platform.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/net_lingala_zip4j.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/sun_mail_javax.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/uk_co_caprica_vlcj.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/jhlabs/composite/AddComposite.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/jhlabs/composite/AverageComposite.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/jhlabs/composite/BurnComposite.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/jhlabs/composite/ColorBurnComposite.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/jhlabs/composite/ColorComposite.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/jhlabs/composite/ColorDodgeComposite.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/jhlabs/composite/ContourComposite.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/jhlabs/composite/DarkenComposite.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/jhlabs/composite/DifferenceComposite.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/jhlabs/composite/DodgeComposite.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/jhlabs/composite/ExclusionComposite.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/jhlabs/composite/HardLightComposite.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/jhlabs/composite/HueComposite.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/jhlabs/composite/LightenComposite.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/jhlabs/composite/MiscComposite.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/jhlabs/composite/MiscCompositeContext.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/jhlabs/composite/MultiplyComposite.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/jhlabs/composite/NegationComposite.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/jhlabs/composite/OverlayComposite.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/jhlabs/composite/PinLightComposite.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/jhlabs/composite/RGBComposite.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/jhlabs/composite/SaturationComposite.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/jhlabs/composite/ScreenComposite.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/jhlabs/composite/SoftLightComposite.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/jhlabs/composite/SubtractComposite.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/jhlabs/composite/ValueComposite.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/jhlabs/image/AbstractBufferedImageOp.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/jhlabs/image/ApplyMaskFilter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/jhlabs/image/ArrayColormap.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/jhlabs/image/AverageFilter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/jhlabs/image/BicubicScaleFilter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/jhlabs/image/BinaryFilter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/jhlabs/image/BlockFilter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/jhlabs/image/BlurFilter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/jhlabs/image/BorderFilter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/jhlabs/image/BoxBlurFilter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/jhlabs/image/BrushedMetalFilter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/jhlabs/image/BumpFilter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/jhlabs/image/CausticsFilter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/jhlabs/image/CellularFilter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/jhlabs/image/ChannelMixFilter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/jhlabs/image/CheckFilter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/jhlabs/image/ChromaKeyFilter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/jhlabs/image/ChromeFilter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/jhlabs/image/CircleFilter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/jhlabs/image/ColorHalftoneFilter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/jhlabs/image/Colormap.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/jhlabs/image/CompositeFilter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/jhlabs/image/CompoundFilter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/jhlabs/image/ContourFilter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/jhlabs/image/ContrastFilter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/jhlabs/image/ConvolveFilter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/jhlabs/image/CropFilter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/jhlabs/image/CrystallizeFilter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/jhlabs/image/CurlFilter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/jhlabs/image/Curve.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/jhlabs/image/CurvesFilter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/jhlabs/image/DeinterlaceFilter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/jhlabs/image/DespeckleFilter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/jhlabs/image/DiffuseFilter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/jhlabs/image/DiffusionFilter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/jhlabs/image/DilateFilter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/jhlabs/image/DisplaceFilter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/jhlabs/image/DissolveFilter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/jhlabs/image/DitherFilter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/jhlabs/image/DoGFilter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/jhlabs/image/EdgeFilter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/jhlabs/image/EmbossFilter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/jhlabs/image/EqualizeFilter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/jhlabs/image/ErodeAlphaFilter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/jhlabs/image/ErodeFilter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/jhlabs/image/ExposureFilter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/jhlabs/image/FBMFilter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/jhlabs/image/FadeFilter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/jhlabs/image/FeedbackFilter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/jhlabs/image/FieldWarpFilter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/jhlabs/image/FillFilter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/jhlabs/image/FlareFilter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/jhlabs/image/FlipFilter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/jhlabs/image/Flush3DFilter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/jhlabs/image/FourColorFilter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/jhlabs/image/GainFilter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/jhlabs/image/GammaFilter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/jhlabs/image/GaussianFilter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/jhlabs/image/GlintFilter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/jhlabs/image/GlowFilter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/jhlabs/image/Gradient.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/jhlabs/image/GradientFilter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/jhlabs/image/GradientWipeFilter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/jhlabs/image/GrayFilter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/jhlabs/image/GrayscaleColormap.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/jhlabs/image/GrayscaleFilter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/jhlabs/image/HSBAdjustFilter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/jhlabs/image/HalftoneFilter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/jhlabs/image/HighPassFilter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/jhlabs/image/Histogram.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/jhlabs/image/ImageCombiningFilter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/jhlabs/image/ImageMath.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/jhlabs/image/ImageUtils.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/jhlabs/image/InterpolateFilter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/jhlabs/image/InvertAlphaFilter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/jhlabs/image/InvertFilter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/jhlabs/image/IteratedFilter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/jhlabs/image/JavaLnFFilter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/jhlabs/image/KaleidoscopeFilter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/jhlabs/image/KeyFilter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/jhlabs/image/LaplaceFilter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/jhlabs/image/LensBlurFilter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/jhlabs/image/LevelsFilter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/jhlabs/image/LifeFilter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/jhlabs/image/LightFilter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/jhlabs/image/LinearColormap.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/jhlabs/image/LookupFilter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/jhlabs/image/MapColorsFilter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/jhlabs/image/MapFilter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/jhlabs/image/MarbleFilter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/jhlabs/image/MarbleTexFilter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/jhlabs/image/MaskFilter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/jhlabs/image/MaximumFilter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/jhlabs/image/MedianFilter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/jhlabs/image/MinimumFilter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/jhlabs/image/MirrorFilter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/jhlabs/image/MotionBlurFilter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/jhlabs/image/MotionBlurOp.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/jhlabs/image/MutatableFilter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/jhlabs/image/NoiseFilter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/jhlabs/image/OctTreeQuantizer.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/jhlabs/image/OffsetFilter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/jhlabs/image/OilFilter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/jhlabs/image/OpacityFilter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/jhlabs/image/OutlineFilter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/jhlabs/image/PerspectiveFilter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/jhlabs/image/PinchFilter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/jhlabs/image/PixelUtils.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/jhlabs/image/PlasmaFilter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/jhlabs/image/PointFilter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/jhlabs/image/PointillizeFilter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/jhlabs/image/PolarFilter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/jhlabs/image/PosterizeFilter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/jhlabs/image/PremultiplyFilter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/jhlabs/image/QuantizeFilter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/jhlabs/image/Quantizer.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/jhlabs/image/QuiltFilter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/jhlabs/image/RGBAdjustFilter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/jhlabs/image/RaysFilter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/jhlabs/image/ReduceNoiseFilter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/jhlabs/image/RenderTextFilter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/jhlabs/image/RescaleFilter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/jhlabs/image/RippleFilter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/jhlabs/image/RotateFilter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/jhlabs/image/SaturationFilter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/jhlabs/image/ScaleFilter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/jhlabs/image/ScratchFilter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/jhlabs/image/ShadeFilter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/jhlabs/image/ShadowFilter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/jhlabs/image/ShapeFilter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/jhlabs/image/SharpenFilter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/jhlabs/image/ShatterFilter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/jhlabs/image/ShearFilter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/jhlabs/image/ShineFilter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/jhlabs/image/SkeletonFilter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/jhlabs/image/SkyFilter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/jhlabs/image/SmartBlurFilter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/jhlabs/image/SmearFilter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/jhlabs/image/SolarizeFilter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/jhlabs/image/SparkleFilter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/jhlabs/image/Spectrum.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/jhlabs/image/SpectrumColormap.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/jhlabs/image/SphereFilter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/jhlabs/image/SplineColormap.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/jhlabs/image/StampFilter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/jhlabs/image/SwimFilter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/jhlabs/image/SwizzleFilter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/jhlabs/image/TextureFilter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/jhlabs/image/ThresholdFilter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/jhlabs/image/TileImageFilter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/jhlabs/image/TransferFilter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/jhlabs/image/TransformFilter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/jhlabs/image/TransitionFilter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/jhlabs/image/TritoneFilter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/jhlabs/image/TwirlFilter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/jhlabs/image/UnpremultiplyFilter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/jhlabs/image/UnsharpFilter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/jhlabs/image/VariableBlurFilter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/jhlabs/image/WarpFilter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/jhlabs/image/WarpGrid.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/jhlabs/image/WaterFilter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/jhlabs/image/WeaveFilter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/jhlabs/image/WholeImageFilter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/jhlabs/image/WoodFilter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/jhlabs/math/BinaryFunction.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/jhlabs/math/BlackFunction.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/jhlabs/math/CellularFunction2D.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/jhlabs/math/CompositeFunction1D.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/jhlabs/math/CompoundFunction2D.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/jhlabs/math/FBM.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/jhlabs/math/FFT.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/jhlabs/math/FractalSumFunction.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/jhlabs/math/Function1D.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/jhlabs/math/Function2D.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/jhlabs/math/Function3D.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/jhlabs/math/ImageFunction2D.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/jhlabs/math/MarbleFunction.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/jhlabs/math/MathFunction1D.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/jhlabs/math/Noise.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/jhlabs/math/RidgedFBM.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/jhlabs/math/SCNoise.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/jhlabs/math/TurbulenceFunction.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/jhlabs/math/VLNoise.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/jhlabs/vecmath/AxisAngle4f.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/jhlabs/vecmath/Color4f.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/jhlabs/vecmath/Matrix4f.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/jhlabs/vecmath/Point3f.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/jhlabs/vecmath/Point4f.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/jhlabs/vecmath/Quat4f.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/jhlabs/vecmath/Tuple3f.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/jhlabs/vecmath/Tuple4f.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/jhlabs/vecmath/Vector3f.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/jhlabs/vecmath/Vector4f.java" afterDir="false" />
+    <list default="true" id="ddb69741-e020-4d21-a32f-f00e79c6818a" name="Changes" comment="release 9.25">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/IMG2_jar/IMG2.jar" beforeDir="false" afterPath="$PROJECT_DIR$/IMG2_jar/IMG2.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resource/manual.html" beforeDir="false" afterPath="$PROJECT_DIR$/resource/manual.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/buildinfo/BuildInfo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/buildinfo/BuildInfo.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/buildinfo/build.number" beforeDir="false" afterPath="$PROJECT_DIR$/src/buildinfo/build.number" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/dialogs/RGBScroll.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/dialogs/RGBScroll.form" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/dialogs/RGBScroll.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/dialogs/RGBScroll.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/thegrid/ImgViewKeyHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/thegrid/ImgViewKeyHandler.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -855,7 +621,7 @@
       <option name="project" value="LOCAL" />
       <updated>1683976691765</updated>
     </task>
-    <option name="localTasksCounter" value="271" />
+    <option name="localTasksCounter" value="272" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -917,7 +683,6 @@
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_NEW_TODO" value="false" />
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="esc closes grid" />
     <MESSAGE value="using icon image in hash compare (vk-v)" />
     <MESSAGE value="new jar" />
     <MESSAGE value="adding libs" />
@@ -942,7 +707,8 @@
     <MESSAGE value="introduced cache" />
     <MESSAGE value="backup" />
     <MESSAGE value="release 4.25" />
-    <option name="LAST_COMMIT_MESSAGE" value="release 4.25" />
+    <MESSAGE value="release 9.25" />
+    <option name="LAST_COMMIT_MESSAGE" value="release 9.25" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

@@ -1,6 +1,5 @@
 package dialogs;
 
-import Catalano.Imaging.FastBitmap;
 import com.jhlabs.image.HSBAdjustFilter;
 import common.Stepper;
 import thegrid.ImgPanel;
@@ -14,12 +13,15 @@ public class RGBScroll extends JDialog {
     private JSlider sliderRed;
     private JSlider sliderGreen;
     private JSlider sliderBlue;
+    private JLabel labBlue;
+    private JLabel labGreen;
+    private JLabel labRed;
     private BufferedImage image;
-    private ImgPanel panel;
+    private ImgPanel imgPanel;
     private final Stepper stepper = new Stepper (0.0f, 1.0f, 255);
 
     public void setImage (BufferedImage img, ImgPanel imgPanel) {
-        panel = imgPanel;
+        this.imgPanel = imgPanel;
         image = img;
     }
 
@@ -67,16 +69,16 @@ public class RGBScroll extends JDialog {
         float r = getVal(sliderRed);
         float g = getVal(sliderGreen);
         float b = getVal(sliderBlue);
-        System.out.println("r:"+r + " g:"+g + " b"+b);
-        HSBAdjustFilter c = new HSBAdjustFilter(r, g, b);
-        panel.setImage(c.filter(image, null));
+        labRed.setText(Float.toString(r));
+        labGreen.setText(Float.toString(g));
+        labBlue.setText(Float.toString(b));
+        imgPanel.setImage(new HSBAdjustFilter(r, g, b).filter(image, null));
     }
 
     private float getVal(JSlider sl) {
         int v = sl.getValue();
         return stepper.get(v);
     }
-
 
     private void onCancel() {
         // add your code here if necessary
