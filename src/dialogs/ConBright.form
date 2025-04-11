@@ -4,7 +4,7 @@
     <rowspec value="center:d:grow"/>
     <colspec value="fill:d:grow"/>
     <constraints>
-      <xy x="48" y="54" width="622" height="297"/>
+      <xy x="48" y="54" width="645" height="297"/>
     </constraints>
     <properties/>
     <border type="none"/>
@@ -13,8 +13,8 @@
         <rowspec value="center:d:noGrow"/>
         <rowspec value="top:4dlu:noGrow"/>
         <rowspec value="center:max(d;4px):noGrow"/>
-        <colspec value="fill:525px:noGrow"/>
-        <colspec value="left:43dlu:noGrow"/>
+        <colspec value="fill:548px:noGrow"/>
+        <colspec value="left:33dlu:noGrow"/>
         <constraints>
           <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
           <forms defaultalign-vert="false"/>
@@ -28,10 +28,14 @@
               <forms defaultalign-horz="false"/>
             </constraints>
             <properties>
+              <background color="-33271"/>
+              <foreground color="-5408000"/>
+              <inverted value="false"/>
+              <majorTickSpacing value="10"/>
               <maximum value="256"/>
               <paintLabels value="false"/>
               <paintTicks value="true"/>
-              <value value="0"/>
+              <value value="256"/>
             </properties>
           </component>
           <component id="7a643" class="javax.swing.JSlider" binding="briSlider">
@@ -40,9 +44,11 @@
               <forms defaultalign-horz="false"/>
             </constraints>
             <properties>
+              <background color="-1518058"/>
               <maximum value="256"/>
+              <minorTickSpacing value="10"/>
               <paintTicks value="true"/>
-              <value value="0"/>
+              <value value="256"/>
             </properties>
           </component>
           <component id="bc59d" class="javax.swing.JLabel" binding="conLabel">

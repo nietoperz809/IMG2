@@ -156,12 +156,13 @@ class ImgViewKeyHandler extends KeyAdapter {
             case KeyEvent.VK_1 -> { // gamma
                 BufferedImage img = imageView.getIconImg();
                 float gamma = SliderBox.xmain("Gamma",
-                        0.4f, 2.0f, 255);
-                img = ImgTools.gammaCorrection(img, gamma);
-                imageView.imgPanel.setImage(img);
+                        0.0f, 3.0f, 255);
+                GammaFilter gf = new GammaFilter(gamma);
+                BufferedImage out = gf.filter(img, null);
+                imageView.imgPanel.setImage(out);
             }
 
-            case KeyEvent.VK_P -> { // special effect
+            case KeyEvent.VK_P -> { // HSBAdjustFilter
                 BufferedImage img = imageView.getIconImg();
                 RGBScroll.xmain(img, imageView.imgPanel);
             }

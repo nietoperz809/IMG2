@@ -45,13 +45,14 @@ public class ConBright extends JDialog {
                 doIt();
             }
         });
-
+        conSlider.setToolTipText("Contrast");
         briSlider.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseReleased(MouseEvent e) {
                 doIt();
             }
         });
+        briSlider.setToolTipText("Brightness");
     }
 
     private float getVal(JSlider sl) {
