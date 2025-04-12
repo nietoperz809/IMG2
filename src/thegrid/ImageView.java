@@ -60,10 +60,10 @@ public class ImageView extends JFrame implements MouseWheelListener {
     }
 
 
-    void sharpenImage() {
-        BufferedImage img = ImgTools.sharpenImage(getIconImg());
-        imgPanel.setImage(img);
-    }
+//    void sharpenImage() {
+//        BufferedImage img = ImgTools.sharpenImage(getIconImg());
+//        imgPanel.setImage(img);
+//    }
 
     void changeContrast(float val) {
         BufferedImage img = getIconImg();

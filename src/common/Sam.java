@@ -32,7 +32,7 @@ public class Sam {
     public static void speak(String in) {
         try {
             byte[] result = doSam(in);
-            Tools.playWave(result);
+            Audio.playWave(result);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

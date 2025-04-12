@@ -29,17 +29,17 @@ public class ConvolveFilter extends AbstractBufferedImageOp {
     /**
      * Treat pixels off the edge as zero.
      */
-	public static int ZERO_EDGES = 0;
+	public static final int ZERO_EDGES = 0;
 
     /**
      * Clamp pixels off the edge to the nearest edge.
      */
-	public static int CLAMP_EDGES = 1;
+	public static final int CLAMP_EDGES = 1;
 
     /**
      * Wrap pixels off the edge to the opposite edge.
      */
-	public static int WRAP_EDGES = 2;
+	public static final int WRAP_EDGES = 2;
 
     /**
      * The convolution kernel.

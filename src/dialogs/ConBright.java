@@ -15,14 +15,14 @@ public class ConBright extends JDialog {
     private JSlider briSlider;
     private JLabel conLabel;
     private JLabel briLabel;
-    private final Stepper stepper = new Stepper(0.0f, 1.0f, 256);
+    private final Stepper stepper = new Stepper(0.0f, 3.0f, 256);
     private ImgPanel imgPanel;
     private BufferedImage image;
 
     public ConBright() {
         setContentPane(contentPane);
         setModal(true);
-        setUndecorated(true);
+        //setUndecorated(true);
 
         // call onCancel() when cross is clicked
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
@@ -75,14 +75,6 @@ public class ConBright extends JDialog {
         // add your code here if necessary
         dispose();
     }
-
-//    public static void main(String[] args) {
-//        ConBright dialog = new ConBright();
-//        dialog.pack();
-//        dialog.setLocationRelativeTo(null);
-//        dialog.setVisible(true);
-//        System.exit(0);
-//    }
 
     public static void xmain(BufferedImage img, ImgPanel imgPanel) {
         ConBright dialog = new ConBright();

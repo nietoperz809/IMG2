@@ -7,9 +7,6 @@ import net.lingala.zip4j.model.enums.CompressionLevel;
 import net.lingala.zip4j.model.enums.EncryptionMethod;
 import thegrid.TheGrid;
 
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.Clip;
-import javax.sound.sampled.Line;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -148,13 +145,6 @@ public class Tools {
         }
 
         return out.toByteArray();
-    }
-
-    public static void playWave(byte[] data) throws Exception {
-        final Clip clip = (Clip) AudioSystem.getLine(new Line.Info(Clip.class));
-        InputStream inp = new BufferedInputStream(new ByteArrayInputStream(data));
-        clip.open(AudioSystem.getAudioInputStream(inp));
-        clip.start();
     }
 
     public static void delay(int ms) {

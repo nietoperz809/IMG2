@@ -198,7 +198,12 @@ class ImgViewKeyHandler extends KeyAdapter {
                 imageView.imgPanel.setImage(fb);
             }
 
-            case KeyEvent.VK_X -> imageView.sharpenImage();
+            case KeyEvent.VK_X -> {
+                BufferedImage img = imageView.getIconImg();
+                BufferedImage out = ImgTools.sharpenImage(img, e.isControlDown());
+                imageView.imgPanel.setImage(out);
+            }
+
             case KeyEvent.VK_F -> imageView.saveAsFile(true);
             case KeyEvent.VK_G -> imageView.saveAsFile(false);
 
@@ -257,6 +262,13 @@ class ImgViewKeyHandler extends KeyAdapter {
             case KeyEvent.VK_F4 -> { // Equalize
                 BufferedImage img = imageView.getIconImg();
                 EqualizeFilter c = new EqualizeFilter();
+                BufferedImage ret = c.filter(img, null);
+                imageView.imgPanel.setImage(ret);
+            }
+
+            case KeyEvent.VK_F5 -> { // Skeleton
+                BufferedImage img = imageView.getIconImg();
+                SkeletonFilter c = new SkeletonFilter();
                 BufferedImage ret = c.filter(img, null);
                 imageView.imgPanel.setImage(ret);
             }
@@ -356,6 +368,7 @@ class ImgViewKeyHandler extends KeyAdapter {
 
             default -> Sam.speak("Key not used.");
         }
+        Audio.playWaveFromResource("drop.wav");
     }
 }
 

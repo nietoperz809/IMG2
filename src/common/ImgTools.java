@@ -268,17 +268,25 @@ public class ImgTools {
         }
     }
 
-    public static BufferedImage sharpenImage(BufferedImage img) {
+    public static BufferedImage sharpenImage (BufferedImage img, boolean kern) {
         int kernelWidth = 3;
         int kernelHeight = 3;
         int xOffset = (kernelWidth - 1) / 2;
         int yOffset = (kernelHeight - 1) / 2;
-        float[] kern = new float[] {
+
+        final float[] sharpenMatrix = {
+                0.0f, -0.2f,  0.0f,
+                -0.2f,  1.8f, -0.2f,
+                0.0f, -0.2f,  0.0f
+        };
+
+        final float[] kern2 = new float[] {
                 0.0f, -1.0f, 0.0f,
                 -1.0f, 5.0f, -1.0f,
                 0.0f, -1.0f, 0.0f
         };
-        Kernel kernel = new Kernel(3, 3, kern);
+
+        Kernel kernel = new Kernel(3, 3, kern ? sharpenMatrix : kern2);
 
 
         BufferedImage newSource = new BufferedImage(
