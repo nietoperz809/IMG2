@@ -65,6 +65,12 @@ public class ImgPanel extends JPanel {
         }
     }
 
+    public void setImageCentered (BufferedImage img) {
+        setImage(img);
+        center(new Point2D.Double(img.getWidth(), img.getHeight()));
+    }
+
+
     public void setImage (BufferedImage img) {
         if (image != null)
             stack.push (ImgTools.deepCopy(image));

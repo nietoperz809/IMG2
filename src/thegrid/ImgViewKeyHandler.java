@@ -23,7 +23,6 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
 
@@ -81,13 +80,11 @@ class ImgViewKeyHandler extends KeyAdapter {
             case KeyEvent.VK_PAGE_DOWN -> imageView.setNextImage();
             case KeyEvent.VK_PAGE_UP -> imageView.setBeforeImage();
             case KeyEvent.VK_PLUS -> {
-                double factor = 1.5f;
-                Point2D.Double p = imageView.scaleIconImg(factor, true);
+                Point2D.Double p = imageView.scaleIconImg(true);
                 imageView.imgPanel.center(p);
             }
             case KeyEvent.VK_MINUS -> {
-                double factor = 1.5f;
-                Point2D.Double p = imageView.scaleIconImg(factor, false);
+                Point2D.Double p = imageView.scaleIconImg(false);
                 imageView.imgPanel.center(p);
             }
 
@@ -102,14 +99,13 @@ class ImgViewKeyHandler extends KeyAdapter {
             case KeyEvent.VK_R -> {
                 BufferedImage img = imageView.getIconImg();
                 img = ImgTools.rotateClockwise90(img);
-                imageView.imgPanel.setImage(img);
-                imageView.imgPanel.clearOffset();
+                imageView.imgPanel.setImageCentered(img);
             }
 
             case KeyEvent.VK_M -> { // mirror
                 BufferedImage img = imageView.getIconImg();
                 img = ImgTools.flip(img);
-                imageView.imgPanel.setImage(img);
+                imageView.imgPanel.setImageCentered(img);
             }
 
             case KeyEvent.VK_W -> { // adjust on width
@@ -191,7 +187,7 @@ class ImgViewKeyHandler extends KeyAdapter {
 
             case KeyEvent.VK_4 -> {
                 FastBitmap fb = imageView.getIconAsFastBitmap();
-                int factor = (int)SliderBox.xmain("BrightnessCorrection",
+                int factor = (int) SliderBox.xmain("BrightnessCorrection",
                         -255f, 255f, 255);
                 BrightnessCorrection bc = new BrightnessCorrection(factor);
                 bc.applyInPlace(fb);
@@ -230,7 +226,7 @@ class ImgViewKeyHandler extends KeyAdapter {
             case KeyEvent.VK_K -> { // +-10
                 int this_rowid = imageView.grid.imageL.get(imageView.indexRing.get()).rowid();
                 String sql = "select name,_ROWID_,tag,accnum from IMAGES where _rowid_ <= " +
-                        (this_rowid+10) + " and _rowid_ >=" + (this_rowid-10);
+                        (this_rowid + 10) + " and _rowid_ >=" + (this_rowid - 10);
                 (new Thread(() -> new TheGrid(sql, "WORKER"))).start();
             }
 
@@ -245,7 +241,7 @@ class ImgViewKeyHandler extends KeyAdapter {
             case KeyEvent.VK_F2 -> { // Grayscale & forward fourier
                 FastBitmap fb = imageView.getIconAsFastBitmap();
                 if (!fb.isGrayscale())
-                   fb.toGrayscale();
+                    fb.toGrayscale();
                 FourierTransform ft = new FourierTransform(fb);
                 ft.Forward();
                 fb = ft.toFastBitmap();
@@ -303,36 +299,36 @@ class ImgViewKeyHandler extends KeyAdapter {
             }
 
             case KeyEvent.VK_6 -> {
-                int rad = (int)SliderBox.xmain("Dilatation",
+                int rad = (int) SliderBox.xmain("Dilatation",
                         1f, 13f, 256);
                 imageView.applyInplaceFilter(new Dilatation(rad));
             }
 
             case KeyEvent.VK_7 -> {
-                int rad = (int)SliderBox.xmain("OilPainting",
+                int rad = (int) SliderBox.xmain("OilPainting",
                         1f, 20f, 256);
                 imageView.applyInplaceFilter(new OilPainting(rad));
             }
 
             case KeyEvent.VK_8 -> {
-                int rad = (int)SliderBox.xmain("Erosion",
+                int rad = (int) SliderBox.xmain("Erosion",
                         1f, 20f, 256);
                 imageView.applyInplaceFilter(new Erosion(rad));
             }
 
             case KeyEvent.VK_9 -> {
-                int r = (int)SliderBox.xmain("SpecularBloom",1f,20f,255);
+                int r = (int) SliderBox.xmain("SpecularBloom", 1f, 20f, 255);
                 imageView.applyInplaceFilter(new SpecularBloom(20, r));
             }
             case KeyEvent.VK_0 -> imageView.applyInplaceFilter(new HistogramEqualization());
             case KeyEvent.VK_B -> {
-                int r = (int)SliderBox.xmain("FastVariance",1f,20f,255);
+                int r = (int) SliderBox.xmain("FastVariance", 1f, 20f, 255);
                 imageView.applyInplaceFilter(new FastVariance(r));
             }
 
             case KeyEvent.VK_Y -> {   //  heatmap
                 FastBitmap fb = imageView.getIconAsFastBitmap();
-                boolean inv = SliderBox.xmain("Heatmap",0f,1f,2) == 1f;
+                boolean inv = SliderBox.xmain("Heatmap", 0f, 1f, 2) == 1f;
                 HeatMap bl = new HeatMap(inv);
                 bl.applyInPlace(fb);
                 imageView.imgPanel.setImage(fb);

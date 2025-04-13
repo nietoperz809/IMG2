@@ -14,22 +14,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ddb69741-e020-4d21-a32f-f00e79c6818a" name="Changes" comment="backup">
-      <change afterPath="$PROJECT_DIR$/resource/cpckey.wav" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resource/drop.wav" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/common/Audio.java" afterDir="false" />
+    <list default="true" id="ddb69741-e020-4d21-a32f-f00e79c6818a" name="Changes" comment="release 4.12">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/IMG2_jar/IMG2.jar" beforeDir="false" afterPath="$PROJECT_DIR$/IMG2_jar/IMG2.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resource/manual.html" beforeDir="false" afterPath="$PROJECT_DIR$/resource/manual.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/buildinfo/BuildInfo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/buildinfo/BuildInfo.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/buildinfo/build.number" beforeDir="false" afterPath="$PROJECT_DIR$/src/buildinfo/build.number" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/jhlabs/image/ConvolveFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/jhlabs/image/ConvolveFilter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/jhlabs/image/SharpenFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/jhlabs/image/SharpenFilter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/common/ImageScaler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/common/ImageScaler.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/common/ImgTools.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/common/ImgTools.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/common/Sam.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/common/Sam.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/common/Tools.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/common/Tools.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/dialogs/ConBright.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/dialogs/ConBright.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/thegrid/ImageView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/thegrid/ImageView.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/thegrid/ImgPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/thegrid/ImgPanel.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/thegrid/ImgViewKeyHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/thegrid/ImgViewKeyHandler.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -632,7 +624,7 @@
       <option name="project" value="LOCAL" />
       <updated>1683976691765</updated>
     </task>
-    <option name="localTasksCounter" value="275" />
+    <option name="localTasksCounter" value="276" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -694,7 +686,6 @@
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_NEW_TODO" value="false" />
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="adding libs" />
     <MESSAGE value="no libs" />
     <MESSAGE value="litle bugfix" />
     <MESSAGE value="litle bugfix in taglist" />
@@ -719,7 +710,8 @@
     <MESSAGE value="10.25" />
     <MESSAGE value="+ con/bright sliders" />
     <MESSAGE value="backup" />
-    <option name="LAST_COMMIT_MESSAGE" value="backup" />
+    <MESSAGE value="release 4.12" />
+    <option name="LAST_COMMIT_MESSAGE" value="release 4.12" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

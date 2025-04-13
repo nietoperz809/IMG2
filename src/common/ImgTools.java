@@ -205,6 +205,8 @@ public class ImgTools {
     }
 
     public static BufferedImage removeAlpha (BufferedImage img) {
+        if (img.getType() == BufferedImage.TYPE_INT_RGB)
+            return img;
         BufferedImage newImage = new BufferedImage(img.getWidth(), img.getHeight(), BufferedImage.TYPE_INT_RGB);
         Graphics2D g = newImage.createGraphics();
         g.drawImage(img, 0, 0, img.getWidth(), img.getHeight(), null);
@@ -287,7 +289,6 @@ public class ImgTools {
         };
 
         Kernel kernel = new Kernel(3, 3, kern ? sharpenMatrix : kern2);
-
 
         BufferedImage newSource = new BufferedImage(
                 img.getWidth() + kernelWidth - 1,

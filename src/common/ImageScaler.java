@@ -67,7 +67,6 @@ public class ImageScaler {
         at.scale(scale, scale);
         AffineTransformOp scaleOp =
                 new AffineTransformOp(at, AffineTransformOp.TYPE_BILINEAR);
-        after = scaleOp.filter(img, after);
-        return after;
+        return scaleOp.filter(img, after);
     }
 }

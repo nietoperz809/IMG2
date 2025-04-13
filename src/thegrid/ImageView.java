@@ -14,6 +14,7 @@ import java.awt.event.*;
 import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
 
+import static common.ImgTools.removeAlpha;
 import static common.MsgBox.chooseDir;
 
 
@@ -56,7 +57,7 @@ public class ImageView extends JFrame implements MouseWheelListener {
     }
 
     BufferedImage getIconImg() {
-        return imgPanel.getImage();
+        return removeAlpha(imgPanel.getImage());
     }
 
 
@@ -86,7 +87,7 @@ public class ImageView extends JFrame implements MouseWheelListener {
             if (orig)
                 img = loadImgFromStore(false);
             else
-                img = ImgTools.removeAlpha(getIconImg());
+                img = removeAlpha(getIconImg());
 
             long milli = System.currentTimeMillis(); // prevent dupes
             if (milli - imgSavetime < 500)
@@ -117,6 +118,8 @@ public class ImageView extends JFrame implements MouseWheelListener {
 
     void applyInplaceFilter(IApplyInPlace bl) {
         FastBitmap fb = getIconAsFastBitmap();
+        //System.out.println("argb "+fb.isARGB());
+        //System.out.println("rgb "+fb.isRGB());
         bl.applyInPlace(fb);
         imgPanel.setImage(fb);
     }
@@ -203,7 +206,7 @@ public class ImageView extends JFrame implements MouseWheelListener {
 
     void setImg() {
         BufferedImage bimg = loadImgFromStore(true);
-        imgPanel.setImage(bimg);
+        imgPanel.setImageCentered(bimg);
         showInfo();
     }
 
@@ -233,6 +236,11 @@ public class ImageView extends JFrame implements MouseWheelListener {
         imgPanel.setImage(img);
         return new Point2D.Double(img.getWidth(), img.getHeight());
     }
+
+    Point2D.Double scaleIconImg(boolean up) {
+        return scaleIconImg (1.5, up);
+    }
+
 
     public void zoomIn(Rectangle r) {
         BufferedImage img = ImgTools.crop(getIconImg(), r);
