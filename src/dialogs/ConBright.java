@@ -6,6 +6,8 @@ import common.Stepper;
 import thegrid.ImgPanel;
 
 import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
 
@@ -33,26 +35,10 @@ public class ConBright extends JDialog {
         });
 
         // call onCancel() on ESCAPE
-        contentPane.registerKeyboardAction(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                onCancel();
-            }
-        }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
+        contentPane.registerKeyboardAction(e -> onCancel(), KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
 
-        conSlider.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseReleased(MouseEvent e) {
-                doIt();
-            }
-        });
-        conSlider.setToolTipText("Contrast");
-        briSlider.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseReleased(MouseEvent e) {
-                doIt();
-            }
-        });
-        briSlider.setToolTipText("Brightness");
+        briSlider.addChangeListener(_ -> doIt());
+        conSlider.addChangeListener(_ -> doIt());
     }
 
     private float getVal(JSlider sl) {

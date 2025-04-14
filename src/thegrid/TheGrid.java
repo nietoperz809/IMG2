@@ -19,6 +19,7 @@ import static common.MsgBox.AskforPWD;
 import static common.NumToText.*;
 import static common.Tools.extractResource;
 import static database.SqlListFunctions.putQuery;
+import static javax.swing.text.StyleConstants.setIcon;
 
 
 public class TheGrid extends MyFrame {
@@ -75,6 +76,11 @@ public class TheGrid extends MyFrame {
             System.out.println("sql already stored");
         }
         setTitle(dbRoot);
+        try {
+            setIconImage (byteArrayToImg(extractResource("favicon.ico")));
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
         imageL.setSQL(sql);
         //System.out.println("TheGrid constructor called");
         DBHandler.log("Images in DB: "+this.imageL.size());

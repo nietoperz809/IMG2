@@ -92,67 +92,65 @@ public class ImgTools {
         return op.filter(img, img);
     }
 
-    public static BufferedImage gammaCorrection(BufferedImage original, float gamma) {
+//    public static BufferedImage gammaCorrection(BufferedImage original, float gamma) {
+//
+//        int alpha, red, green, blue;
+//        int newPixel;
+//
+//        float gamma_new = 1f / gamma;
+//        int[] gamma_LUT = gamma_LUT(gamma_new);
+//
+//        BufferedImage gamma_cor = new BufferedImage(original.getWidth(), original.getHeight(), BufferedImage.TYPE_INT_RGB);
+//
+//        for (int i = 0; i < original.getWidth(); i++) {
+//            for (int j = 0; j < original.getHeight(); j++) {
+//
+//                // Get pixels by R, G, B
+//                alpha = new Color(original.getRGB(i, j)).getAlpha();
+//                red = new Color(original.getRGB(i, j)).getRed();
+//                green = new Color(original.getRGB(i, j)).getGreen();
+//                blue = new Color(original.getRGB(i, j)).getBlue();
+//
+//                red = gamma_LUT[red];
+//                green = gamma_LUT[green];
+//                blue = gamma_LUT[blue];
+//
+//                // Return back to original format
+//                newPixel = colorToRGB(alpha, red, green, blue);
+//
+//                // Write pixels into image
+//                gamma_cor.setRGB(i, j, newPixel);
+//
+//            }
+//        }
+//        return gamma_cor;
+//    }
+//
+//    // Create the gamma correction lookup table
+//    private static int[] gamma_LUT(float gamma_new) {
+//        int[] gamma_LUT = new int[256];
+//
+//        for (int i = 0; i < gamma_LUT.length; i++) {
+//            gamma_LUT[i] = (int) (255 * (Math.pow((float) i / (float) 255, gamma_new)));
+//        }
+//
+//        return gamma_LUT;
+//    }
 
-        int alpha, red, green, blue;
-        int newPixel;
-
-        float gamma_new = 1f / gamma;
-        int[] gamma_LUT = gamma_LUT(gamma_new);
-
-        BufferedImage gamma_cor = new BufferedImage(original.getWidth(), original.getHeight(), BufferedImage.TYPE_INT_RGB);
-
-        for (int i = 0; i < original.getWidth(); i++) {
-            for (int j = 0; j < original.getHeight(); j++) {
-
-                // Get pixels by R, G, B
-                alpha = new Color(original.getRGB(i, j)).getAlpha();
-                red = new Color(original.getRGB(i, j)).getRed();
-                green = new Color(original.getRGB(i, j)).getGreen();
-                blue = new Color(original.getRGB(i, j)).getBlue();
-
-                red = gamma_LUT[red];
-                green = gamma_LUT[green];
-                blue = gamma_LUT[blue];
-
-                // Return back to original format
-                newPixel = colorToRGB(alpha, red, green, blue);
-
-                // Write pixels into image
-                gamma_cor.setRGB(i, j, newPixel);
-
-            }
-        }
-        return gamma_cor;
-    }
-
-    // Create the gamma correction lookup table
-    private static int[] gamma_LUT(float gamma_new) {
-        int[] gamma_LUT = new int[256];
-
-        for (int i = 0; i < gamma_LUT.length; i++) {
-            gamma_LUT[i] = (int) (255 * (Math.pow((float) i / (float) 255, gamma_new)));
-        }
-
-        return gamma_LUT;
-    }
-
-    // Convert R, G, B, Alpha to standard 8 bit
-    private static int colorToRGB(int alpha, int red, int green, int blue) {
-
-        int newPixel = 0;
-        newPixel += alpha;
-        newPixel = newPixel << 8;
-        newPixel += red;
-        newPixel = newPixel << 8;
-        newPixel += green;
-        newPixel = newPixel << 8;
-        newPixel += blue;
-
-        return newPixel;
-
-    }
-
+//    // Convert R, G, B, Alpha to standard 8 bit
+//    private static int colorToRGB(int alpha, int red, int green, int blue) {
+//        int newPixel = 0;
+//        newPixel += alpha;
+//        newPixel = newPixel << 8;
+//        newPixel += red;
+//        newPixel = newPixel << 8;
+//        newPixel += green;
+//        newPixel = newPixel << 8;
+//        newPixel += blue;
+//
+//        return newPixel;
+//    }
+//
 
     public static String[] getImageExtensions() {
         return new String[] {"jpg", "jpeg", "png", "bmp", "gif", "jfif", "webp"};
@@ -282,7 +280,7 @@ public class ImgTools {
                 0.0f, -0.2f,  0.0f
         };
 
-        final float[] kern2 = new float[] {
+        final float[] kern2 =  {
                 0.0f, -1.0f, 0.0f,
                 -1.0f, 5.0f, -1.0f,
                 0.0f, -1.0f, 0.0f

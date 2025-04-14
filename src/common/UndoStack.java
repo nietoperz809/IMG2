@@ -1,13 +1,14 @@
 package common;
 
+import java.awt.image.BufferedImage;
 import java.util.Stack;
 
-public class UndoStack<T> extends Stack<T>
-{
+public class UndoStack<T> extends Stack<T> {
     private final int maxSize;
 
-    public UndoStack(int size)
-    {
+    public static UndoStack<BufferedImage> globalImageStack = new UndoStack<>(20);
+
+    public UndoStack(int size) {
         super();
         this.maxSize = size;
     }
@@ -22,11 +23,9 @@ public class UndoStack<T> extends Stack<T>
     }
 
     @Override
-    public T push(T object)
-    {
+    public T push(T object) {
         //If the stack is too big, remove elements until it's the right size.
-        while (this.size() >= maxSize)
-        {
+        while (this.size() >= maxSize) {
             this.remove(0);
         }
         return super.push(object);

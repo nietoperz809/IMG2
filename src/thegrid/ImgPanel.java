@@ -13,6 +13,8 @@ import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import javax.swing.*;
 
+import static common.UndoStack.globalImageStack;
+
 public class ImgPanel extends JPanel {
 
     private final TheGrid grid;
@@ -23,7 +25,7 @@ public class ImgPanel extends JPanel {
 
     public static final int SCROLLAMOUNT = 10;
 
-    private final UndoStack<BufferedImage> stack = new UndoStack<>(10);
+    //private final UndoStack<BufferedImage> stack = new UndoStack<>(20);
 
     public ImgPanel (TheGrid grid, BufferedImage img, ImageView parent) {
         super();
@@ -46,7 +48,7 @@ public class ImgPanel extends JPanel {
     }
 
     public void undo() {
-        BufferedImage img = stack.pop();
+        BufferedImage img = globalImageStack.pop();
         if (img != null) {
             image = img;
             SwingUtilities.invokeLater(this::repaint);
@@ -73,7 +75,7 @@ public class ImgPanel extends JPanel {
 
     public void setImage (BufferedImage img) {
         if (image != null)
-            stack.push (ImgTools.deepCopy(image));
+            globalImageStack.push (ImgTools.deepCopy(image));
         image = img;
         //String hp = grid.getHistoryPath();
         autoSaveImage();
@@ -143,7 +145,7 @@ public class ImgPanel extends JPanel {
 
     public void setWatermark(Watermark watermark) {
         if (image != null) {
-            stack.push (ImgTools.deepCopy(image));
+            globalImageStack.push (ImgTools.deepCopy(image));
             paintText(image.createGraphics(), watermark.pos, watermark.font,
                     watermark.text, watermark.col, watermark.alpha, watermark.fillground);
             autoSaveImage();

@@ -14,15 +14,18 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ddb69741-e020-4d21-a32f-f00e79c6818a" name="Changes" comment="release 4.12">
+    <list default="true" id="ddb69741-e020-4d21-a32f-f00e79c6818a" name="Changes" comment="update">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IMG2_jar/IMG2.jar" beforeDir="false" afterPath="$PROJECT_DIR$/IMG2_jar/IMG2.jar" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/buildinfo/BuildInfo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/buildinfo/BuildInfo.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/buildinfo/build.number" beforeDir="false" afterPath="$PROJECT_DIR$/src/buildinfo/build.number" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/common/ImageScaler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/common/ImageScaler.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/common/ImgTools.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/common/ImgTools.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/common/UndoStack.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/common/UndoStack.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dialogs/ConBright.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/dialogs/ConBright.form" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dialogs/ConBright.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/dialogs/ConBright.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/thegrid/ImageView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/thegrid/ImageView.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/thegrid/ImgPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/thegrid/ImgPanel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/thegrid/ImgViewKeyHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/thegrid/ImgViewKeyHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/thegrid/TheGrid.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/thegrid/TheGrid.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -624,7 +627,7 @@
       <option name="project" value="LOCAL" />
       <updated>1683976691765</updated>
     </task>
-    <option name="localTasksCounter" value="276" />
+    <option name="localTasksCounter" value="277" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -692,7 +695,6 @@
     <MESSAGE value="litle bugfix in taglist, new jar" />
     <MESSAGE value="backup, minor changes" />
     <MESSAGE value="change ListToText behaviour" />
-    <MESSAGE value="update" />
     <MESSAGE value="bugfixed" />
     <MESSAGE value="extracted key adapter" />
     <MESSAGE value="added query table" />
@@ -711,7 +713,8 @@
     <MESSAGE value="+ con/bright sliders" />
     <MESSAGE value="backup" />
     <MESSAGE value="release 4.12" />
-    <option name="LAST_COMMIT_MESSAGE" value="release 4.12" />
+    <MESSAGE value="update" />
+    <option name="LAST_COMMIT_MESSAGE" value="update" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

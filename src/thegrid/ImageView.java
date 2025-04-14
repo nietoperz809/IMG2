@@ -32,6 +32,7 @@ public class ImageView extends JFrame implements MouseWheelListener {
 
     public ImageView(TheGrid grid, int idx) {
         this.grid = grid;
+        setIconImage(grid.getIconImage());
         shuffledRing = new UniqueRng(grid.imageL.size());
         indexRing = new UniqueRng(grid.imageL.size(), false);
         indexRing.set(idx);
@@ -79,6 +80,11 @@ public class ImageView extends JFrame implements MouseWheelListener {
 
     private long imgSavetime;
 
+    /**
+     * Save img to disk
+     * @param orig true == from database, false == from icon
+     * @param outPath pazh where to write to
+     */
     public void saveImageAsFile(boolean orig, String outPath) {
         if (outPath != null) {
             int rowid = grid.imageL.get(indexRing.get()).rowid();
