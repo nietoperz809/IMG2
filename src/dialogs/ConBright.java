@@ -73,6 +73,5 @@ public class ConBright extends JDialog {
     private void setImage(BufferedImage img, ImgPanel imgPanel) {
         this.imgPanel = imgPanel;
         this.image = img;
-
     }
 }

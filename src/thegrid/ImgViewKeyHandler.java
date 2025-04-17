@@ -12,10 +12,7 @@ import database.DBHandler;
 import dev.brachtendorf.jimagehash.hash.Hash;
 import dev.brachtendorf.jimagehash.hashAlgorithms.HashingAlgorithm;
 import dev.brachtendorf.jimagehash.hashAlgorithms.PerceptiveHash;
-import dialogs.ConBright;
-import dialogs.LineInput;
-import dialogs.RGBScroll;
-import dialogs.SliderBox;
+import dialogs.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -149,14 +146,14 @@ class ImgViewKeyHandler extends KeyAdapter {
                 }
             }
 
-            case KeyEvent.VK_1 -> { // gamma
-                BufferedImage img = imageView.getIconImg();
-                float gamma = SliderBox.xmain("Gamma",
-                        0.0f, 3.0f, 255);
-                GammaFilter gf = new GammaFilter(gamma);
-                BufferedImage out = gf.filter(img, null);
-                imageView.imgPanel.setImage(out);
-            }
+//            case KeyEvent.VK_1 -> { // gamma
+//                BufferedImage img = imageView.getIconImg();
+////                float gamma = SliderBox.xmain("Gamma",
+////                        0.0f, 3.0f, 255);
+////                GammaFilter gf = new GammaFilter(gamma);
+////                BufferedImage out = gf.filter(img, null);
+////                imageView.imgPanel.setImage(out);
+//            }
 
             case KeyEvent.VK_P -> { // HSBAdjustFilter
                 BufferedImage img = imageView.getIconImg();
@@ -167,6 +164,16 @@ class ImgViewKeyHandler extends KeyAdapter {
                 BufferedImage img = imageView.getIconImg();
                 ConBright.xmain(img, imageView.imgPanel);
             }
+
+            case KeyEvent.VK_3 -> {
+                BufferedImage img = imageView.getIconImg();
+                MultiSlider.xmain(img, imageView.imgPanel);
+
+//                float factor = MultiSliader.xmain("Luminance",
+//                        0.5f, 1.5f, 255);
+//                imageView.changeContrast(factor);
+            }
+
 
             case KeyEvent.VK_D -> { // delete
                 if (MsgBox.Question("Delete image from DB?")) {
@@ -179,11 +186,11 @@ class ImgViewKeyHandler extends KeyAdapter {
                 imageView.adjustOn('h');
             }
 
-            case KeyEvent.VK_3 -> {
-                float factor = SliderBox.xmain("Luminance",
-                        0.5f, 1.5f, 255);
-                imageView.changeContrast(factor);
-            }
+//            case KeyEvent.VK_3 -> {
+//                float factor = SliderBox.xmain("Luminance",
+//                        0.5f, 1.5f, 255);
+//                imageView.changeContrast(factor);
+//            }
 
             case KeyEvent.VK_4 -> {
                 FastBitmap fb = imageView.getIconAsFastBitmap();
