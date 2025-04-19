@@ -456,6 +456,10 @@ public class DBHandler {
         throw new RuntimeException("no query results");
     }
 
+    public static String queryImageLen(int rowid) {
+        return querySingleValue("select LENGTH(IMAGE) from IMAGES where _ROWID_='" + rowid + "'");
+    }
+
     public static String queryBlobLen(NameID nid, String table, String blobentry) {
         String s = querySingleValue("select BLOBSIZE from " + table + " where _ROWID_='" + nid.rowid + "'");
         if (s == null) {

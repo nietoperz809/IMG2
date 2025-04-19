@@ -66,12 +66,21 @@ public class Thumbnail extends JLabel {
             setBackground (unmarkedColor);
     }
 
+    private void setToolTip() {
+        String len = DBHandler.queryImageLen(thisID.rowid());
+        int ilen = Integer.parseInt(len);
+        String f = String.format("%,d Bytes", ilen);
+        setToolTipText (f);
+    }
+
     private void init (TheGrid grid, int index, JPanel jp) {
         rootPane = jp;
         thisID = grid.imageL.get(index);
         setVerticalTextPosition(JLabel.BOTTOM);
         setHorizontalTextPosition(JLabel.CENTER);
         setText (String.valueOf(thisID.rowid()));
+
+        setToolTip();
 
         addMouseListener(new MouseAdapter() {
             @Override
@@ -119,7 +128,6 @@ public class Thumbnail extends JLabel {
         super(new ImageIcon(iconImage));
         grid.imageL.addNameID(new DBHandler.NameID(ImageName, grid.imageL.getLastRowid(), null));
         int index = grid.imageL.size()-1;
-        //imgHash = ImgTools.imgHash((BufferedImage)iconImage);
         init (grid, index, rootPane);
     }
 

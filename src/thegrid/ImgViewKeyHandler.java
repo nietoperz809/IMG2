@@ -146,14 +146,12 @@ class ImgViewKeyHandler extends KeyAdapter {
                 }
             }
 
-//            case KeyEvent.VK_1 -> { // gamma
-//                BufferedImage img = imageView.getIconImg();
-////                float gamma = SliderBox.xmain("Gamma",
-////                        0.0f, 3.0f, 255);
-////                GammaFilter gf = new GammaFilter(gamma);
-////                BufferedImage out = gf.filter(img, null);
-////                imageView.imgPanel.setImage(out);
-//            }
+            case KeyEvent.VK_1 -> { // gamma
+                BufferedImage img = imageView.getIconImg();
+                EmbossFilter emb = new EmbossFilter();
+                BufferedImage out = emb.filter(img, null);
+                imageView.imgPanel.setImage(out);
+            }
 
             case KeyEvent.VK_P -> { // HSBAdjustFilter
                 BufferedImage img = imageView.getIconImg();
@@ -203,7 +201,7 @@ class ImgViewKeyHandler extends KeyAdapter {
 
             case KeyEvent.VK_X -> {
                 BufferedImage img = imageView.getIconImg();
-                BufferedImage out = ImgTools.sharpenImage(img, e.isControlDown());
+                BufferedImage out = ImgTools.sharpenImage(img, !e.isControlDown());
                 imageView.imgPanel.setImage(out);
             }
 

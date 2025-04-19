@@ -67,11 +67,11 @@ public class ImageView extends JFrame implements MouseWheelListener {
 //        imgPanel.setImage(img);
 //    }
 
-    void changeContrast(float val) {
-        BufferedImage img = getIconImg();
-        img = ImgTools.contrast(img, val);
-        imgPanel.setImage(img);
-    }
+//    void changeContrast(float val) {
+//        BufferedImage img = getIconImg();
+//        img = ImgTools.contrast(img, val);
+//        imgPanel.setImage(img);
+//    }
 
     void saveAsFile(boolean orig) {
         String outPath = chooseDir(this);

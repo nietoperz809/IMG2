@@ -14,18 +14,22 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ddb69741-e020-4d21-a32f-f00e79c6818a" name="Changes" comment="update">
+    <list default="true" id="ddb69741-e020-4d21-a32f-f00e79c6818a" name="Changes" comment="backup">
+      <change beforePath="$PROJECT_DIR$/.idea/artifacts/IMG2_jar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/artifacts/IMG2_jar.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/IMG2_jar/IMG2.jar" beforeDir="false" afterPath="$PROJECT_DIR$/IMG2_jar/IMG2.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IMG2.iml" beforeDir="false" afterPath="$PROJECT_DIR$/IMG2.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IMG2_jar/IMG2.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/IMG2_jar/runC.bat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/IMG2_jar/runD.bat" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/buildinfo/BuildInfo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/buildinfo/BuildInfo.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/buildinfo/build.number" beforeDir="false" afterPath="$PROJECT_DIR$/src/buildinfo/build.number" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/common/ImgTools.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/common/ImgTools.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/common/UndoStack.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/common/UndoStack.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/dialogs/ConBright.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/dialogs/ConBright.form" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/dialogs/ConBright.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/dialogs/ConBright.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/jhlabs/image/ImageMath.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/jhlabs/image/ImageMath.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/common/Tools.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/common/Tools.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/database/DBHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/database/DBHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dialogs/MultiSlider.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/dialogs/MultiSlider.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/thegrid/ImageView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/thegrid/ImageView.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/thegrid/ImgPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/thegrid/ImgPanel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/thegrid/TheGrid.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/thegrid/TheGrid.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/thegrid/ImgViewKeyHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/thegrid/ImgViewKeyHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/thegrid/Thumbnail.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/thegrid/Thumbnail.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -81,7 +85,6 @@
   &quot;associatedIndex&quot;: 6
 }</component>
   <component name="ProjectId" id="2Gjc7adzp2KGrxTuOD6fCgHjxU7" />
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -98,6 +101,7 @@
     "Application.Main (2).executor": "Run",
     "Application.Main.executor": "Run",
     "Application.MonitorFrame.executor": "Run",
+    "Application.MultiSlider.executor": "Run",
     "Application.RGBScroll.executor": "Run",
     "Application.RandomWord.executor": "Run",
     "Application.SliderBox.executor": "Run",
@@ -122,10 +126,10 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "UI_DESIGNER_EDITOR_MODE.PaletteManager.SHOW": "true",
+    "UI_DESIGNER_EDITOR_MODE.PaletteManager.SHOW": "false",
     "UI_DESIGNER_EDITOR_MODE.PaletteManager.WIDTH": "193",
     "UI_DESIGNER_EDITOR_MODE.UIDesignerToolWindowManager.SHOW": "true",
-    "UI_DESIGNER_EDITOR_MODE.UIDesignerToolWindowManager.WIDTH": "326",
+    "UI_DESIGNER_EDITOR_MODE.UIDesignerToolWindowManager.WIDTH": "210",
     "full.screen.before.presentation.mode": "true",
     "git-widget-placeholder": "withQueue",
     "kotlin-language-version-configured": "true",
@@ -135,7 +139,7 @@
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Project",
+    "project.structure.last.edited": "Artifacts",
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.18296796",
     "run.code.analysis.last.selected.profile": "aDefault",
@@ -164,6 +168,7 @@
       <recent name="database.VideoFunctions" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\peter.home\java\IMG2\out" />
       <recent name="C:\peter.home\java\IMG2\src\httpserv" />
       <recent name="C:\peter.home\java\IMG2\src\dialogs" />
       <recent name="C:\peter.home\java\IMG2\src" />
@@ -230,6 +235,19 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="MultiSlider" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="dialogs.MultiSlider" />
+      <module name="IMG2" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="dialogs.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="SliderBox" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="dialogs.SliderBox" />
       <module name="IMG2" />
@@ -243,29 +261,21 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="All in IMG2" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="IMG2" />
-      <option name="PACKAGE_NAME" value="" />
-      <option name="TEST_OBJECT" value="package" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <list>
       <item itemvalue="Application.Main" />
+      <item itemvalue="Application.MultiSlider" />
       <item itemvalue="Application.ConBright" />
       <item itemvalue="Application.Main (1)" />
       <item itemvalue="Application.Main (2)" />
       <item itemvalue="Application.SliderBox" />
-      <item itemvalue="JUnit.All in IMG2" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.MultiSlider" />
         <item itemvalue="Application.ConBright" />
         <item itemvalue="Application.Main (2)" />
         <item itemvalue="Application.Main (1)" />
         <item itemvalue="Application.SliderBox" />
-        <item itemvalue="JUnit.All in IMG2" />
       </list>
     </recent_temporary>
   </component>
@@ -627,7 +637,7 @@
       <option name="project" value="LOCAL" />
       <updated>1683976691765</updated>
     </task>
-    <option name="localTasksCounter" value="277" />
+    <option name="localTasksCounter" value="279" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -711,10 +721,10 @@
     <MESSAGE value="release 9.25" />
     <MESSAGE value="10.25" />
     <MESSAGE value="+ con/bright sliders" />
-    <MESSAGE value="backup" />
     <MESSAGE value="release 4.12" />
     <MESSAGE value="update" />
-    <option name="LAST_COMMIT_MESSAGE" value="update" />
+    <MESSAGE value="backup" />
+    <option name="LAST_COMMIT_MESSAGE" value="backup" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

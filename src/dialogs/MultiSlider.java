@@ -1,5 +1,6 @@
 package dialogs;
 
+import com.jhlabs.image.AbstractBufferedImageOp;
 import com.jhlabs.image.GainFilter;
 import com.jhlabs.image.GammaFilter;
 import common.Stepper;
@@ -23,6 +24,12 @@ public class MultiSlider extends JDialog {
     private BufferedImage img;
     private ImgPanel imgPanel;
     private final GainFilter gf = new GainFilter();
+    private final GammaFilter flt = new GammaFilter();
+
+    private void doFilt (AbstractBufferedImageOp op) {
+        BufferedImage out = op.filter(img, null);
+        imgPanel.setImage(out);
+    }
 
     public MultiSlider() {
         setContentPane(contentPane);
@@ -32,9 +39,8 @@ public class MultiSlider extends JDialog {
             final Stepper stepper = new Stepper(0.0f, 3.0f, 256);
             float val = stepper.get(sc1.getValue());
             la1.setText(""+val);
-            GammaFilter flt = new GammaFilter(val);
-            BufferedImage out = flt.filter(img, null);
-            imgPanel.setImage(out);
+            flt.setGamma(val);
+            doFilt(flt);
         });
 
         sc2.addAdjustmentListener(_ -> {
@@ -42,8 +48,7 @@ public class MultiSlider extends JDialog {
             float val = stepper.get(sc2.getValue());
             la2.setText(""+val);
             gf.setGain(val);
-            BufferedImage out = gf.filter(img, null);
-            imgPanel.setImage(out);
+            doFilt(gf);
         });
 
         sc3.addAdjustmentListener(_ -> {
@@ -51,8 +56,7 @@ public class MultiSlider extends JDialog {
             float val = stepper.get(sc3.getValue());
             la3.setText(""+val);
             gf.setBias(val);
-            BufferedImage out = gf.filter(img, null);
-            imgPanel.setImage(out);
+            doFilt(gf);
         });
 
         sc4.addAdjustmentListener(_ -> {
