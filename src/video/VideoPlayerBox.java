@@ -130,18 +130,21 @@ public class VideoPlayerBox implements PlayerBox {
                             if (bright > 2.0f)
                                 bright = 0.1f;
                             video.setBrightness(bright);
+                            playerFrame.setTitle (Float.toString(bright));
                         }
                         case 'c' -> { // contrast
                             contrast += 0.05f;
                             if (contrast > 2.0f)
                                 contrast = 0.1f;
                             video.setContrast(contrast);
+                            playerFrame.setTitle (Float.toString(contrast));
                         }
                         case 'g' -> {
                             gamma += 0.01f;
                             if (gamma > 10.0f)
                                 gamma = 0.0f;
                             video.setGamma(gamma);
+                            playerFrame.setTitle (Float.toString(gamma));
                         }
                         case 's' -> {
                             lock.lock();
