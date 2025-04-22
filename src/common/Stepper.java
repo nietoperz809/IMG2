@@ -14,7 +14,11 @@ public class Stepper {
         this.st = (to-from)/steps;
     }
 
-    public float get (int n) {
+    public Stepper (float[] parm) {
+        this (parm[0], parm[1], (int)parm[2]);
+    }
+
+        public float get (int n) {
         n = Math.clamp(n, 0, steps);
 //        if (n < 0) n = 0;
 //        else if (n > steps) n = steps;
