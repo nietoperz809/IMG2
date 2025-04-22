@@ -3,6 +3,7 @@ package video;
 import common.Tools;
 import common.UpDown;
 import database.DBHandler;
+import dialogs.video.ConBrightV;
 import uk.co.caprica.vlcj.player.base.ControlsApi;
 import uk.co.caprica.vlcj.player.base.MediaPlayer;
 import uk.co.caprica.vlcj.player.base.MediaPlayerEventAdapter;
@@ -25,13 +26,13 @@ public class VideoPlayerBox implements PlayerBox {
     private final boolean autoclose;
     private volatile JFrame playerFrame;
     private EmbeddedMediaPlayerComponent mpc;
-    private VideoApi video;
+    //private VideoApi video;
     private boolean paused = false;
     private final VideoApp parent;
     private UpDown speed;
-    private float bright;
-    private float gamma;
-    private float contrast;
+//    private float bright;
+//    private float gamma;
+//    private float contrast;
 
     public VideoPlayerBox (VideoApp parent, DBHandler.NameID nid, boolean autoclose) {
         this.autoclose = autoclose;
@@ -76,14 +77,14 @@ public class VideoPlayerBox implements PlayerBox {
             return;
         lock.lock();
         try {
-            bright = 1.0f;
+            //bright = 1.0f;
             speed = new UpDown(new float[]{0.01f, 0.1f, 0.3f, 1.0f, 2.0f, 3.0f, 5.0f}, 3);
             sbar.setValue(0);
             File tempFile = transferVideoIntoFile(nid);
             System.out.println(tempFile);
             mpc = new EmbeddedMediaPlayerComponent();
-            video = mpc.mediaPlayer().video();
-            video.setAdjustVideo(true);
+            //video = mpc.mediaPlayer().video();
+            //video.setAdjustVideo(true);
             playerFrame = new JFrame();
             playerFrame.requestFocus();
             playerFrame.setTitle("Hit 's' to start and stop, 'p' to take shapshot, +/- for speed");
@@ -118,6 +119,7 @@ public class VideoPlayerBox implements PlayerBox {
             /*
              * Start/Stop using 's'
              * Snapshot using 'p'
+             * bcg -- bright contrast gamma
              */
             playerFrame.addKeyListener(new KeyAdapter() {
                 @Override
@@ -125,27 +127,28 @@ public class VideoPlayerBox implements PlayerBox {
                     char c = keyEvent.getKeyChar();
                     var controls = mpc.mediaPlayer().controls();
                     switch (c) {
-                        case 'b' -> { // brightness
-                            bright += 0.05f;
-                            if (bright > 2.0f)
-                                bright = 0.1f;
-                            video.setBrightness(bright);
-                            playerFrame.setTitle (Float.toString(bright));
-                        }
-                        case 'c' -> { // contrast
-                            contrast += 0.05f;
-                            if (contrast > 2.0f)
-                                contrast = 0.1f;
-                            video.setContrast(contrast);
-                            playerFrame.setTitle (Float.toString(contrast));
-                        }
-                        case 'g' -> {
-                            gamma += 0.01f;
-                            if (gamma > 10.0f)
-                                gamma = 0.0f;
-                            video.setGamma(gamma);
-                            playerFrame.setTitle (Float.toString(gamma));
-                        }
+                        case 'b' -> ConBrightV.xmain(mpc.mediaPlayer().video());
+//                        case 'b' -> { // brightness
+//                            bright += 0.05f;
+//                            if (bright > 2.0f)
+//                                bright = 0.1f;
+//                            video.setBrightness(bright);
+//                            playerFrame.setTitle (Float.toString(bright));
+//                        }
+//                        case 'c' -> { // contrast
+//                            contrast += 0.05f;
+//                            if (contrast > 2.0f)
+//                                contrast = 0.1f;
+//                            video.setContrast(contrast);
+//                            playerFrame.setTitle (Float.toString(contrast));
+//                        }
+//                        case 'g' -> {
+//                            gamma += 0.01f;
+//                            if (gamma > 10.0f)
+//                                gamma = 0.0f;
+//                            video.setGamma(gamma);
+//                            playerFrame.setTitle (Float.toString(gamma));
+//                        }
                         case 's' -> {
                             lock.lock();
                             if (paused) {

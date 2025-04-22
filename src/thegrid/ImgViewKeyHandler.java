@@ -23,6 +23,8 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.HashSet;
 
+import static java.awt.event.KeyEvent.*;
+
 class ImgViewKeyHandler extends KeyAdapter {
     private final ImageView imageView;
     Timer timer = null;
@@ -51,41 +53,41 @@ class ImgViewKeyHandler extends KeyAdapter {
     public void keyPressed(KeyEvent e) {
         int ev = e.getKeyCode();
         switch (ev) {
-            case KeyEvent.VK_UP -> {
+            case VK_UP -> {
                 imageView.imgPanel.scrollDown();
                 return;
             }
-            case KeyEvent.VK_DOWN -> {
+            case VK_DOWN -> {
                 imageView.imgPanel.scrollUp();
                 return;
             }
-            case KeyEvent.VK_LEFT -> {
+            case VK_LEFT -> {
                 imageView.imgPanel.scrollRight();
                 return;
             }
-            case KeyEvent.VK_RIGHT -> {
+            case VK_RIGHT -> {
                 imageView.imgPanel.scrollLeft();
                 return;
             }
-            case KeyEvent.VK_CONTROL -> {
+            case VK_CONTROL -> {
                 return;
             }
         }
         if (!slowDownKeyEvents())
             return;
         switch (ev) {
-            case KeyEvent.VK_PAGE_DOWN -> imageView.setNextImage();
-            case KeyEvent.VK_PAGE_UP -> imageView.setBeforeImage();
-            case KeyEvent.VK_PLUS -> {
+            case VK_PAGE_DOWN -> imageView.setNextImage();
+            case VK_PAGE_UP -> imageView.setBeforeImage();
+            case VK_PLUS -> {
                 Point2D.Double p = imageView.scaleIconImg(true);
                 imageView.imgPanel.center(p);
             }
-            case KeyEvent.VK_MINUS -> {
+            case VK_MINUS -> {
                 Point2D.Double p = imageView.scaleIconImg(false);
                 imageView.imgPanel.center(p);
             }
 
-            case KeyEvent.VK_J -> {
+            case VK_J -> {
                 int id = imageView.grid.imageL.get(imageView.indexRing.get()).rowid();
                 String init = "" + AccessCounter.getAccCounter(id);
                 int res = LineInput.onlyPosNumber(init, "new acc counter for: " + id,
@@ -93,31 +95,31 @@ class ImgViewKeyHandler extends KeyAdapter {
                 AccessCounter.setAccCounter(id, res);
             }
 
-            case KeyEvent.VK_R -> {
+            case VK_R -> {
                 BufferedImage img = imageView.getIconImg();
                 img = ImgTools.rotateClockwise90(img);
                 imageView.imgPanel.setImageCentered(img);
             }
 
-            case KeyEvent.VK_M -> { // mirror
+            case VK_M -> { // mirror
                 BufferedImage img = imageView.getIconImg();
                 img = ImgTools.flip(img);
                 imageView.imgPanel.setImageCentered(img);
             }
 
-            case KeyEvent.VK_W -> { // adjust on width
+            case VK_W -> { // adjust on width
                 imageView.imgPanel.clearOffset();
                 imageView.adjustOn('w');
             }
 
-            case KeyEvent.VK_T -> { // next img
+            case VK_T -> { // next img
                 imageView.indexRing.set(imageView.shuffledRing.getNext());
                 imageView.setImg();
                 imageView.imgPanel.clearOffset();
                 imageView.adjustOn('h');
             }
 
-            case KeyEvent.VK_Z -> { // prev img, ctrlZ -> undo
+            case VK_Z -> { // prev img, ctrlZ -> undo
                 if (e.isControlDown()) {
                     imageView.imgPanel.undo();
                     return;
@@ -128,7 +130,7 @@ class ImgViewKeyHandler extends KeyAdapter {
                 imageView.adjustOn('h');
             }
 
-            case KeyEvent.VK_S -> { // slideshow
+            case VK_S -> { // slideshow
                 if (timer == null) {
                     timer = new Timer(10000, _ -> {
                         imageView.indexRing.set(imageView.shuffledRing.getNext());
@@ -146,51 +148,46 @@ class ImgViewKeyHandler extends KeyAdapter {
                 }
             }
 
-            case KeyEvent.VK_1 -> { // gamma
+            case VK_P -> { // HSBAdjustFilter
+                BufferedImage img = imageView.getIconImg();
+                RGBScroll.xmain(img, imageView.imgPanel);
+            }
+
+            case VK_1 -> { // emboss
                 BufferedImage img = imageView.getIconImg();
                 EmbossFilter emb = new EmbossFilter();
                 BufferedImage out = emb.filter(img, null);
                 imageView.imgPanel.setImage(out);
             }
 
-            case KeyEvent.VK_P -> { // HSBAdjustFilter
-                BufferedImage img = imageView.getIconImg();
-                RGBScroll.xmain(img, imageView.imgPanel);
-            }
-
-            case KeyEvent.VK_2 -> { // contrast, brightness
+            case VK_2 -> { // contrast, brightness
                 BufferedImage img = imageView.getIconImg();
                 ConBright.xmain(img, imageView.imgPanel);
             }
 
-            case KeyEvent.VK_3 -> {
+            case VK_3 -> {
                 BufferedImage img = imageView.getIconImg();
                 MultiSlider.xmain(img, imageView.imgPanel);
-
-//                float factor = MultiSliader.xmain("Luminance",
-//                        0.5f, 1.5f, 255);
-//                imageView.changeContrast(factor);
             }
 
-
-            case KeyEvent.VK_D -> { // delete
+            case VK_D -> { // delete
                 if (MsgBox.Question("Delete image from DB?")) {
                     DBHandler.deleteImage(imageView.grid.imageL.get(imageView.indexRing.get()).rowid());
                 }
             }
 
-            case KeyEvent.VK_H -> {
+            case VK_H -> {
                 imageView.imgPanel.clearOffset();
                 imageView.adjustOn('h');
             }
 
-//            case KeyEvent.VK_3 -> {
+//            case VK_3 -> {
 //                float factor = SliderBox.xmain("Luminance",
 //                        0.5f, 1.5f, 255);
 //                imageView.changeContrast(factor);
 //            }
 
-            case KeyEvent.VK_4 -> {
+            case VK_4 -> {
                 FastBitmap fb = imageView.getIconAsFastBitmap();
                 int factor = (int) SliderBox.xmain("BrightnessCorrection",
                         -255f, 255f, 255);
@@ -199,43 +196,43 @@ class ImgViewKeyHandler extends KeyAdapter {
                 imageView.imgPanel.setImage(fb);
             }
 
-            case KeyEvent.VK_X -> {
+            case VK_X -> {
                 BufferedImage img = imageView.getIconImg();
                 BufferedImage out = ImgTools.sharpenImage(img, !e.isControlDown());
                 imageView.imgPanel.setImage(out);
             }
 
-            case KeyEvent.VK_F -> imageView.saveAsFile(true);
-            case KeyEvent.VK_G -> imageView.saveAsFile(false);
+            case VK_F -> imageView.saveAsFile(true);
+            case VK_G -> imageView.saveAsFile(false);
 
-            case KeyEvent.VK_L -> {
+            case VK_L -> {
                 imageView.imgPanel.clearOffset();
                 imageView.setImg();
             }
 
-            case KeyEvent.VK_ESCAPE -> imageView.dispose();
+            case VK_ESCAPE -> imageView.dispose();
 
-            case KeyEvent.VK_A -> {  // Tags
+            case VK_A -> {  // Tags
                 int rowid = imageView.grid.imageL.get(imageView.indexRing.get()).rowid();
                 String tag = LineInput.tagList(DBHandler.getTags(rowid), "Tag:", Color.YELLOW);
                 DBHandler.setTag(rowid, tag);
             }
 
-            case KeyEvent.VK_5 -> { // denoise
+            case VK_5 -> { // denoise
                 BufferedImage img = imageView.getIconImg();
                 Denoise d = new Denoise(img);
                 BufferedImage out = d.perform_denoise();
                 imageView.imgPanel.setImage(out);
             }
 
-            case KeyEvent.VK_K -> { // +-10
+            case VK_K -> { // +-10
                 int this_rowid = imageView.grid.imageL.get(imageView.indexRing.get()).rowid();
                 String sql = "select name,_ROWID_,tag,accnum from IMAGES where _rowid_ <= " +
                         (this_rowid + 10) + " and _rowid_ >=" + (this_rowid - 10);
                 (new Thread(() -> new TheGrid(sql, "WORKER"))).start();
             }
 
-            case KeyEvent.VK_F1 -> { // Grayscale
+            case VK_F1 -> { // Grayscale
                 FastBitmap fb = imageView.getIconAsFastBitmap();
                 if (fb.isGrayscale())
                     return;
@@ -243,7 +240,7 @@ class ImgViewKeyHandler extends KeyAdapter {
                 imageView.imgPanel.setImage(fb);
             }
 
-            case KeyEvent.VK_F2 -> { // Grayscale & forward fourier
+            case VK_F2 -> { // Grayscale & forward fourier
                 FastBitmap fb = imageView.getIconAsFastBitmap();
                 if (!fb.isGrayscale())
                     fb.toGrayscale();
@@ -253,35 +250,35 @@ class ImgViewKeyHandler extends KeyAdapter {
                 imageView.imgPanel.setImage(fb);
             }
 
-            case KeyEvent.VK_F3 -> { // Diffuse
+            case VK_F3 -> { // Diffuse
                 BufferedImage img = imageView.getIconImg();
                 DiffuseFilter d = new DiffuseFilter();
                 BufferedImage ret = d.filter(img, null);
                 imageView.imgPanel.setImage(ret);
             }
 
-            case KeyEvent.VK_F4 -> { // Equalize
+            case VK_F4 -> { // Equalize
                 BufferedImage img = imageView.getIconImg();
                 EqualizeFilter c = new EqualizeFilter();
                 BufferedImage ret = c.filter(img, null);
                 imageView.imgPanel.setImage(ret);
             }
 
-            case KeyEvent.VK_F5 -> { // Skeleton
+            case VK_F5 -> { // Skeleton
                 BufferedImage img = imageView.getIconImg();
                 SkeletonFilter c = new SkeletonFilter();
                 BufferedImage ret = c.filter(img, null);
                 imageView.imgPanel.setImage(ret);
             }
 
-            case KeyEvent.VK_I -> { // Invert
+            case VK_I -> { // Invert
                 BufferedImage img = imageView.getIconImg();
                 InvertFilter d = new InvertFilter();
                 BufferedImage ret = d.filter(img, null);
                 imageView.imgPanel.setImage(ret);
             }
 
-            case KeyEvent.VK_V -> { // similarities
+            case VK_V -> { // similarities
                 int this_rowid = imageView.grid.imageL.get(imageView.indexRing.get()).rowid();
                 HashingAlgorithm hasher = new PerceptiveHash(32);
                 Hash this_Hash = hasher.hash(imageView.getIconImg());
@@ -303,35 +300,35 @@ class ImgViewKeyHandler extends KeyAdapter {
                 }
             }
 
-            case KeyEvent.VK_6 -> {
+            case VK_6 -> {
                 int rad = (int) SliderBox.xmain("Dilatation",
                         1f, 13f, 256);
                 imageView.applyInplaceFilter(new Dilatation(rad));
             }
 
-            case KeyEvent.VK_7 -> {
+            case VK_7 -> {
                 int rad = (int) SliderBox.xmain("OilPainting",
                         1f, 20f, 256);
                 imageView.applyInplaceFilter(new OilPainting(rad));
             }
 
-            case KeyEvent.VK_8 -> {
+            case VK_8 -> {
                 int rad = (int) SliderBox.xmain("Erosion",
                         1f, 20f, 256);
                 imageView.applyInplaceFilter(new Erosion(rad));
             }
 
-            case KeyEvent.VK_9 -> {
+            case VK_9 -> {
                 int r = (int) SliderBox.xmain("SpecularBloom", 1f, 20f, 255);
                 imageView.applyInplaceFilter(new SpecularBloom(20, r));
             }
-            case KeyEvent.VK_0 -> imageView.applyInplaceFilter(new HistogramEqualization());
-            case KeyEvent.VK_B -> {
+            case VK_0 -> imageView.applyInplaceFilter(new HistogramEqualization());
+            case VK_B -> {
                 int r = (int) SliderBox.xmain("FastVariance", 1f, 20f, 255);
                 imageView.applyInplaceFilter(new FastVariance(r));
             }
 
-            case KeyEvent.VK_Y -> {   //  heatmap
+            case VK_Y -> {   //  heatmap
                 FastBitmap fb = imageView.getIconAsFastBitmap();
                 boolean inv = SliderBox.xmain("Heatmap", 0f, 1f, 2) == 1f;
                 HeatMap bl = new HeatMap(inv);
@@ -339,9 +336,9 @@ class ImgViewKeyHandler extends KeyAdapter {
                 imageView.imgPanel.setImage(fb);
             }
 
-            case KeyEvent.VK_N -> imageView.selectAnotherImage(-1);
+            case VK_N -> imageView.selectAnotherImage(-1);
 
-            case KeyEvent.VK_C -> {
+            case VK_C -> {
                 if (e.isControlDown()) {
                     BufferedImage img = imageView.getIconImg();
                     ImgTools.imageToClipboard(img);
@@ -354,7 +351,7 @@ class ImgViewKeyHandler extends KeyAdapter {
                 }
             }
 
-//            case KeyEvent.VK_I -> {
+//            case VK_I -> {
 //                String name = "?";
 //                name = LineInput.xmain(name, "New Entry:", Color.RED);
 //                if (name.equals("?") || name.isEmpty())
