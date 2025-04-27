@@ -1,5 +1,6 @@
 package thegrid;
 
+import common.SystemClipboard;
 import common.Tools;
 
 import java.awt.datatransfer.DataFlavor;
@@ -8,8 +9,13 @@ import java.awt.dnd.DnDConstants;
 import java.awt.dnd.DropTarget;
 import java.awt.dnd.DropTargetAdapter;
 import java.awt.dnd.DropTargetDropEvent;
-import java.awt.event.*;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.File;
+
+import static common.SystemClipboard.getArray;
 
 public class GridListeners implements KeyListener {
     private final TheGrid theGrid;
@@ -24,7 +30,7 @@ public class GridListeners implements KeyListener {
             Tools.shutdown(theGrid);
     }
 
-    public GridListeners (TheGrid g) {
+    public GridListeners(TheGrid g) {
         theGrid = g;
         enableDrop();
         g.addWindowListener(new WindowAdapter() {
@@ -72,6 +78,20 @@ public class GridListeners implements KeyListener {
         if (kc == KeyEvent.VK_ESCAPE) {
             dispose(false);
         }
+        // ctrl-v, make img tags
+        else if (kc == KeyEvent.VK_V && e.isControlDown()) {
+            StringBuilder sb1 = new StringBuilder();
+            String[] split = getArray();
+            for (String s : split) {
+                if (s.length() < 10)
+                    continue;
+                sb1.append("[img]").append(s).append("[/img]").append("\r\n");
+            }
+            System.out.println(sb1);
+            SystemClipboard.drainClipboard();
+            SystemClipboard.setString(sb1.toString());
+        }
+        // n
         else if (kc == KeyEvent.VK_N) {
             TheGrid tg = TheGrid.getMainGrid();
             ImageView iv = new ImageView(tg, 0);

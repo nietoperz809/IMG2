@@ -9,6 +9,9 @@ import thegrid.gridmenu.GridMenuBar;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.time.Duration;
@@ -19,7 +22,6 @@ import static common.MsgBox.AskforPWD;
 import static common.NumToText.*;
 import static common.Tools.extractResource;
 import static database.SqlListFunctions.putQuery;
-import static javax.swing.text.StyleConstants.setIcon;
 
 
 public class TheGrid extends MyFrame {
@@ -107,7 +109,7 @@ public class TheGrid extends MyFrame {
         for (int s = 0; s < imageL.size(); s++) {
             if (stopFill)
                 break;
-            addImageLabel(s);
+            addThumbnail(s);
         }
         this.pack();
     }
@@ -173,7 +175,7 @@ public class TheGrid extends MyFrame {
     /**
      * Add one single image to the frame
      */
-    public void addImageLabel(int s) {
+    public void addThumbnail (int s) {
         int rowid = imageL.get(s).rowid();
         byte[] thumbBytes = null;
         try {

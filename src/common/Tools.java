@@ -5,10 +5,15 @@ import dialogs.TimedMessage;
 import net.lingala.zip4j.model.ZipParameters;
 import net.lingala.zip4j.model.enums.CompressionLevel;
 import net.lingala.zip4j.model.enums.EncryptionMethod;
+import org.jetbrains.annotations.NotNull;
 import thegrid.TheGrid;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.DataFlavor;
+import java.awt.datatransfer.Transferable;
+import java.awt.datatransfer.UnsupportedFlavorException;
 import java.awt.event.KeyEvent;
 import java.io.*;
 import java.util.*;
@@ -21,7 +26,7 @@ public class Tools {
     private static final ExecutorService globalExecutor = Executors.newCachedThreadPool(); //Executors.newFixedThreadPool(20);
 
     public static Thread loomThread(Runnable r) {
-        return Thread.ofVirtual ().start (r);
+        return Thread.ofVirtual().start(r);
     }
 
     public static FutureTask<?> runTask(Runnable r) {
@@ -44,6 +49,7 @@ public class Tools {
 //        }
 //        return list;
 //    }
+
     /**
      * Checks if a filename has one of n extensions
      *
@@ -155,8 +161,8 @@ public class Tools {
         }
     }
 
-    public static void shutdown (Window gr) {
-        JDialog dlg = TimedMessage.showMessageDialog (gr,"closing ..", "ImageBase",
+    public static void shutdown(Window gr) {
+        JDialog dlg = TimedMessage.showMessageDialog(gr, "closing ..", "ImageBase",
                 3000);
 
         DBHandler.log("--- TheGrid ended");
@@ -175,15 +181,15 @@ public class Tools {
         command.add(javaBin);
         command.add("-jar");
         command.add(currentJar.getPath());
-        command.add ("dbdir:" + DBHandler.getDBRoot());
-        command.add ("nopwd");
+        command.add("dbdir:" + DBHandler.getDBRoot());
+        command.add("nopwd");
 
         final ProcessBuilder builder = new ProcessBuilder(command);
         builder.start();
         System.exit(0);
     }
 
-    public static String buildQueryForGrid (HashSet<Integer> foundSet) {
+    public static String buildQueryForGrid(HashSet<Integer> foundSet) {
         StringBuilder sqlFound = new StringBuilder();
         sqlFound.append("select name,_ROWID_,tag,accnum from IMAGES where ");
         for (int i : foundSet) {
@@ -192,4 +198,5 @@ public class Tools {
         sqlFound.setLength(sqlFound.length() - 4);
         return sqlFound.toString();
     }
+
 }
