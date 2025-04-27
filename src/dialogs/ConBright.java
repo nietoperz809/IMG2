@@ -18,16 +18,18 @@ public class ConBright extends JDialog {
     private JSlider briSlider;
     private JLabel conLabel;
     private JLabel briLabel;
-    private JTextField gammaValue;
     private JButton resetButton;
+    private JSlider gammaSlider;
+    private JLabel gammaLabel;
+    private JButton takeButton;
     private final Stepper stepper = new Stepper(0.0f, 3.0f, 256);
     private ImgPanel imgPanel;
-    private BufferedImage image;
+    private BufferedImage origImg;
+    private BufferedImage outImg;
 
     public ConBright() {
         setContentPane(contentPane);
         setModal(true);
-        //setUndecorated(true);
 
         // call onCancel() when cross is clicked
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
@@ -43,24 +45,25 @@ public class ConBright extends JDialog {
         briSlider.addChangeListener(_ -> doIt());
         conSlider.addChangeListener(_ -> doIt());
 
-        gammaValue.addActionListener(_ -> {
-            double g = 0;
-            try {
-                g = Double.parseDouble(gammaValue.getText());
-            } catch (NumberFormatException e) {
-                g = 1.0;
-            }
-            GammaCorrection cor = new GammaCorrection(g);
-            FastBitmap fb = new FastBitmap(image);
-            cor.applyInPlace(fb);
-            imgPanel.setImage(fb);
-        });
-
-        resetButton.addActionListener(e -> {
+        resetButton.addActionListener(_ -> {
             conSlider.setValue(100);
             briSlider.setValue(100);
-            gammaValue.setText("1.0");
-            imgPanel.setImage(image);
+            gammaSlider.setValue(100);
+            imgPanel.setImage(origImg);
+        });
+
+        gammaSlider.addChangeListener(_ -> {
+            float f = getVal(gammaSlider);
+            gammaLabel.setText(Float.toString(f));
+            GammaCorrection cor = new GammaCorrection(f);
+            FastBitmap fb = new FastBitmap(origImg);
+            cor.applyInPlace(fb);
+            imgPanel.setImage(fb);
+            outImg = fb.toBufferedImage();
+        });
+
+        takeButton.addActionListener(_ -> {
+            origImg = outImg;
         });
     }
 
@@ -78,7 +81,8 @@ public class ConBright extends JDialog {
             ContrastFilter cfilt = new ContrastFilter();
             cfilt.setContrast(c);
             cfilt.setBrightness(b);
-            imgPanel.setImage(cfilt.filter(image, null));
+            outImg = cfilt.filter(origImg, null);
+            imgPanel.setImage(outImg);
         });
     }
 
@@ -89,14 +93,10 @@ public class ConBright extends JDialog {
 
     public static void xmain(BufferedImage img, ImgPanel imgPanel) {
         ConBright dialog = new ConBright();
-        dialog.setImage(img, imgPanel);
+        dialog.imgPanel = imgPanel;
+        dialog.origImg = img;
         dialog.pack();
         dialog.setLocationRelativeTo(null);
         dialog.setVisible(true);
-    }
-
-    private void setImage(BufferedImage img, ImgPanel imgPanel) {
-        this.imgPanel = imgPanel;
-        this.image = img;
     }
 }
