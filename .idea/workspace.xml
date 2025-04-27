@@ -14,17 +14,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ddb69741-e020-4d21-a32f-f00e79c6818a" name="Changes" comment="optiized ConBrightV">
+    <list default="true" id="ddb69741-e020-4d21-a32f-f00e79c6818a" name="Changes" comment="backup">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resource/manual.html" beforeDir="false" afterPath="$PROJECT_DIR$/resource/manual.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/buildinfo/BuildInfo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/buildinfo/BuildInfo.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/buildinfo/build.number" beforeDir="false" afterPath="$PROJECT_DIR$/src/buildinfo/build.number" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/common/Stepper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/common/Stepper.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/dialogs/ConBright.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/dialogs/ConBright.form" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/dialogs/RGBScroll.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/dialogs/RGBScroll.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/dialogs/video/ConBrightV.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/dialogs/video/ConBrightV.form" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/dialogs/video/ConBrightV.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/dialogs/video/ConBrightV.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/video/VideoPlayerBox.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/video/VideoPlayerBox.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dialogs/ConBright.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/dialogs/ConBright.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -633,7 +628,7 @@
       <option name="project" value="LOCAL" />
       <updated>1683976691765</updated>
     </task>
-    <option name="localTasksCounter" value="284" />
+    <option name="localTasksCounter" value="285" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -718,9 +713,9 @@
     <MESSAGE value="release 4.12" />
     <MESSAGE value="update" />
     <MESSAGE value="+contrast/gamma/brightness" />
-    <MESSAGE value="backup" />
     <MESSAGE value="optiized ConBrightV" />
-    <option name="LAST_COMMIT_MESSAGE" value="optiized ConBrightV" />
+    <MESSAGE value="backup" />
+    <option name="LAST_COMMIT_MESSAGE" value="backup" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

@@ -1,15 +1,16 @@
 package dialogs;
 
+import Catalano.Imaging.FastBitmap;
+import Catalano.Imaging.Filters.GammaCorrection;
 import com.jhlabs.image.ContrastFilter;
-import com.jhlabs.image.HSBAdjustFilter;
 import common.Stepper;
 import thegrid.ImgPanel;
 
 import javax.swing.*;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
+
+import static common.Tools.loomThread;
 
 public class ConBright extends JDialog {
     private JPanel contentPane;
@@ -17,6 +18,8 @@ public class ConBright extends JDialog {
     private JSlider briSlider;
     private JLabel conLabel;
     private JLabel briLabel;
+    private JTextField gammaValue;
+    private JButton resetButton;
     private final Stepper stepper = new Stepper(0.0f, 3.0f, 256);
     private ImgPanel imgPanel;
     private BufferedImage image;
@@ -35,10 +38,30 @@ public class ConBright extends JDialog {
         });
 
         // call onCancel() on ESCAPE
-        contentPane.registerKeyboardAction(e -> onCancel(), KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
+        contentPane.registerKeyboardAction(_ -> onCancel(), KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
 
         briSlider.addChangeListener(_ -> doIt());
         conSlider.addChangeListener(_ -> doIt());
+
+        gammaValue.addActionListener(_ -> {
+            double g = 0;
+            try {
+                g = Double.parseDouble(gammaValue.getText());
+            } catch (NumberFormatException e) {
+                g = 1.0;
+            }
+            GammaCorrection cor = new GammaCorrection(g);
+            FastBitmap fb = new FastBitmap(image);
+            cor.applyInPlace(fb);
+            imgPanel.setImage(fb);
+        });
+
+        resetButton.addActionListener(e -> {
+            conSlider.setValue(100);
+            briSlider.setValue(100);
+            gammaValue.setText("1.0");
+            imgPanel.setImage(image);
+        });
     }
 
     private float getVal(JSlider sl) {
@@ -47,14 +70,16 @@ public class ConBright extends JDialog {
     }
 
     private void doIt() {
-        float c = getVal(conSlider);
-        float b = getVal(briSlider);
-        conLabel.setText(Float.toString(c));
-        briLabel.setText(Float.toString(b));
-        ContrastFilter cfilt = new ContrastFilter();
-        cfilt.setContrast(c);
-        cfilt.setBrightness(b);
-        imgPanel.setImage(cfilt.filter(image, null));
+        loomThread(() -> {
+            float c = getVal(conSlider);
+            float b = getVal(briSlider);
+            conLabel.setText(Float.toString(c));
+            briLabel.setText(Float.toString(b));
+            ContrastFilter cfilt = new ContrastFilter();
+            cfilt.setContrast(c);
+            cfilt.setBrightness(b);
+            imgPanel.setImage(cfilt.filter(image, null));
+        });
     }
 
     private void onCancel() {
