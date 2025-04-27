@@ -21,6 +21,8 @@
         <rowspec value="center:max(d;4px):noGrow"/>
         <rowspec value="top:4dlu:noGrow"/>
         <rowspec value="center:max(d;4px):noGrow"/>
+        <rowspec value="top:4dlu:noGrow"/>
+        <rowspec value="center:max(d;4px):noGrow"/>
         <colspec value="fill:max(d;4px):noGrow"/>
         <colspec value="left:4dlu:noGrow"/>
         <colspec value="fill:548px:noGrow"/>
@@ -47,7 +49,7 @@
               <maximum value="256"/>
               <paintLabels value="false"/>
               <paintTicks value="true"/>
-              <value value="256"/>
+              <value value="100"/>
             </properties>
           </component>
           <component id="7a643" class="javax.swing.JSlider" binding="briSlider">
@@ -60,7 +62,7 @@
               <maximum value="256"/>
               <minorTickSpacing value="10"/>
               <paintTicks value="true"/>
-              <value value="256"/>
+              <value value="100"/>
             </properties>
           </component>
           <component id="bc59d" class="javax.swing.JLabel" binding="conLabel">
@@ -118,7 +120,7 @@
               <maximum value="256"/>
               <minorTickSpacing value="10"/>
               <paintTicks value="true"/>
-              <value value="256"/>
+              <value value="100"/>
             </properties>
           </component>
           <component id="e9068" class="javax.swing.JLabel" binding="satLabel">
@@ -149,7 +151,7 @@
               <maximum value="256"/>
               <minorTickSpacing value="10"/>
               <paintTicks value="true"/>
-              <value value="256"/>
+              <value value="100"/>
             </properties>
           </component>
           <component id="22400" class="javax.swing.JLabel" binding="hueLabel">
@@ -180,7 +182,7 @@
               <maximum value="256"/>
               <minorTickSpacing value="10"/>
               <paintTicks value="true"/>
-              <value value="256"/>
+              <value value="100"/>
             </properties>
           </component>
           <component id="2fbca" class="javax.swing.JLabel" binding="scaleLabel">
@@ -190,6 +192,15 @@
             </constraints>
             <properties>
               <text value="Label"/>
+            </properties>
+          </component>
+          <component id="bc4d3" class="javax.swing.JButton" binding="resetButton" default-binding="true">
+            <constraints>
+              <grid row="10" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+              <forms/>
+            </constraints>
+            <properties>
+              <text value="Reset"/>
             </properties>
           </component>
         </children>

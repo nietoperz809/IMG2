@@ -29,13 +29,13 @@ public class Stepper {
         return steps;
     }
 
-    public static void main(String[] args) {
-        Stepper st = new Stepper(-2f,10f, 255);
-        System.out.println(st.get(0));
-        System.out.println(st.get(1));
-        System.out.println(st.get(50));
-        System.out.println(st.get(254));
-        System.out.println(st.get(255));
-        System.out.println(st.get(256));
-    }
+//    public static void main(String[] args) {
+//        Stepper st = new Stepper(-2f,10f, 255);
+//        System.out.println(st.get(0));
+//        System.out.println(st.get(1));
+//        System.out.println(st.get(50));
+//        System.out.println(st.get(254));
+//        System.out.println(st.get(255));
+//        System.out.println(st.get(256));
+//    }
 }

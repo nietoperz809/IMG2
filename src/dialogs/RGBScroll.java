@@ -5,6 +5,8 @@ import common.Stepper;
 import thegrid.ImgPanel;
 
 import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
 
@@ -42,27 +44,11 @@ public class RGBScroll extends JDialog {
         contentPane.registerKeyboardAction(_-> onCancel(),
                 KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
 
+        sliderGreen.addChangeListener(_ -> doIt());
 
-        sliderRed.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseReleased(MouseEvent e) {
-                doIt();
-            }
-        });
+        sliderBlue.addChangeListener(_ -> doIt());
 
-        sliderGreen.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseReleased(MouseEvent e) {
-                doIt();
-            }
-        });
-
-        sliderBlue.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseReleased(MouseEvent e) {
-                doIt();
-            }
-        });
+        sliderRed.addChangeListener(_ -> doIt());
     }
 
     private void doIt() {

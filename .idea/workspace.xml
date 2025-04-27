@@ -14,22 +14,17 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ddb69741-e020-4d21-a32f-f00e79c6818a" name="Changes" comment="backup">
-      <change beforePath="$PROJECT_DIR$/.idea/artifacts/IMG2_jar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/artifacts/IMG2_jar.xml" afterDir="false" />
+    <list default="true" id="ddb69741-e020-4d21-a32f-f00e79c6818a" name="Changes" comment="optiized ConBrightV">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/IMG2.iml" beforeDir="false" afterPath="$PROJECT_DIR$/IMG2.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/IMG2_jar/IMG2.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/IMG2_jar/runC.bat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/IMG2_jar/runD.bat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resource/manual.html" beforeDir="false" afterPath="$PROJECT_DIR$/resource/manual.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/buildinfo/BuildInfo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/buildinfo/BuildInfo.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/buildinfo/build.number" beforeDir="false" afterPath="$PROJECT_DIR$/src/buildinfo/build.number" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/jhlabs/image/ImageMath.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/jhlabs/image/ImageMath.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/common/Tools.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/common/Tools.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/database/DBHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/database/DBHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/dialogs/MultiSlider.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/dialogs/MultiSlider.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/thegrid/ImageView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/thegrid/ImageView.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/thegrid/ImgViewKeyHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/thegrid/ImgViewKeyHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/thegrid/Thumbnail.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/thegrid/Thumbnail.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/common/Stepper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/common/Stepper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dialogs/ConBright.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/dialogs/ConBright.form" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dialogs/RGBScroll.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/dialogs/RGBScroll.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dialogs/video/ConBrightV.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/dialogs/video/ConBrightV.form" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dialogs/video/ConBrightV.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/dialogs/video/ConBrightV.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/video/VideoPlayerBox.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/video/VideoPlayerBox.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -89,76 +84,76 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ASKED_ADD_EXTERNAL_FILES": "true",
-    "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "Application.ConBright.executor": "Run",
-    "Application.Console.executor": "Run",
-    "Application.DBHandler.executor": "Debug",
-    "Application.GUIConsole.executor": "Run",
-    "Application.Main (1).executor": "Run",
-    "Application.Main (2).executor": "Run",
-    "Application.Main.executor": "Run",
-    "Application.MonitorFrame.executor": "Run",
-    "Application.MultiSlider.executor": "Run",
-    "Application.RGBScroll.executor": "Run",
-    "Application.RandomWord.executor": "Run",
-    "Application.SliderBox.executor": "Run",
-    "Application.SqlList.executor": "Run",
-    "Application.Stepper.executor": "Run",
-    "Application.UnlockDialog.executor": "Debug",
-    "Application.WebPDecoder.executor": "Run",
-    "Application.web.executor": "Run",
-    "Downloaded.Files.Path.Enabled": "true",
-    "GenerateAntBuildDialog.backupFiles": "true",
-    "GenerateAntBuildDialog.enableUiFormCompile": "true",
-    "GenerateAntBuildDialog.forceTargetJdk": "true",
-    "GenerateAntBuildDialog.outputFileNameProperty": "img2.iml",
-    "JAR Application.IMG2.jar.executor": "Run",
-    "JAR Application.javafx-graphics-11.0.2-javadoc.jar.executor": "Run",
-    "JUnit.All in IMG2.executor": "Run",
-    "Java Scratch.Scratch.executor": "Run",
-    "Repository.Attach.Annotations": "false",
-    "Repository.Attach.JavaDocs": "true",
-    "Repository.Attach.Sources": "false",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "UI_DESIGNER_EDITOR_MODE.PaletteManager.SHOW": "false",
-    "UI_DESIGNER_EDITOR_MODE.PaletteManager.WIDTH": "193",
-    "UI_DESIGNER_EDITOR_MODE.UIDesignerToolWindowManager.SHOW": "true",
-    "UI_DESIGNER_EDITOR_MODE.UIDesignerToolWindowManager.WIDTH": "210",
-    "full.screen.before.presentation.mode": "true",
-    "git-widget-placeholder": "withQueue",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/peter.home/java/IMG2/resource",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Artifacts",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.18296796",
-    "run.code.analysis.last.selected.profile": "aDefault",
-    "settings.editor.selected.configurable": "preferences.pluginManager",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
+    &quot;ASKED_SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;Application.ConBright.executor&quot;: &quot;Run&quot;,
+    &quot;Application.Console.executor&quot;: &quot;Run&quot;,
+    &quot;Application.DBHandler.executor&quot;: &quot;Debug&quot;,
+    &quot;Application.GUIConsole.executor&quot;: &quot;Run&quot;,
+    &quot;Application.Main (1).executor&quot;: &quot;Run&quot;,
+    &quot;Application.Main (2).executor&quot;: &quot;Run&quot;,
+    &quot;Application.Main.executor&quot;: &quot;Run&quot;,
+    &quot;Application.MonitorFrame.executor&quot;: &quot;Run&quot;,
+    &quot;Application.MultiSlider.executor&quot;: &quot;Run&quot;,
+    &quot;Application.RGBScroll.executor&quot;: &quot;Run&quot;,
+    &quot;Application.RandomWord.executor&quot;: &quot;Run&quot;,
+    &quot;Application.SliderBox.executor&quot;: &quot;Run&quot;,
+    &quot;Application.SqlList.executor&quot;: &quot;Run&quot;,
+    &quot;Application.Stepper.executor&quot;: &quot;Run&quot;,
+    &quot;Application.UnlockDialog.executor&quot;: &quot;Debug&quot;,
+    &quot;Application.WebPDecoder.executor&quot;: &quot;Run&quot;,
+    &quot;Application.web.executor&quot;: &quot;Run&quot;,
+    &quot;Downloaded.Files.Path.Enabled&quot;: &quot;true&quot;,
+    &quot;GenerateAntBuildDialog.backupFiles&quot;: &quot;true&quot;,
+    &quot;GenerateAntBuildDialog.enableUiFormCompile&quot;: &quot;true&quot;,
+    &quot;GenerateAntBuildDialog.forceTargetJdk&quot;: &quot;true&quot;,
+    &quot;GenerateAntBuildDialog.outputFileNameProperty&quot;: &quot;img2.iml&quot;,
+    &quot;JAR Application.IMG2.jar.executor&quot;: &quot;Run&quot;,
+    &quot;JAR Application.javafx-graphics-11.0.2-javadoc.jar.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.All in IMG2.executor&quot;: &quot;Run&quot;,
+    &quot;Java Scratch.Scratch.executor&quot;: &quot;Run&quot;,
+    &quot;Repository.Attach.Annotations&quot;: &quot;false&quot;,
+    &quot;Repository.Attach.JavaDocs&quot;: &quot;true&quot;,
+    &quot;Repository.Attach.Sources&quot;: &quot;false&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;UI_DESIGNER_EDITOR_MODE.PaletteManager.SHOW&quot;: &quot;true&quot;,
+    &quot;UI_DESIGNER_EDITOR_MODE.PaletteManager.WIDTH&quot;: &quot;193&quot;,
+    &quot;UI_DESIGNER_EDITOR_MODE.UIDesignerToolWindowManager.SHOW&quot;: &quot;true&quot;,
+    &quot;UI_DESIGNER_EDITOR_MODE.UIDesignerToolWindowManager.WIDTH&quot;: &quot;300&quot;,
+    &quot;full.screen.before.presentation.mode&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;withQueue&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/peter.home/java/IMG2/src/dialogs/video&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Artifacts&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.18296796&quot;,
+    &quot;run.code.analysis.last.selected.profile&quot;: &quot;aDefault&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
-  "keyToStringList": {
-    "com.intellij.ide.scratch.ScratchImplUtil$2/New Scratch File": [
-      "JAVA"
+  &quot;keyToStringList&quot;: {
+    &quot;com.intellij.ide.scratch.ScratchImplUtil$2/New Scratch File&quot;: [
+      &quot;JAVA&quot;
     ]
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\peter.home\java\IMG2\src\dialogs\video" />
       <recent name="C:\peter.home\java\IMG2\resource" />
       <recent name="C:\peter.home\java\IMG2" />
       <recent name="C:\peter.home\java\IMG2\src\dialogs" />
       <recent name="C:\peter.home\java\IMG2\lib" />
-      <recent name="C:\peter.home\java\IMG2\src\Imaging" />
     </key>
     <key name="MoveMembersDialog.RECENTS_KEY">
       <recent name="common.Audio" />
@@ -196,6 +191,7 @@
     <option name="myCommands">
       <command value="local history" />
       <command value="breadcrumb" />
+      <command value="ant" />
     </option>
   </component>
   <component name="RunManager" selected="Application.Main">
@@ -263,10 +259,10 @@
     </configuration>
     <list>
       <item itemvalue="Application.Main" />
-      <item itemvalue="Application.MultiSlider" />
       <item itemvalue="Application.ConBright" />
       <item itemvalue="Application.Main (1)" />
       <item itemvalue="Application.Main (2)" />
+      <item itemvalue="Application.MultiSlider" />
       <item itemvalue="Application.SliderBox" />
     </list>
     <recent_temporary>
@@ -637,7 +633,7 @@
       <option name="project" value="LOCAL" />
       <updated>1683976691765</updated>
     </task>
-    <option name="localTasksCounter" value="279" />
+    <option name="localTasksCounter" value="284" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -699,8 +695,6 @@
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_NEW_TODO" value="false" />
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="no libs" />
-    <MESSAGE value="litle bugfix" />
     <MESSAGE value="litle bugfix in taglist" />
     <MESSAGE value="litle bugfix in taglist, new jar" />
     <MESSAGE value="backup, minor changes" />
@@ -723,8 +717,10 @@
     <MESSAGE value="+ con/bright sliders" />
     <MESSAGE value="release 4.12" />
     <MESSAGE value="update" />
+    <MESSAGE value="+contrast/gamma/brightness" />
     <MESSAGE value="backup" />
-    <option name="LAST_COMMIT_MESSAGE" value="backup" />
+    <MESSAGE value="optiized ConBrightV" />
+    <option name="LAST_COMMIT_MESSAGE" value="optiized ConBrightV" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

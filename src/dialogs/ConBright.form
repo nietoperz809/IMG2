@@ -37,7 +37,7 @@
               <maximum value="256"/>
               <paintLabels value="false"/>
               <paintTicks value="true"/>
-              <value value="256"/>
+              <value value="100"/>
             </properties>
           </component>
           <component id="7a643" class="javax.swing.JSlider" binding="briSlider">
@@ -50,7 +50,7 @@
               <maximum value="256"/>
               <minorTickSpacing value="10"/>
               <paintTicks value="true"/>
-              <value value="256"/>
+              <value value="100"/>
             </properties>
           </component>
           <component id="bc59d" class="javax.swing.JLabel" binding="conLabel">
