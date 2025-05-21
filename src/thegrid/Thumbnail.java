@@ -16,6 +16,15 @@ public class Thumbnail extends JLabel {
     private DBHandler.NameID thisID;
     private JPanel rootPane;
 
+    @Override
+    public JToolTip createToolTip() {
+        JToolTip tooltip = super.createToolTip();
+        tooltip.setBorder(BorderFactory.createLineBorder(Color.YELLOW));
+        tooltip.setBackground(Color.BLACK);
+        tooltip.setForeground(Color.GREEN);
+        return tooltip;
+    }
+
     static public void markAll (TheGrid grid, boolean mark) {
         Component[] comp = grid.rootPane.getComponents();
         for (Component c : comp) {

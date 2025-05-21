@@ -15,6 +15,7 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;
 
+import static common.SystemClipboard.completeImagelinks;
 import static common.SystemClipboard.getArray;
 
 public class GridListeners implements KeyListener {
@@ -80,16 +81,7 @@ public class GridListeners implements KeyListener {
         }
         // ctrl-v, make img tags
         else if (kc == KeyEvent.VK_V && e.isControlDown()) {
-            StringBuilder sb1 = new StringBuilder();
-            String[] split = getArray();
-            for (String s : split) {
-                if (s.length() < 10)
-                    continue;
-                sb1.append("[img]").append(s).append("[/img]").append("\r\n");
-            }
-            System.out.println(sb1);
-            SystemClipboard.drainClipboard();
-            SystemClipboard.setString(sb1.toString());
+            completeImagelinks();
         }
         // n
         else if (kc == KeyEvent.VK_N) {
