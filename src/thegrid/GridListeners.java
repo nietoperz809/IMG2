@@ -81,7 +81,7 @@ public class GridListeners implements KeyListener {
         }
         // ctrl-v, make img tags
         else if (kc == KeyEvent.VK_V && e.isControlDown()) {
-            completeImagelinks();
+            completeImagelinks("img");
         }
         // n
         else if (kc == KeyEvent.VK_N) {

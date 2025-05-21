@@ -18,11 +18,7 @@ public class Thumbnail extends JLabel {
 
     @Override
     public JToolTip createToolTip() {
-        JToolTip tooltip = super.createToolTip();
-        tooltip.setBorder(BorderFactory.createLineBorder(Color.YELLOW));
-        tooltip.setBackground(Color.BLACK);
-        tooltip.setForeground(Color.GREEN);
-        return tooltip;
+        return common.Tools.createCustomToolTip (this);
     }
 
     static public void markAll (TheGrid grid, boolean mark) {

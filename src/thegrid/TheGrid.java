@@ -119,6 +119,8 @@ public class TheGrid extends MyFrame {
 //                DBHandler.log("SHUTDOWN"));
 //        Runtime.getRuntime().addShutdownHook(hook);
 
+        UIManager.put("ToolTip.font", new Font("Arial", Font.BOLD, 20));
+
         Win32.hideConsoleWindow();
 
         try {

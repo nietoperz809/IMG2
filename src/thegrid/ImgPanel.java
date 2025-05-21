@@ -25,7 +25,10 @@ public class ImgPanel extends JPanel {
 
     public static final int SCROLLAMOUNT = 10;
 
-    //private final UndoStack<BufferedImage> stack = new UndoStack<>(20);
+    @Override
+    public JToolTip createToolTip() {
+        return common.Tools.createCustomToolTip (this);
+    }
 
     public ImgPanel (TheGrid grid, BufferedImage img, ImageView parent) {
         super();
