@@ -51,7 +51,7 @@ public class GridMenuBar extends JMenuBar {
         jmi.addActionListener(_ -> new MonitorFrame());
         jm.add(jmi);
 
-        jmi = new ColoredMenuItem("Restart the app ...", Color.RED);
+        jmi = new ColoredMenuItem("Restart the app ...", Color.RED, Color.WHITE);
         jmi.addActionListener(_ -> {
             DBHandler.log("--- TheGrid ended");
             DBHandler.close();
@@ -131,9 +131,7 @@ public class GridMenuBar extends JMenuBar {
         jmi.addActionListener(_ -> DBHandler.backup());
         jm.add(jmi);
 
-        //jm.add(searchDupes());
-
-        jmi = new ColoredMenuItem("video App", Color.BLUE);
+        jmi = new ColoredMenuItem("Open video App", Color.BLUE, Color.WHITE);
         jmi.addActionListener(_ -> VideoApp.open(theGrid));
         jm.add(jmi);
 
