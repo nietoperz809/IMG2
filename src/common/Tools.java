@@ -5,15 +5,10 @@ import dialogs.TimedMessage;
 import net.lingala.zip4j.model.ZipParameters;
 import net.lingala.zip4j.model.enums.CompressionLevel;
 import net.lingala.zip4j.model.enums.EncryptionMethod;
-import org.jetbrains.annotations.NotNull;
 import thegrid.TheGrid;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.datatransfer.Clipboard;
-import java.awt.datatransfer.DataFlavor;
-import java.awt.datatransfer.Transferable;
-import java.awt.datatransfer.UnsupportedFlavorException;
 import java.awt.event.KeyEvent;
 import java.io.*;
 import java.util.*;
@@ -199,4 +194,12 @@ public class Tools {
         return sqlFound.toString();
     }
 
+    public static JToolTip createCustomToolTip(JComponent jc) {
+        JToolTip tooltip = new JToolTip();
+        tooltip.setComponent(jc);
+        tooltip.setBorder(BorderFactory.createLineBorder(Color.WHITE));
+        tooltip.setBackground(Color.BLACK);
+        tooltip.setForeground(Color.YELLOW);
+        return tooltip;
+    }
 }

@@ -84,9 +84,10 @@ public class SubMenuMarked extends JMenu {
                     ZipParameters zipParameters = Tools.getStandardZipParams();
                     String outPath = MsgBox.chooseDir(SubMenuMarked.this);
                     try {
+                        String pwd = RandomWord.generateWord(6);
                         ZipFile zipFile = new ZipFile (outPath+ File.separator +
                                 System.currentTimeMillis()+"-images.rar",
-                                "imagebase".toCharArray());
+                                pwd.toCharArray());
                         final Thumbnail[] marked = Thumbnail.getMarked(grid);
                         for (Thumbnail gi : marked) {
                             int id = gi.getRowID();
@@ -97,6 +98,8 @@ public class SubMenuMarked extends JMenu {
                         }
                         Thumbnail.markAll(grid, false);
                         zipFile.close();
+                        MsgBox.Info("Password (posted to clipboard) is: "+pwd);
+                        SystemClipboard.setString(pwd);
                     } catch (IOException ex) {
                         throw new RuntimeException(ex);
                     }

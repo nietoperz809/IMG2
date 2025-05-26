@@ -4,6 +4,8 @@ import java.awt.*;
 import java.awt.datatransfer.*;
 import java.io.IOException;
 
+import static common.NumToText.convertLessThanOneThousand;
+
 public class SystemClipboard {
     private static final Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
 
@@ -39,5 +41,31 @@ public class SystemClipboard {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+    }
+
+    /**
+     * add IMG tags to every line
+     */
+    public static void completeImagelinks(String tag) {
+        StringBuilder sb1 = new StringBuilder();
+        String[] split = getArray();
+        int count = 0;
+        for (String s : split) {
+            if (s.length() < 10)
+                continue;
+            if (!s.startsWith("http:"))
+                continue;
+            sb1.append("[").
+                    append(tag).append("]").
+                    append(s).
+                    append("[/").
+                    append (tag).append("]").
+                    append("\r\n");
+            count++;
+        }
+        System.out.println(sb1);
+        drainClipboard();
+        Sam.speak(convertLessThanOneThousand(count)+" image tags posted to clipboard");
+        setString(sb1.toString());
     }
 }

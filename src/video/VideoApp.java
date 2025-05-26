@@ -132,7 +132,7 @@ public class VideoApp extends JDialog {
                 saveSingle (selectedValuesList.getFirst());
             }
             else {
-                saveMulti (selectedValuesList);
+                saveMultiAsZip(selectedValuesList);
             }
         });
 
@@ -210,7 +210,7 @@ public class VideoApp extends JDialog {
         }
     }
 
-    private void saveMulti (List<DBHandler.NameID> selectedValuesList) {
+    private void saveMultiAsZip (List<DBHandler.NameID> selectedValuesList) {
         ZipParameters zipParameters = Tools.getStandardZipParams();
         String outPath = MsgBox.chooseDir(this);
         System.out.println(outPath);
