@@ -389,6 +389,9 @@ public class DBHandler {
         }
     }
 
+    /*
+    Create Thumbnail 100*100
+     */
     public static void createNewThumb(int id) {
         try {
             byte[] bigbytes = loadImage(id);

@@ -15,6 +15,8 @@ import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.awt.image.BufferedImageOp;
 import java.io.*;
 import java.sql.SQLException;
 import java.util.*;
@@ -150,6 +152,13 @@ public class GridMenuBar extends JMenuBar {
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
+        });
+        jm.add(jmi);
+
+        jmi = new JMenuItem("4*4 Grid preview");
+        jmi.addActionListener(_ -> {
+            BufferedImage big = ImgTools.createPreviewImage(theGrid);
+            ImageViewer.xmain(big);
         });
         jm.add(jmi);
 

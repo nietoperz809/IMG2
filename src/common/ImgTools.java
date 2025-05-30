@@ -1,7 +1,9 @@
 package common;
 
 import com.luciad.imageio.webp.WebPReadParam;
+import database.DBHandler;
 import org.jetbrains.annotations.NotNull;
+import thegrid.TheGrid;
 
 import javax.imageio.ImageIO;
 import javax.imageio.ImageReader;
@@ -15,6 +17,28 @@ import java.io.*;
 import static common.Tools.hasExtension;
 
 public class ImgTools {
+    /**
+        Make Preview from first 16 tiles of a Grid
+     */
+    public static BufferedImage createPreviewImage (TheGrid grid) {
+        if (grid.imageL.size() < 16) {
+            System.out.println("Too few Imgs");
+            throw new RuntimeException("To few tiles");
+        }
+        BufferedImage big = new BufferedImage(410, 410, BufferedImage.TYPE_INT_RGB);
+        Graphics2D ig2 = big.createGraphics();
+        ig2.setBackground(Color.YELLOW);
+        ig2.clearRect(0, 0,600, 600);
+        int i=0;
+        for (int x=2; x<410; x+=102)
+            for (int y=2; y<410; y+=102) {
+                byte[] b = DBHandler.loadThumbnail(grid.imageL.get(i++).rowid());
+                BufferedImage bimg = ImgTools.byteArrayToImg(b);
+                ig2.drawImage (bimg, x,y, null);
+            }
+        return big;
+    }
+
     /**
      * save IMG zo Disk
      * @param img the Image

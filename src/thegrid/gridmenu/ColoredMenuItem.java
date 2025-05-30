@@ -5,6 +5,10 @@ import java.awt.*;
 
 public class ColoredMenuItem extends JMenuItem {
 
+    public ColoredMenuItem(String label) {
+        this (label, Color.BLACK, Color.WHITE);
+    }
+
     public ColoredMenuItem(String label, Color col) {
         this (label, col, Color.LIGHT_GRAY);
     }

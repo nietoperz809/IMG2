@@ -30,22 +30,6 @@ public class Denoise {
     }
 
     /**
-     * Constructor with Buffered Image and file path
-     * @param img
-     * @param inpath
-     */
-
-    /**
-     * Constructor with file path
-     * @param inpath
-     */
-
-    /**
-     * Set an image from a file path
-     * @param inpath
-     */
-
-    /**
      * Set an image from a buffered image
      */
     //@Override
