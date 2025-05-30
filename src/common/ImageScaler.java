@@ -62,7 +62,7 @@ public class ImageScaler {
             scale = 1.0/scale;
         int w = (int)(img.getWidth()*scale);
         int h = (int)(img.getHeight()*scale);
-        BufferedImage after = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
+        BufferedImage after = new BufferedImage(w, h, BufferedImage.TYPE_INT_RGB);
         AffineTransform at = new AffineTransform();
         at.scale(scale, scale);
         AffineTransformOp scaleOp =

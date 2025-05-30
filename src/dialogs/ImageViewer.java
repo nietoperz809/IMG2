@@ -1,5 +1,6 @@
 package dialogs;
 
+import common.ImageScaler;
 import common.MsgBox;
 import thegrid.gridmenu.SubMenuMarked;
 
@@ -23,7 +24,8 @@ public class ImageViewer {
         m_image = img;
         button1.addActionListener(_ -> {
             String outPath = MsgBox.chooseDir(button1);
-            saveImg2Disk(m_image, 0,outPath);
+            BufferedImage imgsc = ImageScaler.scaleImg(m_image, 3.0, true);
+            saveImg2Disk(imgsc, 0,outPath);
         });
     }
 
