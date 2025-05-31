@@ -14,7 +14,7 @@ import java.awt.event.*;
 import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
 
-import static common.ImgTools.removeAlpha;
+import static common.ImageTools.removeAlpha;
 import static common.MsgBox.chooseDir;
 
 
@@ -100,7 +100,7 @@ public class ImageView extends JFrame implements MouseWheelListener {
                 return;
             imgSavetime = milli;
 
-            ImgTools.saveImg2Disk(img, rowid, outPath);
+            ImageTools.saveImg2Disk(img, rowid, outPath);
         }
     }
 
@@ -226,7 +226,7 @@ public class ImageView extends JFrame implements MouseWheelListener {
                 System.out.println("loadImgFromStore-1 fail!!!");
                 return TheGrid.failImg;
             }
-            BufferedImage b2 = ImgTools.byteArrayToImg(b);
+            BufferedImage b2 = ImageTools.byteArrayToImg(b);
             if (b2 == null) {
                 System.out.println("loadImgFromStore-2 fail!!!");
                 return TheGrid.failImg;
@@ -249,7 +249,7 @@ public class ImageView extends JFrame implements MouseWheelListener {
 
 
     public void zoomIn(Rectangle r) {
-        BufferedImage img = ImgTools.crop(getIconImg(), r);
+        BufferedImage img = ImageTools.crop(getIconImg(), r);
         imgPanel.clearOffset();
         imgPanel.setImage(img);
     }

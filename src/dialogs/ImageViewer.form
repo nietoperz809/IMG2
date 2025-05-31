@@ -27,7 +27,7 @@
               <forms/>
             </constraints>
             <properties>
-              <text value="Button"/>
+              <text value="Save image"/>
             </properties>
           </component>
         </children>

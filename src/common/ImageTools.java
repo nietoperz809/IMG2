@@ -3,7 +3,7 @@ package common;
 import com.luciad.imageio.webp.WebPReadParam;
 import database.DBHandler;
 import org.jetbrains.annotations.NotNull;
-import thegrid.TheGrid;
+import thegrid.ImageList;
 
 import javax.imageio.ImageIO;
 import javax.imageio.ImageReader;
@@ -16,26 +16,33 @@ import java.io.*;
 
 import static common.Tools.hasExtension;
 
-public class ImgTools {
+public class ImageTools {
     /**
-        Make Preview from first 16 tiles of a Grid
+     Make Preview from first dim*dim tiles of a Grid
+     @param list ImageList
+     @param rowcol  rows and columns of new image
      */
-    public static BufferedImage createPreviewImage (TheGrid grid) {
-        if (grid.imageL.size() < 16) {
-            System.out.println("Too few Imgs");
-            throw new RuntimeException("To few tiles");
-        }
-        BufferedImage big = new BufferedImage(410, 410, BufferedImage.TYPE_INT_RGB);
+    public static BufferedImage createPreviewImage(ImageList list, final int rowcol) {
+//        if (list.size() < (rowcol * rowcol)) {
+//            throw new RuntimeException("To few tiles");
+//        }
+        final int k = rowcol * 102 + 2;
+        BufferedImage big = new BufferedImage(k, k, BufferedImage.TYPE_INT_RGB);
         Graphics2D ig2 = big.createGraphics();
         ig2.setBackground(Color.YELLOW);
-        ig2.clearRect(0, 0,600, 600);
-        int i=0;
-        for (int x=2; x<410; x+=102)
-            for (int y=2; y<410; y+=102) {
-                byte[] b = DBHandler.loadThumbnail(grid.imageL.get(i++).rowid());
-                BufferedImage bimg = ImgTools.byteArrayToImg(b);
-                ig2.drawImage (bimg, x,y, null);
+        ig2.clearRect(0, 0, k, k);
+        int i = 0;
+        for (int x = 2; x < k; x += 102) {
+            for (int y = 2; y < k; y += 102) {
+                try {
+                    byte[] b = DBHandler.loadThumbnail(list.get(i++).rowid());
+                    BufferedImage bimg = ImageTools.byteArrayToImg(b);
+                    ig2.drawImage(bimg, x, y, null);
+                } catch (RuntimeException e) {
+                    //throw new RuntimeException(e);
+                }
             }
+        }
         return big;
     }
 
@@ -45,15 +52,15 @@ public class ImgTools {
      * @param anum arbitrary ID
      * @param outPath path were the Img goes
      */
-    public static String saveImg2Disk (BufferedImage img, int anum, String outPath) {
-        outPath = outPath+File.separator +
-                RandomWord.generateWord(-1)+"("+anum +")"+".jpg";
+    public static String saveImg2Disk(BufferedImage img, int anum, String outPath) {
+        outPath = outPath + File.separator +
+                RandomWord.generateWord(-1) + "(" + anum + ")" + ".jpg";
         try {
             boolean success = ImageIO.write(img, "jpg", new File(outPath));
             if (!success)
                 System.err.println("imgIO write fail ");
         } catch (Exception ex) {
-            System.err.println("imgIO write fail "+ex);
+            System.err.println("imgIO write fail " + ex);
             throw new RuntimeException(ex);
         }
         return outPath;
@@ -96,22 +103,21 @@ public class ImgTools {
 
     public static void writeToFile(Image im2, String format, String dir, String name) {
         try {
-            ImageIO.write(ImgTools.toBufferedImage(im2), format,
-                    new File(dir + File.separator + name + "."+format));
+            ImageIO.write(ImageTools.toBufferedImage(im2), format,
+                    new File(dir + File.separator + name + "." + format));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
 
     }
 
-    public static void imageToClipboard(Image bi)
-    {
-        TransferableImage trans = new TransferableImage( bi );
+    public static void imageToClipboard(Image bi) {
+        TransferableImage trans = new TransferableImage(bi);
         Clipboard c = Toolkit.getDefaultToolkit().getSystemClipboard();
-        c.setContents( trans, trans );
+        c.setContents(trans, trans);
     }
 
-    public static BufferedImage contrast (BufferedImage img, float val) {
+    public static BufferedImage contrast(BufferedImage img, float val) {
         RescaleOp op = new RescaleOp(val, 0, null);
         return op.filter(img, img);
     }
@@ -177,13 +183,13 @@ public class ImgTools {
 //
 
     public static String[] getImageExtensions() {
-        return new String[] {"jpg", "jpeg", "png", "bmp", "gif", "jfif", "webp"};
+        return new String[]{"jpg", "jpeg", "png", "bmp", "gif", "jfif", "webp"};
     }
 
-    public static BufferedImage loadImageFromFile (String name) throws IOException {
-        if (Tools.isGIF (name)) {
-            MsgBox.Info ("Please put animated gifs in video app");
-            return ImageIO.read(new File (name));
+    public static BufferedImage loadImageFromFile(String name) throws IOException {
+        if (Tools.isGIF(name)) {
+            MsgBox.Info("Please put animated gifs in video app");
+            return ImageIO.read(new File(name));
         } else if (hasExtension(name, ".webp")) {
             // Obtain a WebP ImageReader instance
             ImageReader reader = ImageIO.getImageReadersByMIMEType("image/webp").next();
@@ -198,7 +204,7 @@ public class ImgTools {
             fis.close();
             return buff;
         } else {
-            return ImageIO.read(new File (name));
+            return ImageIO.read(new File(name));
         }
     }
 
@@ -207,10 +213,8 @@ public class ImgTools {
      * @param img primitive image
      * @return buffered image with same content
      */
-    public static BufferedImage toBufferedImage(Image img)
-    {
-        if (img instanceof BufferedImage)
-        {
+    public static BufferedImage toBufferedImage(Image img) {
+        if (img instanceof BufferedImage) {
             return (BufferedImage) img;
         }
 
@@ -226,7 +230,7 @@ public class ImgTools {
         return bimage;
     }
 
-    public static BufferedImage removeAlpha (BufferedImage img) {
+    public static BufferedImage removeAlpha(BufferedImage img) {
         if (img.getType() == BufferedImage.TYPE_INT_RGB)
             return img;
         BufferedImage newImage = new BufferedImage(img.getWidth(), img.getHeight(), BufferedImage.TYPE_INT_RGB);
@@ -258,7 +262,7 @@ public class ImgTools {
      * @param img original image
      * @return flipped image
      */
-    public static BufferedImage flip (BufferedImage img) {
+    public static BufferedImage flip(BufferedImage img) {
         AffineTransform tx = AffineTransform.getScaleInstance(-1, 1);
         tx.translate(-img.getWidth(null), 0);
         AffineTransformOp op = new AffineTransformOp(tx, AffineTransformOp.TYPE_NEAREST_NEIGHBOR);
@@ -272,9 +276,9 @@ public class ImgTools {
      * @return the image as byte array
      * @throws IOException if smth. gone wrong
      */
-    public static byte[] imgToByteArray (BufferedImage img) throws IOException {
+    public static byte[] imgToByteArray(BufferedImage img) throws IOException {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        ImageIO.write (img, "jpg", baos);
+        ImageIO.write(img, "jpg", baos);
         return baos.toByteArray();
     }
 
@@ -283,7 +287,7 @@ public class ImgTools {
      * @param arr image als byte array
      * @return a BufferedImage object
      */
-    public static BufferedImage byteArrayToImg (byte[] arr) {
+    public static BufferedImage byteArrayToImg(byte[] arr) {
         InputStream is = new ByteArrayInputStream(arr);
         try {
             return ImageIO.read(is);
@@ -292,19 +296,19 @@ public class ImgTools {
         }
     }
 
-    public static BufferedImage sharpenImage (BufferedImage img, boolean kern) {
+    public static BufferedImage sharpenImage(BufferedImage img, boolean kern) {
         int kernelWidth = 3;
         int kernelHeight = 3;
         int xOffset = (kernelWidth - 1) / 2;
         int yOffset = (kernelHeight - 1) / 2;
 
         final float[] sharpenMatrix = {
-                0.0f, -0.2f,  0.0f,
-                -0.2f,  1.8f, -0.2f,
-                0.0f, -0.2f,  0.0f
+                0.0f, -0.2f, 0.0f,
+                -0.2f, 1.8f, -0.2f,
+                0.0f, -0.2f, 0.0f
         };
 
-        final float[] kern2 =  {
+        final float[] kern2 = {
                 0.0f, -1.0f, 0.0f,
                 -1.0f, 5.0f, -1.0f,
                 0.0f, -1.0f, 0.0f
@@ -320,11 +324,11 @@ public class ImgTools {
         g2.drawImage(img, xOffset, yOffset, null);
         g2.dispose();
 
-        ConvolveOp op = new ConvolveOp (kernel,ConvolveOp.EDGE_NO_OP,null);
+        ConvolveOp op = new ConvolveOp(kernel, ConvolveOp.EDGE_NO_OP, null);
         return op.filter(newSource, null);
     }
 
-    public static BufferedImage crop (BufferedImage img, Rectangle r) {
+    public static BufferedImage crop(BufferedImage img, Rectangle r) {
         BufferedImage part = new BufferedImage(r.width, r.height, BufferedImage.TYPE_INT_RGB);
         Graphics2D g = (Graphics2D) part.getGraphics();
         g.setRenderingHint(RenderingHints.KEY_INTERPOLATION,
@@ -338,7 +342,7 @@ public class ImgTools {
         return part;
     }
 
-    public static BufferedImage deepCopy (BufferedImage source){
+    public static BufferedImage deepCopy(BufferedImage source) {
         BufferedImage b = new BufferedImage(source.getWidth(), source.getHeight(), BufferedImage.TYPE_INT_RGB);
         Graphics g = b.getGraphics();
         g.drawImage(source, 0, 0, null);

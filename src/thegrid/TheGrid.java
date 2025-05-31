@@ -9,15 +9,12 @@ import thegrid.gridmenu.GridMenuBar;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ComponentAdapter;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.time.Duration;
 import java.time.Instant;
 
-import static common.ImgTools.byteArrayToImg;
+import static common.ImageTools.byteArrayToImg;
 import static common.MsgBox.AskforPWD;
 import static common.NumToText.*;
 import static common.Tools.extractResource;

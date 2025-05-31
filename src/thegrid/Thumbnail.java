@@ -1,6 +1,6 @@
 package thegrid;
 
-import common.ImgTools;
+import common.ImageTools;
 import common.MsgBox;
 import database.DBHandler;
 
@@ -142,7 +142,7 @@ public class Thumbnail extends JLabel {
      * @param rootPane the Imagegrid itself
      */
     Thumbnail(TheGrid grid, byte[] tbh, int currentIndex, JPanel rootPane) {
-        super(new ImageIcon(ImgTools.byteArrayToImg(tbh)));
+        super(new ImageIcon(ImageTools.byteArrayToImg(tbh)));
         //imgHash = null;
         init (grid, currentIndex, rootPane);
     }

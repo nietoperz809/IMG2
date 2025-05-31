@@ -25,7 +25,7 @@ public class ImageWarper {
     }
 
     private static BufferedImage createImageFromArray(int[] pixels, int width, int height) {
-        BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+        BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
         image.setRGB(0, 0, width, height, pixels, 0, width);
         return image;
     }

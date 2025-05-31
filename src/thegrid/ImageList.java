@@ -16,8 +16,12 @@ public class ImageList {
         allFiles = DBHandler.loadImageInfos(this.sql);
     }
 
-    public DBHandler.NameID get (int n) {
-        return allFiles.get(n);
+    public DBHandler.NameID get (int n) throws RuntimeException {
+        try {
+            return allFiles.get(n);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public int size() {

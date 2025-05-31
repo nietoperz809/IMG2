@@ -14,12 +14,26 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ddb69741-e020-4d21-a32f-f00e79c6818a" name="Changes" comment="backup">
+    <list default="true" id="ddb69741-e020-4d21-a32f-f00e79c6818a" name="Changes" comment="fixed image scaler to int_rgb">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/Catalano.Image.jar" beforeDir="false" afterPath="$PROJECT_DIR$/lib/Catalano.Image.jar" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/buildinfo/BuildInfo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/buildinfo/BuildInfo.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/buildinfo/build.number" beforeDir="false" afterPath="$PROJECT_DIR$/src/buildinfo/build.number" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/dialogs/ConBright.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/dialogs/ConBright.form" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/dialogs/ConBright.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/dialogs/ConBright.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/common/ImageWarper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/common/ImageWarper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/common/ImgTools.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/common/ImageTools.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/database/DBHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/database/DBHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dialogs/ImageViewer.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/dialogs/ImageViewer.form" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dialogs/ImageViewer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/dialogs/ImageViewer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/thegrid/ImageList.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/thegrid/ImageList.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/thegrid/ImageView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/thegrid/ImageView.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/thegrid/ImgPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/thegrid/ImgPanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/thegrid/ImgViewKeyHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/thegrid/ImgViewKeyHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/thegrid/TheGrid.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/thegrid/TheGrid.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/thegrid/Thumbnail.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/thegrid/Thumbnail.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/thegrid/gridmenu/GridMenuBar.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/thegrid/gridmenu/GridMenuBar.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/thegrid/gridmenu/SubMenuMarked.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/thegrid/gridmenu/SubMenuMarked.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/video/AnimPlayerBox.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/video/AnimPlayerBox.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/video/GifDecoder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/video/GifDecoder.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -87,6 +101,7 @@
     "Application.Console.executor": "Run",
     "Application.DBHandler.executor": "Debug",
     "Application.GUIConsole.executor": "Run",
+    "Application.ImageViewer.executor": "Run",
     "Application.Main (1).executor": "Run",
     "Application.Main (2).executor": "Run",
     "Application.Main.executor": "Run",
@@ -119,21 +134,21 @@
     "UI_DESIGNER_EDITOR_MODE.PaletteManager.SHOW": "true",
     "UI_DESIGNER_EDITOR_MODE.PaletteManager.WIDTH": "193",
     "UI_DESIGNER_EDITOR_MODE.UIDesignerToolWindowManager.SHOW": "true",
-    "UI_DESIGNER_EDITOR_MODE.UIDesignerToolWindowManager.WIDTH": "300",
+    "UI_DESIGNER_EDITOR_MODE.UIDesignerToolWindowManager.WIDTH": "298",
     "full.screen.before.presentation.mode": "true",
     "git-widget-placeholder": "withQueue",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/peter.home/java/IMG2/src/dialogs/video",
+    "last_opened_file_path": "C:/peter.home/java/IMG3",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Artifacts",
+    "project.structure.last.edited": "Libraries",
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.18296796",
     "run.code.analysis.last.selected.profile": "aDefault",
-    "settings.editor.selected.configurable": "preferences.pluginManager",
+    "settings.editor.selected.configurable": "advanced.settings",
     "vue.rearranger.settings.migration": "true"
   },
   "keyToStringList": {
@@ -190,8 +205,8 @@
     </option>
   </component>
   <component name="RunManager" selected="Application.Main">
-    <configuration name="ConBright" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="dialogs.ConBright" />
+    <configuration name="ImageViewer" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="dialogs.ImageViewer" />
       <module name="IMG2" />
       <extension name="coverage">
         <pattern>
@@ -254,7 +269,7 @@
     </configuration>
     <list>
       <item itemvalue="Application.Main" />
-      <item itemvalue="Application.ConBright" />
+      <item itemvalue="Application.ImageViewer" />
       <item itemvalue="Application.Main (1)" />
       <item itemvalue="Application.Main (2)" />
       <item itemvalue="Application.MultiSlider" />
@@ -262,11 +277,11 @@
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.ImageViewer" />
+        <item itemvalue="Application.SliderBox" />
         <item itemvalue="Application.MultiSlider" />
-        <item itemvalue="Application.ConBright" />
         <item itemvalue="Application.Main (2)" />
         <item itemvalue="Application.Main (1)" />
-        <item itemvalue="Application.SliderBox" />
       </list>
     </recent_temporary>
   </component>
@@ -628,7 +643,7 @@
       <option name="project" value="LOCAL" />
       <updated>1683976691765</updated>
     </task>
-    <option name="localTasksCounter" value="286" />
+    <option name="localTasksCounter" value="294" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -690,12 +705,6 @@
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_NEW_TODO" value="false" />
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="litle bugfix in taglist" />
-    <MESSAGE value="litle bugfix in taglist, new jar" />
-    <MESSAGE value="backup, minor changes" />
-    <MESSAGE value="change ListToText behaviour" />
-    <MESSAGE value="bugfixed" />
-    <MESSAGE value="extracted key adapter" />
     <MESSAGE value="added query table" />
     <MESSAGE value="working sql list!" />
     <MESSAGE value="improved sql list" />
@@ -715,7 +724,13 @@
     <MESSAGE value="+contrast/gamma/brightness" />
     <MESSAGE value="optiized ConBrightV" />
     <MESSAGE value="backup" />
-    <option name="LAST_COMMIT_MESSAGE" value="backup" />
+    <MESSAGE value="changed tooktip colors" />
+    <MESSAGE value="speak out how many images &#10;are 'img'-tagged" />
+    <MESSAGE value="introduced ColoredMenuItem.java" />
+    <MESSAGE value="minor change in menu" />
+    <MESSAGE value="preview image for imagelists" />
+    <MESSAGE value="fixed image scaler to int_rgb" />
+    <option name="LAST_COMMIT_MESSAGE" value="fixed image scaler to int_rgb" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

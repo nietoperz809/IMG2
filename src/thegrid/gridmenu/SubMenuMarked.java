@@ -56,8 +56,8 @@ public class SubMenuMarked extends JMenu {
                     for (Thumbnail gi : marked) {
                         int id = gi.getRowID();
                         byte[] b = DBHandler.loadImage(id);
-                        BufferedImage b2 = ImgTools.byteArrayToImg(b);
-                        ImgTools.saveImg2Disk(b2, id, outPath);
+                        BufferedImage b2 = ImageTools.byteArrayToImg(b);
+                        ImageTools.saveImg2Disk(b2, id, outPath);
                     }
                     Thumbnail.markAll(grid, false);
                 });
@@ -91,8 +91,8 @@ public class SubMenuMarked extends JMenu {
                         final Thumbnail[] marked = Thumbnail.getMarked(grid);
                         for (Thumbnail gi : marked) {
                             int id = gi.getRowID();
-                            BufferedImage b2 = ImgTools.byteArrayToImg(DBHandler.loadImage(id));
-                            String imgFile = ImgTools.saveImg2Disk(b2, id, outPath);
+                            BufferedImage b2 = ImageTools.byteArrayToImg(DBHandler.loadImage(id));
+                            String imgFile = ImageTools.saveImg2Disk(b2, id, outPath);
                             zipFile.addFile(imgFile,zipParameters);
                             DeferredFileDeleter.put (new File(imgFile));
                         }

@@ -2,16 +2,12 @@ package dialogs;
 
 import common.ImageScaler;
 import common.MsgBox;
-import thegrid.gridmenu.SubMenuMarked;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
-import java.io.File;
 
-import static common.ImgTools.saveImg2Disk;
+import static common.ImageTools.saveImg2Disk;
 
 public class ImageViewer {
     private final BufferedImage m_image;
@@ -21,30 +17,23 @@ public class ImageViewer {
     private JPanel imagePanel;
 
     public ImageViewer(BufferedImage img) {
+        final JFrame frame = new JFrame("PreviewImage");
         m_image = img;
         button1.addActionListener(_ -> {
-            String outPath = MsgBox.chooseDir(button1);
+            String outPath = MsgBox.chooseDir(frame);
             BufferedImage imgsc = ImageScaler.scaleImg(m_image, 3.0, true);
             saveImg2Disk(imgsc, 0,outPath);
+            frame.dispose();
         });
-    }
-
-//    public static void main(String[] args) {
-//        JFrame frame = new JFrame("ImageViewer");
-//        frame.setContentPane(new ImageViewer(null).panel1);
-//        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//        frame.pack();
-//        frame.setVisible(true);
-//    }
-
-    public static void xmain(BufferedImage bi) {
-        JFrame frame = new JFrame("PreviewImage");
-        ImageViewer imv = new ImageViewer(bi);
-        frame.setContentPane(imv.panel1);
+        frame.setContentPane(panel1);
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.setSize(800, 800);
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
+    }
+
+    public static void xmain(BufferedImage bi) {
+        new ImageViewer(bi);
     }
 
     private void createUIComponents() {

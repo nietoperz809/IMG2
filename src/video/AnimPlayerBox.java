@@ -1,6 +1,6 @@
 package video;
 
-import common.ImgTools;
+import common.ImageTools;
 import common.Tools;
 
 import javax.swing.*;
@@ -98,7 +98,7 @@ public class AnimPlayerBox implements PlayerBox {
 
                     frameNum++;
                     if (saveFlag) {
-                        ImgTools.writeToFile(im2, "jpg", parent.snapDir, "" + frameNum);
+                        ImageTools.writeToFile(im2, "jpg", parent.snapDir, "" + frameNum);
                     }
                     iic.setImage(im2);
                     label.repaint();

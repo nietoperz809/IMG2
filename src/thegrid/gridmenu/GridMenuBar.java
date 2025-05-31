@@ -16,7 +16,6 @@ import java.awt.datatransfer.DataFlavor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
-import java.awt.image.BufferedImageOp;
 import java.io.*;
 import java.sql.SQLException;
 import java.util.*;
@@ -99,7 +98,7 @@ public class GridMenuBar extends JMenuBar {
             if (lastPath.exists() && lastPath.isDirectory()) {
                 fc.setCurrentDirectory(new File(lastDirectory));
             }
-            FileNameExtensionFilter filter = new FileNameExtensionFilter("Image Files", ImgTools.getImageExtensions());
+            FileNameExtensionFilter filter = new FileNameExtensionFilter("Image Files", ImageTools.getImageExtensions());
             fc.setFileFilter(filter);
             fc.setMultiSelectionEnabled(true);
             if (fc.showOpenDialog(theGrid.rootPane) == JFileChooser.APPROVE_OPTION) {
@@ -155,9 +154,9 @@ public class GridMenuBar extends JMenuBar {
         });
         jm.add(jmi);
 
-        jmi = new JMenuItem("4*4 Grid preview");
+        jmi = new JMenuItem("x*x Grid preview");
         jmi.addActionListener(_ -> {
-            BufferedImage big = ImgTools.createPreviewImage(theGrid);
+            BufferedImage big = ImageTools.createPreviewImage(theGrid.imageL, 5);
             ImageViewer.xmain(big);
         });
         jm.add(jmi);

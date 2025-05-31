@@ -97,13 +97,13 @@ class ImgViewKeyHandler extends KeyAdapter {
 
             case VK_R -> {
                 BufferedImage img = imageView.getIconImg();
-                img = ImgTools.rotateClockwise90(img);
+                img = ImageTools.rotateClockwise90(img);
                 imageView.imgPanel.setImageCentered(img);
             }
 
             case VK_M -> { // mirror
                 BufferedImage img = imageView.getIconImg();
-                img = ImgTools.flip(img);
+                img = ImageTools.flip(img);
                 imageView.imgPanel.setImageCentered(img);
             }
 
@@ -198,7 +198,7 @@ class ImgViewKeyHandler extends KeyAdapter {
 
             case VK_X -> {
                 BufferedImage img = imageView.getIconImg();
-                BufferedImage out = ImgTools.sharpenImage(img, !e.isControlDown());
+                BufferedImage out = ImageTools.sharpenImage(img, !e.isControlDown());
                 imageView.imgPanel.setImage(out);
             }
 
@@ -341,7 +341,7 @@ class ImgViewKeyHandler extends KeyAdapter {
             case VK_C -> {
                 if (e.isControlDown()) {
                     BufferedImage img = imageView.getIconImg();
-                    ImgTools.imageToClipboard(img);
+                    ImageTools.imageToClipboard(img);
                 } else {
                     int id = imageView.grid.imageL.get(imageView.indexRing.get()).rowid();
                     if (MsgBox.Question("Replace image #" + id)) {

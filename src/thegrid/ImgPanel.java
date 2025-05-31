@@ -78,7 +78,7 @@ public class ImgPanel extends JPanel {
 
     public void setImage (BufferedImage img) {
         if (image != null)
-            globalImageStack.push (ImgTools.deepCopy(image));
+            globalImageStack.push (ImageTools.deepCopy(image));
         image = img;
         //String hp = grid.getHistoryPath();
         autoSaveImage();
@@ -148,7 +148,7 @@ public class ImgPanel extends JPanel {
 
     public void setWatermark(Watermark watermark) {
         if (image != null) {
-            globalImageStack.push (ImgTools.deepCopy(image));
+            globalImageStack.push (ImageTools.deepCopy(image));
             paintText(image.createGraphics(), watermark.pos, watermark.font,
                     watermark.text, watermark.col, watermark.alpha, watermark.fillground);
             autoSaveImage();
