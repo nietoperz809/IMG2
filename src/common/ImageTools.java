@@ -23,9 +23,6 @@ public class ImageTools {
      @param rowcol  rows and columns of new image
      */
     public static BufferedImage createPreviewImage(ImageList list, final int rowcol) {
-//        if (list.size() < (rowcol * rowcol)) {
-//            throw new RuntimeException("To few tiles");
-//        }
         final int k = rowcol * 102 + 2;
         BufferedImage big = new BufferedImage(k, k, BufferedImage.TYPE_INT_RGB);
         Graphics2D ig2 = big.createGraphics();
@@ -37,7 +34,7 @@ public class ImageTools {
                 try {
                     byte[] b = DBHandler.loadThumbnail(list.get(i++).rowid());
                     BufferedImage bimg = ImageTools.byteArrayToImg(b);
-                    ig2.drawImage(bimg, x, y, null);
+                    ig2.drawImage(bimg, x, y, 100,100,null);
                 } catch (RuntimeException e) {
                     //throw new RuntimeException(e);
                 }
