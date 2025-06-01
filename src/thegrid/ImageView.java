@@ -55,23 +55,12 @@ public class ImageView extends JFrame implements MouseWheelListener {
                 kh.stopTimer();
             }
         });
+        ImageViewController.add(this);
     }
 
     BufferedImage getIconImg() {
         return removeAlpha(imgPanel.getImage());
     }
-
-
-//    void sharpenImage() {
-//        BufferedImage img = ImgTools.sharpenImage(getIconImg());
-//        imgPanel.setImage(img);
-//    }
-
-//    void changeContrast(float val) {
-//        BufferedImage img = getIconImg();
-//        img = ImgTools.contrast(img, val);
-//        imgPanel.setImage(img);
-//    }
 
     void saveAsFile(boolean orig) {
         String outPath = chooseDir(this);

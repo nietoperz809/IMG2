@@ -117,7 +117,7 @@ public class Thumbnail extends JLabel {
                     }
                     ImageView iv = new ImageView(grid, index);
                     markAll(grid, false);
-                    ImageViewController.add(iv);
+                    //ImageViewController.add(iv);
                 }
             }
         });

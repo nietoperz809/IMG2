@@ -97,7 +97,9 @@ public class TheGrid extends MyFrame {
         // Action ...
         imageCount = 0;
         startTime = Instant.now();
-
+        if (thisInstCount > 1) {
+            ImageViewController.add(this);
+        }
         if (imageL.size() == 0) {
             stopThumbViewFill("sql error");
             return;
