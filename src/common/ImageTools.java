@@ -15,6 +15,7 @@ import java.awt.image.*;
 import java.io.*;
 
 import static common.Tools.hasExtension;
+import static database.DBHandler.loadThumbnail;
 
 public class ImageTools {
     /**
@@ -32,9 +33,8 @@ public class ImageTools {
         for (int x = 2; x < k; x += 102) {
             for (int y = 2; y < k; y += 102) {
                 try {
-                    byte[] b = DBHandler.loadThumbnail(list.get(i++).rowid());
-                    BufferedImage bimg = ImageTools.byteArrayToImg(b);
-                    ig2.drawImage(bimg, x, y, 100,100,null);
+                    ig2.drawImage(byteArrayToImg(loadThumbnail(list.get(i++).rowid())),
+                            x, y, 100,100,null);
                 } catch (RuntimeException e) {
                     //throw new RuntimeException(e);
                 }

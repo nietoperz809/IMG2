@@ -4,19 +4,19 @@ import java.util.ArrayList;
 
 public class ImageViewController {
 
-    private final ArrayList<ImageView> _list = new ArrayList<>();
+    private static final ArrayList<ImageView> _list = new ArrayList<>();
 
-    public void add(ImageView iv) {
+    public static void add(ImageView iv) {
         //System.out.println("ivm add: "+iv);
         _list.add(iv);
     }
 
-    public void remove(ImageView iv) {
+    public static void remove(ImageView iv) {
         //System.out.println("ivm remove: "+iv);
         _list.remove(iv);
     }
 
-    public void killAllViews() {
+    public static void killAllViews() {
         ArrayList<ImageView> cl = (ArrayList<ImageView>) _list.clone();
         for (ImageView iv: cl) {
             iv.dispose();

@@ -27,7 +27,7 @@ public class ImageView extends JFrame implements MouseWheelListener {
     @Override
     public void dispose() {
         super.dispose();
-        grid.controller.remove(this);
+        ImageViewController.remove(this);
     }
 
     public ImageView(TheGrid grid, int idx) {

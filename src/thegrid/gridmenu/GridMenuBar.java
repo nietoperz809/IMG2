@@ -5,6 +5,7 @@ import database.DBHandler;
 import dialogs.*;
 import httpserv.WebApp;
 import org.h2.tools.GUIConsole;
+import thegrid.ImageViewController;
 import thegrid.TheGrid;
 import video.VideoApp;
 
@@ -86,7 +87,7 @@ public class GridMenuBar extends JMenuBar {
         jm.add(jmi);
 
         jmi = new JMenuItem("Dispose all open views ...");
-        jmi.addActionListener(_ -> theGrid.controller.killAllViews());
+        jmi.addActionListener(_ -> ImageViewController.killAllViews());
         jm.add(jmi);
 
         jmi = new JMenuItem("Add more pictures ...");

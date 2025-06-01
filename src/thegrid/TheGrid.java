@@ -27,7 +27,6 @@ public class TheGrid extends MyFrame {
     static ImageView mainView;
     public int thisInstCount;
     public final ImageList imageL = new ImageList();
-    public final ImageViewController controller = new ImageViewController();
     public final JPanel rootPane;
     public final JScrollPane scrollPane;
     private final ProgressBox progress;
