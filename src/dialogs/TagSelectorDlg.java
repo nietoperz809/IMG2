@@ -39,7 +39,9 @@ public class TagSelectorDlg extends JDialog {
 
     public static JList<String> open() {
         TagSelectorDlg dialog = new TagSelectorDlg();
-        dialog.pack();
+        //dialog.pack();
+        dialog.setSize(1100,400);
+        dialog.setLocationRelativeTo(null);
         dialog.setVisible(true);
         if (dialog.cancelled)
             return null;

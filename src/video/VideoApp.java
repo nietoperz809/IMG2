@@ -34,7 +34,7 @@ import java.util.Locale;
 import static common.Sam.speak;
 import static database.VideoFunctions.*;
 
-public class VideoApp extends JDialog {
+public class VideoApp extends JFrame {
     private final List<DBHandler.NameID> entireList = new ArrayList<>();
     public String snapDir = "C:\\Users\\Administrator\\Desktop\\snaps";
     public List<DBHandler.NameID> videoList;
@@ -53,7 +53,6 @@ public class VideoApp extends JDialog {
     private JCheckBox checkBoxAC;
     private JCheckBox checkBoxautoNew;
     private PlayerBox playerBox;
-    //private JScrollPane listscroll;
     private JButton filterButton;
     private JButton restoreButton;
 
@@ -69,6 +68,7 @@ public class VideoApp extends JDialog {
         menu.add(mi2);
         mb.add(menu);
         setJMenuBar(mb);
+        setTitle ("Video Player Application!");
 
         outputDirLabel.setText(snapDir);
         outputDirLabel.setToolTipText("Output Dir, klick to change ...");

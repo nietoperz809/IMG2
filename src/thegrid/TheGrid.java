@@ -91,7 +91,6 @@ public class TheGrid extends MyFrame {
         setSize(1050, 800);
         setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         setLocationRelativeTo(null);
-        //rootPane.setToolTipText(imageL.size() + " Images, press 'a' to add more");
         new GridListeners(this);
         new GridMenuBar(this);
         // Action ...
