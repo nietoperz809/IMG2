@@ -126,7 +126,7 @@ public class VideoFunctions extends DBHandler{
     }
 
     public static List<NameID> getAnimatedFileNames(String dbname) {
-        String sql = "select name,_ROWID_,tag from " + dbname + " order by _ROWID_ asc";
+        String sql = "select name,_ROWID_,blobsize from " + dbname + " order by blobsize asc";
         return getNames(sql);
     }
 

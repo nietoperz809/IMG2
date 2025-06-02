@@ -193,6 +193,10 @@ public class VideoApp extends JFrame {
                             .format(Double.parseDouble(len));
                     MsgBox.Info("Bloblen: " + flen + " Bytes");
                 }
+                // .. left double click
+                else if (e.getClickCount() == 2) {
+                    CancelOldAndPlayNew();
+                }
             }
         });
     }
