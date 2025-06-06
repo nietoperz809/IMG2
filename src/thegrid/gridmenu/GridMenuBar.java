@@ -172,8 +172,8 @@ public class GridMenuBar extends JMenuBar {
         });
         jm.add(jmi);
 
-        JCheckBoxMenuItem m7 = new JCheckBoxMenuItem("WebServer");
-        m7.addActionListener(new ActionListener() {
+        final JCheckBoxMenuItem cbMenuItem = new JCheckBoxMenuItem("WebServer");
+        cbMenuItem.addActionListener(new ActionListener() {
             static WebApp wapp;
 
             @Override
@@ -183,10 +183,36 @@ public class GridMenuBar extends JMenuBar {
                     return;
                 }
                 wapp = new WebApp();
-                m7.setState(true);
+                cbMenuItem.setState(true);
             }
         });
-        jm.add(m7);
+        jm.add(cbMenuItem);
+
+        final JCheckBoxMenuItem dwItem = new JCheckBoxMenuItem("DirectoryWatch");
+        dwItem.addActionListener(new ActionListener() {
+            static DirectoryWatcher dwatch;
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (!dwItem.getState()) {// not checked
+                    dwatch.stop();
+                    dwatch = null;
+                } else { //checked
+                    String dir = MsgBox.chooseDir(theGrid);
+                    if (dir == null) {
+                        dwItem.setState(false);
+                        return;
+                    }
+                    dwatch = new DirectoryWatcher();
+                    try {
+                        dwatch.start(dir);
+                    } catch (Exception ex) {
+                        throw new RuntimeException(ex);
+                    }
+                }
+            }
+        });
+        jm.add(dwItem);
 
         final JMenuItem jmi2 = new JCheckBoxMenuItem("save image history");
         jmi2.addActionListener(_ -> {

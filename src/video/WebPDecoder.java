@@ -192,7 +192,7 @@ public class WebPDecoder implements AnimDecoder {
     }
 
     private static boolean debugEnabled() {
-        return Objects.equals(System.getProperty("jna.debug_load"), "true");
+        return false; //Objects.equals(System.getProperty("jna.debug_load"), "true");
     }
 
 //    //==========================
