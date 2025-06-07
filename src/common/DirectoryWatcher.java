@@ -1,18 +1,22 @@
 package common;
 
+import database.DBHandler;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.nio.file.*;
+import java.io.File;
+import java.io.IOException;
+import java.util.Set;
+import java.util.concurrent.FutureTask;
 
 public class DirectoryWatcher {
 
-    private WatchKey watchKey;
-    private boolean stopflag = false;
+    FutureTask<?> task;
 
     public static JCheckBoxMenuItem createMenuItem(Component parent) {
-        final JCheckBoxMenuItem dwItem = new JCheckBoxMenuItem("DirectoryWatch");
+        final JCheckBoxMenuItem dwItem = new JCheckBoxMenuItem("Scan dir for new imgs");
         dwItem.addActionListener(new ActionListener() {
             static DirectoryWatcher dwatch;
 
@@ -41,33 +45,31 @@ public class DirectoryWatcher {
 
     public void stop() {
         System.out.println("dwatch stop");
-        stopflag = true;
+        task.cancel(true);
     }
 
-    public void start (String dir) throws Exception {
+    public void start(final String dir) throws Exception {
         System.out.println("dwatch start");
-        WatchService watchService = FileSystems.getDefault().newWatchService();
-        Path path = Paths.get(dir);
-        path.register (watchService, StandardWatchEventKinds.ENTRY_CREATE);
-//                StandardWatchEventKinds.ENTRY_DELETE,
-//                StandardWatchEventKinds.ENTRY_MODIFY);
-
-        Tools.runTask(() -> {
-            do {
-                watchKey = watchService.poll();
-                if (watchKey == null) {
-                    Tools.delay(500);
-                    continue;
+        task = Tools.runTask(() -> {
+            for (; ; ) {
+                try {
+                    Set<String> set = Tools.listFiles(dir);
+                    for (String fname : set) {
+                        File f = new File(dir + File.separator + fname);
+                        try {
+                            // move to DB and delete from disk
+                            DBHandler.MoveImageFilesToDB(new File[]{f}, (img, name) -> {
+                                Sam.speak("file added");
+                            });
+                        } catch (Exception e) {
+                            throw new RuntimeException(e);
+                        }
+                    }
+                    Tools.delay(10000); // next round in 10s
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
                 }
-                for (WatchEvent<?> event : watchKey.pollEvents()) {
-                    System.out.println(
-                            "Event kind:" + event.kind()
-                                    + ". File affected: " + event.context() + ".");
-                }
-                watchKey.reset();
-            } while (!stopflag);
-            System.out.println("leave watcher task");
+            }
         });
-
     }
 }

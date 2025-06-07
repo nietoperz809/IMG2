@@ -11,10 +11,15 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.*;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.FutureTask;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class Tools {
 
@@ -152,7 +157,7 @@ public class Tools {
         try {
             Thread.sleep(ms);
         } catch (InterruptedException ioe) {
-            System.out.println("intExc");
+            System.out.println("delay interrupted");
         }
     }
 
@@ -201,5 +206,15 @@ public class Tools {
         tooltip.setBackground(Color.BLACK);
         tooltip.setForeground(Color.YELLOW);
         return tooltip;
+    }
+
+    public static Set<String> listFiles(String dir) throws IOException {
+        try (Stream<Path> stream = Files.list(Paths.get(dir))) {
+            return stream
+                    .filter(file -> !Files.isDirectory(file))
+                    .map(Path::getFileName)
+                    .map(Path::toString)
+                    .collect(Collectors.toSet());
+        }
     }
 }
