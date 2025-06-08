@@ -14,7 +14,8 @@ public class DeferredFileDeleter {
                     File file = __delQue.take();
                     Tools.runTask(() -> {
                         boolean del = file.delete();
-                        if (!del) { // del failed
+                        if (!del) {
+                            System.out.println("delete of queue etry failed");
                             put (file);
                         }
                     });

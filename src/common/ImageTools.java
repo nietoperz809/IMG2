@@ -115,7 +115,7 @@ public class ImageTools {
     }
 
     public static BufferedImage contrast(BufferedImage img, float val) {
-        RescaleOp op = new RescaleOp(val, 0, null);
+        RescaleOp op = new RescaleOp(val, 20.0f, null);
         return op.filter(img, img);
     }
 

@@ -8,6 +8,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.concurrent.FutureTask;
 
@@ -51,12 +52,17 @@ public class DirectoryWatcher {
     public void start(final String dir) throws Exception {
         System.out.println("dwatch start");
         task = Tools.runTask(() -> {
+            Set<String> intersection = new HashSet<>();
             for (; ; ) {
                 try {
-                    Set<String> set = Tools.listFiles(dir);
-                    for (String fname : set) {
+                    Set<String> set1 = Tools.listFiles(dir);
+                    for (String fname : set1) {
                         File f = new File(dir + File.separator + fname);
-                        try {
+                        if (!intersection.isEmpty()) {
+                            boolean d = f.delete();
+                            if (!d)
+                                System.out.println("delete fail in DirectoryWatcher");
+                        } else try {
                             // move to DB and delete from disk
                             DBHandler.MoveImageFilesToDB(new File[]{f}, (img, name) -> {
                                 Sam.speak("file added");
@@ -66,6 +72,9 @@ public class DirectoryWatcher {
                         }
                     }
                     Tools.delay(10000); // next round in 10s
+                    Set<String> set2 = Tools.listFiles(dir);
+                    intersection = new HashSet<>(set1);
+                    intersection.retainAll(set2);
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }

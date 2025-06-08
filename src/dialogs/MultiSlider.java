@@ -3,6 +3,7 @@ package dialogs;
 import com.jhlabs.image.AbstractBufferedImageOp;
 import com.jhlabs.image.GainFilter;
 import com.jhlabs.image.GammaFilter;
+import common.ImageTools;
 import common.Stepper;
 import thegrid.ImgPanel;
 
@@ -59,9 +60,13 @@ public class MultiSlider extends JDialog {
             doFilt(gf);
         });
 
-        sc4.addAdjustmentListener(_ -> {
-            la4.setText(""+sc4.getValue());
-        });
+//        sc4.addAdjustmentListener(_ -> {
+//            final Stepper stepper = new Stepper(-3.0f, 3.0f, 256);
+//            float val = stepper.get(sc4.getValue());
+//            la4.setText(""+val);
+//            BufferedImage out = ImageTools.contrast(img, val);
+//            imgPanel.setImage(out);
+//        });
     }
 
     public static void main(String[] args) {
