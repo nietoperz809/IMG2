@@ -59,6 +59,8 @@ public class DirectoryWatcher {
                     for (String fname : set1) {
                         File f = new File(dir + File.separator + fname);
                         if (!intersection.isEmpty()) {
+                            System.out.println("intersection not empty "+
+                                    intersection.size());
                             boolean d = f.delete();
                             if (!d)
                                 System.out.println("delete fail in DirectoryWatcher");
@@ -82,3 +84,5 @@ public class DirectoryWatcher {
         });
     }
 }
+
+//laladumm1234

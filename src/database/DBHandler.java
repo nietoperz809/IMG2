@@ -34,7 +34,9 @@ public class DBHandler {
     static final String NO_PASS = "NoPass";
     static final String DB_FILE = "mydb";
     static final String DB_FILE_FULL = DB_FILE + ".mv.db";
-    static String RootDirectory = "E:\\Databases\\";
+    static String RootDirectory =
+            //"C:\\Databases_Copy\\Databases\\";
+            "E:\\Databases\\";
     static Connection connection;
     static Statement statement;
     /*
@@ -345,7 +347,7 @@ public class DBHandler {
      * @param ic Callback object after insertion into DB
      * @throws Exception if smth. went wrong
      */
-    public static int MoveImageFilesToDB(File[] files, InsertCallback ic) throws Exception {
+    public static synchronized int MoveImageFilesToDB(File[] files, InsertCallback ic) throws Exception {
         int ret = 0;
         for (File file : files) {
             String name = UUID.randomUUID().toString();
