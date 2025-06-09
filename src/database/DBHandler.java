@@ -35,8 +35,8 @@ public class DBHandler {
     static final String DB_FILE = "mydb";
     static final String DB_FILE_FULL = DB_FILE + ".mv.db";
     static String RootDirectory =
-            //"C:\\Databases_Copy\\Databases\\";
-            "E:\\Databases\\";
+            "C:\\Databases_Copy\\Databases\\";
+            //"E:\\Databases\\";
     static Connection connection;
     static Statement statement;
     /*
@@ -45,7 +45,8 @@ public class DBHandler {
     static volatile boolean _backupIsRunning;
     static Future<?> transferTask;
 
-    static {
+    public static void startDatabase(String root) {
+        RootDirectory = root;
         PersistString pers = new PersistString("pwddb", NO_PASS);
         try {
             String aes_pwd;
@@ -110,10 +111,10 @@ public class DBHandler {
         return RootDirectory;
     }
 
-    public static void setDBRoot(String s) {
-        RootDirectory = s;
-        log("DBROOT set to:" + s);
-    }
+//    public static void setDBRoot(String s) {
+//        RootDirectory = s;
+//        log("DBROOT set to:" + s);
+//    }
 
     /**
      * Warning box if an image is about to be deleted

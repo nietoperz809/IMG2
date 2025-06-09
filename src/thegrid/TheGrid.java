@@ -126,8 +126,7 @@ public class TheGrid extends MyFrame {
             for (String s : input) {
                 if (s.startsWith(dbRoot)) {
                     dbRoot = s.substring(dbRoot.length());
-                    DBHandler.setDBRoot(dbRoot);
-                    //System.out.println(dbRoot);
+                    DBHandler.startDatabase(dbRoot);
                 }
                 else if (s.equals("nopwd")) {
                     askPwd = false;
