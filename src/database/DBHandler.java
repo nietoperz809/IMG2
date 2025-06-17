@@ -1,29 +1,30 @@
 package database;
 
 import common.*;
+import dev.brachtendorf.jimagehash.hash.Hash;
+import dev.brachtendorf.jimagehash.hashAlgorithms.HashingAlgorithm;
+import dev.brachtendorf.jimagehash.hashAlgorithms.PerceptiveHash;
 import dialogs.UnlockDialog;
-import common.ImageScaler;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.*;
+import java.io.File;
+import java.io.IOException;
+import java.io.RandomAccessFile;
 import java.lang.ref.SoftReference;
 import java.nio.MappedByteBuffer;
 import java.nio.channels.FileChannel;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.sql.*;
-import java.text.SimpleDateFormat;
 import java.time.Duration;
 import java.time.Instant;
 import java.util.*;
 import java.util.List;
 import java.util.concurrent.Future;
 import java.util.concurrent.atomic.AtomicReference;
-
-import dev.brachtendorf.jimagehash.hash.Hash;
-import dev.brachtendorf.jimagehash.hashAlgorithms.HashingAlgorithm;
-import dev.brachtendorf.jimagehash.hashAlgorithms.PerceptiveHash;
-
 
 import static common.ImageTools.byteArrayToImg;
 import static common.Tools.extractResource;
@@ -37,7 +38,7 @@ public class DBHandler {
     static final String DB_FILE_FULL = DB_FILE + ".mv.db";
     static String RootDirectory =
             "C:\\Databases_Copy\\Databases\\";
-            //"E:\\Databases\\";
+    //"E:\\Databases\\";
     static Connection connection;
     static Statement statement;
     /*
@@ -76,7 +77,7 @@ public class DBHandler {
             sql = "alter table IMAGES add if not exists IMGHASH JAVA_OBJECT";
             statement.execute(sql);
 
-            sql= "create table if not exists QUERIES (sql varbinary(512) primary key)";
+            sql = "create table if not exists QUERIES (sql varbinary(512) primary key)";
             statement.execute(sql);
 
             sql = "create table if not exists LOG " +
@@ -300,26 +301,26 @@ public class DBHandler {
         return ll;
     }
 
-    public static void backup() {
-        final String timeStamp = new SimpleDateFormat("yyyy-MM-dd HH-mm-ss")
-                .format(new java.util.Date());
-        final String dest = RootDirectory + timeStamp + ".backup";
+    public static void backupDatabase() {
+        final String dest = "E:\\Databases\\mydb.mv.db";
         final String src = RootDirectory + DB_FILE_FULL;
 
         close();
 
-        new Thread(() -> {
-            Instant startTime = Instant.now();
-            _backupIsRunning = true;
-            Boolean b = CopyFile (src, dest);
-            _backupIsRunning = false;
-            if (b) {
-                Instant end = Instant.now();
-                String msg = "DB backup took: " + Duration.between(startTime, end).toSeconds() + " Seconds";
-                MsgBox.Info(msg);
-                System.out.println("done!");
-            } else MsgBox.Info("DB Copy fail!");
-        }).start();
+        Instant startTime = Instant.now();
+        _backupIsRunning = true;
+
+        try {
+            Files.copy(Paths.get(src),
+                    Paths.get(dest), StandardCopyOption.REPLACE_EXISTING);
+            Instant end = Instant.now();
+            String msg = "DB backup took: " + Duration.between(startTime, end).toSeconds() + " Seconds";
+            MsgBox.Info(msg);
+            System.out.println("done!");
+        } catch (IOException e) {
+            MsgBox.Info("DB Copy fail!");
+        }
+        _backupIsRunning = false;
     }
 
     /**
@@ -529,7 +530,7 @@ public class DBHandler {
         try {
             try (ResultSet res = query(q)) {
                 while (Objects.requireNonNull(res).next()) {
-                    HashId hid = new HashId((Hash)res.getObject(1), res.getInt(2));
+                    HashId hid = new HashId((Hash) res.getObject(1), res.getInt(2));
                     list.add(hid);
                 }
             }
@@ -544,7 +545,7 @@ public class DBHandler {
         try (ResultSet res = query(q)) {
             if (Objects.requireNonNull(res).next()) {
                 byte[] img = res.getBytes(1);
-                Hash hash = (Hash)res.getObject(2);
+                Hash hash = (Hash) res.getObject(2);
                 if (hash == null) { // create hash if missing
                     BufferedImage bi = byteArrayToImg(img);
                     HashingAlgorithm hasher = new PerceptiveHash(32);
@@ -593,7 +594,7 @@ public class DBHandler {
         }
     }
 
-    public record HashId (Hash hash, int rowID) {
+    public record HashId(Hash hash, int rowID) {
     }
 }
 
