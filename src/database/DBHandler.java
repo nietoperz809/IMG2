@@ -27,6 +27,7 @@ import dev.brachtendorf.jimagehash.hashAlgorithms.PerceptiveHash;
 
 import static common.ImageTools.byteArrayToImg;
 import static common.Tools.extractResource;
+import static common.Win32.CopyFile;
 import static database.VideoFunctions.*;
 import static java.lang.System.*;
 
@@ -100,6 +101,7 @@ public class DBHandler {
             statement.execute(sql);
             Sam.speak("deta base is ready!");
         } catch (SQLException e) {
+            connection = null;
             Sam.speak("Failed to connect to data base!");
             pers.reset();
             MsgBox.Error(e.toString());
@@ -307,38 +309,16 @@ public class DBHandler {
         close();
 
         new Thread(() -> {
-            InputStream in = null;
-            OutputStream out = null;
             Instant startTime = Instant.now();
-            try {
-                in = new BufferedInputStream(new FileInputStream(src));
-                out = new BufferedOutputStream(new FileOutputStream(dest));
-                final byte[] buffer = new byte[1024 * 1024 * 4];
-                int lengthRead;
-                long total = 0;
-                _backupIsRunning = true;
-                while ((lengthRead = in.read(buffer)) > 0) {
-                    out.write(buffer, 0, lengthRead);
-                    total += lengthRead;
-                    System.out.print("." + total);
-                    //Thread.yield();
-                    //System.out.print(".");
-                }
-            } catch (Exception e) {
-                throw new RuntimeException(e);
-            } finally {
-                _backupIsRunning = false;
+            _backupIsRunning = true;
+            Boolean b = CopyFile (src, dest);
+            _backupIsRunning = false;
+            if (b) {
                 Instant end = Instant.now();
                 String msg = "DB backup took: " + Duration.between(startTime, end).toSeconds() + " Seconds";
                 MsgBox.Info(msg);
                 System.out.println("done!");
-                try {
-                    Objects.requireNonNull(out).close();
-                    Objects.requireNonNull(in).close();
-                } catch (IOException e) {
-                    //System.out.println(new RuntimeException(e));
-                }
-            }
+            } else MsgBox.Info("DB Copy fail!");
         }).start();
     }
 
