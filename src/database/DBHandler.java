@@ -27,9 +27,8 @@ import java.util.concurrent.Future;
 import java.util.concurrent.atomic.AtomicReference;
 
 import static common.ImageTools.byteArrayToImg;
+import static common.MsgBox.Question;
 import static common.Tools.extractResource;
-import static common.Tools.restartApplication;
-import static common.Win32.CopyFile;
 import static database.VideoFunctions.*;
 import static java.lang.System.*;
 
@@ -143,7 +142,7 @@ public class DBHandler {
         }
     }
 
-    public static void close() {
+    public static void closeDatabase() {
         try {
             connection.close();
             //_inst = null;
@@ -309,7 +308,14 @@ public class DBHandler {
         final String backup = "E:\\Databases\\mydb.mv.db";
         final String src = RootDirectory + DB_FILE_FULL;
 
-        close();
+        String q = "Copy: " + src + " to " + backup;
+        if (!Question(q+"?"))
+        {
+            Sam.speak ("Copying Cancelled!");
+            return;
+        }
+        Sam.speak(q);
+        closeDatabase();
 
         Instant startTime = Instant.now();
         _backupIsRunning = true;
@@ -321,9 +327,11 @@ public class DBHandler {
                     diff.toHours(),
                     diff.toMinutesPart(),
                     diff.toSecondsPart());
+            Sam.speak ("Copying done.");
             MsgBox.Info("DB backup took: " + hms);
             System.out.println("done!");
         } catch (IOException e) {
+            Sam.speak ("Copying failed.");
             MsgBox.Error("DB Copy failed!");
         }
         _backupIsRunning = false;

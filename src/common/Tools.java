@@ -167,7 +167,7 @@ public class Tools {
 
         DBHandler.log("--- TheGrid ended");
         gr.setVisible(false);
-        DBHandler.close();
+        DBHandler.closeDatabase();
         dlg.dispose();
         System.exit(1);
     }

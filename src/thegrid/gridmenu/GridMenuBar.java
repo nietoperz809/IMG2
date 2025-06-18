@@ -58,7 +58,7 @@ public class GridMenuBar extends JMenuBar {
         jmi = new ColoredMenuItem("Restart the app ...", Color.RED, Color.WHITE);
         jmi.addActionListener(_ -> {
             DBHandler.log("--- TheGrid ended");
-            DBHandler.close();
+            DBHandler.closeDatabase();
             try {
                 Tools.delay(600);
                 Tools.restartApplication();
