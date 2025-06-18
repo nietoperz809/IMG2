@@ -37,4 +37,14 @@ public class Win32 {
                 (hwnd, HWND_MinusOne, 0, 0, 0, 0,
                         SWP_NOMOVE | SWP_NOSIZE | SWP_NOACTIVATE);
     }
+
+    public static boolean CopyFile (String src, String target) {
+        return Kernel32.INSTANCE.CopyFile(src, target, false);
+    }
+
+//    public static boolean CopyFileEx (String src, String target) {
+//        return Kernel32.INSTANCE.CopyFileEx
+//    }
+
 }
+

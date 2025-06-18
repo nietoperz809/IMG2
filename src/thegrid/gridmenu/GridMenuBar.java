@@ -22,6 +22,8 @@ import java.sql.SQLException;
 import java.util.*;
 import java.util.List;
 
+import static common.Tools.restartApplication;
+
 //import static database.DBHandler.RowIDfromImgHash;
 
 
@@ -68,7 +70,7 @@ public class GridMenuBar extends JMenuBar {
 
         jmi = new JMenuItem("direct sql command");
         jmi.addActionListener(_ -> {
-            String sql = LineInput.xmain("select * from (select name,_ROWID_,tag,accnum from IMAGES) order by _rowid_ dec",
+            String sql = LineInput.xmain("select * from (select name,_ROWID_,tag,accnum from IMAGES) order by _rowid_ desc",
                     "direct SQL", Color.BLUE);
             if (!sql.isEmpty()) {
                 boolean b = DBHandler.execSQL(sql);
@@ -79,7 +81,7 @@ public class GridMenuBar extends JMenuBar {
 
         jmi = new JMenuItem("Open another Grid ...");
         jmi.addActionListener(_ -> (new Thread(() -> {
-            String sql = LineInput.xmain("select * from (select name,_ROWID_,tag,accnum from IMAGES) order by _rowid_ dec",
+            String sql = LineInput.xmain("select * from (select name,_ROWID_,tag,accnum from IMAGES) order by _rowid_ desc",
                     "SQL", Color.BLUE);
             if (!sql.isEmpty())
                 new TheGrid(sql, "child ");
@@ -130,7 +132,14 @@ public class GridMenuBar extends JMenuBar {
         jm.add(jmi);
 
         jmi = new JMenuItem("Backup DB ...");
-        jmi.addActionListener(_ -> DBHandler.backup());
+        jmi.addActionListener(_ -> {
+            DBHandler.backupDatabase();
+            try {
+                restartApplication();
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        });
         jm.add(jmi);
 
         jmi = new ColoredMenuItem("Open video App", Color.BLUE, Color.WHITE);

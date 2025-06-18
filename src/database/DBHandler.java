@@ -28,6 +28,7 @@ import java.util.concurrent.atomic.AtomicReference;
 
 import static common.ImageTools.byteArrayToImg;
 import static common.Tools.extractResource;
+import static common.Tools.restartApplication;
 import static common.Win32.CopyFile;
 import static database.VideoFunctions.*;
 import static java.lang.System.*;
@@ -301,8 +302,11 @@ public class DBHandler {
         return ll;
     }
 
+    /**
+     * Backup Database
+     */
     public static void backupDatabase() {
-        final String dest = "E:\\Databases\\mydb.mv.db";
+        final String backup = "E:\\Databases\\mydb.mv.db";
         final String src = RootDirectory + DB_FILE_FULL;
 
         close();
@@ -311,14 +315,16 @@ public class DBHandler {
         _backupIsRunning = true;
 
         try {
-            Files.copy(Paths.get(src),
-                    Paths.get(dest), StandardCopyOption.REPLACE_EXISTING);
-            Instant end = Instant.now();
-            String msg = "DB backup took: " + Duration.between(startTime, end).toSeconds() + " Seconds";
-            MsgBox.Info(msg);
+            Files.copy (Paths.get(src), Paths.get(backup), StandardCopyOption.REPLACE_EXISTING);
+            Duration diff = Duration.between(startTime, Instant.now());
+            String hms = String.format("%d:%02d:%02d",
+                    diff.toHours(),
+                    diff.toMinutesPart(),
+                    diff.toSecondsPart());
+            MsgBox.Info("DB backup took: " + hms);
             System.out.println("done!");
         } catch (IOException e) {
-            MsgBox.Info("DB Copy fail!");
+            MsgBox.Error("DB Copy failed!");
         }
         _backupIsRunning = false;
     }
