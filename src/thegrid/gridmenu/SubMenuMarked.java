@@ -56,8 +56,9 @@ public class SubMenuMarked extends JMenu {
                     for (Thumbnail gi : marked) {
                         int id = gi.getRowID();
                         byte[] b = DBHandler.loadImage(id);
+                        String tags = DBHandler.getTagsCommaReplaced(id);
                         BufferedImage b2 = ImageTools.byteArrayToImg(b);
-                        ImageTools.saveImg2Disk(b2, id, outPath);
+                        ImageTools.saveImg2Disk(b2, id, outPath, tags);
                     }
                     Thumbnail.markAll(grid, false);
                 });
@@ -81,27 +82,32 @@ public class SubMenuMarked extends JMenu {
 
         addItem("Make Zip",
                 _ -> {
-                    ZipParameters zipParameters = Tools.getStandardZipParams();
-                    String outPath = MsgBox.chooseDir(SubMenuMarked.this);
-                    try {
-                        String pwd = RandomWord.generateWord(6);
-                        ZipFile zipFile = new ZipFile (outPath+ File.separator +
-                                System.currentTimeMillis()+"-images.rar",
-                                pwd.toCharArray());
-                        final Thumbnail[] marked = Thumbnail.getMarked(grid);
-                        for (Thumbnail gi : marked) {
-                            int id = gi.getRowID();
-                            BufferedImage b2 = ImageTools.byteArrayToImg(DBHandler.loadImage(id));
-                            String imgFile = ImageTools.saveImg2Disk(b2, id, outPath);
-                            zipFile.addFile(imgFile,zipParameters);
-                            DeferredFileDeleter.put (new File(imgFile));
+                    synchronized (this) { // Must be sync'd because async behaviour
+                        // of zip library result in exception
+                        ZipParameters zipParameters = Tools.getStandardZipParams();
+                        String outPath = MsgBox.chooseDir(SubMenuMarked.this);
+                        try {
+                            String pwd = RandomWord.generateWord(6);
+                            ZipFile zipFile = new ZipFile (outPath+ File.separator +
+                                    System.currentTimeMillis()+"-images.rar",
+                                    pwd.toCharArray());
+                            final Thumbnail[] marked = Thumbnail.getMarked(grid);
+                            for (Thumbnail gi : marked) {
+                                int id = gi.getRowID();
+                                BufferedImage b2 = ImageTools.byteArrayToImg(DBHandler.loadImage(id));
+                                String tags = DBHandler.getTagsCommaReplaced(id);
+                                String imgFile = ImageTools.saveImg2Disk(b2, id, outPath, tags);
+                                System.out.println("put on zip: "+imgFile);
+                                zipFile.addFile(imgFile,zipParameters);
+                                DeferredFileDeleter.put (new File(imgFile));
+                            }
+                            Thumbnail.markAll(grid, false);
+                            zipFile.close();
+                            MsgBox.Info("Password (posted to clipboard) is: "+pwd);
+                            SystemClipboard.setString(pwd);
+                        } catch (IOException ex) {
+                            throw new RuntimeException(ex);
                         }
-                        Thumbnail.markAll(grid, false);
-                        zipFile.close();
-                        MsgBox.Info("Password (posted to clipboard) is: "+pwd);
-                        SystemClipboard.setString(pwd);
-                    } catch (IOException ex) {
-                        throw new RuntimeException(ex);
                     }
                 });
     }

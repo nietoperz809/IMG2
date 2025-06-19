@@ -13,6 +13,7 @@ import java.awt.datatransfer.*;
 import java.awt.geom.AffineTransform;
 import java.awt.image.*;
 import java.io.*;
+import java.util.Objects;
 
 import static common.Tools.hasExtension;
 import static database.DBHandler.loadThumbnail;
@@ -49,9 +50,11 @@ public class ImageTools {
      * @param anum arbitrary ID
      * @param outPath path were the Img goes
      */
-    public static String saveImg2Disk(BufferedImage img, int anum, String outPath) {
-        outPath = outPath + File.separator +
-                RandomWord.generateWord(-1) + "(" + anum + ")" + ".jpg";
+    public static String saveImg2Disk(BufferedImage img, int anum, String outPath, String name) {
+        outPath += File.separator;
+        outPath += Objects.requireNonNullElseGet(name, () -> RandomWord.generateWord(-1));
+        outPath += "(" + anum + ").jpg";
+        System.out.println(outPath);
         try {
             boolean success = ImageIO.write(img, "jpg", new File(outPath));
             if (!success)

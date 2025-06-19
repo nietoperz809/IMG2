@@ -22,7 +22,7 @@ public class ImageViewer {
         button1.addActionListener(_ -> {
             String outPath = MsgBox.chooseDir(frame);
             BufferedImage imgsc = ImageScaler.scaleImg(m_image, 3.0, true);
-            saveImg2Disk(imgsc, 0,outPath);
+            saveImg2Disk(imgsc, 0, outPath, "preview");
             frame.dispose();
         });
         frame.setContentPane(panel1);

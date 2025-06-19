@@ -89,7 +89,7 @@ public class ImageView extends JFrame implements MouseWheelListener {
                 return;
             imgSavetime = milli;
 
-            ImageTools.saveImg2Disk(img, rowid, outPath);
+            ImageTools.saveImg2Disk(img, rowid, outPath, null);
         }
     }
 

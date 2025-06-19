@@ -283,6 +283,10 @@ public class DBHandler {
         return strres;
     }
 
+    public static String getTagsCommaReplaced(int rowid) {
+        return getTags(rowid).replaceAll(", ","-");
+    }
+
     public static synchronized TreeSet<String> getImageTagList() {
         TreeSet<String> ll = new TreeSet<>();
         try {
@@ -302,7 +306,7 @@ public class DBHandler {
     }
 
     /**
-     * Backup Database
+     * _Backup Database_
      */
     public static void backupDatabase() {
         final String backup = "E:\\Databases\\mydb.mv.db";
@@ -329,7 +333,6 @@ public class DBHandler {
                     diff.toSecondsPart());
             Sam.speak ("Copying done.");
             MsgBox.Info("DB backup took: " + hms);
-            System.out.println("done!");
         } catch (IOException e) {
             Sam.speak ("Copying failed.");
             MsgBox.Error("DB Copy failed!");
