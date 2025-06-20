@@ -15,9 +15,7 @@ import java.io.RandomAccessFile;
 import java.lang.ref.SoftReference;
 import java.nio.MappedByteBuffer;
 import java.nio.channels.FileChannel;
-import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
 import java.sql.*;
 import java.time.Duration;
 import java.time.Instant;
@@ -28,6 +26,7 @@ import java.util.concurrent.atomic.AtomicReference;
 
 import static common.ImageTools.byteArrayToImg;
 import static common.MsgBox.Question;
+import static common.Tools.MB100;
 import static common.Tools.extractResource;
 import static database.VideoFunctions.*;
 import static java.lang.System.*;
@@ -309,7 +308,8 @@ public class DBHandler {
      * _Backup Database_
      */
     public static void backupDatabase() {
-        final String backup = "E:\\Databases\\mydb.mv.db";
+        final String backup = "C:\\Databases_copy\\backup";
+        //"E:\\Databases\\mydb.mv.db";
         final String src = RootDirectory + DB_FILE_FULL;
 
         String q = "Copy: " + src + " to " + backup;
@@ -318,14 +318,18 @@ public class DBHandler {
             Sam.speak ("Copying Cancelled!");
             return;
         }
-        Sam.speak(q);
+        Sam.speak("Copy start!");
         closeDatabase();
 
         Instant startTime = Instant.now();
         _backupIsRunning = true;
 
         try {
-            Files.copy (Paths.get(src), Paths.get(backup), StandardCopyOption.REPLACE_EXISTING);
+            Channelcopy.perform(Paths.get(src),
+                    Paths.get(backup),
+                    MB100,
+                    out::println);
+            //Files.copy (Paths.get(src), Paths.get(backup), StandardCopyOption.REPLACE_EXISTING);
             Duration diff = Duration.between(startTime, Instant.now());
             String hms = String.format("%d:%02d:%02d",
                     diff.toHours(),

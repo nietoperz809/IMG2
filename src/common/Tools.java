@@ -10,11 +10,17 @@ import thegrid.TheGrid;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
-import java.io.*;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Objects;
+import java.util.Set;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.FutureTask;
@@ -217,4 +223,24 @@ public class Tools {
                     .collect(Collectors.toSet());
         }
     }
+
+//    public static void copyUsingFileChannel(Path source, Path destination) throws IOException {
+//        try (FileChannel sourceChannel = FileChannel.open(source, StandardOpenOption.READ);
+//             FileChannel destChannel = FileChannel.open(destination,
+//                     StandardOpenOption.CREATE,
+//                     StandardOpenOption.WRITE)) {
+//
+//            long transferred = 0;
+//            long size = sourceChannel.size();
+//            while (transferred < size) {
+//                transferred += sourceChannel.transferTo(
+//                        transferred,
+//                        size - transferred,
+//                        destChannel
+//                );
+//            }
+//        }
+//    }
+
+    public static long MB100 = 1024*1024*100;
 }
