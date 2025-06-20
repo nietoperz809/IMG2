@@ -14,22 +14,27 @@ public class Channelcopy {
              FileChannel destChannel = FileChannel.open(destination,
                      StandardOpenOption.CREATE,
                      StandardOpenOption.WRITE)) {
-
             long transferred = 0;
             long size = sourceChannel.size();
             while (transferred < size) {
                 // Calculate the size of the next chunk
                 long chunkSize = Math.min(maxChunkSize, size - transferred);
-
                 // Transfer the chunk
                 transferred += sourceChannel.transferTo(transferred, chunkSize, destChannel);
-                cp.func(transferred);
+                if (cp.func(transferred, size))  // true stops the copy loop
+                    return;
             }
         }
     }
 
     public interface CopyCallback {
-        void func (long transferred);
+        /**
+         * CopyCallback
+         * @param transferred Number of bytes transferred so far
+         * @param size Size of whole file
+         * @return false to continue, true to stop
+         */
+        boolean func (long transferred, long size);
     }
 }
 

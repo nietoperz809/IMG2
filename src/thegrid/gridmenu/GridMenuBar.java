@@ -133,7 +133,7 @@ public class GridMenuBar extends JMenuBar {
 
         jmi = new JMenuItem("Backup DB ...");
         jmi.addActionListener(_ -> {
-            DBHandler.backupDatabase();
+            DBHandler.backupDatabase("C:\\Databases_copy\\backup"); //"E:\\Databases\\mydb.mv.db";
             try {
                 restartApplication();
             } catch (Exception e) {

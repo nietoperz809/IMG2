@@ -283,7 +283,7 @@ public class DBHandler {
     }
 
     public static String getTagsCommaReplaced(int rowid) {
-        return getTags(rowid).replaceAll(", ","-");
+        return getTags(rowid).replaceAll(", ", "-");
     }
 
     public static synchronized TreeSet<String> getImageTagList() {
@@ -307,38 +307,35 @@ public class DBHandler {
     /**
      * _Backup Database_
      */
-    public static void backupDatabase() {
-        final String backup = "C:\\Databases_copy\\backup";
-        //"E:\\Databases\\mydb.mv.db";
+    public static void backupDatabase(final String destination) {
         final String src = RootDirectory + DB_FILE_FULL;
-
-        String q = "Copy: " + src + " to " + backup;
-        if (!Question(q+"?"))
-        {
-            Sam.speak ("Copying Cancelled!");
+        String q = "Copy: " + src + " to " + destination;
+        if (!Question(q + "?")) {
+            Sam.speak("Copying Cancelled!");
             return;
         }
         Sam.speak("Copy start!");
         closeDatabase();
-
         Instant startTime = Instant.now();
         _backupIsRunning = true;
-
         try {
             Channelcopy.perform(Paths.get(src),
-                    Paths.get(backup),
+                    Paths.get(destination),
                     MB100,
-                    out::println);
+                    (transferred, size) -> {
+                        out.println(transferred + "-" + size);
+                        return false; // true will stop the copy
+                    });
             //Files.copy (Paths.get(src), Paths.get(backup), StandardCopyOption.REPLACE_EXISTING);
             Duration diff = Duration.between(startTime, Instant.now());
             String hms = String.format("%d:%02d:%02d",
                     diff.toHours(),
                     diff.toMinutesPart(),
                     diff.toSecondsPart());
-            Sam.speak ("Copying done.");
+            Sam.speak("Copying done.");
             MsgBox.Info("DB backup took: " + hms);
         } catch (IOException e) {
-            Sam.speak ("Copying failed.");
+            Sam.speak("Copying failed.");
             MsgBox.Error("DB Copy failed!");
         }
         _backupIsRunning = false;
