@@ -4,6 +4,7 @@ import common.*;
 import dev.brachtendorf.jimagehash.hash.Hash;
 import dev.brachtendorf.jimagehash.hashAlgorithms.HashingAlgorithm;
 import dev.brachtendorf.jimagehash.hashAlgorithms.PerceptiveHash;
+import dialogs.Copier;
 import dialogs.UnlockDialog;
 
 import javax.swing.*;
@@ -307,38 +308,39 @@ public class DBHandler {
     /**
      * _Backup Database_
      */
-    public static void backupDatabase(final String destination) {
-        final String src = RootDirectory + DB_FILE_FULL;
-        String q = "Copy: " + src + " to " + destination;
-        if (!Question(q + "?")) {
-            Sam.speak("Copying Cancelled!");
-            return;
-        }
-        Sam.speak("Copy start!");
+    public static void backupDatabase(/*final String destination*/) {
+//        final String src = RootDirectory + DB_FILE_FULL;
+//        String q = "Copy: " + src + " to " + destination;
+//        if (!Question(q + "?")) {
+//            Sam.speak("Copying Cancelled!");
+//            return;
+//        }
+//        Sam.speak("Copy start!");
         closeDatabase();
-        Instant startTime = Instant.now();
-        _backupIsRunning = true;
-        try {
-            Channelcopy.performCopy(Paths.get(src),
-                    Paths.get(destination),
-                    MB100,
-                    (transferred, size) -> {
-                        out.println(transferred + "-" + size);
-                        return false; // true will stop the copy
-                    });
-            //Files.copy (Paths.get(src), Paths.get(backup), StandardCopyOption.REPLACE_EXISTING);
-            Duration diff = Duration.between(startTime, Instant.now());
-            String hms = String.format("%d:%02d:%02d",
-                    diff.toHours(),
-                    diff.toMinutesPart(),
-                    diff.toSecondsPart());
-            Sam.speak("Copying done.");
-            MsgBox.Info("DB backup took: " + hms);
-        } catch (IOException e) {
-            Sam.speak("Copying failed.");
-            MsgBox.Error("DB Copy failed!");
-        }
-        _backupIsRunning = false;
+        Copier.main(new String[0]);
+//        Instant startTime = Instant.now();
+//        _backupIsRunning = true;
+//        try {
+//            Channelcopy.performCopy(Paths.get(src),
+//                    Paths.get(destination),
+//                    MB100,
+//                    (transferred, size) -> {
+//                        out.println(transferred + "-" + size);
+//                        return false; // true will stop the copy
+//                    });
+//            //Files.copy (Paths.get(src), Paths.get(backup), StandardCopyOption.REPLACE_EXISTING);
+//            Duration diff = Duration.between(startTime, Instant.now());
+//            String hms = String.format("%d:%02d:%02d",
+//                    diff.toHours(),
+//                    diff.toMinutesPart(),
+//                    diff.toSecondsPart());
+//            Sam.speak("Copying done.");
+//            MsgBox.Info("DB backup took: " + hms);
+//        } catch (IOException e) {
+//            Sam.speak("Copying failed.");
+//            MsgBox.Error("DB Copy failed!");
+//        }
+//        _backupIsRunning = false;
     }
 
     /**

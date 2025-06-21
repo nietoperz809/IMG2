@@ -16,7 +16,6 @@ import static common.Tools.MB100;
 public class Copier extends JDialog {
     private JPanel contentPane;
     private JButton buttonOK;
-    private JButton buttonCancel;
     private JTextField fromText;
     private JTextField toText;
     private JTextField progressText;
@@ -64,18 +63,13 @@ public class Copier extends JDialog {
 
         buttonOK.addActionListener(e -> onOK());
 
-        buttonCancel.addActionListener(e -> onCancel());
-
         // call onCancel() when cross is clicked
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e) {
-                onCancel();
+                dispose();
             }
         });
-
-        // call onCancel() on ESCAPE
-        contentPane.registerKeyboardAction(_ -> onCancel(), KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
 
         rbFrom.addActionListener(_ -> doForRadioButton(fromText, pFrom));
         rbTo.addActionListener(_ -> doForRadioButton(toText, pTo));
@@ -107,11 +101,6 @@ public class Copier extends JDialog {
                 throw new RuntimeException(e);
             }
         });
-    }
-
-    private void onCancel() {
-        // add your code here if necessary
-        dispose();
     }
 
     public static void main(String[] args) {
