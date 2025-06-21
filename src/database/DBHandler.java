@@ -319,7 +319,7 @@ public class DBHandler {
         Instant startTime = Instant.now();
         _backupIsRunning = true;
         try {
-            Channelcopy.perform(Paths.get(src),
+            Channelcopy.performCopy(Paths.get(src),
                     Paths.get(destination),
                     MB100,
                     (transferred, size) -> {

@@ -6,10 +6,21 @@ import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
 
 public class Channelcopy {
-    public static void perform(Path source,
-                               Path destination,
-                               long maxChunkSize,
-                               CopyCallback cp) throws IOException {
+    /**
+     * Copy Callback
+     * @param <In1> Number of bytes transferred so far
+     * @param <In2> Size of whole file
+     * @param <Out> false to continue, true to stop
+     */
+    @FunctionalInterface
+    public interface _CP<In1, In2, Out> {
+        Out apply(In1 in1, In2 in2);
+    }
+
+    public static void performCopy(Path source,
+                                   Path destination,
+                                   long maxChunkSize,
+                                   _CP<Long, Long, Boolean> cp) throws IOException {
         try (FileChannel sourceChannel = FileChannel.open(source, StandardOpenOption.READ);
              FileChannel destChannel = FileChannel.open(destination,
                      StandardOpenOption.CREATE,
@@ -21,20 +32,10 @@ public class Channelcopy {
                 long chunkSize = Math.min(maxChunkSize, size - transferred);
                 // Transfer the chunk
                 transferred += sourceChannel.transferTo(transferred, chunkSize, destChannel);
-                if (cp.func(transferred, size))  // true stops the copy loop
+                if (cp.apply(transferred, size))  // true breaks the copy loop
                     return;
             }
         }
-    }
-
-    public interface CopyCallback {
-        /**
-         * CopyCallback
-         * @param transferred Number of bytes transferred so far
-         * @param size Size of whole file
-         * @return false to continue, true to stop
-         */
-        boolean func (long transferred, long size);
     }
 }
 
