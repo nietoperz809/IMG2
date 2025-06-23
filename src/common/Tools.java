@@ -242,5 +242,6 @@ public class Tools {
 //        }
 //    }
 
+    public static long MB10 = 1024*1024*10;
     public static long MB100 = 1024*1024*100;
 }

@@ -1,19 +1,23 @@
 package dialogs;
 
-import common.Channelcopy;
-import common.NumToText;
-import common.PersistString;
-import common.Tools;
+import common.*;
 
 import javax.swing.*;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.IOException;
 import java.nio.file.Paths;
+import java.time.Duration;
+import java.time.Instant;
 
+import static common.Tools.MB10;
 import static common.Tools.MB100;
+import static database.DBHandler.closeDatabase;
 
 public class Copier extends JDialog {
+    private boolean dbClosed;
     private JPanel contentPane;
     private JButton buttonOK;
     private JTextField fromText;
@@ -21,58 +25,37 @@ public class Copier extends JDialog {
     private JTextField progressText;
     private JRadioButton rbFrom;
     private JRadioButton rbTo;
-    private final PersistString pFrom;
-    private final PersistString pTo;
+    private JButton buttonCloseDB;
+    private JList<String> chunkList;
     final JFileChooser fc = new JFileChooser();
 
     public Copier() {
-        pFrom = new PersistString("pfrom", "fromFile");
-        fromText.setText(pFrom.get());
-        fromText.setOpaque(true);
-        fromText.addActionListener(e -> {
-            fromText.setBackground(Color.YELLOW);
-            pFrom.set(fromText.getText());
-        });
-        fromText.addFocusListener(new FocusAdapter() {
-            @Override
-            public void focusLost(FocusEvent e) {
-                super.focusLost(e);
-                fromText.setBackground(Color.WHITE);
-            }
-        });
+        chunkList.setSelectedIndex(1); // 10MB
 
-        pTo = new PersistString("pTo", "toFile");
-        toText.setText(pTo.get());
-        toText.setOpaque(true);
-        toText.addActionListener(e -> {
-            toText.setBackground(Color.YELLOW);
-            pTo.set(toText.getText());
-        });
-        toText.addFocusListener(new FocusAdapter() {
-            @Override
-            public void focusLost(FocusEvent e) {
-                super.focusLost(e);
-                toText.setBackground(Color.WHITE);
-            }
-        });
+        PersistString pFrom = new PersistString("pfrom", "fromFile");
+        doForInit(pFrom, fromText, rbFrom);
 
-        setTitle("CopyBox");
+        PersistString pTo = new PersistString("pTo", "toFile");
+        doForInit(pTo, toText, rbTo);
+
+        setTitle("Fast CopyBox");
         setContentPane(contentPane);
         setModal(true);
         getRootPane().setDefaultButton(buttonOK);
 
         buttonOK.addActionListener(e -> onOK());
 
-        // call onCancel() when cross is clicked
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e) {
                 dispose();
             }
         });
-
-        rbFrom.addActionListener(_ -> doForRadioButton(fromText, pFrom));
-        rbTo.addActionListener(_ -> doForRadioButton(toText, pTo));
+        buttonCloseDB.addActionListener(_ -> {
+            Sam.speak("Database disconnect");
+            closeDatabase();
+            dbClosed = true;
+        });
     }
 
     private void doForRadioButton(JTextField jt, PersistString ps) {
@@ -84,18 +67,52 @@ public class Copier extends JDialog {
         }
     }
 
+    private void doForInit(PersistString ps, JTextField jt, JRadioButton rb) {
+        jt.setText(ps.get());
+        jt.setOpaque(true);
+        jt.addActionListener(e -> {
+            jt.setBackground(Color.YELLOW);
+            ps.set(jt.getText());
+        });
+        jt.addFocusListener(new FocusAdapter() {
+            @Override
+            public void focusLost(FocusEvent e) {
+                super.focusLost(e);
+                jt.setBackground(Color.WHITE);
+            }
+        });
+        rb.addActionListener(_ -> doForRadioButton(jt, ps));
+    }
+
+    private String elapsed(Instant startTime) {
+        Duration diff = Duration.between(startTime, Instant.now());
+        return String.format("%d:%02d:%02d",
+                diff.toHours(),
+                diff.toMinutesPart(),
+                diff.toSecondsPart());
+    }
+
     private void onOK() {
         Tools.runTask(() -> {
             try {
+                long chunksize;
+                if (chunkList.getSelectedIndex() == 0)
+                    chunksize = MB100;
+                else chunksize = MB10;
                 buttonOK.setVisible(false);
+                Instant startTime = Instant.now();
                 Channelcopy.performCopy(Paths.get(fromText.getText()),
                         Paths.get(toText.getText()),
-                        MB100,
+                        chunksize,
                         (transferred, size) -> {
-                            progressText.setText(NumToText.convert(transferred/MB100));
+                            long max = size / chunksize;
+                            long x = transferred / chunksize;
+                            progressText.setText(x + " from " + max + " blocks in "+elapsed(startTime));
                             repaint();
                             return false; // true will stop the copy
                         });
+                buttonOK.setVisible(true);
+                MsgBox.Info("DB backup took: " + elapsed(startTime));
             } catch (IOException e) {
                 buttonOK.setVisible(true);
                 throw new RuntimeException(e);
@@ -103,11 +120,11 @@ public class Copier extends JDialog {
         });
     }
 
-    public static void main(String[] args) {
+    public static boolean main(String[] args) {
         Copier dialog = new Copier();
         dialog.pack();
         dialog.setLocationRelativeTo(null);
         dialog.setVisible(true);
-        System.exit(0);
+        return dialog.dbClosed;
     }
 }

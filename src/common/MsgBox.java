@@ -7,6 +7,7 @@ import java.awt.*;
 import java.io.File;
 import java.nio.charset.Charset;
 import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
 
 public class MsgBox {
@@ -51,15 +52,19 @@ public class MsgBox {
         return null;
     }
 
-    public static void AskforPWD() throws Exception {
+    public static void AskforPWD() throws RuntimeException {
         byte[] bt = UnlockDialog.xmain("PWD?").getBytes(Charset.defaultCharset());
-        MessageDigest md = MessageDigest.getInstance("MD5");
-        byte[] theMD5digest = md.digest(bt);
-        byte[] shouldBe = {46, -123, 13, -68, 98, 92, -32, -104, -55, 20, 57, 79, -73, 120, 116, 50};
-        if (!Arrays.equals(theMD5digest,shouldBe)) {
-            Sam.speak(".Access denied!");
-            Thread.sleep(3000);
-            System.exit(0);
+        try {
+            MessageDigest md = MessageDigest.getInstance("MD5");
+            byte[] theMD5digest = md.digest(bt);
+            byte[] shouldBe = {46, -123, 13, -68, 98, 92, -32, -104, -55, 20, 57, 79, -73, 120, 116, 50};
+            if (!Arrays.equals(theMD5digest,shouldBe)) {
+                Sam.speak(".Access denied!");
+                Thread.sleep(3000);
+                System.exit(0);
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
     }
 }

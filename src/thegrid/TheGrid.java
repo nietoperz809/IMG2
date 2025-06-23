@@ -116,11 +116,16 @@ public class TheGrid extends MyFrame {
 //                DBHandler.log("SHUTDOWN"));
 //        Runtime.getRuntime().addShutdownHook(hook);
 
-        UIManager.put("ToolTip.font", new Font("Arial", Font.BOLD, 20));
+        Thread.setDefaultUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler() {
+            public void uncaughtException(Thread t, Throwable e) {
+                MsgBox.Error(e.toString());
+                System.exit(-3);
+            }
+        });
 
+        UIManager.put("ToolTip.font", new Font("Arial", Font.BOLD, 20));
         Win32.hideConsoleWindow();
 
-        try {
             boolean askPwd = true;
             String dbRoot = "dbdir:";
             for (String s : input) {
@@ -139,10 +144,6 @@ public class TheGrid extends MyFrame {
             DBHandler.log("+++ TheGrid started");
             new TheGrid (ImageList.mainSQL, dbRoot);
             System.out.println("end main");
-        } catch (Exception e) {
-            System.out.println("FAIL: " + e);
-            DBHandler.log("FAIL: " + e);
-        }
     }
 
     public void addImageFilesToDatabase(File[] files) throws Exception {
