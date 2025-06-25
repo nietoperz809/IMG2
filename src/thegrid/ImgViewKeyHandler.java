@@ -28,7 +28,7 @@ import static java.awt.event.KeyEvent.*;
 class ImgViewKeyHandler extends KeyAdapter {
     private final ImageView imageView;
     Timer timer = null;
-    private long keyTime;
+    private boolean anyReleased = true;
 
     public ImgViewKeyHandler(ImageView imageView) {
         this.imageView = imageView;
@@ -40,41 +40,42 @@ class ImgViewKeyHandler extends KeyAdapter {
         }
     }
 
-    private boolean slowDownKeyEvents() {
-        long t = System.currentTimeMillis();
-        long diff = t - keyTime;
-        if (diff < 300)
-            return false;
-        else
-            keyTime = t;
-        return true;
+    @Override
+    public void keyReleased(KeyEvent e) {
+        anyReleased = true;  // suppress key repeat
     }
 
     public void keyPressed(KeyEvent e) {
+        if (!anyReleased)
+            return;
+        anyReleased = false;
+
         int ev = e.getKeyCode();
         switch (ev) {
             case VK_UP -> {
                 imageView.imgPanel.scrollDown();
+                anyReleased = true;
                 return;
             }
             case VK_DOWN -> {
                 imageView.imgPanel.scrollUp();
+                anyReleased = true;
                 return;
             }
             case VK_LEFT -> {
                 imageView.imgPanel.scrollRight();
+                anyReleased = true;
                 return;
             }
             case VK_RIGHT -> {
                 imageView.imgPanel.scrollLeft();
+                anyReleased = true;
                 return;
             }
-            case VK_CONTROL -> {
-                return;
-            }
+//            case VK_CONTROL -> {
+//                return;
+//            }
         }
-        if (!slowDownKeyEvents())
-            return;
         switch (ev) {
             case VK_PAGE_DOWN -> imageView.setNextImage();
             case VK_PAGE_UP -> imageView.setBeforeImage();
@@ -364,11 +365,13 @@ class ImgViewKeyHandler extends KeyAdapter {
 //                }
 //            }
 
-            default -> Sam.speak("Key not used.");
+//            default -> {
+//                if (ev != VK_CONTROL && ev != VK_SHIFT)
+//                    Sam.speak("Key not used.");
+//            }
         }
         Audio.playWaveFromResource("drop.wav");
     }
 }
 
-/////////////////////////////////////////
 
