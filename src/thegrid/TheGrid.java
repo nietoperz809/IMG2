@@ -116,11 +116,9 @@ public class TheGrid extends MyFrame {
 //                DBHandler.log("SHUTDOWN"));
 //        Runtime.getRuntime().addShutdownHook(hook);
 
-        Thread.setDefaultUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler() {
-            public void uncaughtException(Thread t, Throwable e) {
-                MsgBox.Error(e.toString());
-                System.exit(-3);
-            }
+        Thread.setDefaultUncaughtExceptionHandler((t, e) -> {
+            MsgBox.Error(e.toString());
+            //System.exit(-3);
         });
 
         UIManager.put("ToolTip.font", new Font("Arial", Font.BOLD, 20));

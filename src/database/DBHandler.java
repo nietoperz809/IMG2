@@ -281,7 +281,8 @@ public class DBHandler {
     }
 
     public static String getTagsCommaReplaced(int rowid) {
-        return getTags(rowid).replaceAll(", ", "-");
+        String tags = getTags(rowid);
+        return tags == null ? null : tags.replaceAll(", ", "-");
     }
 
     public static synchronized TreeSet<String> getImageTagList() {
