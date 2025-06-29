@@ -136,16 +136,15 @@ public class Tools {
     }
 
     public static ZipParameters getStandardZipParams() {
-        ZipParameters zipParameters = new ZipParameters();
-        zipParameters.setEncryptFiles(true);
-        zipParameters.setCompressionLevel(CompressionLevel.HIGHER);
-        zipParameters.setEncryptionMethod(EncryptionMethod.AES);
-        return zipParameters;
+        ZipParameters params = new ZipParameters();
+        params.setEncryptFiles(true);
+        params.setCompressionLevel(CompressionLevel.NORMAL);
+        params.setEncryptionMethod(EncryptionMethod.ZIP_STANDARD);
+        return params;
     }
 
     static public byte[] extractResource(String name) throws Exception {
         InputStream is = ClassLoader.getSystemResourceAsStream(name);
-
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         byte[] buffer = new byte[1024];
         while (true) {

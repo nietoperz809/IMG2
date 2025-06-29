@@ -14,18 +14,17 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ddb69741-e020-4d21-a32f-f00e79c6818a" name="Changes" comment="backup">
-      <change beforePath="$PROJECT_DIR$/.idea/ant.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/ant.xml" afterDir="false" />
+    <list default="true" id="ddb69741-e020-4d21-a32f-f00e79c6818a" name="Changes" comment="better keyboard handling">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/buildinfo/BuildInfo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/buildinfo/BuildInfo.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/buildinfo/build.number" beforeDir="false" afterPath="$PROJECT_DIR$/src/buildinfo/build.number" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/common/MsgBox.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/common/MsgBox.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/common/Audio.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/common/Audio.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/common/EmailUtil.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/common/Tools.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/common/Tools.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/database/DBHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/database/DBHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/dialogs/Copier.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/dialogs/Copier.form" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/dialogs/Copier.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/dialogs/Copier.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/thegrid/TheGrid.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/thegrid/TheGrid.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/database/InsertCallback.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/database/InsertCallback.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/thegrid/GridListeners.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/thegrid/GridListeners.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/thegrid/ImgViewKeyHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/thegrid/ImgViewKeyHandler.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/thegrid/gridmenu/GridMenuBar.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/thegrid/gridmenu/GridMenuBar.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/thegrid/gridmenu/SubMenuMarked.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/thegrid/gridmenu/SubMenuMarked.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -138,7 +137,7 @@
     &quot;full.screen.before.presentation.mode&quot;: &quot;true&quot;,
     &quot;git-widget-placeholder&quot;: &quot;withQueue&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/peter.home/java/IMG3&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/peter.home/java/IMG3/resource&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
@@ -173,11 +172,11 @@
       <recent name="common.MsgBox" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\peter.home\java\IMG3\resource" />
       <recent name="C:\peter.home\java\IMG2\out" />
       <recent name="C:\peter.home\java\IMG2\src\httpserv" />
       <recent name="C:\peter.home\java\IMG2\src\dialogs" />
       <recent name="C:\peter.home\java\IMG2\src" />
-      <recent name="C:\peter.home\java\IMG2\src\common" />
     </key>
     <key name="MoveInnerDialog.RECENTS_KEY">
       <recent name="database" />
@@ -605,7 +604,7 @@
       <option name="project" value="LOCAL" />
       <updated>1683976691765</updated>
     </task>
-    <option name="localTasksCounter" value="316" />
+    <option name="localTasksCounter" value="319" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -626,6 +625,7 @@
     <option name="OPEN_GENERIC_TABS">
       <map>
         <entry key="044a3ef1-cb6f-4acc-83b9-e9480b84b9bc" value="TOOL_WINDOW" />
+        <entry key="1f429571-a11a-4322-b147-b4adb683cf89" value="TOOL_WINDOW" />
       </map>
     </option>
     <option name="TAB_STATES">
@@ -655,6 +655,11 @@
             </State>
           </value>
         </entry>
+        <entry key="1f429571-a11a-4322-b147-b4adb683cf89">
+          <value>
+            <State />
+          </value>
+        </entry>
         <entry key="MAIN">
           <value>
             <State />
@@ -667,9 +672,6 @@
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_NEW_TODO" value="false" />
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="+ con/bright sliders" />
-    <MESSAGE value="release 4.12" />
-    <MESSAGE value="update" />
     <MESSAGE value="+contrast/gamma/brightness" />
     <MESSAGE value="optiized ConBrightV" />
     <MESSAGE value="changed tooktip colors" />
@@ -692,7 +694,10 @@
     <MESSAGE value="added FunctionalInterface" />
     <MESSAGE value="+CopyBox" />
     <MESSAGE value="backup" />
-    <option name="LAST_COMMIT_MESSAGE" value="backup" />
+    <MESSAGE value="last realease" />
+    <MESSAGE value="fixed a little NPE in DBHandler.getTagsCommaReplaced" />
+    <MESSAGE value="better keyboard handling" />
+    <option name="LAST_COMMIT_MESSAGE" value="better keyboard handling" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -714,11 +719,6 @@
             <option name="WATCH_EXIT" value="false" />
           </properties>
           <option name="timeStamp" value="3" />
-        </line-breakpoint>
-        <line-breakpoint type="java-line">
-          <url>file://$PROJECT_DIR$/src/common/EmailUtil.java</url>
-          <line>21</line>
-          <option name="timeStamp" value="73" />
         </line-breakpoint>
         <breakpoint type="java-exception">
           <properties class="java.lang.NullPointerException" package="java.lang" />

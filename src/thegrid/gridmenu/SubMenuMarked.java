@@ -83,7 +83,7 @@ public class SubMenuMarked extends JMenu {
         addItem("Make Zip",
                 _ -> {
                     synchronized (this) { // Must be sync'd because async behaviour
-                        // of zip library result in exception
+                        // of zip library results in exception
                         ZipParameters zipParameters = Tools.getStandardZipParams();
                         String outPath = MsgBox.chooseDir(SubMenuMarked.this);
                         try {

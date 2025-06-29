@@ -28,7 +28,7 @@ import static java.awt.event.KeyEvent.*;
 class ImgViewKeyHandler extends KeyAdapter {
     private final ImageView imageView;
     Timer timer = null;
-    private boolean anyReleased = true;
+    private volatile boolean anyReleased = true;
 
     public ImgViewKeyHandler(ImageView imageView) {
         this.imageView = imageView;
@@ -40,43 +40,41 @@ class ImgViewKeyHandler extends KeyAdapter {
         }
     }
 
+    public void keyPressed(KeyEvent e) {
+        if (!anyReleased || e.getKeyCode() == VK_CONTROL ||
+                e.getKeyCode() == VK_SHIFT)
+            return;
+        anyReleased = false;
+        Audio.playAsyncWave("myfirst.wav");
+
+        doForKey(e);
+    }
+
     @Override
     public void keyReleased(KeyEvent e) {
         anyReleased = true;  // suppress key repeat
+        Audio.playAsyncWave("mylast.wav");
     }
 
-    public void keyPressed(KeyEvent e) {
-        if (!anyReleased)
-            return;
-        anyReleased = false;
+    private void doForKey (KeyEvent e) {
+        switch (e.getKeyCode()) {
 
-        int ev = e.getKeyCode();
-        switch (ev) {
             case VK_UP -> {
                 imageView.imgPanel.scrollDown();
                 anyReleased = true;
-                return;
             }
             case VK_DOWN -> {
                 imageView.imgPanel.scrollUp();
                 anyReleased = true;
-                return;
             }
             case VK_LEFT -> {
                 imageView.imgPanel.scrollRight();
                 anyReleased = true;
-                return;
             }
             case VK_RIGHT -> {
                 imageView.imgPanel.scrollLeft();
                 anyReleased = true;
-                return;
             }
-//            case VK_CONTROL -> {
-//                return;
-//            }
-        }
-        switch (ev) {
             case VK_PAGE_DOWN -> imageView.setNextImage();
             case VK_PAGE_UP -> imageView.setBeforeImage();
             case VK_PLUS -> {
@@ -181,12 +179,6 @@ class ImgViewKeyHandler extends KeyAdapter {
                 imageView.imgPanel.clearOffset();
                 imageView.adjustOn('h');
             }
-
-//            case VK_3 -> {
-//                float factor = SliderBox.xmain("Luminance",
-//                        0.5f, 1.5f, 255);
-//                imageView.changeContrast(factor);
-//            }
 
             case VK_4 -> {
                 FastBitmap fb = imageView.getIconAsFastBitmap();
@@ -370,7 +362,6 @@ class ImgViewKeyHandler extends KeyAdapter {
 //                    Sam.speak("Key not used.");
 //            }
         }
-        Audio.playWaveFromResource("drop.wav");
     }
 }
 

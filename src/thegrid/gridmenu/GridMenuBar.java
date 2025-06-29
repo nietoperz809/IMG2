@@ -39,9 +39,9 @@ public class GridMenuBar extends JMenuBar {
         jmi.addActionListener(_ -> Manual.start());
         jm.add(jmi);
 
-        jmi = new JMenuItem("Mail ...");
-        jmi.addActionListener(_ -> EmailUtil.xmain(null));
-        jm.add(jmi);
+//        jmi = new JMenuItem("Mail ...");
+//        jmi.addActionListener(_ -> EmailUtil.xmain(null));
+//        jm.add(jmi);
 
         jmi = new JMenuItem("Speak Integer");
         jmi.addActionListener(_ -> {

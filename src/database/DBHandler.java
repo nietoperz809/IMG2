@@ -4,8 +4,8 @@ import common.*;
 import dev.brachtendorf.jimagehash.hash.Hash;
 import dev.brachtendorf.jimagehash.hashAlgorithms.HashingAlgorithm;
 import dev.brachtendorf.jimagehash.hashAlgorithms.PerceptiveHash;
-import dialogs.Copier;
 import dialogs.UnlockDialog;
+import org.jetbrains.annotations.NotNull;
 
 import javax.swing.*;
 import java.awt.*;
@@ -16,10 +16,7 @@ import java.io.RandomAccessFile;
 import java.lang.ref.SoftReference;
 import java.nio.MappedByteBuffer;
 import java.nio.channels.FileChannel;
-import java.nio.file.Paths;
 import java.sql.*;
-import java.time.Duration;
-import java.time.Instant;
 import java.util.*;
 import java.util.List;
 import java.util.concurrent.Future;
@@ -33,7 +30,6 @@ import static java.lang.System.*;
 public class DBHandler {
     static final String NO_PASS = "NoPass";
     static final String DB_FILE = "mydb";
-    static final String DB_FILE_FULL = DB_FILE + ".mv.db";
     static String RootDirectory =
             "C:\\Databases_Copy\\Databases\\";
     //"E:\\Databases\\";
@@ -548,7 +544,7 @@ public class DBHandler {
 
     public record NameID(String name, int rowid, String tag) {
         @Override
-        public String toString() {
+        public @NotNull String toString() {
             return name + " : (" + rowid + ") ";
         }
     }
@@ -557,7 +553,7 @@ public class DBHandler {
         static final String DELIM = "--";
 
         @Override
-        public String toString() {
+        public @NotNull String toString() {
             return rowid + DELIM + sql;
         }
 
@@ -569,7 +565,7 @@ public class DBHandler {
 
     public record LogMessage(String time, String entry) {
         @Override
-        public String toString() {
+        public @NotNull String toString() {
             return time + " : " + entry + "\n";
         }
     }

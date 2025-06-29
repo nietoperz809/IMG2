@@ -1,6 +1,5 @@
 package thegrid;
 
-import common.SystemClipboard;
 import common.Tools;
 
 import java.awt.datatransfer.DataFlavor;
@@ -16,19 +15,18 @@ import java.awt.event.WindowEvent;
 import java.io.File;
 
 import static common.SystemClipboard.completeImagelinks;
-import static common.SystemClipboard.getArray;
 
 public class GridListeners implements KeyListener {
     private final TheGrid theGrid;
 
     private void dispose(boolean shutdown_allowed) {
-        if (theGrid.thisInstCount > 1)  // not the last grid?
-        {
+        if (theGrid.thisInstCount > 1) { // not the last grid?
             theGrid.dispose();
             return;
         }
-        if (shutdown_allowed)
+        if (shutdown_allowed) {
             Tools.shutdown(theGrid);
+        }
     }
 
     public GridListeners(TheGrid g) {
