@@ -14,18 +14,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ddb69741-e020-4d21-a32f-f00e79c6818a" name="Changes" comment="better keyboard handling">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/common/Audio.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/common/Audio.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/common/EmailUtil.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/common/Tools.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/common/Tools.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/database/DBHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/database/DBHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/database/InsertCallback.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/database/InsertCallback.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/thegrid/GridListeners.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/thegrid/GridListeners.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/thegrid/ImgViewKeyHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/thegrid/ImgViewKeyHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/thegrid/gridmenu/GridMenuBar.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/thegrid/gridmenu/GridMenuBar.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/thegrid/gridmenu/SubMenuMarked.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/thegrid/gridmenu/SubMenuMarked.java" afterDir="false" />
-    </list>
+    <list default="true" id="ddb69741-e020-4d21-a32f-f00e79c6818a" name="Changes" comment="better keyboard handling" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -604,7 +593,7 @@
       <option name="project" value="LOCAL" />
       <updated>1683976691765</updated>
     </task>
-    <option name="localTasksCounter" value="319" />
+    <option name="localTasksCounter" value="320" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
