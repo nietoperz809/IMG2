@@ -1,6 +1,6 @@
 package thegrid;
 
-import buildinfo.BuildInfo;
+import buildinfo.BuildInfo2;
 import common.*;
 import common.ImageScaler;
 import database.DBHandler;
@@ -161,7 +161,8 @@ public class TheGrid extends MyFrame {
         rootPane.doLayout();
         scrollPane.getViewport().setView(rootPane);
         if (this.thisInstCount == 1)
-            setTitle (getTitle()+ " " + BuildInfo.buildInfo +
+            setTitle (getTitle()+ " " + BuildInfo2.BUILD_NUMBER+" -- " +
+                    BuildInfo2.BUILD_DATE+" -- " +
                     " -- "+info+" -- H2:"+DBHandler.getH2Version());
         else
             setTitle (imageL.getSql());
