@@ -29,7 +29,8 @@ import static java.lang.System.*;
 
 public class DBHandler {
     static final String NO_PASS = "NoPass";
-    static final String DB_FILE = "mydb";
+    public static final String DB_FILE = "mydb";
+    public static final String DB_EXT = ".mv.db";
     static String RootDirectory =
             "C:\\Databases_Copy\\Databases\\";
     //"E:\\Databases\\";

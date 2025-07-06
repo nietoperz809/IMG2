@@ -1,17 +1,22 @@
 package dialogs;
 
 import common.*;
+import database.DBHandler;
 
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import java.awt.*;
 import java.awt.event.*;
+import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.Duration;
 import java.time.Instant;
 
+import static common.MsgBox.Info;
 import static common.Tools.MB10;
 import static common.Tools.MB100;
 import static database.DBHandler.closeDatabase;
@@ -95,14 +100,14 @@ public class Copier extends JDialog {
     private void onOK() {
         Tools.runTask(() -> {
             try {
-                long chunksize;
-                if (chunkList.getSelectedIndex() == 0)
-                    chunksize = MB100;
-                else chunksize = MB10;
+                long chunksize = chunkList.getSelectedIndex() == 0 ? MB100 : MB10;
                 buttonOK.setVisible(false);
                 Instant startTime = Instant.now();
+                Path destP = Paths.get(toText.getText() +
+                        File.separatorChar + DBHandler.DB_FILE+DBHandler.DB_EXT);
+                Files.createDirectories(destP.getParent());
                 Channelcopy.performCopy(Paths.get(fromText.getText()),
-                        Paths.get(toText.getText()),
+                        destP,
                         chunksize,
                         (transferred, size) -> {
                             long max = size / chunksize;
@@ -112,8 +117,9 @@ public class Copier extends JDialog {
                             return false; // true will stop the copy
                         });
                 buttonOK.setVisible(true);
-                MsgBox.Info("DB backup took: " + elapsed(startTime));
+                Info("DB backup took: " + elapsed(startTime));
             } catch (IOException e) {
+                MsgBox.Error (e.toString());
                 buttonOK.setVisible(true);
                 throw new RuntimeException(e);
             }
