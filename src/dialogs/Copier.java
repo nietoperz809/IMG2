@@ -17,8 +17,7 @@ import java.time.Duration;
 import java.time.Instant;
 
 import static common.MsgBox.Info;
-import static common.Tools.MB10;
-import static common.Tools.MB100;
+import static common.Tools.*;
 import static database.DBHandler.closeDatabase;
 
 public class Copier extends JDialog {
@@ -101,11 +100,11 @@ public class Copier extends JDialog {
         Tools.runTask(() -> {
             try {
                 long chunksize = chunkList.getSelectedIndex() == 0 ? MB100 : MB10;
-                buttonOK.setVisible(false);
+                buttonOK.setEnabled(false);
                 Instant startTime = Instant.now();
                 Path destP = Paths.get(toText.getText() +
                         File.separatorChar + DBHandler.DB_FILE+DBHandler.DB_EXT);
-                Files.createDirectories(destP.getParent());
+                createMisssingDirs(destP);
                 Channelcopy.performCopy(Paths.get(fromText.getText()),
                         destP,
                         chunksize,
@@ -116,7 +115,7 @@ public class Copier extends JDialog {
                             repaint();
                             return false; // true will stop the copy
                         });
-                buttonOK.setVisible(true);
+                buttonOK.setEnabled(true);
                 Info("DB backup took: " + elapsed(startTime));
             } catch (IOException e) {
                 MsgBox.Error (e.toString());

@@ -14,13 +14,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ddb69741-e020-4d21-a32f-f00e79c6818a" name="Changes" comment="release">
+    <list default="true" id="ddb69741-e020-4d21-a32f-f00e79c6818a" name="Changes" comment="copier: destination is directory">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/buildinfo/BuildInfo2.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/buildinfo/BuildInfo2.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/buildinfo/build2.number" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/database/DBHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/database/DBHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/dialogs/Copier.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/dialogs/Copier.form" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/common/Tools.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/common/Tools.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/dialogs/Copier.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/dialogs/Copier.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/thegrid/ImageView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/thegrid/ImageView.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -85,73 +84,73 @@
     <option name="showScratchesAndConsoles" value="false" />
     <option name="showVisibilityIcons" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ASKED_ADD_EXTERNAL_FILES": "true",
-    "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "Application.ConBright.executor": "Run",
-    "Application.Console.executor": "Run",
-    "Application.Copier.executor": "Run",
-    "Application.DBHandler.executor": "Debug",
-    "Application.GUIConsole.executor": "Run",
-    "Application.ImageViewer.executor": "Run",
-    "Application.Main (1).executor": "Run",
-    "Application.Main (2).executor": "Run",
-    "Application.Main.executor": "Run",
-    "Application.MainC.executor": "Run",
-    "Application.MainE.executor": "Run",
-    "Application.MonitorFrame.executor": "Run",
-    "Application.MultiSlider.executor": "Run",
-    "Application.RGBScroll.executor": "Run",
-    "Application.RandomWord.executor": "Run",
-    "Application.SliderBox.executor": "Run",
-    "Application.SqlList.executor": "Run",
-    "Application.Stepper.executor": "Run",
-    "Application.UnlockDialog.executor": "Debug",
-    "Application.WebPDecoder.executor": "Run",
-    "Application.web.executor": "Run",
-    "Downloaded.Files.Path.Enabled": "true",
-    "GenerateAntBuildDialog.backupFiles": "true",
-    "GenerateAntBuildDialog.enableUiFormCompile": "true",
-    "GenerateAntBuildDialog.forceTargetJdk": "true",
-    "GenerateAntBuildDialog.outputFileNameProperty": "img2.iml",
-    "JAR Application.IMG2.jar.executor": "Run",
-    "JAR Application.javafx-graphics-11.0.2-javadoc.jar.executor": "Run",
-    "JUnit.All in IMG2.executor": "Run",
-    "Java Scratch.Scratch.executor": "Run",
-    "Repository.Attach.Annotations": "false",
-    "Repository.Attach.JavaDocs": "true",
-    "Repository.Attach.Sources": "false",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "UI_DESIGNER_EDITOR_MODE.PaletteManager.SHOW": "true",
-    "UI_DESIGNER_EDITOR_MODE.PaletteManager.WIDTH": "205",
-    "UI_DESIGNER_EDITOR_MODE.UIDesignerToolWindowManager.SHOW": "true",
-    "UI_DESIGNER_EDITOR_MODE.UIDesignerToolWindowManager.WIDTH": "389",
-    "full.screen.before.presentation.mode": "true",
-    "git-widget-placeholder": "withQueue",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/peter.home/java/IMG3/src/buildinfo",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Project",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.18296796",
-    "run.code.analysis.last.selected.profile": "aDefault",
-    "settings.editor.selected.configurable": "reference.projectsettings.compiler.javacompiler",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
+    &quot;ASKED_SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;Application.ConBright.executor&quot;: &quot;Run&quot;,
+    &quot;Application.Console.executor&quot;: &quot;Run&quot;,
+    &quot;Application.Copier.executor&quot;: &quot;Run&quot;,
+    &quot;Application.DBHandler.executor&quot;: &quot;Debug&quot;,
+    &quot;Application.GUIConsole.executor&quot;: &quot;Run&quot;,
+    &quot;Application.ImageViewer.executor&quot;: &quot;Run&quot;,
+    &quot;Application.Main (1).executor&quot;: &quot;Run&quot;,
+    &quot;Application.Main (2).executor&quot;: &quot;Run&quot;,
+    &quot;Application.Main.executor&quot;: &quot;Run&quot;,
+    &quot;Application.MainC.executor&quot;: &quot;Run&quot;,
+    &quot;Application.MainE.executor&quot;: &quot;Run&quot;,
+    &quot;Application.MonitorFrame.executor&quot;: &quot;Run&quot;,
+    &quot;Application.MultiSlider.executor&quot;: &quot;Run&quot;,
+    &quot;Application.RGBScroll.executor&quot;: &quot;Run&quot;,
+    &quot;Application.RandomWord.executor&quot;: &quot;Run&quot;,
+    &quot;Application.SliderBox.executor&quot;: &quot;Run&quot;,
+    &quot;Application.SqlList.executor&quot;: &quot;Run&quot;,
+    &quot;Application.Stepper.executor&quot;: &quot;Run&quot;,
+    &quot;Application.UnlockDialog.executor&quot;: &quot;Debug&quot;,
+    &quot;Application.WebPDecoder.executor&quot;: &quot;Run&quot;,
+    &quot;Application.web.executor&quot;: &quot;Run&quot;,
+    &quot;Downloaded.Files.Path.Enabled&quot;: &quot;true&quot;,
+    &quot;GenerateAntBuildDialog.backupFiles&quot;: &quot;true&quot;,
+    &quot;GenerateAntBuildDialog.enableUiFormCompile&quot;: &quot;true&quot;,
+    &quot;GenerateAntBuildDialog.forceTargetJdk&quot;: &quot;true&quot;,
+    &quot;GenerateAntBuildDialog.outputFileNameProperty&quot;: &quot;img2.iml&quot;,
+    &quot;JAR Application.IMG2.jar.executor&quot;: &quot;Run&quot;,
+    &quot;JAR Application.javafx-graphics-11.0.2-javadoc.jar.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.All in IMG2.executor&quot;: &quot;Run&quot;,
+    &quot;Java Scratch.Scratch.executor&quot;: &quot;Run&quot;,
+    &quot;Repository.Attach.Annotations&quot;: &quot;false&quot;,
+    &quot;Repository.Attach.JavaDocs&quot;: &quot;true&quot;,
+    &quot;Repository.Attach.Sources&quot;: &quot;false&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;UI_DESIGNER_EDITOR_MODE.PaletteManager.SHOW&quot;: &quot;true&quot;,
+    &quot;UI_DESIGNER_EDITOR_MODE.PaletteManager.WIDTH&quot;: &quot;205&quot;,
+    &quot;UI_DESIGNER_EDITOR_MODE.UIDesignerToolWindowManager.SHOW&quot;: &quot;true&quot;,
+    &quot;UI_DESIGNER_EDITOR_MODE.UIDesignerToolWindowManager.WIDTH&quot;: &quot;389&quot;,
+    &quot;full.screen.before.presentation.mode&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;withQueue&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/peter.home/java/IMG3/src/buildinfo&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.18296796&quot;,
+    &quot;run.code.analysis.last.selected.profile&quot;: &quot;aDefault&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;reference.projectsettings.compiler.javacompiler&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
-  "keyToStringList": {
-    "com.intellij.ide.scratch.ScratchImplUtil$2/New Scratch File": [
-      "JAVA"
+  &quot;keyToStringList&quot;: {
+    &quot;com.intellij.ide.scratch.ScratchImplUtil$2/New Scratch File&quot;: [
+      &quot;JAVA&quot;
     ]
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\peter.home\java\IMG3\src\buildinfo" />
@@ -600,7 +599,7 @@
       <option name="project" value="LOCAL" />
       <updated>1683976691765</updated>
     </task>
-    <option name="localTasksCounter" value="325" />
+    <option name="localTasksCounter" value="326" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -668,7 +667,6 @@
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_NEW_TODO" value="false" />
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="optiized ConBrightV" />
     <MESSAGE value="changed tooktip colors" />
     <MESSAGE value="speak out how many images &#10;are 'img'-tagged" />
     <MESSAGE value="introduced ColoredMenuItem.java" />
@@ -693,7 +691,8 @@
     <MESSAGE value="fixed a little NPE in DBHandler.getTagsCommaReplaced" />
     <MESSAGE value="better keyboard handling" />
     <MESSAGE value="release" />
-    <option name="LAST_COMMIT_MESSAGE" value="release" />
+    <MESSAGE value="copier: destination is directory" />
+    <option name="LAST_COMMIT_MESSAGE" value="copier: destination is directory" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

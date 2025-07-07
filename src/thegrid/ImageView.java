@@ -163,11 +163,13 @@ public class ImageView extends JFrame implements MouseWheelListener {
 
     public String toString() {
         var v = grid.imageL.get(indexRing.get());
+        String len = DBHandler.queryImageLen(v.rowid());
         BufferedImage bi = loadImgFromStore(false);
         return "IDX:" + indexRing.get() + " ROWID:" +
                 v.rowid() + " TAG:" + v.tag() +
                 " -- x/y: " + bi.getWidth() + "/" + bi.getHeight() +
-                " -- ACC: " + AccessCounter.getAccCounter(v.rowid());
+                " -- ACC: " + AccessCounter.getAccCounter(v.rowid()) +
+                " -- Size: " + len + " Bytes";
     }
 
     private void showByIdx() {
