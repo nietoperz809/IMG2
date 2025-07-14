@@ -31,7 +31,6 @@ public class Copier extends JDialog {
     private JRadioButton rbTo;
     private JButton buttonCloseDB;
     private JList<String> chunkList;
-    final JFileChooser fc = new JFileChooser();
 
     public Copier() {
         chunkList.setSelectedIndex(1); // 10MB
@@ -62,9 +61,13 @@ public class Copier extends JDialog {
         });
     }
 
-    private void doForRadioButton(JTextField jt, PersistString ps) {
-        int returnVal = fc.showOpenDialog(contentPane);
-        if (returnVal == JFileChooser.APPROVE_OPTION) {
+    private void doForRadioButton(JTextField jt, PersistString ps, boolean directory) {
+        JFileChooser fc = new JFileChooser();
+        if (directory) {
+            fc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+            fc.setAcceptAllFileFilterUsed(false);
+        }
+        if (fc.showOpenDialog(contentPane) == JFileChooser.APPROVE_OPTION) {
             jt.setText(fc.getSelectedFile().getAbsolutePath());
             jt.setBackground(Color.YELLOW);
             ps.set(jt.getText());
@@ -85,7 +88,7 @@ public class Copier extends JDialog {
                 jt.setBackground(Color.WHITE);
             }
         });
-        rb.addActionListener(_ -> doForRadioButton(jt, ps));
+        rb.addActionListener(_ -> doForRadioButton(jt, ps, rb.equals(rbTo)));
     }
 
     private String elapsed(Instant startTime) {
@@ -112,7 +115,7 @@ public class Copier extends JDialog {
                             long max = size / chunksize;
                             long x = transferred / chunksize;
                             progressText.setText(x + " from " + max + " blocks in "+elapsed(startTime));
-                            repaint();
+                            progressText.repaint();
                             return false; // true will stop the copy
                         });
                 buttonOK.setEnabled(true);

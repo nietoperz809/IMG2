@@ -4,6 +4,7 @@ import common.*;
 import database.DBHandler;
 import dialogs.LineInput;
 import net.lingala.zip4j.ZipFile;
+import net.lingala.zip4j.exception.ZipException;
 import net.lingala.zip4j.model.ZipParameters;
 import thegrid.Thumbnail;
 import thegrid.TheGrid;
@@ -92,20 +93,34 @@ public class SubMenuMarked extends JMenu {
                                     System.currentTimeMillis()+"-images.rar",
                                     pwd.toCharArray());
                             final Thumbnail[] marked = Thumbnail.getMarked(grid);
+                            //DeferredFileDeleter.lock();
+                            int repeats = 0;
                             for (Thumbnail gi : marked) {
                                 int id = gi.getRowID();
                                 BufferedImage b2 = ImageTools.byteArrayToImg(DBHandler.loadImage(id));
                                 String tags = DBHandler.getTagsCommaReplaced(id);
                                 String imgFile = ImageTools.saveImg2Disk(b2, id, outPath, tags);
                                 System.out.println("put on zip: "+imgFile);
-                                zipFile.addFile(imgFile,zipParameters);
+                                do {
+                                    try {
+                                        zipFile.addFile(imgFile, zipParameters);
+                                        repeats = 0;
+                                    } catch (ZipException e) {
+                                        repeats++;
+                                        if (repeats > 1000) {
+                                            throw new RuntimeException("Zipper: too many retries!");
+                                        }
+                                    }
+                                } while (repeats != 0);
                                 DeferredFileDeleter.put (new File(imgFile));
                             }
                             Thumbnail.markAll(grid, false);
                             zipFile.close();
+                            //DeferredFileDeleter.unlock();
                             MsgBox.Info("Password (posted to clipboard) is: "+pwd);
                             SystemClipboard.setString(pwd);
                         } catch (IOException ex) {
+                            //System.out.println("Zipping err: "+ex);
                             throw new RuntimeException(ex);
                         }
                     }

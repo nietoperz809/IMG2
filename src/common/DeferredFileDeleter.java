@@ -3,14 +3,20 @@ package common;
 import java.io.File;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.FutureTask;
 
 public class DeferredFileDeleter {
-    private static final BlockingQueue<File> __delQue = new ArrayBlockingQueue<>(100);
+    private static final BlockingQueue<File> __delQue = new ArrayBlockingQueue<>(500);
+    private static volatile boolean lock;
 
     static {
         Tools.runTask(() -> {
             while (true) {
                 try {
+                    if (lock) {
+                        Thread.sleep(1000);
+                        continue;
+                    }
                     File file = __delQue.take();
                     Tools.runTask(() -> {
                         boolean del = file.delete();
@@ -24,6 +30,14 @@ public class DeferredFileDeleter {
                 }
             }
         });
+    }
+
+    public static void lock() {
+        lock = true;
+    }
+
+    public static void unlock() {
+        lock = false;
     }
 
     public static void put(String s ) {
