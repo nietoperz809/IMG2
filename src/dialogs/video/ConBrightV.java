@@ -38,7 +38,7 @@ public class ConBrightV extends JDialog {
         conSlider.addChangeListener(_ -> doChange(new float[]{0.0f,2.0f,256f}, conSlider, conLabel, vapi::setContrast));
         satSlider.addChangeListener(_ -> doChange(new float[]{0.01f,3.0f,256f}, satSlider, satLabel, vapi::setSaturation));
         hueSlider.addChangeListener(_ -> doChange(new float[]{-180f,180f,256f}, hueSlider, hueLabel, vapi::setHue));
-        scaleSlider.addChangeListener(_ -> doChange(new float[]{0.1f,2.0f,256f}, scaleSlider, scaleLabel, vapi::setScale));
+        scaleSlider.addChangeListener(_ -> doChange(new float[]{0.1f,5.0f,256f}, scaleSlider, scaleLabel, vapi::setScale));
 
         resetButton.addActionListener(_ -> reset());
     }

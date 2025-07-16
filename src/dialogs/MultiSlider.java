@@ -3,13 +3,10 @@ package dialogs;
 import com.jhlabs.image.AbstractBufferedImageOp;
 import com.jhlabs.image.GainFilter;
 import com.jhlabs.image.GammaFilter;
-import common.ImageTools;
 import common.Stepper;
 import thegrid.ImgPanel;
 
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 
 public class MultiSlider extends JDialog {
