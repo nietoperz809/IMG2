@@ -296,15 +296,6 @@ public class Denoise {
         denoise_compare_from_fft(image2);
         return image;
     }
-
-    /**
-     * Save the image
-     */
-
-    /**
-     * Delete the image
-     */
-
 }
 
 

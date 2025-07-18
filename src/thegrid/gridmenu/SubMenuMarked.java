@@ -25,6 +25,25 @@ public class SubMenuMarked extends JMenu {
         add(jmi);
     }
 
+    private void changeTags(final TheGrid grid, boolean remove) {
+        final Thumbnail[] marked = Thumbnail.getMarked(grid);
+        String tagsnew = LineInput.tagList("", "Tag:", Color.YELLOW);
+        if (tagsnew.isEmpty())
+            return;
+        TreeSet<String> tnew = Csv.SetFromCSVString(tagsnew);
+        for (Thumbnail gi : marked) {
+            int id = gi.getRowID();
+            String tags = DBHandler.getTags(id);
+            TreeSet<String> tset = Csv.SetFromCSVString(tags);
+            if (remove)
+                tset.removeAll(tnew);
+            else
+                tset.addAll(tnew);
+            DBHandler.setTag(id, Csv.CsvStringFromSet(tset));
+        }
+        Thumbnail.markAll(grid, false);
+    }
+
     public SubMenuMarked(final TheGrid grid) {
         super("Marked ...");
 
@@ -64,27 +83,8 @@ public class SubMenuMarked extends JMenu {
                     Thumbnail.markAll(grid, false);
                 });
 
-        addItem("Add tags",
-                _ -> {
-                    final Thumbnail[] marked = Thumbnail.getMarked(grid);
-                    String tagsnew = LineInput.tagList("", "Tag:", Color.YELLOW);
-                    if (tagsnew.isEmpty())
-                        return;
-                    TreeSet<String> tnew = Csv.SetFromCSVString(tagsnew);
-                    for (Thumbnail gi : marked) {
-                        int id = gi.getRowID();
-                        String tags = DBHandler.getTags(id);
-                        TreeSet<String> tset = Csv.SetFromCSVString(tags);
-                        tset.addAll(tnew);
-                        DBHandler.setTag(id, Csv.CsvStringFromSet(tset));
-                    }
-                    Thumbnail.markAll(grid, false);
-                });
-
         addItem("Make Zip",
                 _ -> {
-//                    synchronized (this) { // Must be sync'd because async behaviour
-//                        // of zip library results in exception
                     ZipParameters zipParameters = Tools.getStandardZipParams();
                     String outPath = MsgBox.chooseDir(SubMenuMarked.this);
                     try {
@@ -123,7 +123,16 @@ public class SubMenuMarked extends JMenu {
                         //System.out.println("Zipping err: "+ex);
                         throw new RuntimeException(ex);
                     }
-//                    }
+                });
+
+        addItem("Add tags",
+                _ -> {
+                    changeTags(grid, false);
+                });
+
+        addItem("Remove tags",
+                _ -> {
+                    changeTags(grid, true);
                 });
     }
 }
