@@ -23,11 +23,6 @@ public class FontChooser2 extends JDialog
      * The font name chooser
      */
     private final List fontNameChoice;
-
-// --Commented out by Inspection START (3/2/2018 8:06 PM):
-//    /** The resulting font size */
-//    private int resultSize;
-// --Commented out by Inspection STOP (3/2/2018 8:06 PM)
     /**
      * The font size chooser
      */
@@ -53,18 +48,6 @@ public class FontChooser2 extends JDialog
      * The font the user has chosen
      */
     private Font resultFont;
-    /**
-     * The resulting font name
-     */
-    private String resultName;
-    /**
-     * The resulting boldness
-     */
-    private boolean isBold;
-    /**
-     * The resulting italicness
-     */
-    private boolean isItalic;
 
     /**
      * Construct a FontChooser -- Sets title and gets array of fonts on the
@@ -141,14 +124,14 @@ public class FontChooser2 extends JDialog
         JButton canButton = new JButton("Cancel");
         bot.add(canButton);
         canButton.addActionListener(e -> {
-            // Set all values to null. Better: restore previous.
-            resultFont = null;
-            resultName = null;
-            resultSize = 0;
-            isBold = false;
-            isItalic = false;
-
-            dispose();
+//            // Set all values to null. Better: restore previous.
+//            resultFont = null;
+//            resultName = null;
+//            resultSize = 0;
+//            isBold = false;
+//            isItalic = false;
+//
+//            dispose();
             setVisible(false);
         });
 
@@ -162,15 +145,15 @@ public class FontChooser2 extends JDialog
 
     private void previewFont ()
     {
-        resultName = fontNameChoice.getSelectedItem();
+        String resultName = fontNameChoice.getSelectedItem();
         String resultSizeName = fontSizeChoice.getSelectedItem();
         resultSize = Integer.parseInt(resultSizeName);
-        isBold = bold.getState();
-        isItalic = italic.getState();
+        boolean isBold = bold.getState();
+        boolean isItalic = italic.getState();
         int attrs = Font.PLAIN;
         if (isBold)
         {
-            attrs = Font.BOLD;
+            attrs |= Font.BOLD;
         }
         if (isItalic)
         {
@@ -181,40 +164,15 @@ public class FontChooser2 extends JDialog
         pack(); // ensure Dialog is big enough.
     }
 
-    private static void findAndSelect(List li, String s) {
-        for (int i = 0; i < li.getItemCount(); i++) {
-            String item = li.getItem(i);
-            if (item.equals(s)) {
-                li.select(i);
-                return;
-            }
-        }
-    }
-
-// --Commented out by Inspection START (2/17/2025 3:01 AM):
-//    public void adjustDisplay (Font f)
-//    {
-//        resultFont = f;
-//        bold.setState(f.isBold());
-//        italic.setState(f.isItalic());
-//        findAndSelect(fontNameChoice, f.getName());
-//        findAndSelect(fontSizeChoice, "" + f.getSize());
+//    private static void findAndSelect(List li, String s) {
+//        for (int i = 0; i < li.getItemCount(); i++) {
+//            String item = li.getItem(i);
+//            if (item.equals(s)) {
+//                li.select(i);
+//                return;
+//            }
+//        }
 //    }
-// --Commented out by Inspection STOP (2/17/2025 3:01 AM)
-
-// --Commented out by Inspection START (3/2/2018 7:49 PM):
-//    /** Retrieve the selected font name. */
-//    public String getSelectedName() {
-//        return resultName;
-//    }
-// --Commented out by Inspection STOP (3/2/2018 7:49 PM)
-
-// --Commented out by Inspection START (3/2/2018 7:49 PM):
-//    /** Retrieve the selected size */
-//    public int getSelectedSize() {
-//        return resultSize;
-//    }
-// --Commented out by Inspection STOP (3/2/2018 7:49 PM)
 
     /**
      * Retrieve the selected font, or null
@@ -232,5 +190,4 @@ public class FontChooser2 extends JDialog
 //        fc.setVisible(true);
 //        return fc.getSelectedFont();
 //    }
-// --Commented out by Inspection STOP (3/2/2018 7:49 PM)
 }

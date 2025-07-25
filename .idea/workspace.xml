@@ -14,12 +14,18 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ddb69741-e020-4d21-a32f-f00e79c6818a" name="Changes" comment="copier: destination is directory">
+    <list default="true" id="ddb69741-e020-4d21-a32f-f00e79c6818a" name="Changes" comment="added menu item: remove tags">
+      <change beforePath="$PROJECT_DIR$/.idea/ant.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/artifacts/IMG2_jar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/artifacts/IMG2_jar.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/IMG2.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/IMG2.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/net_lingala_zip4j.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/net_lingala_zip4j.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/buildinfo/BuildInfo2.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/buildinfo/BuildInfo2.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/common/Tools.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/common/Tools.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/dialogs/Copier.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/dialogs/Copier.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/thegrid/ImageView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/thegrid/ImageView.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dialogs/FontChooser2.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/dialogs/FontChooser2.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dialogs/TextParamBox.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/dialogs/TextParamBox.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/video/AnimPlayerBox.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/video/AnimPlayerBox.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/video/VideoPlayerBox.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/video/VideoPlayerBox.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -138,11 +144,11 @@
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
     &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Artifacts&quot;,
     &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.18296796&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2984206&quot;,
     &quot;run.code.analysis.last.selected.profile&quot;: &quot;aDefault&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;reference.projectsettings.compiler.javacompiler&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
   &quot;keyToStringList&quot;: {
@@ -599,7 +605,7 @@
       <option name="project" value="LOCAL" />
       <updated>1683976691765</updated>
     </task>
-    <option name="localTasksCounter" value="326" />
+    <option name="localTasksCounter" value="330" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -667,9 +673,6 @@
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_NEW_TODO" value="false" />
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="changed tooktip colors" />
-    <MESSAGE value="speak out how many images &#10;are 'img'-tagged" />
-    <MESSAGE value="introduced ColoredMenuItem.java" />
     <MESSAGE value="minor change in menu" />
     <MESSAGE value="preview image for imagelists" />
     <MESSAGE value="fixed image scaler to int_rgb" />
@@ -682,7 +685,6 @@
     <MESSAGE value="little bugfix" />
     <MESSAGE value="using winapi to copy whole DB" />
     <MESSAGE value="using Files.copy to copy whole DB" />
-    <MESSAGE value="some improvements" />
     <MESSAGE value="fixed zip creation" />
     <MESSAGE value="added FunctionalInterface" />
     <MESSAGE value="+CopyBox" />
@@ -692,7 +694,11 @@
     <MESSAGE value="better keyboard handling" />
     <MESSAGE value="release" />
     <MESSAGE value="copier: destination is directory" />
-    <option name="LAST_COMMIT_MESSAGE" value="copier: destination is directory" />
+    <MESSAGE value="some improvements" />
+    <MESSAGE value="workaround regarding MakeZip menuitem: 1000 retries because ZipFile might be locked" />
+    <MESSAGE value="some little bugs fixed" />
+    <MESSAGE value="added menu item: remove tags" />
+    <option name="LAST_COMMIT_MESSAGE" value="added menu item: remove tags" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

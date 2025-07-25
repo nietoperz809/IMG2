@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<project version="4">
-  <component name="AntConfiguration">
-    <buildFile url="file://$USER_HOME$/IdeaProjects/JForth/src/tools/buildnum.xml">
-      <executeOn event="beforeCompilation" target="UpdateBuildnum" />
-    </buildFile>
-  </component>
-</project>

@@ -16,9 +16,10 @@ public class TextParamBox extends JDialog {
     private JTextField a2020TextField;
     private JTextField a05TextField;
     private JCheckBox fillGroundCheckBox;
-    private JButton buttonOK;
+    //private JButton buttonOK;
 
     private static final TextParamBox instance = new TextParamBox();
+    private static final FontChooser2 fontc = new FontChooser2(instance);
 
     final Watermark watermark = new Watermark();
     private ImgPanel imgPanel;
@@ -27,9 +28,9 @@ public class TextParamBox extends JDialog {
         setContentPane(contentPane);
         setModal(true);
         fontButton.addActionListener(e -> {
-            FontChooser2 fc = new FontChooser2(instance);
-            fc.setVisible(true);
-            watermark.font = fc.getSelectedFont();
+            //FontChooser2 fc = new FontChooser2(instance);
+            fontc.setVisible(true);
+            watermark.font = fontc.getSelectedFont();
         });
 
         colorButton.addActionListener(e -> watermark.col = JColorChooser.showDialog(null,

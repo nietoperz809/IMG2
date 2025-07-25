@@ -3,7 +3,6 @@
     <output-path>$PROJECT_DIR$/out/IMG2_jar</output-path>
     <root id="archive" name="IMG2.jar">
       <element id="module-output" name="IMG2" />
-      <element id="library" level="project" name="IMG2" />
       <element id="extracted-dir" path="$PROJECT_DIR$/lib/javax.mail-1.5.5-javadoc.jar" path-in-jar="/" />
       <element id="extracted-dir" path="$PROJECT_DIR$/lib/javax.mail-1.5.5.jar" path-in-jar="/" />
       <element id="extracted-dir" path="$PROJECT_DIR$/lib/activation-1.1.jar" path-in-jar="/" />

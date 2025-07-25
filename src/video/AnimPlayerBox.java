@@ -62,6 +62,9 @@ public class AnimPlayerBox implements PlayerBox {
             @Override
             public void keyTyped(KeyEvent keyEvent) {
                 switch (keyEvent.getKeyChar()) {
+                    case '\u001B':  // Escape key
+                        SwingUtilities.invokeLater(() -> stop());
+                        break;
                     case 's':
                         waitFlag.set(!waitFlag.get());
                         break;

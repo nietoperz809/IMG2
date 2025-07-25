@@ -120,6 +120,9 @@ public class VideoPlayerBox implements PlayerBox {
                     char c = keyEvent.getKeyChar();
                     var controls = mpc.mediaPlayer().controls();
                     switch (c) {
+                        case '\u001B' -> {  // Escape key
+                            SwingUtilities.invokeLater(() -> stop());
+                        }
                         case 'b' -> {
                             VideoPlayerBox.this.parent.setVisible(false);
                             ConBrightV.popup(mpc.mediaPlayer().video());

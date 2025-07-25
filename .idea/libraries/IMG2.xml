@@ -1,8 +1,6 @@
 <component name="libraryTable">
   <library name="IMG2">
-    <CLASSES>
-      <root url="jar://$PROJECT_DIR$/IMG2_jar/IMG2.jar!/" />
-    </CLASSES>
+    <CLASSES />
     <JAVADOC />
     <SOURCES />
   </library>
