@@ -25,7 +25,7 @@ import java.util.HashSet;
 
 import static java.awt.event.KeyEvent.*;
 
-class ImgViewKeyHandler extends KeyAdapter {
+public class ImgViewKeyHandler extends KeyAdapter {
     private final ImageView imageView;
     Timer timer = null;
     private volatile boolean anyReleased = true;
@@ -275,22 +275,7 @@ class ImgViewKeyHandler extends KeyAdapter {
                 int this_rowid = imageView.grid.imageL.get(imageView.indexRing.get()).rowid();
                 HashingAlgorithm hasher = new PerceptiveHash(32);
                 Hash this_Hash = hasher.hash(imageView.getIconImg());
-                ArrayList<DBHandler.HashId> hlist = DBHandler.loadPerceptiveImgHashes();
-                HashSet<Integer> foundSet = new HashSet<>();
-                for (DBHandler.HashId h : hlist) {
-                    if (!h.hash().equals(this_Hash)) {
-                        double similarityScore = this_Hash.normalizedHammingDistance(h.hash());
-                        if (similarityScore < 0.2 && h.rowID() != this_rowid) {
-                            foundSet.add(h.rowID());
-                        }
-                    }
-                }
-                if (!foundSet.isEmpty()) {
-                    String xx = Tools.buildQueryForGrid(foundSet);
-                    (new Thread(() -> new TheGrid(xx, "WORKER"))).start();
-                } else {
-                    MsgBox.Info("No similarities found!");
-                }
+                loadSimilarities (this_Hash, this_rowid);
             }
 
             case VK_6 -> {
@@ -361,6 +346,25 @@ class ImgViewKeyHandler extends KeyAdapter {
 //                if (ev != VK_CONTROL && ev != VK_SHIFT)
 //                    Sam.speak("Key not used.");
 //            }
+        }
+    }
+
+    public static void loadSimilarities(Hash this_Hash, int this_rowid) {
+        ArrayList<DBHandler.HashId> hlist = DBHandler.loadPerceptiveImgHashes();
+        HashSet<Integer> foundSet = new HashSet<>();
+        for (DBHandler.HashId h : hlist) {
+            if (!h.hash().equals(this_Hash)) {
+                double similarityScore = this_Hash.normalizedHammingDistance(h.hash());
+                if (similarityScore < 0.2 && h.rowID() != this_rowid) {
+                    foundSet.add(h.rowID());
+                }
+            }
+        }
+        if (!foundSet.isEmpty()) {
+            String xx = Tools.buildQueryForGrid(foundSet);
+            (new Thread(() -> new TheGrid(xx, "WORKER"))).start();
+        } else {
+            MsgBox.Info("No similarities found!");
         }
     }
 }

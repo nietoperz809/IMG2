@@ -66,7 +66,7 @@ public class FontChooser2 extends JDialog
         fontNameChoice.addItemListener(e -> previewFont());
         top.add(fontNameChoice);
 
-        Toolkit toolkit = Toolkit.getDefaultToolkit();
+        //Toolkit toolkit = Toolkit.getDefaultToolkit();
         // For JDK 1.1: returns about 10 names (Serif, SansSerif, etc.)
         // fontList = toolkit.getFontList();
         // For JDK 1.2: a much longer list; most of the names that come
@@ -91,10 +91,11 @@ public class FontChooser2 extends JDialog
         String[] fontSizes = {"8", "10", "11", "12", "14", "16", "18",
                 "20", "24", "30", "36", "40", "48", "60", "72"
         };
-        for (String fontSize : fontSizes)
-        {
+
+        for (String fontSize : fontSizes) {
             fontSizeChoice.add(fontSize);
         }
+
         fontSizeChoice.select(DEFAULT_SIZE);
 
         cp.add(top, BorderLayout.NORTH);
@@ -121,9 +122,9 @@ public class FontChooser2 extends JDialog
             setVisible(false);
         });
 
-        JButton canButton = new JButton("Cancel");
-        bot.add(canButton);
-        canButton.addActionListener(e -> {
+//        JButton canButton = new JButton("Cancel");
+//        bot.add(canButton);
+//        canButton.addActionListener(e -> {
 //            // Set all values to null. Better: restore previous.
 //            resultFont = null;
 //            resultName = null;
@@ -132,8 +133,8 @@ public class FontChooser2 extends JDialog
 //            isItalic = false;
 //
 //            dispose();
-            setVisible(false);
-        });
+//            setVisible(false);
+//        });
 
         cp.add(bot, BorderLayout.SOUTH);
 

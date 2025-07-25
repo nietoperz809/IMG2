@@ -10,7 +10,7 @@ public class ColoredMenuItem extends JMenuItem {
     }
 
     public ColoredMenuItem(String label, Color col) {
-        this (label, col, Color.LIGHT_GRAY);
+        this (label, col, Color.WHITE);
     }
 
     public ColoredMenuItem(String label, Color col, Color back) {

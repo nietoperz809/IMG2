@@ -117,10 +117,10 @@ public class ImageTools {
         c.setContents(trans, trans);
     }
 
-    public static BufferedImage contrast(BufferedImage img, float val) {
-        RescaleOp op = new RescaleOp(val, 20.0f, null);
-        return op.filter(img, img);
-    }
+//    public static BufferedImage contrast(BufferedImage img, float val) {
+//        RescaleOp op = new RescaleOp(val, 20.0f, null);
+//        return op.filter(img, img);
+//    }
 
 //    public static BufferedImage gammaCorrection(BufferedImage original, float gamma) {
 //

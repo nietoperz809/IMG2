@@ -2,6 +2,9 @@ package thegrid.gridmenu;
 
 import common.*;
 import database.DBHandler;
+import dev.brachtendorf.jimagehash.hash.Hash;
+import dev.brachtendorf.jimagehash.hashAlgorithms.HashingAlgorithm;
+import dev.brachtendorf.jimagehash.hashAlgorithms.PerceptiveHash;
 import dialogs.*;
 import httpserv.WebApp;
 import org.h2.tools.GUIConsole;
@@ -22,10 +25,9 @@ import java.sql.SQLException;
 import java.util.*;
 import java.util.List;
 
+import static common.ImageTools.loadImageFromFile;
 import static common.Tools.restartApplication;
-
-//import static database.DBHandler.RowIDfromImgHash;
-
+import static thegrid.ImgViewKeyHandler.loadSimilarities;
 
 public class GridMenuBar extends JMenuBar {
 
@@ -43,7 +45,27 @@ public class GridMenuBar extends JMenuBar {
 //        jmi.addActionListener(_ -> EmailUtil.xmain(null));
 //        jm.add(jmi);
 
+        jmi = new ColoredMenuItem("Check external image", Color.GREEN);
+        jmi.setToolTipText("Find similarities in database");
+        jmi.addActionListener(_ -> {
+            JFileChooser fc = new JFileChooser();
+            FileNameExtensionFilter filter = new FileNameExtensionFilter("Image Files", ImageTools.getImageExtensions());
+            fc.setFileFilter(filter);
+            if (fc.showOpenDialog(theGrid.rootPane) == JFileChooser.APPROVE_OPTION) {
+                File f = fc.getSelectedFile();
+                try {
+                    BufferedImage img = loadImageFromFile(f.getAbsolutePath());
+                    HashingAlgorithm hasher = new PerceptiveHash(32);
+                    loadSimilarities (hasher.hash(img), -1);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        });
+        jm.add(jmi);
+
         jmi = new JMenuItem("Speak Integer");
+        jmi.setToolTipText("Say number using SAM");
         jmi.addActionListener(_ -> {
             int num = LineInput.onlyPosNumber("", "Num", Color.MAGENTA);
             String s = NumToText.convert(num);
@@ -52,6 +74,7 @@ public class GridMenuBar extends JMenuBar {
         jm.add(jmi);
 
         jmi = new JMenuItem("Memory Monitor ...");
+        jmi.setToolTipText("Display Memory Graph");
         jmi.addActionListener(_ -> new MonitorFrame());
         jm.add(jmi);
 
@@ -117,6 +140,7 @@ public class GridMenuBar extends JMenuBar {
         jm.add(jmi);
 
         jmi = new JMenuItem("Paste more pictures ...");
+        jmi.setToolTipText("New images from Clipboard");
         jmi.addActionListener(_ -> {
             Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
             try {
@@ -132,6 +156,7 @@ public class GridMenuBar extends JMenuBar {
         jm.add(jmi);
 
         jmi = new JMenuItem("Backup DB ...");
+        jmi.setToolTipText("Copy entire DB");
         jmi.addActionListener(_ -> {
             boolean needRestart = Copier.main(new String[0]);
             try {
@@ -144,10 +169,12 @@ public class GridMenuBar extends JMenuBar {
         jm.add(jmi);
 
         jmi = new ColoredMenuItem("Open video App", Color.BLUE, Color.WHITE);
+        jmi.setToolTipText("Go to video viewer");
         jmi.addActionListener(_ -> VideoApp.open(theGrid));
         jm.add(jmi);
 
         jmi = new JMenuItem("Tag List");
+        jmi.setToolTipText("Select images having same Tags");
         jmi.addActionListener(_ -> TagSelectorDlg.worker_for_tagList());
         jm.add(jmi);
 
@@ -166,6 +193,7 @@ public class GridMenuBar extends JMenuBar {
         jm.add(jmi);
 
         jmi = new JMenuItem("x*x Grid preview");
+        jmi.setToolTipText("Create preview image of a grid");
         jmi.addActionListener(_ -> {
             BufferedImage big = ImageTools.createPreviewImage(theGrid.imageL, 5);
             ImageViewer.xmain(big);
