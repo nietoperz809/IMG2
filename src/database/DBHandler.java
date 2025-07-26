@@ -501,7 +501,7 @@ public class DBHandler {
         return null;
     }
 
-    public static ArrayList<HashId> loadPerceptiveImgHashes() {
+    public static synchronized ArrayList<HashId> loadPerceptiveImgHashes() {
         String q = "select imghash,_rowid_ from IMAGES where imghash is not null";
         ArrayList<HashId> list = new ArrayList<>();
         try {
