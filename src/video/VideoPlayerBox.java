@@ -16,6 +16,7 @@ import java.io.File;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
+import static com.sun.jna.platform.win32.Win32VK.VK_RETURN;
 import static database.VideoFunctions.transferVideoIntoFile;
 
 public class VideoPlayerBox implements PlayerBox {
@@ -78,11 +79,11 @@ public class VideoPlayerBox implements PlayerBox {
             System.out.println(tempFile);
             mpc = new EmbeddedMediaPlayerComponent();
             playerFrame = new JFrame();
-            //mpc.setToolTipText("b to open slider box ...");
             playerFrame.requestFocus();
-            playerFrame.setTitle("Hit 's' to start and stop, 'p' to take shapshot, +/- for speed, 'b' to show sliders");
+            //playerFrame.setTitle("Hit 's' to start and stop, 'p' to take shapshot, +/- for speed, 'b' to show sliders");
+            playerFrame.setUndecorated(true);
             Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-            playerFrame.setBounds(0, 0, screenSize.width-20, screenSize.height-20);
+            playerFrame.setBounds(0, 0, screenSize.width, screenSize.height-30);
             playerFrame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
             /*
              * cleanup on window close
@@ -157,7 +158,7 @@ public class VideoPlayerBox implements PlayerBox {
             });
             playerFrame.setLayout(new BorderLayout());
             playerFrame.add(mpc, BorderLayout.CENTER); //setContentPane(mpc);
-            playerFrame.add(sbar, BorderLayout.SOUTH);
+            playerFrame.add(sbar, BorderLayout.NORTH);
             playerFrame.setVisible(true);
             /*
              * update scrollbar
