@@ -14,7 +14,7 @@ import java.io.File;
 import java.time.Duration;
 import java.time.Instant;
 
-import static common.ImageTools.byteArrayToImg;
+import static common.ImageTools.JPGByteArrayToImg;
 import static common.MsgBox.AskforPWD;
 import static common.NumToText.*;
 import static common.Tools.extractResource;
@@ -52,7 +52,7 @@ public class TheGrid extends MyFrame {
 
     static {
         try {
-            failImg = byteArrayToImg (extractResource ("fail.png"));
+            failImg = JPGByteArrayToImg(extractResource ("fail.png"));
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -75,7 +75,7 @@ public class TheGrid extends MyFrame {
         }
         setTitle(dbRoot);
         try {
-            setIconImage (byteArrayToImg(extractResource("favicon.ico")));
+            setIconImage (JPGByteArrayToImg(extractResource("favicon.ico")));
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

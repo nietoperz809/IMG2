@@ -1,7 +1,6 @@
 package common;
 
 import com.luciad.imageio.webp.WebPReadParam;
-import database.DBHandler;
 import org.jetbrains.annotations.NotNull;
 import thegrid.ImageList;
 
@@ -34,7 +33,7 @@ public class ImageTools {
         for (int x = 2; x < k; x += 102) {
             for (int y = 2; y < k; y += 102) {
                 try {
-                    ig2.drawImage(byteArrayToImg(loadThumbnail(list.get(i++).rowid())),
+                    ig2.drawImage(JPGByteArrayToImg(loadThumbnail(list.get(i++).rowid())),
                             x, y, 100,100,null);
                 } catch (RuntimeException e) {
                     //throw new RuntimeException(e);
@@ -276,7 +275,8 @@ public class ImageTools {
      * @return the image as byte array
      * @throws IOException if smth. gone wrong
      */
-    public static byte[] imgToByteArray(BufferedImage img) throws IOException {
+    public static byte[] imgToJPGByteArray(BufferedImage img) throws IOException {
+        img = removeAlpha(img);
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         ImageIO.write(img, "jpg", baos);
         return baos.toByteArray();
@@ -288,7 +288,7 @@ public class ImageTools {
      * @param arr image als byte array
      * @return a BufferedImage object
      */
-    public static BufferedImage byteArrayToImg(byte[] arr) {
+    public static BufferedImage JPGByteArrayToImg(byte[] arr) {
         InputStream is = new ByteArrayInputStream(arr);
         try {
             return ImageIO.read(is);

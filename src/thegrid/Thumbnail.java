@@ -142,7 +142,7 @@ public class Thumbnail extends JLabel {
      * @param rootPane the Imagegrid itself
      */
     Thumbnail(TheGrid grid, byte[] tbh, int currentIndex, JPanel rootPane) {
-        super(new ImageIcon(ImageTools.byteArrayToImg(tbh)));
+        super(new ImageIcon(ImageTools.JPGByteArrayToImg(tbh)));
         //imgHash = null;
         init (grid, currentIndex, rootPane);
     }

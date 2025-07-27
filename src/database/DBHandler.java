@@ -22,7 +22,7 @@ import java.util.List;
 import java.util.concurrent.Future;
 import java.util.concurrent.atomic.AtomicReference;
 
-import static common.ImageTools.byteArrayToImg;
+import static common.ImageTools.JPGByteArrayToImg;
 import static common.Tools.extractResource;
 import static database.VideoFunctions.*;
 import static java.lang.System.*;
@@ -330,10 +330,10 @@ public class DBHandler {
      * @param img the image
      */
     public static void insertImageRecord(String name, BufferedImage img) throws IOException {
-        byte[] buff = ImageTools.imgToByteArray(img);
+        byte[] buff = ImageTools.imgToJPGByteArray(img);
         BufferedImage thumbnailImage = ImageScaler.scaleExact(img,
                 new Dimension(100, 100));
-        byte[] buff2 = ImageTools.imgToByteArray(thumbnailImage);
+        byte[] buff2 = ImageTools.imgToJPGByteArray(thumbnailImage);
         PreparedStatement prep;
         HashingAlgorithm hasher = new PerceptiveHash(32);
         Hash hash0 = hasher.hash(img);
@@ -356,14 +356,14 @@ public class DBHandler {
     public static void createNewThumb(int id) {
         try {
             byte[] bigbytes = loadImage(id);
-            BufferedImage bigImg = ImageTools.byteArrayToImg(bigbytes);
+            BufferedImage bigImg = ImageTools.JPGByteArrayToImg(bigbytes);
             if (bigImg == null) {
                 out.println("bigimg load fail: " + id);
-                bigImg = byteArrayToImg(extractResource("fail.png"));
+                bigImg = JPGByteArrayToImg(extractResource("fail.png"));
             }
             BufferedImage thumbnailImage = ImageScaler.scaleExact(bigImg,
                     new Dimension(100, 100));
-            byte[] buff = ImageTools.imgToByteArray(thumbnailImage);
+            byte[] buff = ImageTools.imgToJPGByteArray(thumbnailImage);
             PreparedStatement prep;
             prep = connection.prepareStatement(
                     "update IMAGES set thumb=? where _rowid_ = " + id);
@@ -376,8 +376,8 @@ public class DBHandler {
 
     public static void changeBigImg(BufferedImage img, int id) {
         try {
-            img = ImageTools.removeAlpha(img);
-            byte[] buff = ImageTools.imgToByteArray(img);
+            //img = ImageTools.removeAlpha(img);
+            byte[] buff = ImageTools.imgToJPGByteArray(img);
             HashingAlgorithm hasher = new PerceptiveHash(32);
             Hash hash0 = hasher.hash(img);
             PreparedStatement prep;
@@ -524,7 +524,7 @@ public class DBHandler {
                 byte[] img = res.getBytes(1);
                 Hash hash = (Hash) res.getObject(2);
                 if (hash == null) { // create hash if missing
-                    BufferedImage bi = byteArrayToImg(img);
+                    BufferedImage bi = JPGByteArrayToImg(img);
                     HashingAlgorithm hasher = new PerceptiveHash(32);
                     hash = hasher.hash(bi);
                     PreparedStatement prep = connection.prepareStatement(

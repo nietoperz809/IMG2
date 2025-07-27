@@ -77,7 +77,7 @@ public class SubMenuMarked extends JMenu {
                         int id = gi.getRowID();
                         byte[] b = DBHandler.loadImage(id);
                         String tags = DBHandler.getTagsCommaReplaced(id);
-                        BufferedImage b2 = ImageTools.byteArrayToImg(b);
+                        BufferedImage b2 = ImageTools.JPGByteArrayToImg(b);
                         ImageTools.saveImg2Disk(b2, id, outPath, tags);
                     }
                     Thumbnail.markAll(grid, false);
@@ -97,7 +97,7 @@ public class SubMenuMarked extends JMenu {
                         int repeats = 0;
                         for (Thumbnail gi : marked) {
                             int id = gi.getRowID();
-                            BufferedImage b2 = ImageTools.byteArrayToImg(DBHandler.loadImage(id));
+                            BufferedImage b2 = ImageTools.JPGByteArrayToImg(DBHandler.loadImage(id));
                             String tags = DBHandler.getTagsCommaReplaced(id);
                             String imgFile = ImageTools.saveImg2Disk(b2, id, outPath, tags);
                             System.out.println("put on zip: " + imgFile);

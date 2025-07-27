@@ -14,7 +14,7 @@ import java.awt.event.*;
 import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
 
-import static common.ImageTools.removeAlpha;
+//import static common.ImageTools.removeAlpha;
 import static common.MsgBox.chooseDir;
 
 
@@ -59,7 +59,7 @@ public class ImageView extends JFrame implements MouseWheelListener {
     }
 
     BufferedImage getIconImg() {
-        return removeAlpha(imgPanel.getImage());
+        return ImageTools.removeAlpha(imgPanel.getImage());
     }
 
     void saveAsFile(boolean orig) {
@@ -77,18 +77,11 @@ public class ImageView extends JFrame implements MouseWheelListener {
     public void saveImageAsFile(boolean orig, String outPath) {
         if (outPath != null) {
             int rowid = grid.imageL.get(indexRing.get()).rowid();
-            BufferedImage img;
-
-            if (orig)
-                img = loadImgFromStore(false);
-            else
-                img = removeAlpha(getIconImg());
-
+            BufferedImage img = orig ? loadImgFromStore(false) : ImageTools.removeAlpha(getIconImg());
             long milli = System.currentTimeMillis(); // prevent dupes
             if (milli - imgSavetime < 500)
                 return;
             imgSavetime = milli;
-
             ImageTools.saveImg2Disk(img, rowid, outPath, null);
         }
     }
@@ -217,7 +210,7 @@ public class ImageView extends JFrame implements MouseWheelListener {
                 System.out.println("loadImgFromStore-1 fail!!!");
                 return TheGrid.failImg;
             }
-            BufferedImage b2 = ImageTools.byteArrayToImg(b);
+            BufferedImage b2 = ImageTools.JPGByteArrayToImg(b);
             if (b2 == null) {
                 System.out.println("loadImgFromStore-2 fail!!!");
                 return TheGrid.failImg;
