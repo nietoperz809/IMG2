@@ -327,7 +327,7 @@ public class DBHandler {
     /**
      * Convert img into INT_RGB, generate thumbnail and put all int the tabke
      * @param name image name, can be any string
-     * @param img th image
+     * @param img the image
      */
     public static void insertImageRecord(String name, BufferedImage img) throws IOException {
         byte[] buff = ImageTools.imgToByteArray(img);
@@ -336,7 +336,7 @@ public class DBHandler {
         byte[] buff2 = ImageTools.imgToByteArray(thumbnailImage);
         PreparedStatement prep;
         HashingAlgorithm hasher = new PerceptiveHash(32);
-        Hash hash0 = hasher.hash(byteArrayToImg(buff));
+        Hash hash0 = hasher.hash(img);
         try {
             prep = connection.prepareStatement(
                     "insert into IMAGES (image,thumb,name,imghash) values (?,?,?,?)");

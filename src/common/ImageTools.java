@@ -284,6 +284,7 @@ public class ImageTools {
 
     /**
      * make image from byte array
+     * Doesnt work for PNG
      * @param arr image als byte array
      * @return a BufferedImage object
      */
