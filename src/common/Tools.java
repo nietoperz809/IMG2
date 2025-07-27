@@ -10,10 +10,7 @@ import thegrid.TheGrid;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -251,4 +248,15 @@ public class Tools {
             throw new RuntimeException(e);
         }
     }
+    public static String getGITrevcount() {
+        try {
+            Process process = Runtime.getRuntime().exec("git rev-list HEAD --count");
+            process.waitFor();
+            BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+            return reader.readLine();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 }

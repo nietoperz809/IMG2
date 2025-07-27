@@ -366,11 +366,8 @@ public abstract class NanoHTTPD {
         @Override
         public void exec(ClientHandler clientHandler) {
             ++this.requestCount;
-            /*Thread t =*/ Tools.runTask(clientHandler);
-            //t.setDaemon(true);
-            //t.setName("NanoHttpd Request Processor (#" + this.requestCount + ")");
-            this.running.add(clientHandler);
-            //t.start();
+            Tools.runTask(clientHandler); ////loomThread (clientHandler);  //runTask(clientHandler);
+            this.running.add (clientHandler);
         }
     }
 

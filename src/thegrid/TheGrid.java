@@ -18,6 +18,7 @@ import static common.ImageTools.JPGByteArrayToImg;
 import static common.MsgBox.AskforPWD;
 import static common.NumToText.*;
 import static common.Tools.extractResource;
+import static common.Tools.getGITrevcount;
 import static database.SqlListFunctions.putQuery;
 
 
@@ -161,9 +162,11 @@ public class TheGrid extends MyFrame {
         rootPane.doLayout();
         scrollPane.getViewport().setView(rootPane);
         if (this.thisInstCount == 1)
-            setTitle (getTitle()+ " " + BuildInfo2.BUILD_NUMBER+" -- " +
-                    BuildInfo2.BUILD_DATE+" -- " +
-                    " -- "+info+" -- H2:"+DBHandler.getH2Version());
+            setTitle (getTitle()+ " -- " + BuildInfo2.BUILD_NUMBER+" -- " +
+                    BuildInfo2.BUILD_DATE+
+                    " -- Git:" + getGITrevcount() +
+                    " -- H2:"+DBHandler.getH2Version() +
+                    " -- "+info);
         else
             setTitle (imageL.getSql());
         setVisible(true);
