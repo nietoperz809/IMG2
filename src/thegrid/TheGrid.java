@@ -14,6 +14,7 @@ import java.io.File;
 import java.time.Duration;
 import java.time.Instant;
 
+import static buildinfo.BuildInfo2.GIT_REV;
 import static common.ImageTools.JPGByteArrayToImg;
 import static common.MsgBox.AskforPWD;
 import static common.NumToText.*;
@@ -164,7 +165,7 @@ public class TheGrid extends MyFrame {
         if (this.thisInstCount == 1)
             setTitle (getTitle()+ " -- " + BuildInfo2.BUILD_NUMBER+" -- " +
                     BuildInfo2.BUILD_DATE+
-                    " -- Git:" + getGITrevcount() +
+                    " -- Git:" + GIT_REV +
                     " -- H2:"+DBHandler.getH2Version() +
                     " -- "+info);
         else

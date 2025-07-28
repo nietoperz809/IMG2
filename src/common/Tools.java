@@ -251,7 +251,7 @@ public class Tools {
 
     /**
      * Git rev count as build number
-     * @return
+     * @return number of revisions from GIT
      */
     public static String getGITrevcount() {
         try {
