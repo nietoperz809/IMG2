@@ -248,12 +248,16 @@ public class Tools {
             throw new RuntimeException(e);
         }
     }
+
+    /**
+     * Git rev count as build number
+     * @return
+     */
     public static String getGITrevcount() {
         try {
-            Process process = Runtime.getRuntime().exec("git rev-list HEAD --count");
+            Process process = Runtime.getRuntime().exec(new String[] {"git", "rev-list", "HEAD", "--count"});
             process.waitFor();
-            BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
-            return reader.readLine();
+            return new BufferedReader(new InputStreamReader(process.getInputStream())).readLine();
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
