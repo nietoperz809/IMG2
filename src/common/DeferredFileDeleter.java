@@ -3,7 +3,6 @@ package common;
 import java.io.File;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.FutureTask;
 
 public class DeferredFileDeleter {
     private static final BlockingQueue<File> __delQue = new ArrayBlockingQueue<>(500);
@@ -21,7 +20,7 @@ public class DeferredFileDeleter {
                     Tools.runTask(() -> {
                         boolean del = file.delete();
                         if (!del) {
-                            System.out.println("delete of queue etry failed");
+                            System.out.println("delete of queue entry failed");
                             put (file);
                         }
                     });

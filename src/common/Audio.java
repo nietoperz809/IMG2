@@ -3,7 +3,6 @@ package common;
 import javax.sound.sampled.*;
 import java.io.BufferedInputStream;
 import java.io.ByteArrayInputStream;
-import java.io.IOException;
 import java.io.InputStream;
 import java.util.Objects;
 import java.util.concurrent.CountDownLatch;

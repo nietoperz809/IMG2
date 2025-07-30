@@ -18,6 +18,7 @@ public class ImageViewController {
     }
 
     public static void killAllViews() {
+        @SuppressWarnings("unchecked")
         ArrayList<JFrame> cl = (ArrayList<JFrame>) _list.clone();
         for (JFrame iv: cl) {
             iv.dispose();

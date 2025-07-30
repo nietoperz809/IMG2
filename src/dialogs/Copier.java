@@ -31,6 +31,10 @@ public class Copier extends JDialog {
     private JRadioButton rbTo;
     private JButton buttonCloseDB;
     private JList<String> chunkList;
+    public static long MB10 = 1024*1024*10;
+    public static long MB50 = 1024*1024*50;
+    public static long MB100 = 1024*1024*100;
+
 
     public Copier() {
         chunkList.setSelectedIndex(1); // 10MB
@@ -102,7 +106,11 @@ public class Copier extends JDialog {
     private void onOK() {
         Tools.runTask(() -> {
             try {
-                long chunksize = chunkList.getSelectedIndex() == 0 ? MB100 : MB10;
+                long chunksize = switch (chunkList.getSelectedIndex()) {
+                    case 1 -> MB50;
+                    case 2 -> MB10;
+                    default -> MB100;
+                };
                 buttonOK.setEnabled(false);
                 Instant startTime = Instant.now();
                 Path destP = Paths.get(toText.getText() +
@@ -128,7 +136,7 @@ public class Copier extends JDialog {
         });
     }
 
-    public static boolean main(String[] args) {
+    public static boolean main(String[] ignoredArgs) {
         Copier dialog = new Copier();
         dialog.pack();
         dialog.setLocationRelativeTo(null);

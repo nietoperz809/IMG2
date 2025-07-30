@@ -2,7 +2,6 @@ package thegrid;
 
 import buildinfo.BuildInfo2;
 import common.*;
-import common.ImageScaler;
 import database.DBHandler;
 import dialogs.ProgressBox;
 import thegrid.gridmenu.GridMenuBar;
@@ -17,16 +16,15 @@ import java.time.Instant;
 import static buildinfo.BuildInfo2.GIT_REV;
 import static common.ImageTools.JPGByteArrayToImg;
 import static common.MsgBox.AskforPWD;
-import static common.NumToText.*;
+import static common.NumToText.convertLessThanOneThousand;
 import static common.Tools.extractResource;
-import static common.Tools.getGITrevcount;
 import static database.SqlListFunctions.putQuery;
 
 
 public class TheGrid extends MyFrame {
     private static int instCount = 0;
     private static TheGrid mainGrid;
-    static ImageView mainView;
+    // static ImageView mainView;
     public int thisInstCount;
     public final ImageList imageL = new ImageList();
     public final JPanel rootPane;
@@ -46,7 +44,7 @@ public class TheGrid extends MyFrame {
     }
 
     public void setHistoryPath(String historyPath) {
-        System.out.println("histPath: "+historyPath);
+        System.out.println("histPath: " + historyPath);
         this.historyPath = historyPath;
     }
 
@@ -54,18 +52,18 @@ public class TheGrid extends MyFrame {
 
     static {
         try {
-            failImg = JPGByteArrayToImg(extractResource ("fail.png"));
+            failImg = JPGByteArrayToImg(extractResource("fail.png"));
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
 
     public void notifyClick() {
-        stopThumbViewFill ("-- prematurely stopped --");
+        stopThumbViewFill("-- prematurely stopped --");
     }
 
 
-    public TheGrid (String sql, String dbRoot) {
+    public TheGrid(String sql, String dbRoot) {
         if (instCount == 0)
             mainGrid = this;
         instCount++;
@@ -77,13 +75,13 @@ public class TheGrid extends MyFrame {
         }
         setTitle(dbRoot);
         try {
-            setIconImage (JPGByteArrayToImg(extractResource("favicon.ico")));
+            setIconImage(JPGByteArrayToImg(extractResource("favicon.ico")));
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
         imageL.setSQL(sql);
         //System.out.println("TheGrid constructor called");
-        DBHandler.log("Images in DB: "+this.imageL.size());
+        DBHandler.log("Images in DB: " + this.imageL.size());
         progress = new ProgressBox(this, this.imageL.size());
         Win32.dialogToTop(progress);
         rootPane = new JPanel();
@@ -118,7 +116,7 @@ public class TheGrid extends MyFrame {
 //                DBHandler.log("SHUTDOWN"));
 //        Runtime.getRuntime().addShutdownHook(hook);
 
-        Thread.setDefaultUncaughtExceptionHandler((t, e) -> {
+        Thread.setDefaultUncaughtExceptionHandler((_, e) -> {
             MsgBox.Error(e.toString());
             //System.exit(-3);
         });
@@ -126,24 +124,23 @@ public class TheGrid extends MyFrame {
         UIManager.put("ToolTip.font", new Font("Arial", Font.BOLD, 20));
         Win32.hideConsoleWindow();
 
-            boolean askPwd = true;
-            String dbRoot = "dbdir:";
-            for (String s : input) {
-                if (s.startsWith(dbRoot)) {
-                    dbRoot = s.substring(dbRoot.length());
-                    DBHandler.startDatabase(dbRoot);
-                }
-                else if (s.equals("nopwd")) {
-                    askPwd = false;
-                }
+        boolean askPwd = true;
+        String dbRoot = "dbdir:";
+        for (String s : input) {
+            if (s.startsWith(dbRoot)) {
+                dbRoot = s.substring(dbRoot.length());
+                DBHandler.startDatabase(dbRoot);
+            } else if (s.equals("nopwd")) {
+                askPwd = false;
             }
-            if (askPwd) {
-                AskforPWD();
-            }
+        }
+        if (askPwd) {
+            AskforPWD();
+        }
 
-            DBHandler.log("+++ TheGrid started");
-            new TheGrid (ImageList.mainSQL, dbRoot);
-            System.out.println("end main");
+        DBHandler.log("+++ TheGrid started");
+        new TheGrid(ImageList.mainSQL, dbRoot);
+        System.out.println("end main");
     }
 
     public void addImageFilesToDatabase(File[] files) throws Exception {
@@ -154,7 +151,7 @@ public class TheGrid extends MyFrame {
             rootPane.add(lab);
         });
         rootPane.doLayout();
-        Sam.speak(convertLessThanOneThousand(numadd)+" new files added");
+        Sam.speak(convertLessThanOneThousand(numadd) + " new files added");
     }
 
     public void stopThumbViewFill(String info) {
@@ -163,13 +160,13 @@ public class TheGrid extends MyFrame {
         rootPane.doLayout();
         scrollPane.getViewport().setView(rootPane);
         if (this.thisInstCount == 1)
-            setTitle (getTitle()+ " -- " + BuildInfo2.BUILD_NUMBER+" -- " +
-                    BuildInfo2.BUILD_DATE+
+            setTitle(getTitle() + " -- " + BuildInfo2.BUILD_NUMBER + " -- " +
+                    BuildInfo2.BUILD_DATE +
                     " -- Git:" + GIT_REV +
-                    " -- H2:"+DBHandler.getH2Version() +
-                    " -- "+info);
+                    " -- H2:" + DBHandler.getH2Version() +
+                    " -- " + info);
         else
-            setTitle (imageL.getSql());
+            setTitle(imageL.getSql());
         setVisible(true);
         Tools.gc_now();
     }
@@ -177,7 +174,7 @@ public class TheGrid extends MyFrame {
     /**
      * Add one single image to the frame
      */
-    public void addThumbnail (int s) {
+    public void addThumbnail(int s) {
         int rowid = imageL.get(s).rowid();
         byte[] thumbBytes = null;
         try {

@@ -7,7 +7,6 @@ import java.awt.*;
 import java.io.File;
 import java.nio.charset.Charset;
 import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
 
 public class MsgBox {

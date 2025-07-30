@@ -5,6 +5,7 @@ import dialogs.TimedMessage;
 import net.lingala.zip4j.model.ZipParameters;
 import net.lingala.zip4j.model.enums.CompressionLevel;
 import net.lingala.zip4j.model.enums.EncryptionMethod;
+import thegrid.ImageViewController;
 import thegrid.TheGrid;
 
 import javax.swing.*;
@@ -166,7 +167,7 @@ public class Tools {
     public static void shutdown(Window gr) {
         JDialog dlg = TimedMessage.showMessageDialog(gr, "closing ..", "ImageBase",
                 3000);
-
+        ImageViewController.killAllViews();
         DBHandler.log("--- TheGrid ended");
         gr.setVisible(false);
         DBHandler.closeDatabase();
@@ -237,9 +238,6 @@ public class Tools {
 //            }
 //        }
 //    }
-
-    public static long MB10 = 1024*1024*10;
-    public static long MB100 = 1024*1024*100;
 
     public static void createMisssingDirs (Path p) {
         try {

@@ -9,7 +9,7 @@ import static common.NumToText.convertLessThanOneThousand;
 public class SystemClipboard {
     private static final Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
 
-    public static Transferable emptyTrans = new Transferable() {
+    public static final Transferable emptyTrans = new Transferable() {
         @Override
         public DataFlavor[] getTransferDataFlavors() {
             return new DataFlavor[0];
@@ -21,7 +21,7 @@ public class SystemClipboard {
         }
 
         @Override
-        public Object getTransferData(DataFlavor flavor) throws UnsupportedFlavorException, IOException {
+        public Object getTransferData(DataFlavor flavor) {
             return null;
         }
     };

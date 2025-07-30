@@ -71,7 +71,7 @@ public class NumToText {
             return "zero";
         }
 
-        String snumber = Long.toString(number);
+        String snumber; //= Long.toString(number);
 
         // pad with "0"
         String mask = "000000000000";
@@ -89,16 +89,16 @@ public class NumToText {
 
         String result = switch (billions) {
             case 0 -> "";
-            case 1 -> convertLessThanOneThousand(billions)
-                    + " billion ";
+//            case 1 -> convertLessThanOneThousand(billions)
+//                    + " billion ";
             default -> convertLessThanOneThousand(billions)
                     + " billion ";
         };
 
         String tradMillions = switch (millions) {
             case 0 -> "";
-            case 1 -> convertLessThanOneThousand(millions)
-                    + " million ";
+//            case 1 -> convertLessThanOneThousand(millions)
+//                    + " million ";
             default -> convertLessThanOneThousand(millions)
                     + " million ";
         };
@@ -119,55 +119,4 @@ public class NumToText {
         // remove extra spaces!
         return result.replaceAll("^\\s+", "").replaceAll("\\b\\s{2,}\\b", " ");
     }
-
-//    /**
-//     * testing
-//     *
-//     * @param args
-//     */
-//    public static void main(String[] args) {
-//        System.out.println("*** " + EnglishNumberToWords.convert(0));
-//        System.out.println("*** " + EnglishNumberToWords.convert(1));
-//        System.out.println("*** " + EnglishNumberToWords.convert(16));
-//        System.out.println("*** " + EnglishNumberToWords.convert(100));
-//        System.out.println("*** " + EnglishNumberToWords.convert(118));
-//        System.out.println("*** " + EnglishNumberToWords.convert(200));
-//        System.out.println("*** " + EnglishNumberToWords.convert(219));
-//        System.out.println("*** " + EnglishNumberToWords.convert(800));
-//        System.out.println("*** " + EnglishNumberToWords.convert(801));
-//        System.out.println("*** " + EnglishNumberToWords.convert(1316));
-//        System.out.println("*** " + EnglishNumberToWords.convert(1000000));
-//        System.out.println("*** " + EnglishNumberToWords.convert(2000000));
-//        System.out.println("*** " + EnglishNumberToWords.convert(3000200));
-//        System.out.println("*** " + EnglishNumberToWords.convert(700000));
-//        System.out.println("*** " + EnglishNumberToWords.convert(9000000));
-//        System.out.println("*** " + EnglishNumberToWords.convert(9001000));
-//        System.out.println("*** " + EnglishNumberToWords.convert(123456789));
-//        System.out.println("*** " + EnglishNumberToWords.convert(2147483647));
-//        System.out.println("*** " + EnglishNumberToWords.convert(3000000010L));
-
-        /*
-         *** zero
-         *** one
-         *** sixteen
-         *** one hundred
-         *** one hundred eighteen
-         *** two hundred
-         *** two hundred nineteen
-         *** eight hundred
-         *** eight hundred one
-         *** one thousand three hundred sixteen
-         *** one million
-         *** two millions
-         *** three millions two hundred
-         *** seven hundred thousand
-         *** nine millions
-         *** nine millions one thousand
-         *** one hundred twenty three millions four hundred
-         **      fifty six thousand seven hundred eighty nine
-         *** two billion one hundred forty seven millions
-         **      four hundred eighty three thousand six hundred forty seven
-         *** three billion ten
-         **/
-//    }
 }

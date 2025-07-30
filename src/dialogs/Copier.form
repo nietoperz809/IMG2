@@ -124,6 +124,7 @@
         <properties>
           <model>
             <item value="100MB"/>
+            <item value="50MB"/>
             <item value="10MB"/>
           </model>
           <selectionMode value="0"/>
