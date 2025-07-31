@@ -117,8 +117,17 @@ public class TheGrid extends MyFrame {
 //        Runtime.getRuntime().addShutdownHook(hook);
 
         Thread.setDefaultUncaughtExceptionHandler((_, e) -> {
-            MsgBox.Error(e.toString());
-            //System.exit(-3);
+            //MsgBox.Error(e.toString());
+            StackTraceElement[] stackTraceElements = e.getStackTrace ();
+            StringBuilder builder = new StringBuilder ();
+            builder.append (e);
+            builder.append ("\n");
+            for (int i = 0; i < 3; i++)
+            {
+                builder.append (stackTraceElements[i].toString ());
+                builder.append ("\n");
+            }
+            MsgBox.Error (builder.toString());
         });
 
         UIManager.put("ToolTip.font", new Font("Arial", Font.BOLD, 20));
