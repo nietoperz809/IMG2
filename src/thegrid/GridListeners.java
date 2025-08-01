@@ -42,6 +42,7 @@ public class GridListeners implements KeyListener {
         g.addKeyListener(this);
     }
 
+    @SuppressWarnings("unchecked")
     private void enableDrop() {
         new DropTarget(theGrid, new DropTargetAdapter() {
             @Override

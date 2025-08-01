@@ -195,7 +195,8 @@ public class VideoApp extends JFrame {
                 }
                 // .. left double click
                 else if (e.getClickCount() == 2) {
-                    CancelOldAndPlayNew();
+                    buttonPlay.doClick();
+                    //CancelOldAndPlayNew();
                 }
             }
         });
@@ -294,8 +295,6 @@ public class VideoApp extends JFrame {
 
     private void onOK() {
         SwingUtilities.invokeLater(this::transferAndRun);
-        //transferAndRun();
-        //Tools.runTask(() -> transferAndRun());
     }
 
     /**
