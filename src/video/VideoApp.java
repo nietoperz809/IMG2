@@ -320,7 +320,7 @@ public class VideoApp extends JFrame {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-        else playerBox = new VideoPlayerBox(this, nid, checkBoxAC.isSelected());
+        else playerBox = new MP4PlayerBox(this, nid, checkBoxAC.isSelected());
         playerBox.start();
     }
 
@@ -360,9 +360,6 @@ public class VideoApp extends JFrame {
     private void setAndSortJListContent() {
         entireList.clear();
         videoList = getVideoFileNames();
-        //------------------
-        //String test = DBHandler.getVideoBlobLen(videoList.get(0));
-        //------------------
         gifList = getGifFileNames();
         webpList = getWebPFileNames();
         entireList.addAll(videoList);
@@ -396,6 +393,7 @@ public class VideoApp extends JFrame {
                 for (DataFlavor flavor : flavors) {
                     if (flavor.isFlavorJavaFileListType()) {
                         try {
+                            @SuppressWarnings("unchecked")
                             java.util.List<File> files = (java.util.List<File>) transferable.getTransferData(flavor);
                             for (File f : files) {
                                 if (Tools.isGIF(f.getPath())) {
@@ -409,9 +407,6 @@ public class VideoApp extends JFrame {
                                     speak("Regular video added");
                                 }
                                 DeferredFileDeleter.put(f);
-//                                if (!f.delete()) {
-//                                    speak("could not delete");
-//                                }
                             }
                             setAndSortJListContent();
                             repaint();
@@ -425,7 +420,7 @@ public class VideoApp extends JFrame {
     }
 
     /**
-     *
+     * Custom CellRenderer
      */
     static class MyCellRenderer extends JLabel implements ListCellRenderer<Object> {
 
@@ -463,11 +458,4 @@ public class VideoApp extends JFrame {
             return this;
         }
     }
-
-//    public static void main(String[] args) {
-//        VideoApp dialog = new VideoApp();
-//        dialog.setSize(400,400);
-//        dialog.setLocationRelativeTo(null);
-//        dialog.setVisible(true);
-//    }
 }

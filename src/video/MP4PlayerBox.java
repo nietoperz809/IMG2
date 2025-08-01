@@ -16,21 +16,20 @@ import java.io.File;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
-import static com.sun.jna.platform.win32.Win32VK.VK_RETURN;
 import static database.VideoFunctions.transferVideoIntoFile;
 
-public class VideoPlayerBox implements PlayerBox {
+public class MP4PlayerBox implements PlayerBox {
     private static final Lock lock = new ReentrantLock();
     private final JScrollBar sbar;
     private final DBHandler.NameID nid;
     private final boolean autoclose;
     private volatile JFrame playerFrame;
-    private EmbeddedMediaPlayerComponent mpc;
+    private EmbeddedMediaPlayerComponent mediaPlayerComponent;
     private boolean paused = false;
     private final VideoApp parent;
     private UpDown speed;
 
-    public VideoPlayerBox (VideoApp parent, DBHandler.NameID nid, boolean autoclose) {
+    public MP4PlayerBox(VideoApp parent, DBHandler.NameID nid, boolean autoclose) {
         this.autoclose = autoclose;
         this.nid = nid;
         this.parent = parent;
@@ -41,10 +40,10 @@ public class VideoPlayerBox implements PlayerBox {
          * forward/backward by scrollbar move
          */
         sbar.addAdjustmentListener(adjustmentEvent -> {
-            if (mpc == null)
+            if (mediaPlayerComponent == null)
                 return;
             if (adjustmentEvent.getValueIsAdjusting()) {
-                ControlsApi mp = mpc.mediaPlayer().controls();
+                ControlsApi mp = mediaPlayerComponent.mediaPlayer().controls();
                 lock.lock();
                 //mp.pause();
                 mp.setPosition(adjustmentEvent.getValue() / 1000f);
@@ -58,8 +57,8 @@ public class VideoPlayerBox implements PlayerBox {
         sbar.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent mouseEvent) {
-                if (mpc != null && SwingUtilities.isRightMouseButton(mouseEvent)) {
-                    var mp = mpc.mediaPlayer().controls();
+                if (mediaPlayerComponent != null && SwingUtilities.isRightMouseButton(mouseEvent)) {
+                    var mp = mediaPlayerComponent.mediaPlayer().controls();
                     lock.lock();
                     mp.pause();
                     lock.unlock();
@@ -77,10 +76,10 @@ public class VideoPlayerBox implements PlayerBox {
             sbar.setValue(0);
             File tempFile = transferVideoIntoFile(nid);
             System.out.println(tempFile);
-            mpc = new EmbeddedMediaPlayerComponent();
+            mediaPlayerComponent = new EmbeddedMediaPlayerComponent();
             playerFrame = new JFrame();
             playerFrame.requestFocus();
-            //playerFrame.setTitle("Hit 's' to start and stop, 'p' to take shapshot, +/- for speed, 'b' to show sliders");
+            //playerFrame.setTitle("Hit 's' to start and stop, 'p' to take snapshot, +/- for speed, 'b' to show sliders");
             playerFrame.setUndecorated(true);
             Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
             playerFrame.setBounds(0, 0, screenSize.width, screenSize.height-30);
@@ -119,15 +118,13 @@ public class VideoPlayerBox implements PlayerBox {
                 @Override
                 public void keyTyped(KeyEvent keyEvent) {
                     char c = keyEvent.getKeyChar();
-                    var controls = mpc.mediaPlayer().controls();
+                    var controls = mediaPlayerComponent.mediaPlayer().controls();
                     switch (c) {
-                        case '\u001B' -> {  // Escape key
-                            SwingUtilities.invokeLater(() -> stop());
-                        }
+                        case '\u001B' -> SwingUtilities.invokeLater(() -> stop()); // Escape key
                         case 'b' -> {
-                            VideoPlayerBox.this.parent.setVisible(false);
-                            ConBrightV.popup(mpc.mediaPlayer().video());
-                            VideoPlayerBox.this.parent.setVisible(true);
+                            MP4PlayerBox.this.parent.setVisible(false);
+                            ConBrightV.popup(mediaPlayerComponent.mediaPlayer().video());
+                            MP4PlayerBox.this.parent.setVisible(true);
                         }
                         case 's' -> {
                             lock.lock();
@@ -150,31 +147,31 @@ public class VideoPlayerBox implements PlayerBox {
                             controls.setRate(speed.down());
                             playerFrame.setTitle (Float.toString(speed.current()));
                         }
-                        case 'p' -> mpc.mediaPlayer().snapshots()
+                        case 'p' -> mediaPlayerComponent.mediaPlayer().snapshots()
                                 .save(new File(parent.snapDir + File.separator + System.currentTimeMillis() + ".png"));
                         default -> throw new IllegalStateException("Unexpected value: " + c);
                     }
                 }
             });
             playerFrame.setLayout(new BorderLayout());
-            playerFrame.add(mpc, BorderLayout.CENTER); //setContentPane(mpc);
+            playerFrame.add(mediaPlayerComponent, BorderLayout.CENTER); //setContentPane(mpc);
             playerFrame.add(sbar, BorderLayout.NORTH);
             playerFrame.setVisible(true);
             /*
              * update scrollbar
              */
-            mpc.mediaPlayer().events().addMediaPlayerEventListener(new MediaPlayerEventAdapter() {
+            mediaPlayerComponent.mediaPlayer().events().addMediaPlayerEventListener(new MediaPlayerEventAdapter() {
                 @Override
                 public void positionChanged(MediaPlayer mediaPlayer, float v) {
                     sbar.setValue((int) (v * 1000));
                 }
             });
             /*
-             * videao finished
+             * video finished
              */
-            mpc.mediaPlayer().events().addMediaPlayerEventListener(new MediaPlayerEventAdapter() {
+            mediaPlayerComponent.mediaPlayer().events().addMediaPlayerEventListener(new MediaPlayerEventAdapter() {
                 private void restart() {
-                    mpc.mediaPlayer().media().play(tempFile.getAbsolutePath());
+                    mediaPlayerComponent.mediaPlayer().media().play(tempFile.getAbsolutePath());
                 }
 
                 @Override
@@ -187,8 +184,8 @@ public class VideoPlayerBox implements PlayerBox {
                     }
                 }
             });
-            mpc.mediaPlayer().videoSurface().attachVideoSurface();
-            mpc.mediaPlayer().media().play(tempFile.getAbsolutePath());
+            mediaPlayerComponent.mediaPlayer().videoSurface().attachVideoSurface();
+            mediaPlayerComponent.mediaPlayer().media().play(tempFile.getAbsolutePath());
         } catch (Exception e) {
             throw new RuntimeException(e);
         } finally {
@@ -201,7 +198,7 @@ public class VideoPlayerBox implements PlayerBox {
             return;
         lock.lock();
         System.out.println("stop");
-        mpc.release();
+        mediaPlayerComponent.release();
         playerFrame.dispose();
         playerFrame = null;
         Tools.gc_now();
