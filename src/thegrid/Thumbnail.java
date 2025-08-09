@@ -72,10 +72,14 @@ public class Thumbnail extends JLabel {
     }
 
     private void setToolTip() {
-        String len = DBHandler.queryImageLen(thisID.rowid());
-        int ilen = Integer.parseInt(len);
-        String f = String.format("%,d Bytes", ilen);
-        setToolTipText (f);
+        try {
+            String len = DBHandler.queryImageLen(thisID.rowid());
+            int ilen = Integer.parseInt(len);
+            String f = String.format("%d Bytes", ilen);
+            setToolTipText (f);
+        } catch (Exception e) {
+            setToolTipText("could not get length of img: "+thisID.rowid());
+        }
     }
 
     private void init (TheGrid grid, int index, JPanel jp) {

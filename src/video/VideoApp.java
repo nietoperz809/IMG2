@@ -177,10 +177,10 @@ public class VideoApp extends JFrame {
         listControl.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
+                int row = listControl.locationToIndex(e.getPoint());
+                listControl.setSelectedIndex(row);
+                DBHandler.NameID nid = listControl.getSelectedValue();
                 if (SwingUtilities.isRightMouseButton(e)) {
-                    int row = listControl.locationToIndex(e.getPoint());
-                    listControl.setSelectedIndex(row);
-                    DBHandler.NameID nid = listControl.getSelectedValue();
                     String len = null;
                     if (videoList.contains(nid))
                         len = getVideoBlobLen(nid);
@@ -195,8 +195,9 @@ public class VideoApp extends JFrame {
                 }
                 // .. left double click
                 else if (e.getClickCount() == 2) {
+                    dialogs.TimedMessage.showMessageDialog (VideoApp.this,
+                            nid.name(), "Next Playing", 8000);
                     buttonPlay.doClick();
-                    //CancelOldAndPlayNew();
                 }
             }
         });

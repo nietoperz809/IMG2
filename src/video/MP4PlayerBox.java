@@ -166,6 +166,7 @@ public class MP4PlayerBox implements PlayerBox {
                     sbar.setValue((int) (v * 1000));
                 }
             });
+
             /*
              * video finished
              */

@@ -40,7 +40,9 @@ public class AnimPlayerBox implements PlayerBox {
         window.setLayout(new BorderLayout());
         window.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         window.getContentPane().add(label, BorderLayout.CENTER);
-        window.setSize(800, 800);
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        window.setBounds(0, 0, screenSize.height, screenSize.height);
+        window.setUndecorated(true);
         window.setVisible(true);
         window.setTitle("(p)photo, (+/-)faster/slower, (s)wait");
         window.setLocationRelativeTo(null); // center on screen
