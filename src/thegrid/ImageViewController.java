@@ -1,7 +1,13 @@
 package thegrid;
 
+import database.DBHandler;
+
 import javax.swing.*;
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
+
+import static common.Tools.buildQueryForGrid;
 
 public class ImageViewController {
 
@@ -24,4 +30,20 @@ public class ImageViewController {
             iv.dispose();
         }
     }
+
+    public static void combineGrids() {
+        Set<Integer> hset = new HashSet<>();
+        for (JFrame iv: _list) {
+            if (iv instanceof TheGrid gr) {
+                int si = gr.imageL.size();
+                for (DBHandler.NameID nid : gr.imageL.allFiles) {
+                    hset.add(nid.rowid());
+                }
+                gr.dispose();
+            }
+        }
+        String q = buildQueryForGrid(hset);
+        (new Thread(() -> new TheGrid(q, "WORKER"))).start();
+    }
+
 }

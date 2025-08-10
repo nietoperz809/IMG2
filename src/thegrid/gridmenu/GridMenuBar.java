@@ -2,7 +2,6 @@ package thegrid.gridmenu;
 
 import common.*;
 import database.DBHandler;
-import dev.brachtendorf.jimagehash.hash.Hash;
 import dev.brachtendorf.jimagehash.hashAlgorithms.HashingAlgorithm;
 import dev.brachtendorf.jimagehash.hashAlgorithms.PerceptiveHash;
 import dialogs.*;
@@ -113,6 +112,10 @@ public class GridMenuBar extends JMenuBar {
 
         jmi = new JMenuItem("Dispose all open views ...");
         jmi.addActionListener(_ -> ImageViewController.killAllViews());
+        jm.add(jmi);
+
+        jmi = new JMenuItem("Combine open Grids ...");
+        jmi.addActionListener(_ -> ImageViewController.combineGrids());
         jm.add(jmi);
 
         jmi = new JMenuItem("Add more pictures ...");

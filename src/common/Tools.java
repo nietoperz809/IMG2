@@ -192,7 +192,7 @@ public class Tools {
         System.exit(0);
     }
 
-    public static String buildQueryForGrid(HashSet<Integer> foundSet) {
+    public static String buildQueryForGrid(Set<Integer> foundSet) {
         StringBuilder sqlFound = new StringBuilder();
         sqlFound.append("select name,_ROWID_,tag,accnum from IMAGES where ");
         for (int i : foundSet) {
