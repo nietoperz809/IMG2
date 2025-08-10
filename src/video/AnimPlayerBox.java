@@ -28,7 +28,9 @@ public class AnimPlayerBox implements PlayerBox {
     private final File file;
     private final BlockingQueue<BufferedImage> __que = new ArrayBlockingQueue<>(20);
     private boolean saveFlag;
+    private boolean winflag;
     private final Future decoderTask;
+    Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 
     public AnimPlayerBox(File file, VideoApp parent, AnimDecoder decoder,
                          boolean close_when_finished) {
@@ -40,7 +42,6 @@ public class AnimPlayerBox implements PlayerBox {
         window.setLayout(new BorderLayout());
         window.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         window.getContentPane().add(label, BorderLayout.CENTER);
-        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         window.setBounds(0, 0, screenSize.height, screenSize.height);
         window.setUndecorated(true);
         window.setVisible(true);
@@ -64,23 +65,31 @@ public class AnimPlayerBox implements PlayerBox {
             @Override
             public void keyTyped(KeyEvent keyEvent) {
                 switch (keyEvent.getKeyChar()) {
-                    case '\u001B':  // Escape key
-                        SwingUtilities.invokeLater(() -> stop());
-                        break;
-                    case 's':
-                        waitFlag.set(!waitFlag.get());
-                        break;
-                    case 'p':
-                        saveFlag = !saveFlag;
-                        break;
-                    case '+':
+                    case '\u001B' ->  // Escape key
+                            SwingUtilities.invokeLater(() -> stop());
+                    case 'w' -> {
+                        winflag = !winflag;
+                        window.dispose();
+                        if (winflag) {
+                            window.setBounds(0, 0, 600, 600);
+                            window.setUndecorated(false);
+                        } else {
+                            window.setBounds(0, 0, screenSize.height, screenSize.height);
+                            window.setUndecorated(true);
+                        }
+                        window.setLocationRelativeTo(null); // center on screen
+                        window.setVisible(true);
+                    }
+                    case 's' -> waitFlag.set(!waitFlag.get());
+                    case 'p' -> saveFlag = !saveFlag;
+                    case '+' -> {
                         sleepTime.getAndAdd(-100);
                         if (sleepTime.get() < 0) sleepTime.set(0);
-                        break;
-                    case '-':
+                    }
+                    case '-' -> {
                         sleepTime.getAndAdd(100);
                         if (sleepTime.get() > 5000) sleepTime.set(5000);
-                        break;
+                    }
                 }
             }
         });
