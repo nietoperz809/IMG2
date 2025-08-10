@@ -16,7 +16,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.ExecutorService;
@@ -200,6 +199,13 @@ public class Tools {
         }
         sqlFound.setLength(sqlFound.length() - 4);
         return sqlFound.toString();
+    }
+
+    public static void newGridForSet(Set<Integer> iset) {
+        if (!iset.isEmpty()) {
+            String q = buildQueryForGrid(iset);
+            (new Thread(() -> new TheGrid(q, "WORKER"))).start();
+        }
     }
 
     public static JToolTip createCustomToolTip(JComponent jc) {

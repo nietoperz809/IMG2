@@ -23,6 +23,7 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.HashSet;
 
+import static common.Tools.newGridForSet;
 import static java.awt.event.KeyEvent.*;
 
 public class ImgViewKeyHandler extends KeyAdapter {
@@ -361,8 +362,7 @@ public class ImgViewKeyHandler extends KeyAdapter {
             }
         }
         if (!foundSet.isEmpty()) {
-            String xx = Tools.buildQueryForGrid(foundSet);
-            (new Thread(() -> new TheGrid(xx, "WORKER"))).start();
+            newGridForSet(foundSet);
         } else {
             MsgBox.Info("No similarities found!");
         }

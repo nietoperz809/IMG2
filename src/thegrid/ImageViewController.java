@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
-import static common.Tools.buildQueryForGrid;
+import static common.Tools.newGridForSet;
 
 public class ImageViewController {
 
@@ -34,16 +34,14 @@ public class ImageViewController {
     public static void combineGrids() {
         Set<Integer> hset = new HashSet<>();
         for (JFrame iv: _list) {
-            if (iv instanceof TheGrid gr) {
-                int si = gr.imageL.size();
-                for (DBHandler.NameID nid : gr.imageL.allFiles) {
+            if (iv instanceof TheGrid oldGrid) {
+                for (DBHandler.NameID nid : oldGrid.imageL.allFiles) {
                     hset.add(nid.rowid());
                 }
-                gr.dispose();
+                oldGrid.dispose();
             }
         }
-        String q = buildQueryForGrid(hset);
-        (new Thread(() -> new TheGrid(q, "WORKER"))).start();
+        newGridForSet(hset);
     }
 
 }
