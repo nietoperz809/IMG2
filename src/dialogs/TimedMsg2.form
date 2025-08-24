@@ -23,7 +23,9 @@
       </component>
       <grid id="9538f" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="1">
         <constraints/>
-        <properties/>
+        <properties>
+          <background color="-65520"/>
+        </properties>
         <border type="none"/>
         <children>
           <component id="e7465" class="javax.swing.JButton" binding="buttonOK">

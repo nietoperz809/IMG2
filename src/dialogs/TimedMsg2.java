@@ -26,7 +26,8 @@ public class TimedMsg2 extends JDialog {
             @Override
             public void run() {
                 thisSec--;
-                label.setText(" "+thisSec);
+                label.setText("shutdown in "+thisSec+"s");
+                pack();
                 if (thisSec == 0) {
                     onCancel();
                 }

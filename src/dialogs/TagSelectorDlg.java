@@ -39,9 +39,9 @@ public class TagSelectorDlg extends JDialog {
 
     public static JList<String> open() {
         TagSelectorDlg dialog = new TagSelectorDlg();
-        //dialog.pack();
-        dialog.setSize(1100,400);
+        //dialog.setSize(1100,400);
         dialog.setLocationRelativeTo(null);
+        dialog.pack();
         dialog.setVisible(true);
         if (dialog.cancelled)
             return null;
@@ -61,6 +61,7 @@ public class TagSelectorDlg extends JDialog {
     private void createUIComponents() {
         TreeSet<String> tags = DBHandler.getImageTagList();
         list1 = new JList<>(tags.toArray(new String[0]));
+        list1.setFixedCellWidth(65);
         list1.setCellRenderer (new MyListCellRenderer());
     }
 

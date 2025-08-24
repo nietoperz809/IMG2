@@ -14,6 +14,7 @@ public class MyListCellRenderer extends JLabel implements ListCellRenderer<Strin
     public Component getListCellRendererComponent(JList<? extends String> list, String value,
                                                   int index, boolean isSelected, boolean cellHasFocus) {
         setText(value);
+        setToolTipText(value);
         setBorder(new LineBorder(Color.BLUE));
 
         Color background;

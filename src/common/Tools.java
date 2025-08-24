@@ -164,8 +164,7 @@ public class Tools {
     }
 
     public static void shutdown(Window gr) {
-        boolean b = TimedMsg2.doTimedBox();
-        if (b)
+        if (TimedMsg2.doTimedBox()) // true if cancelled
             return;
         ImageViewController.killAllViews();
         DBHandler.log("--- TheGrid ended");

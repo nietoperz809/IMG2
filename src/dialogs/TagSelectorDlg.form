@@ -24,18 +24,22 @@
           <forms defaultalign-horz="false" defaultalign-vert="false"/>
         </constraints>
         <properties>
-          <minimumSize width="800" height="300"/>
-          <preferredSize width="800" height="300"/>
+          <horizontalScrollBarPolicy value="30"/>
+          <verticalScrollBarPolicy value="20"/>
         </properties>
+        <clientProperties>
+          <html.disable class="java.lang.Boolean" value="true"/>
+        </clientProperties>
         <border type="none"/>
         <children>
           <component id="f719e" class="javax.swing.JList" binding="list1" custom-create="true" default-binding="true">
             <constraints/>
             <properties>
               <layoutOrientation value="2"/>
-              <preferredSize width="700" height="300"/>
-              <visibleRowCount value="8"/>
             </properties>
+            <clientProperties>
+              <html.disable class="java.lang.Boolean" value="true"/>
+            </clientProperties>
           </component>
         </children>
       </scrollpane>
