@@ -80,7 +80,6 @@ public class TheGrid extends MyFrame {
             throw new RuntimeException(e);
         }
         imageL.setSQL(sql);
-        //System.out.println("TheGrid constructor called");
         DBHandler.log("Images in DB: " + this.imageL.size());
         progress = new ProgressBox(this, this.imageL.size());
         Win32.dialogToTop(progress);

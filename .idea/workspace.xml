@@ -15,10 +15,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ddb69741-e020-4d21-a32f-f00e79c6818a" name="Changes" comment="Copier: + 50MB Chunks">
+    <list default="true" id="ddb69741-e020-4d21-a32f-f00e79c6818a" name="Changes" comment="new TimedMsgBox">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/buildinfo/BuildInfo2.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/buildinfo/BuildInfo2.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/common/Tools.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/common/Tools.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dialogs/TimedMsg2.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/dialogs/TimedMsg2.form" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dialogs/TimedMsg2.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/dialogs/TimedMsg2.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/thegrid/TheGrid.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/thegrid/TheGrid.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/video/VideoApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/video/VideoApp.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -69,7 +73,7 @@
     <option name="stateVersion" value="1" />
   </component>
   <component name="ProblemsViewState">
-    <option name="selectedTabId" value="DEPENDENCY_CHECKER_PROBLEMS_TAB" />
+    <option name="selectedTabId" value="CurrentFile" />
   </component>
   <component name="ProjectColorInfo">{
   &quot;customColor&quot;: &quot;&quot;,
@@ -97,7 +101,7 @@
     "Application.Main (2).executor": "Run",
     "Application.Main.executor": "Run",
     "Application.MainC.executor": "Run",
-    "Application.MainE.executor": "Debug",
+    "Application.MainE.executor": "Run",
     "Application.MonitorFrame.executor": "Run",
     "Application.MultiSlider.executor": "Run",
     "Application.RGBScroll.executor": "Run",
@@ -105,6 +109,7 @@
     "Application.SliderBox.executor": "Run",
     "Application.SqlList.executor": "Run",
     "Application.Stepper.executor": "Run",
+    "Application.TimedMsg2.executor": "Run",
     "Application.UnlockDialog.executor": "Debug",
     "Application.WebPDecoder.executor": "Run",
     "Application.web.executor": "Run",
@@ -127,7 +132,7 @@
     "UI_DESIGNER_EDITOR_MODE.PaletteManager.SHOW": "true",
     "UI_DESIGNER_EDITOR_MODE.PaletteManager.WIDTH": "205",
     "UI_DESIGNER_EDITOR_MODE.UIDesignerToolWindowManager.SHOW": "true",
-    "UI_DESIGNER_EDITOR_MODE.UIDesignerToolWindowManager.WIDTH": "389",
+    "UI_DESIGNER_EDITOR_MODE.UIDesignerToolWindowManager.WIDTH": "461",
     "full.screen.before.presentation.mode": "true",
     "git-widget-placeholder": "withQueue",
     "kotlin-language-version-configured": "true",
@@ -197,7 +202,7 @@
       <command value="ant" />
     </option>
   </component>
-  <component name="RunManager" selected="Application.MainE">
+  <component name="RunManager" selected="Application.TimedMsg2">
     <configuration name="Copier" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="dialogs.Copier" />
       <module name="IMG2" />
@@ -229,13 +234,28 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="TimedMsg2" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="dialogs.TimedMsg2" />
+      <module name="IMG2" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="dialogs.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <list>
       <item itemvalue="Application.MainC" />
       <item itemvalue="Application.MainE" />
+      <item itemvalue="Application.TimedMsg2" />
       <item itemvalue="Application.Copier" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.TimedMsg2" />
         <item itemvalue="Application.Copier" />
       </list>
     </recent_temporary>
@@ -598,7 +618,7 @@
       <option name="project" value="LOCAL" />
       <updated>1683976691765</updated>
     </task>
-    <option name="localTasksCounter" value="340" />
+    <option name="localTasksCounter" value="348" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -666,12 +686,6 @@
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_NEW_TODO" value="false" />
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="FILE watcher now functional" />
-    <MESSAGE value="synchronized file transfer to database" />
-    <MESSAGE value="little bugfix" />
-    <MESSAGE value="using winapi to copy whole DB" />
-    <MESSAGE value="using Files.copy to copy whole DB" />
-    <MESSAGE value="fixed zip creation" />
     <MESSAGE value="added FunctionalInterface" />
     <MESSAGE value="+CopyBox" />
     <MESSAGE value="last realease" />
@@ -686,12 +700,18 @@
     <MESSAGE value="new menu item: check external img" />
     <MESSAGE value="increased stability of loadPerceptiveImgHashes function" />
     <MESSAGE value="fixed PNG file input" />
-    <MESSAGE value="backup" />
     <MESSAGE value="VideoPlayerBox -&gt; fullscreen" />
     <MESSAGE value="+ GitRevCount as version number" />
     <MESSAGE value="+ GitRevCount as build number" />
     <MESSAGE value="Copier: + 50MB Chunks" />
-    <option name="LAST_COMMIT_MESSAGE" value="Copier: + 50MB Chunks" />
+    <MESSAGE value="backup" />
+    <MESSAGE value="removed some warnings" />
+    <MESSAGE value="video player frame size adjusted" />
+    <MESSAGE value="'w' -&gt; change player frame size while running" />
+    <MESSAGE value="added combine grids menuitem" />
+    <MESSAGE value="added newGridforSet" />
+    <MESSAGE value="new TimedMsgBox" />
+    <option name="LAST_COMMIT_MESSAGE" value="new TimedMsgBox" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -708,11 +728,6 @@
           <properties class="java.lang.RuntimeException" package="java.lang" />
           <option name="timeStamp" value="75" />
         </breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/thegrid/GridListeners.java</url>
-          <line>55</line>
-          <option name="timeStamp" value="77" />
-        </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/database/DBHandler.java</url>
           <line>332</line>

@@ -1,7 +1,7 @@
 package common;
 
 import database.DBHandler;
-import dialogs.TimedMessage;
+import dialogs.TimedMsg2;
 import net.lingala.zip4j.model.ZipParameters;
 import net.lingala.zip4j.model.enums.CompressionLevel;
 import net.lingala.zip4j.model.enums.EncryptionMethod;
@@ -164,13 +164,13 @@ public class Tools {
     }
 
     public static void shutdown(Window gr) {
-        JDialog dlg = TimedMessage.showMessageDialog(gr, "closing ..", "ImageBase",
-                3000);
+        boolean b = TimedMsg2.doTimedBox();
+        if (b)
+            return;
         ImageViewController.killAllViews();
         DBHandler.log("--- TheGrid ended");
         gr.setVisible(false);
         DBHandler.closeDatabase();
-        dlg.dispose();
         System.exit(1);
     }
 

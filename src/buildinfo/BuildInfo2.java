@@ -2,8 +2,8 @@
 package buildinfo;
 
 public class BuildInfo2 {
-    public static final String BUILD_NUMBER = "3579";
-    public static final String BUILD_DATE = "08/06/2025 at 09:25 AM";
-    public static final String GIT_REV = "344";
+    public static final String BUILD_NUMBER = "3580";
+    public static final String BUILD_DATE = "08/24/2025 at 02:31 AM";
+    public static final String GIT_REV = "349";
 }
 
