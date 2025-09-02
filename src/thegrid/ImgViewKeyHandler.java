@@ -46,7 +46,7 @@ public class ImgViewKeyHandler extends KeyAdapter {
                 e.getKeyCode() == VK_SHIFT)
             return;
         anyReleased = false;
-        Audio.playAsyncWave("myfirst.wav");
+        //Audio.playAsyncWave("myfirst.wav");
 
         doForKey(e);
     }
@@ -54,7 +54,7 @@ public class ImgViewKeyHandler extends KeyAdapter {
     @Override
     public void keyReleased(KeyEvent e) {
         anyReleased = true;  // suppress key repeat
-        Audio.playAsyncWave("mylast.wav");
+        //Audio.playAsyncWave("mylast.wav");
     }
 
     private void doForKey (KeyEvent e) {

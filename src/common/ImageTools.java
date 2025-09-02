@@ -114,6 +114,7 @@ public class ImageTools {
         TransferableImage trans = new TransferableImage(bi);
         Clipboard c = Toolkit.getDefaultToolkit().getSystemClipboard();
         c.setContents(trans, trans);
+        Sam.speak ("Image posted to clipboard");
     }
 
 //    public static BufferedImage contrast(BufferedImage img, float val) {
