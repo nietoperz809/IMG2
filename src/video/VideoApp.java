@@ -56,6 +56,7 @@ public class VideoApp extends JFrame {
     private PlayerBox playerBox;
     private JButton filterButton;
     private JButton restoreButton;
+    private JScrollPane scroller;
 
     public VideoApp() {
         /* define menu bar */
@@ -180,6 +181,9 @@ public class VideoApp extends JFrame {
             public void mouseClicked(MouseEvent e) {
                 int row = listControl.locationToIndex(e.getPoint());
                 listControl.setSelectedIndex(row);
+
+                listControl.ensureIndexIsVisible(listControl.getSelectedIndex());
+
                 DBHandler.NameID nid = listControl.getSelectedValue();
                 if (SwingUtilities.isRightMouseButton(e)) {
                     String len = null;
@@ -286,6 +290,7 @@ public class VideoApp extends JFrame {
         if (idx >= listControl.getModel().getSize())
             idx = 0;
         listControl.setSelectedIndex(idx);
+        listControl.ensureIndexIsVisible(listControl.getSelectedIndex());
     }
 
     /**

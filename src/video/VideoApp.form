@@ -10,7 +10,7 @@
     </properties>
     <border type="none"/>
     <children>
-      <scrollpane id="a992a">
+      <scrollpane id="a992a" binding="scroller">
         <constraints border-constraint="Center"/>
         <properties>
           <preferredSize width="800" height="54"/>
