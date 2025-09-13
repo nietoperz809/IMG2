@@ -85,7 +85,7 @@ public class GridListeners implements KeyListener {
         // n
         else if (kc == KeyEvent.VK_N) {
             TheGrid tg = TheGrid.getMainGrid();
-            ImageView iv = new ImageView(tg, 0);
+            ImageFrame iv = new ImageFrame(tg, 0);
             //ImageViewController.add(iv);
             iv.selectAnotherImage(-1);
         } else {

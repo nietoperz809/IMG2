@@ -19,6 +19,7 @@ import java.awt.image.WritableRaster;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.Serial;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.net.URLConnection;
@@ -569,6 +570,7 @@ public class WebPDecoder implements AnimDecoder {
 
         class Size_T extends IntegerType {
 
+            @Serial
             private static final long serialVersionUID = 1L;
 
             public static final Size_T ZERO = new Size_T();

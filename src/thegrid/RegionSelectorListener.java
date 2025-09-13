@@ -9,16 +9,16 @@ import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
 
 public class RegionSelectorListener extends MouseAdapter {
-    final ImageView theView;
+    final ImageFrame theView;
     final ImgPanel imgPanel;
     Rectangle box = null;
     Graphics2D g2d;
     Point pressed  = null;
     Rectangle before = null;
-    final ImageView parent;
+    final ImageFrame parent;
     boolean shouldWarp = false;
 
-    public RegionSelectorListener(BufferedImage img, ImgPanel thePanel, ImageView p) {
+    public RegionSelectorListener(BufferedImage img, ImgPanel thePanel, ImageFrame p) {
         theView = p;
         float a = img.getHeight();
         float b = img.getWidth();

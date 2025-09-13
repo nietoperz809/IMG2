@@ -15,22 +15,19 @@ import javax.swing.*;
 
 import static common.UndoStack.globalImageStack;
 
-public class ImgPanel extends JPanel {
+public class ImgPanel extends JPanel implements Positioner {
 
     private final TheGrid grid;
     private BufferedImage image;
-    public Point2D.Float offset = new Point2D.Float();
 
-    final ImageView theView;
-
-    public static final int SCROLLAMOUNT = 10;
+    final ImageFrame theView;
 
     @Override
     public JToolTip createToolTip() {
         return common.Tools.createCustomToolTip (this);
     }
 
-    public ImgPanel (TheGrid grid, BufferedImage img, ImageView parent) {
+    public ImgPanel (TheGrid grid, BufferedImage img, ImageFrame parent) {
         super();
         this.grid = grid;
         addMouseListener(new MouseAdapter() {
@@ -44,13 +41,22 @@ public class ImgPanel extends JPanel {
         image = img;
         theView = parent;
         setSize(img.getWidth(), img.getHeight());
+        clearOffset();
+        SwingUtilities.invokeLater(this::repaint);
+    }
+
+    public void autoSaveImage() {
+        String hp = grid.getHistoryPath();
+        if (hp != null) {
+            SwingUtilities.invokeLater(() -> theView.saveImageAsFile(false, hp));
+        }
     }
 
     public BufferedImage getImage() {
         return image;
     }
 
-    public void undo() {
+    public void undoImage() {
         BufferedImage img = globalImageStack.pop();
         if (img != null) {
             image = img;
@@ -58,25 +64,17 @@ public class ImgPanel extends JPanel {
         }
     }
 
-    public void setImage (FastBitmap fb) {
+    public void setImage(FastBitmap fb) {
         BufferedImage bimg = fb.toBufferedImage();
         setImage(bimg);
     }
 
-    private void autoSaveImage() {
-        String hp = grid.getHistoryPath();
-        if (hp != null) {
-            SwingUtilities.invokeLater(() -> theView.saveImageAsFile (false, hp));
-        }
-    }
-
-    public void setImageCentered (BufferedImage img) {
+    public void setImageCentered(BufferedImage img) {
         setImage(img);
-        center(new Point2D.Double(img.getWidth(), img.getHeight()));
+        center (this, new Point2D.Double(img.getWidth(), img.getHeight()));
     }
 
-
-    public void setImage (BufferedImage img) {
+    public void setImage(BufferedImage img) {
         if (image != null)
             globalImageStack.push (ImageTools.deepCopy(image));
         image = img;
@@ -103,47 +101,10 @@ public class ImgPanel extends JPanel {
         g.drawString(txt, pos.x, pos.y);
     }
 
-    public void center(Point2D.Double p) {
-        double w1 = getWidth()/2.0;
-        double w2 = (float)p.getX()/2.0;
-        double h1 = getHeight()/2.0;
-        double h2 = p.getY()/2.0;
-        offset.x = (float) (w1-w2);
-        offset.y = (float) (h1-h2);
-    }
-
-    public void clearOffset() {
-        offset = new Point2D.Float();
-    }
-
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         g.drawImage(image, (int)offset.x, (int)offset.y, this);
-    }
-
-    public Point2D.Float getOffset() {
-        return offset;
-    }
-
-    public void scrollRight() {
-        offset.x += SCROLLAMOUNT;
-        repaint();
-    }
-
-    public void scrollLeft() {
-        offset.x -= SCROLLAMOUNT;
-        repaint();
-    }
-
-    public void scrollDown() {
-        offset.y += SCROLLAMOUNT;
-        repaint();
-    }
-
-    public void scrollUp() {
-        offset.y -= SCROLLAMOUNT;
-        repaint();
     }
 
     public void setWatermark(Watermark watermark) {

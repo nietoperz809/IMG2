@@ -18,7 +18,7 @@ import java.awt.image.BufferedImage;
 import static common.MsgBox.chooseDir;
 
 
-public class ImageView extends JFrame implements MouseWheelListener {
+public class ImageFrame extends JFrame implements MouseWheelListener {
     protected final ImgPanel imgPanel;
     final UniqueRng indexRing;
     final UniqueRng shuffledRing;
@@ -30,7 +30,7 @@ public class ImageView extends JFrame implements MouseWheelListener {
         ImageViewController.remove(this);
     }
 
-    public ImageView(TheGrid grid, int idx) {
+    public ImageFrame(TheGrid grid, int idx) {
         this.grid = grid;
         setIconImage(grid.getIconImage());
         shuffledRing = new UniqueRng(grid.imageL.size());
@@ -93,7 +93,7 @@ public class ImageView extends JFrame implements MouseWheelListener {
         adjustOn('h');
     }
 
-    void setBeforeImage() {
+    void setPrevImage() {
         indexRing.getPrev();
         setImg();
         imgPanel.clearOffset();
@@ -149,9 +149,9 @@ public class ImageView extends JFrame implements MouseWheelListener {
     @Override
     public void mouseWheelMoved(MouseWheelEvent e) {
         if (e.getWheelRotation() < 0)
-            imgPanel.scrollDown();
+            imgPanel.scrollDown(imgPanel);
         else
-            imgPanel.scrollUp();
+            imgPanel.scrollUp(imgPanel);
     }
 
     public String toString() {
