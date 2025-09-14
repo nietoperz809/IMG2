@@ -60,6 +60,9 @@ public class ImgViewKeyHandler extends KeyAdapter {
     private void doForKey (KeyEvent e) {
         switch (e.getKeyCode()) {
 
+            case VK_ENTER -> {
+                JfxImageView.start(imageFrame.imgPanel.getImage());
+            }
             case VK_UP -> {
                 imageFrame.imgPanel.scrollDown(imageFrame.imgPanel);
                 anyReleased = true;
