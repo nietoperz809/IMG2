@@ -18,7 +18,12 @@ import java.io.InputStream;
 public class JfxImageView {
     private JPanel panel1;
     private JFXPanel bridge;
-    private static ImageView imageView;
+    private JScrollPane scroller;
+    private JPanel bridgepanel;
+    private JSlider slider1;
+    private JSlider slider2;
+    private ImageView imageView;
+    private Scene scene;
 
     public JfxImageView (final BufferedImage inImg) {
 
@@ -36,16 +41,27 @@ public class JfxImageView {
             imageView.setPreserveRatio(true);
 
             StackPane root = new StackPane(imageView);
-            Scene scene = new Scene(root);
+            scene = new Scene(root);
 
             bridge.setScene(scene);
             bridge.setSize(600,600);
 
             JFrame frame = new JFrame("JfxImageView");
+            frame.addWindowListener(new java.awt.event.WindowAdapter() {
+                @Override
+                public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+                    frame.setVisible(false);
+                }
+            });
+
             frame.setContentPane(panel1);
-            frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+            frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
             frame.setVisible(true);
             frame.setSize(800,800);
+        });
+
+        slider1.addChangeListener(e -> {
+            Platform.runLater(() -> imageView.setRotate(slider1.getValue()));
         });
     }
 
