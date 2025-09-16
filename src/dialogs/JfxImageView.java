@@ -31,28 +31,11 @@ public class JfxImageView {
     private ImageView imageView;
     private Scene scene;
 
-    class ImageViewToBufferedImage {
-        public static BufferedImage getTransformedImage(ImageView imageView) {
-            SnapshotParameters params = new SnapshotParameters();
-            WritableImage fxImage = imageView.snapshot(params, null);
-            return SwingFXUtils.fromFXImage(fxImage, null);
-        }
-    }
-
-    public JfxImageView (final BufferedImage inImg) {
+    public JfxImageView (final thegrid.ImgPanel out, final BufferedImage inImg) {
 
         Platform.runLater(() -> {
-            if (inImg == null) { // no image
-                ClassLoader classloader = Thread.currentThread().getContextClassLoader();
-                InputStream is1 = classloader.getResourceAsStream("transp.png");
-                Image img1 = new Image(is1);
-                imageView = new ImageView(img1);
-            }
-            else {
-                Image image = SwingFXUtils.toFXImage(inImg, null);
-                imageView = new ImageView (image);
-            }
-            //imageView.setPreserveRatio(true);
+            Image image = SwingFXUtils.toFXImage(inImg, null);
+            imageView = new ImageView (image);
 
             StackPane root = new StackPane(imageView);
             scene = new Scene(root);
@@ -64,6 +47,7 @@ public class JfxImageView {
             frame.addWindowListener(new java.awt.event.WindowAdapter() {
                 @Override
                 public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+                    out.setImageCentered(getTransformedImg());
                     frame.setVisible(false);
                 }
             });
@@ -71,7 +55,7 @@ public class JfxImageView {
             frame.setContentPane(panel1);
             frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
             frame.setVisible(true);
-            frame.setSize(800,800);
+            frame.setSize(out.getWidth(),out.getHeight());
         });
 
         slider1.addChangeListener(_ -> Platform.runLater(() -> imageView.setRotate(slider1.getValue())));
@@ -85,15 +69,9 @@ public class JfxImageView {
         }));
     }
 
-//    public static BufferedImage getTransformedImage(ImageView iv) {
-//        SnapshotParameters params = new SnapshotParameters();
-//        WritableImage fxImage = iv.snapshot(params, null);
-//        return SwingFXUtils.fromFXImage(fxImage, null);
-//    }
-
     public BufferedImage getTransformedImg() {
         final CountDownLatch latch = new CountDownLatch(1);
-        AtomicReference<BufferedImage> ret = new AtomicReference<>();
+        final AtomicReference<BufferedImage> ret = new AtomicReference<>();
         Platform.runLater(() -> {
             SnapshotParameters params = new SnapshotParameters();
             params.setFill(Color.TRANSPARENT); // kein weißer Hintergrund
@@ -109,12 +87,12 @@ public class JfxImageView {
         return ret.get();
     }
 
-    public static JfxImageView create(BufferedImage img) {
-        return new JfxImageView(img);
+    public static JfxImageView create (thegrid.ImgPanel out, BufferedImage in) {
+        return new JfxImageView (out, in);
     }
 
-    public static void main(String[] args) {
-        new JfxImageView(null);
-    }
+//    public static void main(String[] args) {
+//        new JfxImageView(null);
+//    }
 }
 
