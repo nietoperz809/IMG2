@@ -14,8 +14,9 @@ import javafx.scene.image.WritableImage;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
-import java.io.InputStream;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -28,6 +29,7 @@ public class JfxImageView {
     private JSlider slider1;
     private JSlider slider2;
     private JCheckBox checkBox;
+    private JCheckBox checkBox_preserve;
     private ImageView imageView;
     private Scene scene;
 
@@ -36,6 +38,7 @@ public class JfxImageView {
         Platform.runLater(() -> {
             Image image = SwingFXUtils.toFXImage(inImg, null);
             imageView = new ImageView (image);
+            imageView.setSmooth(true);
 
             StackPane root = new StackPane(imageView);
             scene = new Scene(root);
@@ -67,6 +70,10 @@ public class JfxImageView {
             else
                 imageView.setFitWidth(n);
         }));
+
+        checkBox_preserve.addActionListener(e -> {
+            imageView.setPreserveRatio(checkBox_preserve.isSelected());
+        });
     }
 
     public BufferedImage getTransformedImg() {
@@ -87,8 +94,8 @@ public class JfxImageView {
         return ret.get();
     }
 
-    public static JfxImageView create (thegrid.ImgPanel out, BufferedImage in) {
-        return new JfxImageView (out, in);
+    public static JfxImageView create (thegrid.ImgPanel out) {
+        return new JfxImageView (out, out.getImage());
     }
 
 //    public static void main(String[] args) {
