@@ -275,6 +275,19 @@ public class ImgViewKeyHandler extends KeyAdapter {
                 imageFrame.imgPanel.setImage(ret);
             }
 
+            case VK_U -> { // one similar image
+                int this_rowid = imageFrame.grid.imageL.get(imageFrame.indexRing.get()).rowid();
+                HashingAlgorithm hasher = new PerceptiveHash(32);
+                Hash this_Hash = hasher.hash(imageFrame.getIconImg());
+                final HashSet<Integer> simi = getSimilarities(this_Hash, this_rowid);
+                if(simi.isEmpty())
+                    return;
+                int i = simi.iterator().next();
+                byte[] b = DBHandler.loadImage(i);
+                BufferedImage bi = ImageTools.JPGByteArrayToImg(b);
+                imageFrame.imgPanel.setImageCentered(bi);
+            }
+
             case VK_V -> { // similarities
                 int this_rowid = imageFrame.grid.imageL.get(imageFrame.indexRing.get()).rowid();
                 HashingAlgorithm hasher = new PerceptiveHash(32);
@@ -353,7 +366,8 @@ public class ImgViewKeyHandler extends KeyAdapter {
         }
     }
 
-    public static void loadSimilarities(Hash this_Hash, int this_rowid) {
+
+    public static HashSet<Integer> getSimilarities(Hash this_Hash, int this_rowid) {
         ArrayList<DBHandler.HashId> hlist = DBHandler.loadPerceptiveImgHashes();
         HashSet<Integer> foundSet = new HashSet<>();
         for (DBHandler.HashId h : hlist) {
@@ -364,6 +378,11 @@ public class ImgViewKeyHandler extends KeyAdapter {
                 }
             }
         }
+        return foundSet;
+    }
+
+    public static void loadSimilarities(Hash this_Hash, int this_rowid) {
+        HashSet<Integer> foundSet = getSimilarities(this_Hash, this_rowid);
         if (!foundSet.isEmpty()) {
             newGridForSet(foundSet);
         } else {

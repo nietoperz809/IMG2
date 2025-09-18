@@ -78,7 +78,6 @@ public class ImgPanel extends JPanel implements Positioner {
         if (image != null)
             globalImageStack.push (ImageTools.deepCopy(image));
         image = img;
-        //String hp = grid.getHistoryPath();
         autoSaveImage();
         SwingUtilities.invokeLater(this::repaint);
     }
