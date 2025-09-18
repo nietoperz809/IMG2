@@ -2,19 +2,21 @@ package thegrid;
 
 import Catalano.Imaging.FastBitmap;
 import Catalano.Imaging.IApplyInPlace;
-import common.*;
 import common.ImageScaler;
+import common.ImageTools;
 import database.AccessCounter;
 import database.DBHandler;
 import dialogs.LineInput;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
+import java.awt.event.MouseWheelEvent;
+import java.awt.event.MouseWheelListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
 
-//import static common.ImageTools.removeAlpha;
 import static common.MsgBox.chooseDir;
 
 
@@ -43,7 +45,7 @@ public class ImageFrame extends JFrame implements MouseWheelListener {
         BufferedImage img = loadImgFromStore(true);
         assert img != null;
         imgPanel = new ImgPanel(grid, img, this);
-        showInfo();
+        showInfo(null);
         new RegionSelectorListener(img, imgPanel, this);
         setContentPane(imgPanel);
         setExtendedState(JFrame.MAXIMIZED_BOTH);
@@ -138,11 +140,11 @@ public class ImageFrame extends JFrame implements MouseWheelListener {
                     if (n == -1)
                         return;
             }
-        }
-        else {
-            n = rowid_in;
+        } else {
+            n = grid.imageL.IndexByRowID(rowid_in);
         }
         indexRing.set(n);
+        adjustOn('h');
         showByIdx();
     }
 
@@ -155,7 +157,11 @@ public class ImageFrame extends JFrame implements MouseWheelListener {
     }
 
     public String toString() {
-        var v = grid.imageL.get(indexRing.get());
+        System.out.println("default");
+        return toString (grid.imageL.get(indexRing.get()));
+    }
+
+    public String toString(DBHandler.NameID v) {
         String len = DBHandler.queryImageLen(v.rowid());
         BufferedImage bi = loadImgFromStore(false);
         return "IDX:" + indexRing.get() + " ROWID:" +
@@ -189,20 +195,36 @@ public class ImageFrame extends JFrame implements MouseWheelListener {
         imgPanel.setImage(img);
     }
 
-    private void showInfo() {
-        imgPanel.setToolTipText(toString());
-        setTitle(toString());
+    private void showInfo(DBHandler.NameID v) {
+        String info = v==null ? toString() : toString(v);
+        imgPanel.setToolTipText(info);
+        setTitle(info);
+    }
+
+    void setImg (BufferedImage bimg) {
+        imgPanel.setImageCentered(bimg);
+        showInfo(null);
+    }
+
+    void setImg(int id) {
+        BufferedImage bimg = loadImgFromStore(id, true);
+        imgPanel.setImageCentered(bimg);
+        int index = grid.imageL.IndexByRowID(id);
+        showInfo(grid.imageL.get(index));
     }
 
     void setImg() {
         BufferedImage bimg = loadImgFromStore(true);
-        imgPanel.setImageCentered(bimg);
-        showInfo();
+        setImg (bimg);
     }
 
-    private BufferedImage loadImgFromStore(boolean doInc) {
+    public BufferedImage loadImgFromStore(boolean doInc) {
+        int id = grid.imageL.get(indexRing.get()).rowid();
+        return loadImgFromStore(id, doInc);
+    }
+
+    public BufferedImage loadImgFromStore(int id, boolean doInc) {
         try {
-            int id = grid.imageL.get(indexRing.get()).rowid();
             if (doInc)
                 AccessCounter.incAccCounter(id);
             byte[] b = DBHandler.loadImage(id);
@@ -228,7 +250,7 @@ public class ImageFrame extends JFrame implements MouseWheelListener {
     }
 
     Point2D.Double scaleIconImg(boolean up) {
-        return scaleIconImg (1.5, up);
+        return scaleIconImg(1.5, up);
     }
 
 

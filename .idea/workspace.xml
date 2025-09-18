@@ -17,9 +17,9 @@
   <component name="ChangeListManager">
     <list default="true" id="ddb69741-e020-4d21-a32f-f00e79c6818a" name="Changes" comment="jfx: added preserve ratio checkbox">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resource/manual.html" beforeDir="false" afterPath="$PROJECT_DIR$/resource/manual.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/buildinfo/BuildInfo2.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/buildinfo/BuildInfo2.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/dialogs/JfxImageView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/dialogs/JfxImageView.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/thegrid/ImgPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/thegrid/ImgPanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/thegrid/ImageFrame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/thegrid/ImageFrame.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/thegrid/ImgViewKeyHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/thegrid/ImgViewKeyHandler.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -71,7 +71,7 @@
     <option name="stateVersion" value="1" />
   </component>
   <component name="ProblemsViewState">
-    <option name="selectedTabId" value="QODANA_PROBLEMS_VIEW_TAB" />
+    <option name="selectedTabId" value="CurrentFile" />
   </component>
   <component name="ProjectColorInfo">{
   &quot;customColor&quot;: &quot;&quot;,
@@ -85,75 +85,75 @@
     <option name="showScratchesAndConsoles" value="false" />
     <option name="showVisibilityIcons" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
-    &quot;ASKED_SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;Application.ConBright.executor&quot;: &quot;Run&quot;,
-    &quot;Application.Console.executor&quot;: &quot;Run&quot;,
-    &quot;Application.Copier.executor&quot;: &quot;Run&quot;,
-    &quot;Application.DBHandler.executor&quot;: &quot;Debug&quot;,
-    &quot;Application.GUIConsole.executor&quot;: &quot;Run&quot;,
-    &quot;Application.ImageViewer.executor&quot;: &quot;Run&quot;,
-    &quot;Application.JfxImageView.executor&quot;: &quot;Run&quot;,
-    &quot;Application.Main (1).executor&quot;: &quot;Run&quot;,
-    &quot;Application.Main (2).executor&quot;: &quot;Run&quot;,
-    &quot;Application.Main.executor&quot;: &quot;Run&quot;,
-    &quot;Application.MainC.executor&quot;: &quot;Run&quot;,
-    &quot;Application.MainE.executor&quot;: &quot;Run&quot;,
-    &quot;Application.MonitorFrame.executor&quot;: &quot;Run&quot;,
-    &quot;Application.MultiSlider.executor&quot;: &quot;Run&quot;,
-    &quot;Application.RGBScroll.executor&quot;: &quot;Run&quot;,
-    &quot;Application.RandomWord.executor&quot;: &quot;Run&quot;,
-    &quot;Application.SliderBox.executor&quot;: &quot;Run&quot;,
-    &quot;Application.SqlList.executor&quot;: &quot;Run&quot;,
-    &quot;Application.Stepper.executor&quot;: &quot;Run&quot;,
-    &quot;Application.TimedMsg2.executor&quot;: &quot;Run&quot;,
-    &quot;Application.UnlockDialog.executor&quot;: &quot;Debug&quot;,
-    &quot;Application.WebPDecoder.executor&quot;: &quot;Run&quot;,
-    &quot;Application.web.executor&quot;: &quot;Run&quot;,
-    &quot;Downloaded.Files.Path.Enabled&quot;: &quot;true&quot;,
-    &quot;GenerateAntBuildDialog.backupFiles&quot;: &quot;true&quot;,
-    &quot;GenerateAntBuildDialog.enableUiFormCompile&quot;: &quot;true&quot;,
-    &quot;GenerateAntBuildDialog.forceTargetJdk&quot;: &quot;true&quot;,
-    &quot;GenerateAntBuildDialog.outputFileNameProperty&quot;: &quot;img2.iml&quot;,
-    &quot;JAR Application.IMG2.jar.executor&quot;: &quot;Run&quot;,
-    &quot;JAR Application.javafx-graphics-11.0.2-javadoc.jar.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.All in IMG2.executor&quot;: &quot;Run&quot;,
-    &quot;Java Scratch.Scratch.executor&quot;: &quot;Run&quot;,
-    &quot;Repository.Attach.Annotations&quot;: &quot;false&quot;,
-    &quot;Repository.Attach.JavaDocs&quot;: &quot;true&quot;,
-    &quot;Repository.Attach.Sources&quot;: &quot;false&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;UI_DESIGNER_EDITOR_MODE.PaletteManager.SHOW&quot;: &quot;true&quot;,
-    &quot;UI_DESIGNER_EDITOR_MODE.PaletteManager.WIDTH&quot;: &quot;205&quot;,
-    &quot;UI_DESIGNER_EDITOR_MODE.UIDesignerToolWindowManager.SHOW&quot;: &quot;true&quot;,
-    &quot;UI_DESIGNER_EDITOR_MODE.UIDesignerToolWindowManager.WIDTH&quot;: &quot;360&quot;,
-    &quot;full.screen.before.presentation.mode&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;withQueue&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/peter.home/java/IMG3/resource&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Artifacts&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.2984206&quot;,
-    &quot;run.code.analysis.last.selected.profile&quot;: &quot;aDefault&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;Groovy compiler&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_ADD_EXTERNAL_FILES": "true",
+    "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "Application.ConBright.executor": "Run",
+    "Application.Console.executor": "Run",
+    "Application.Copier.executor": "Run",
+    "Application.DBHandler.executor": "Debug",
+    "Application.GUIConsole.executor": "Run",
+    "Application.ImageViewer.executor": "Run",
+    "Application.JfxImageView.executor": "Run",
+    "Application.Main (1).executor": "Run",
+    "Application.Main (2).executor": "Run",
+    "Application.Main.executor": "Run",
+    "Application.MainC.executor": "Run",
+    "Application.MainE.executor": "Run",
+    "Application.MonitorFrame.executor": "Run",
+    "Application.MultiSlider.executor": "Run",
+    "Application.RGBScroll.executor": "Run",
+    "Application.RandomWord.executor": "Run",
+    "Application.SliderBox.executor": "Run",
+    "Application.SqlList.executor": "Run",
+    "Application.Stepper.executor": "Run",
+    "Application.TimedMsg2.executor": "Run",
+    "Application.UnlockDialog.executor": "Debug",
+    "Application.WebPDecoder.executor": "Run",
+    "Application.web.executor": "Run",
+    "Downloaded.Files.Path.Enabled": "true",
+    "GenerateAntBuildDialog.backupFiles": "true",
+    "GenerateAntBuildDialog.enableUiFormCompile": "true",
+    "GenerateAntBuildDialog.forceTargetJdk": "true",
+    "GenerateAntBuildDialog.outputFileNameProperty": "img2.iml",
+    "JAR Application.IMG2.jar.executor": "Run",
+    "JAR Application.javafx-graphics-11.0.2-javadoc.jar.executor": "Run",
+    "JUnit.All in IMG2.executor": "Run",
+    "Java Scratch.Scratch.executor": "Run",
+    "Repository.Attach.Annotations": "false",
+    "Repository.Attach.JavaDocs": "true",
+    "Repository.Attach.Sources": "false",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "UI_DESIGNER_EDITOR_MODE.PaletteManager.SHOW": "true",
+    "UI_DESIGNER_EDITOR_MODE.PaletteManager.WIDTH": "205",
+    "UI_DESIGNER_EDITOR_MODE.UIDesignerToolWindowManager.SHOW": "true",
+    "UI_DESIGNER_EDITOR_MODE.UIDesignerToolWindowManager.WIDTH": "360",
+    "full.screen.before.presentation.mode": "true",
+    "git-widget-placeholder": "withQueue",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/peter.home/java/IMG3/resource",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Artifacts",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2984206",
+    "run.code.analysis.last.selected.profile": "aDefault",
+    "settings.editor.selected.configurable": "Groovy compiler",
+    "vue.rearranger.settings.migration": "true"
   },
-  &quot;keyToStringList&quot;: {
-    &quot;com.intellij.ide.scratch.ScratchImplUtil$2/New Scratch File&quot;: [
-      &quot;JAVA&quot;
+  "keyToStringList": {
+    "com.intellij.ide.scratch.ScratchImplUtil$2/New Scratch File": [
+      "JAVA"
     ]
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\peter.home\java\IMG3\resource" />
@@ -635,7 +635,7 @@
       <option name="project" value="LOCAL" />
       <updated>1683976691765</updated>
     </task>
-    <option name="localTasksCounter" value="358" />
+    <option name="localTasksCounter" value="359" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -749,6 +749,11 @@
           <url>file://$PROJECT_DIR$/src/database/DBHandler.java</url>
           <line>332</line>
           <option name="timeStamp" value="80" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/thegrid/ImageFrame.java</url>
+          <line>118</line>
+          <option name="timeStamp" value="81" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

@@ -21,6 +21,7 @@ import java.awt.event.KeyEvent;
 import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
 
 import static common.Tools.newGridForSet;
@@ -282,17 +283,18 @@ public class ImgViewKeyHandler extends KeyAdapter {
                 final HashSet<Integer> simi = getSimilarities(this_Hash, this_rowid);
                 if(simi.isEmpty())
                     return;
-                int i = simi.iterator().next();
-                byte[] b = DBHandler.loadImage(i);
-                BufferedImage bi = ImageTools.JPGByteArrayToImg(b);
-                imageFrame.imgPanel.setImageCentered(bi);
+                System.out.println(simi);
+                ArrayList<Integer> li = new ArrayList<>(simi);
+                Collections.shuffle(li);
+                imageFrame.selectAnotherImage(li.getFirst());
             }
 
             case VK_V -> { // similarities
                 int this_rowid = imageFrame.grid.imageL.get(imageFrame.indexRing.get()).rowid();
                 HashingAlgorithm hasher = new PerceptiveHash(32);
                 Hash this_Hash = hasher.hash(imageFrame.getIconImg());
-                loadSimilarities (this_Hash, this_rowid);
+                HashSet<Integer> set = loadSimilarities (this_Hash, this_rowid);
+                System.out.println(set);
             }
 
             case VK_6 -> {
@@ -366,7 +368,6 @@ public class ImgViewKeyHandler extends KeyAdapter {
         }
     }
 
-
     public static HashSet<Integer> getSimilarities(Hash this_Hash, int this_rowid) {
         ArrayList<DBHandler.HashId> hlist = DBHandler.loadPerceptiveImgHashes();
         HashSet<Integer> foundSet = new HashSet<>();
@@ -378,16 +379,18 @@ public class ImgViewKeyHandler extends KeyAdapter {
                 }
             }
         }
+        if(foundSet.isEmpty()){
+            MsgBox.Info("No similarities found!");
+        }
         return foundSet;
     }
 
-    public static void loadSimilarities(Hash this_Hash, int this_rowid) {
+    public static HashSet<Integer> loadSimilarities(Hash this_Hash, int this_rowid) {
         HashSet<Integer> foundSet = getSimilarities(this_Hash, this_rowid);
         if (!foundSet.isEmpty()) {
             newGridForSet(foundSet);
-        } else {
-            MsgBox.Info("No similarities found!");
         }
+        return foundSet;
     }
 }
 
