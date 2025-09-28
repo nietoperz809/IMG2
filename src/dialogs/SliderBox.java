@@ -14,7 +14,7 @@ public class SliderBox extends JDialog {
     private JLabel valueLabel;
     private final Stepper stepper; // = new Stepper (0.4f, 2.0f, 255);
     private float lastStep = 1.0f;
-    private DecimalFormat df = new DecimalFormat("#.##");
+    private final DecimalFormat df = new DecimalFormat("#.##");
 
     public SliderBox(Stepper stp) {
         stepper = stp;

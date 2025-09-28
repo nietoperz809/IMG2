@@ -2,6 +2,7 @@ package dialogs;
 
 import common.Watermark;
 import thegrid.ImgPanel;
+import thegrid.Positioner;
 
 import javax.swing.*;
 import java.awt.*;
@@ -49,8 +50,8 @@ public class TextParamBox extends JDialog {
     }
 
     public static void xmain (ImgPanel imgp, MouseEvent e) {
-        int x = e.getX()-(int)imgp.offset.x;
-        int y = e.getY()-(int)imgp.offset.y;
+        int x = e.getX()-(int) Positioner.offset.x;
+        int y = e.getY()-(int) Positioner.offset.y;
         instance.a2020TextField.setText(x+","+y);
         instance.imgPanel = imgp;
         instance.pack();

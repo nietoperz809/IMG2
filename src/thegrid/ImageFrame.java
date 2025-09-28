@@ -108,8 +108,6 @@ public class ImageFrame extends JFrame implements MouseWheelListener {
 
     void applyInplaceFilter(IApplyInPlace bl) {
         FastBitmap fb = getIconAsFastBitmap();
-        //System.out.println("argb "+fb.isARGB());
-        //System.out.println("rgb "+fb.isRGB());
         bl.applyInPlace(fb);
         imgPanel.setImage(fb);
     }
@@ -157,7 +155,6 @@ public class ImageFrame extends JFrame implements MouseWheelListener {
     }
 
     public String toString() {
-        System.out.println("default");
         return toString (grid.imageL.get(indexRing.get()));
     }
 
@@ -172,8 +169,8 @@ public class ImageFrame extends JFrame implements MouseWheelListener {
     }
 
     private void showByIdx() {
-        adjustOn('h');
         setImg();
+        adjustOn('h');
     }
 
     void adjustOn(char which) {
@@ -192,7 +189,7 @@ public class ImageFrame extends JFrame implements MouseWheelListener {
         }
         Dimension d = new Dimension(newWidth, newHeight);
         img = common.ImageScaler.scaleDirect(img, d);
-        imgPanel.setImage(img);
+        imgPanel.setImageCentered(img);
     }
 
     private void showInfo(DBHandler.NameID v) {

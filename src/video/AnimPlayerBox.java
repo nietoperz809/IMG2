@@ -121,8 +121,6 @@ public class AnimPlayerBox implements PlayerBox {
             }
             if (autoclose)
                 stop();
-            //Tools.gc_now();
-            //System.out.println("end thread");
         });
 
         decoderTask = Tools.runTask(() -> {

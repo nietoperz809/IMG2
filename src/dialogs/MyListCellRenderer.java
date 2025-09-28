@@ -25,7 +25,7 @@ public class MyListCellRenderer extends JLabel implements ListCellRenderer<Strin
         } else {
             background = Color.WHITE;
             foreground = Color.BLACK;
-        };
+        }
         setBackground(background);
         setForeground(foreground);
         return this;

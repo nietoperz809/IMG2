@@ -47,7 +47,7 @@ public class ImageList {
                 return n;
             }
         }
-        return -1;
+        return size()-1;
     }
 
     public void setSQL(String sql) {

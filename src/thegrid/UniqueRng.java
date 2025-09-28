@@ -48,6 +48,8 @@ public class UniqueRng {
     }
 
     public int get() {
+        if (idx < 0)
+            idx = _list.size()-1;
         return _list.get(idx);
     }
 }

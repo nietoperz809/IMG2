@@ -122,20 +122,6 @@ public class FontChooser2 extends JDialog
             setVisible(false);
         });
 
-//        JButton canButton = new JButton("Cancel");
-//        bot.add(canButton);
-//        canButton.addActionListener(e -> {
-//            // Set all values to null. Better: restore previous.
-//            resultFont = null;
-//            resultName = null;
-//            resultSize = 0;
-//            isBold = false;
-//            isItalic = false;
-//
-//            dispose();
-//            setVisible(false);
-//        });
-
         cp.add(bot, BorderLayout.SOUTH);
 
         previewFont(); // ensure view is up to date!
@@ -165,16 +151,6 @@ public class FontChooser2 extends JDialog
         pack(); // ensure Dialog is big enough.
     }
 
-//    private static void findAndSelect(List li, String s) {
-//        for (int i = 0; i < li.getItemCount(); i++) {
-//            String item = li.getItem(i);
-//            if (item.equals(s)) {
-//                li.select(i);
-//                return;
-//            }
-//        }
-//    }
-
     /**
      * Retrieve the selected font, or null
      */
@@ -184,11 +160,4 @@ public class FontChooser2 extends JDialog
     }
 
 // --Commented out by Inspection START (3/2/2018 7:49 PM):
-//    /** Simple main program to start it running */
-//    public static Font main()
-//    {
-//        final FontChooser2 fc = new FontChooser2(null);
-//        fc.setVisible(true);
-//        return fc.getSelectedFont();
-//    }
 }

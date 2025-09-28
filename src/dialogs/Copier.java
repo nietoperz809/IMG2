@@ -31,9 +31,9 @@ public class Copier extends JDialog {
     private JRadioButton rbTo;
     private JButton buttonCloseDB;
     private JList<String> chunkList;
-    public static long MB10 = 1024*1024*10;
-    public static long MB50 = 1024*1024*50;
-    public static long MB100 = 1024*1024*100;
+    public static final long MB10 = 1024*1024*10;
+    public static final long MB50 = 1024*1024*50;
+    public static final long MB100 = 1024*1024*100;
 
 
     public Copier() {
@@ -123,7 +123,8 @@ public class Copier extends JDialog {
                             long max = size / chunksize;
                             long x = transferred / chunksize;
                             progressText.setText(x + " from " + max + " blocks in "+elapsed(startTime));
-                            progressText.repaint();
+                            progressText.paintImmediately(0, 0, progressText.getWidth(), progressText.getHeight());
+                            contentPane.repaint();
                             return false; // true will stop the copy
                         });
                 buttonOK.setEnabled(true);

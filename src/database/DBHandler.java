@@ -108,11 +108,6 @@ public class DBHandler {
         return RootDirectory;
     }
 
-//    public static void setDBRoot(String s) {
-//        RootDirectory = s;
-//        log("DBROOT set to:" + s);
-//    }
-
     /**
      * Warning box if an image is about to be deleted
      *
@@ -138,6 +133,7 @@ public class DBHandler {
 
     public static void closeDatabase() {
         try {
+            execSQL("shutdown immediately");
             connection.close();
             //_inst = null;
         } catch (SQLException e) {
@@ -154,11 +150,6 @@ public class DBHandler {
     }
 
     public static void log(String str) {
-//        try {
-//            statement.execute("insert into LOG(sql) values ('"+str+"')");
-//        } catch (SQLException e) {
-//            throw new RuntimeException(e);
-//        }
     }
 
     public static void reduceLog() {
@@ -535,8 +526,8 @@ public class DBHandler {
                 return img;
             }
         } catch (SQLException e) {
-            out.println(e);
-            //throw new RuntimeException(e);
+            //out.println(e);
+            throw new RuntimeException(e);
         }
         return null;
     }

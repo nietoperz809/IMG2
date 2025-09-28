@@ -200,8 +200,6 @@ public class VideoApp extends JFrame {
                 }
                 // .. left double click
                 else if (e.getClickCount() == 2) {
-//                    dialogs.TimedMessage.showMessageDialog (VideoApp.this,
-//                            nid.name(), "Next Playing", 8000);
                     TimedMsg2.doTimedBox();
                     buttonPlay.doClick();
                 }

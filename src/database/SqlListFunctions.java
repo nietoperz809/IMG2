@@ -22,7 +22,7 @@ public class SqlListFunctions extends DBHandler {
             res.close();
             return al;
         } catch (SQLException e) {
-            System.out.println(e);
+            //System.out.println(e);
             throw new RuntimeException(e);
         }
     }

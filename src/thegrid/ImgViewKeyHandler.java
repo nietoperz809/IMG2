@@ -348,23 +348,6 @@ public class ImgViewKeyHandler extends KeyAdapter {
                 }
             }
 
-//            case VK_I -> {
-//                String name = "?";
-//                name = LineInput.xmain(name, "New Entry:", Color.RED);
-//                if (name.equals("?") || name.isEmpty())
-//                    return;
-//                BufferedImage img = imageView.getIconImg();
-//                try {
-//                    DBHandler.insertImageRecord(name, img);
-//                } catch (IOException ex) {
-//                    throw new RuntimeException(ex);
-//                }
-//            }
-
-//            default -> {
-//                if (ev != VK_CONTROL && ev != VK_SHIFT)
-//                    Sam.speak("Key not used.");
-//            }
         }
     }
 

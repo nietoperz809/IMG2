@@ -69,9 +69,7 @@ public class JfxImageView {
                 imageView.setFitWidth(n);
         }));
 
-        checkBox_preserve.addActionListener(e -> {
-            imageView.setPreserveRatio(checkBox_preserve.isSelected());
-        });
+        checkBox_preserve.addActionListener(e -> imageView.setPreserveRatio(checkBox_preserve.isSelected()));
     }
 
     public BufferedImage getTransformedImg() {

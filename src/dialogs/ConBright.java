@@ -62,9 +62,7 @@ public class ConBright extends JDialog {
             outImg = fb.toBufferedImage();
         });
 
-        takeButton.addActionListener(_ -> {
-            origImg = outImg;
-        });
+        takeButton.addActionListener(_ -> origImg = outImg);
     }
 
     private float getVal(JSlider sl) {
