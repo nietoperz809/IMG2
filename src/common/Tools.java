@@ -169,7 +169,7 @@ public class Tools {
         ImageViewController.killAllViews();
         DBHandler.log("--- TheGrid ended");
         gr.setVisible(false);
-        DBHandler.closeDatabase();
+        DBHandler.closeDatabase(true);
         System.exit(1);
     }
 

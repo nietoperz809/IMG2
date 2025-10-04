@@ -3,11 +3,14 @@ package dialogs;
 import javafx.embed.swing.JFXPanel;
 
 import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 import javafx.application.Platform;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.Scene;
 import javafx.scene.SnapshotParameters;
+import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.WritableImage;
@@ -23,11 +26,11 @@ public class JfxImageView {
     private JPanel panel1;
     private JFXPanel bridge;
     private JScrollPane scroller;
-    private JPanel bridgepanel;
     private JSlider slider1;
     private JSlider slider2;
     private JCheckBox checkBox;
     private JCheckBox checkBox_preserve;
+    private JSlider slider3;
     private ImageView imageView;
     private Scene scene;
 
@@ -70,6 +73,12 @@ public class JfxImageView {
         }));
 
         checkBox_preserve.addActionListener(e -> imageView.setPreserveRatio(checkBox_preserve.isSelected()));
+
+        slider3.addChangeListener(_ -> {
+            final ColorAdjust colorAdjust = new ColorAdjust();
+            colorAdjust.setContrast (((double)slider3.getValue())/100.0);
+            imageView.setEffect (colorAdjust);
+        });
     }
 
     public BufferedImage getTransformedImg() {

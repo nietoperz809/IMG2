@@ -60,7 +60,7 @@ public class Copier extends JDialog {
         });
         buttonCloseDB.addActionListener(_ -> {
             Sam.speak("Database disconnect");
-            closeDatabase();
+            closeDatabase(true);
             dbClosed = true;
         });
     }

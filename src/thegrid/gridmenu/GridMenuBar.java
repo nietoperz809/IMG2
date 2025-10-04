@@ -80,7 +80,7 @@ public class GridMenuBar extends JMenuBar {
         jmi = new ColoredMenuItem("Restart the app ...", Color.RED, Color.WHITE);
         jmi.addActionListener(_ -> {
             DBHandler.log("--- TheGrid ended");
-            DBHandler.closeDatabase();
+            DBHandler.closeDatabase(false);
             try {
                 Tools.delay(600);
                 Tools.restartApplication();
@@ -148,7 +148,7 @@ public class GridMenuBar extends JMenuBar {
             Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
             try {
                 clipboard.getData(DataFlavor.javaFileListFlavor);
-
+                @SuppressWarnings("unchecked")
                 List<File> list = (ArrayList<File>) clipboard.getData(DataFlavor.javaFileListFlavor);
                 File[] arr = list.toArray(new File[0]);
                 theGrid.addImageFilesToDatabase(arr);
@@ -198,7 +198,8 @@ public class GridMenuBar extends JMenuBar {
         jmi = new JMenuItem("x*x Grid preview");
         jmi.setToolTipText("Create preview image of a grid");
         jmi.addActionListener(_ -> {
-            BufferedImage big = ImageTools.createPreviewImage(theGrid.imageL, 5);
+            int xy = Input.getInteger("single value, width & Height of matrix");
+            BufferedImage big = ImageTools.createPreviewImage(theGrid.imageL, xy);
             ImageViewer.xmain(big);
         });
         jm.add(jmi);

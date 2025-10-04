@@ -131,9 +131,14 @@ public class DBHandler {
         }
     }
 
-    public static void closeDatabase() {
+    /**
+     * close the DB
+     * @param defrag true if defrag allowed
+     */
+    public static void closeDatabase(boolean defrag) {
         try {
-            execSQL("shutdown immediately");
+            if (!defrag)
+                execSQL("shutdown immediately");
             connection.close();
             //_inst = null;
         } catch (SQLException e) {

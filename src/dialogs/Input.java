@@ -1,10 +1,13 @@
 package dialogs;
 
+import common.BlockCaret;
 import common.Pair;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
 import javax.swing.*;
+import javax.swing.text.DefaultCaret;
+import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
@@ -12,9 +15,11 @@ import java.awt.event.WindowEvent;
 public class Input extends JDialog {
     private JPanel contentPane;
     private JButton buttonOK;
-    private JButton buttonCancel;
+    //private JButton buttonCancel;
     private JTextField textField1;
     private JTextField tf2;
+    private JLabel lab2;
+    private JLabel lab1;
 
     public Input() {
         setContentPane(contentPane);
@@ -23,7 +28,7 @@ public class Input extends JDialog {
 
         buttonOK.addActionListener(e -> onOK());
 
-        buttonCancel.addActionListener(e -> onCancel());
+        //buttonCancel.addActionListener(e -> onCancel());
 
         // call onCancel() when cross is clicked
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
@@ -47,13 +52,38 @@ public class Input extends JDialog {
         dispose();
     }
 
+    public static int getInteger(String desc) {
+        Integer p = null;
+        do {
+            Input dialog = new Input();
+            dialog.setTitle(desc);
+            dialog.lab1.setText(desc);
+            dialog.textField1.setToolTipText("Enter value here");
+            dialog.tf2.setVisible(false);
+            dialog.lab2.setVisible(false);
+            dialog.pack();
+            dialog.textField1.setCaret(new BlockCaret());
+            dialog.setVisible(true);
+            String t1 = dialog.textField1.getText();
+            dialog.dispose();
+            try {
+                p = Integer.parseInt(t1);
+            } catch (NumberFormatException e) {
+                //p = null;
+            }
+        } while (p == null);
+        return p;
+    }
+
     @Contract("_ -> new")
-    public static @NotNull Pair<Integer, Integer> getIntegers(String desc) {
+    public static @NotNull Pair<Integer, Integer> getIntPair(String desc) {
         Pair<Integer, Integer> p = null;
         do {
             Input dialog = new Input();
             dialog.setTitle(desc);
             dialog.pack();
+            dialog.textField1.setCaret(new BlockCaret());
+            dialog.tf2.setCaret(new BlockCaret());
             dialog.setVisible(true);
             String t1 = dialog.textField1.getText();
             String t2 = dialog.tf2.getText();
@@ -68,7 +98,8 @@ public class Input extends JDialog {
     }
 
     public static void main(String[] args) {
-        Pair<Integer, Integer> p = getIntegers("hello world");
+        Pair<Integer, Integer> p = getIntPair("hello world");
+        //Integer p = getInteger("hello");
         System.out.println(p);
         System.exit(0);
     }
