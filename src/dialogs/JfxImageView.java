@@ -31,17 +31,19 @@ public class JfxImageView {
     private JCheckBox checkBox;
     private JCheckBox checkBox_preserve;
     private JSlider slider3;
-    private ImageView imageView;
+    private JSlider slider4;
+    private JSlider slider5;
+    private ImageView imgV;
     private Scene scene;
 
     public JfxImageView (final thegrid.ImgPanel out, final BufferedImage inImg) {
 
         Platform.runLater(() -> {
             Image image = SwingFXUtils.toFXImage(inImg, null);
-            imageView = new ImageView (image);
-            imageView.setSmooth(true);
+            imgV = new ImageView (image);
+            imgV.setSmooth(true);
 
-            StackPane root = new StackPane(imageView);
+            StackPane root = new StackPane(imgV);
             scene = new Scene(root);
 
             bridge.setScene(scene);
@@ -62,23 +64,44 @@ public class JfxImageView {
             frame.setSize(out.getWidth(),out.getHeight());
         });
 
-        slider1.addChangeListener(_ -> Platform.runLater(() -> imageView.setRotate(slider1.getValue())));
+        slider1.addChangeListener(_ -> Platform.runLater(() -> imgV.setRotate(slider1.getValue())));
 
         slider2.addChangeListener(_ -> Platform.runLater(() -> {
             int n = 10*slider2.getValue();
             if (checkBox.isSelected())
-                imageView.setFitHeight(n);
+                imgV.setFitHeight(n);
             else
-                imageView.setFitWidth(n);
+                imgV.setFitWidth(n);
         }));
 
-        checkBox_preserve.addActionListener(e -> imageView.setPreserveRatio(checkBox_preserve.isSelected()));
+        checkBox_preserve.addActionListener(e -> imgV.setPreserveRatio(checkBox_preserve.isSelected()));
 
         slider3.addChangeListener(_ -> {
             final ColorAdjust colorAdjust = new ColorAdjust();
-            colorAdjust.setContrast (((double)slider3.getValue())/100.0);
-            imageView.setEffect (colorAdjust);
+            double v = getAdjust(slider3);
+            colorAdjust.setContrast (v);
+            imgV.setEffect (colorAdjust);
         });
+
+        slider4.addChangeListener(_ -> {
+            final ColorAdjust colorAdjust = new ColorAdjust();
+            double v = getAdjust(slider4);
+            colorAdjust.setBrightness (v);
+            imgV.setEffect (colorAdjust);
+        });
+
+        slider5.addChangeListener(_ -> {
+            final ColorAdjust colorAdjust = new ColorAdjust();
+            double v = getAdjust(slider5);
+            colorAdjust.setHue (v);
+            imgV.setEffect (colorAdjust);
+        });
+    }
+
+    private double getAdjust (JSlider sl) {
+        double v = 1.0-((double)sl.getValue()/50.0);
+        System.out.println(v);
+        return v;
     }
 
     public BufferedImage getTransformedImg() {
@@ -87,7 +110,7 @@ public class JfxImageView {
         Platform.runLater(() -> {
             SnapshotParameters params = new SnapshotParameters();
             params.setFill(Color.TRANSPARENT); // kein weißer Hintergrund
-            WritableImage fxImage = imageView.snapshot(params, null);
+            WritableImage fxImage = imgV.snapshot(params, null);
             ret.set(SwingFXUtils.fromFXImage(fxImage, null));
             latch.countDown();
         });

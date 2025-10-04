@@ -15,12 +15,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ddb69741-e020-4d21-a32f-f00e79c6818a" name="Changes" comment="jfx: added preserve ratio checkbox">
+    <list default="true" id="ddb69741-e020-4d21-a32f-f00e79c6818a" name="Changes" comment="some improvements&#10;made restart faster">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resource/manual.html" beforeDir="false" afterPath="$PROJECT_DIR$/resource/manual.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/buildinfo/BuildInfo2.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/buildinfo/BuildInfo2.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/thegrid/ImageFrame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/thegrid/ImageFrame.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/thegrid/ImgViewKeyHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/thegrid/ImgViewKeyHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dialogs/JfxImageView.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/dialogs/JfxImageView.form" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dialogs/JfxImageView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/dialogs/JfxImageView.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -71,7 +69,7 @@
     <option name="stateVersion" value="1" />
   </component>
   <component name="ProblemsViewState">
-    <option name="selectedTabId" value="CurrentFile" />
+    <option name="selectedTabId" value="DEPENDENCY_CHECKER_PROBLEMS_TAB" />
   </component>
   <component name="ProjectColorInfo">{
   &quot;customColor&quot;: &quot;&quot;,
@@ -95,6 +93,7 @@
     "Application.DBHandler.executor": "Debug",
     "Application.GUIConsole.executor": "Run",
     "Application.ImageViewer.executor": "Run",
+    "Application.Input.executor": "Run",
     "Application.JfxImageView.executor": "Run",
     "Application.Main (1).executor": "Run",
     "Application.Main (2).executor": "Run",
@@ -131,7 +130,7 @@
     "UI_DESIGNER_EDITOR_MODE.PaletteManager.SHOW": "true",
     "UI_DESIGNER_EDITOR_MODE.PaletteManager.WIDTH": "205",
     "UI_DESIGNER_EDITOR_MODE.UIDesignerToolWindowManager.SHOW": "true",
-    "UI_DESIGNER_EDITOR_MODE.UIDesignerToolWindowManager.WIDTH": "360",
+    "UI_DESIGNER_EDITOR_MODE.UIDesignerToolWindowManager.WIDTH": "242",
     "full.screen.before.presentation.mode": "true",
     "git-widget-placeholder": "withQueue",
     "kotlin-language-version-configured": "true",
@@ -145,7 +144,7 @@
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.2984206",
     "run.code.analysis.last.selected.profile": "aDefault",
-    "settings.editor.selected.configurable": "Groovy compiler",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
     "vue.rearranger.settings.migration": "true"
   },
   "keyToStringList": {
@@ -192,8 +191,8 @@
       <recent name="" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
-      <recent name="httpserv" />
       <recent name="common" />
+      <recent name="httpserv" />
       <recent name="video" />
     </key>
   </component>
@@ -207,6 +206,19 @@
   <component name="RunManager" selected="Application.MainC">
     <configuration name="Copier" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="dialogs.Copier" />
+      <module name="IMG2" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="dialogs.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Input" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="dialogs.Input" />
       <module name="IMG2" />
       <extension name="coverage">
         <pattern>
@@ -265,12 +277,14 @@
     <list>
       <item itemvalue="Application.MainC" />
       <item itemvalue="Application.MainE" />
+      <item itemvalue="Application.Input" />
       <item itemvalue="Application.JfxImageView" />
       <item itemvalue="Application.TimedMsg2" />
       <item itemvalue="Application.Copier" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.Input" />
         <item itemvalue="Application.JfxImageView" />
         <item itemvalue="Application.TimedMsg2" />
         <item itemvalue="Application.Copier" />
@@ -635,7 +649,7 @@
       <option name="project" value="LOCAL" />
       <updated>1683976691765</updated>
     </task>
-    <option name="localTasksCounter" value="359" />
+    <option name="localTasksCounter" value="362" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -703,8 +717,6 @@
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_NEW_TODO" value="false" />
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="workaround regarding MakeZip menuitem: 1000 retries because ZipFile might be locked" />
-    <MESSAGE value="some little bugs fixed" />
     <MESSAGE value="added menu item: remove tags" />
     <MESSAGE value="new menu item: check external img" />
     <MESSAGE value="increased stability of loadPerceptiveImgHashes function" />
@@ -728,7 +740,9 @@
     <MESSAGE value="resize using slider in jfx-window" />
     <MESSAGE value="updata" />
     <MESSAGE value="jfx: added preserve ratio checkbox" />
-    <option name="LAST_COMMIT_MESSAGE" value="jfx: added preserve ratio checkbox" />
+    <MESSAGE value="release 5, some improvements" />
+    <MESSAGE value="some improvements&#10;made restart faster" />
+    <option name="LAST_COMMIT_MESSAGE" value="some improvements&#10;made restart faster" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -745,15 +759,10 @@
           <properties class="java.lang.RuntimeException" package="java.lang" />
           <option name="timeStamp" value="75" />
         </breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
+        <line-breakpoint type="java-line">
           <url>file://$PROJECT_DIR$/src/database/DBHandler.java</url>
-          <line>332</line>
+          <line>328</line>
           <option name="timeStamp" value="80" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/thegrid/ImageFrame.java</url>
-          <line>118</line>
-          <option name="timeStamp" value="81" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
