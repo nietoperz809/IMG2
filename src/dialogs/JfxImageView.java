@@ -3,8 +3,6 @@ package dialogs;
 import javafx.embed.swing.JFXPanel;
 
 import javax.swing.*;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 
 import javafx.application.Platform;
 import javafx.embed.swing.SwingFXUtils;
@@ -30,9 +28,10 @@ public class JfxImageView {
     private JSlider slider2;
     private JCheckBox checkBox;
     private JCheckBox checkBox_preserve;
-    private JSlider slider3;
-    private JSlider slider4;
-    private JSlider slider5;
+    private JSlider sliderContrast;
+    private JSlider sliderBrightness;
+    private JSlider sliderHue;
+    private JSlider sliderSaturation;
     private ImageView imgV;
     private Scene scene;
 
@@ -41,6 +40,7 @@ public class JfxImageView {
         Platform.runLater(() -> {
             Image image = SwingFXUtils.toFXImage(inImg, null);
             imgV = new ImageView (image);
+            imgV.setPreserveRatio(true);
             imgV.setSmooth(true);
 
             StackPane root = new StackPane(imgV);
@@ -64,6 +64,8 @@ public class JfxImageView {
             frame.setSize(out.getWidth(),out.getHeight());
         });
 
+        checkBox_preserve.setSelected(true);
+
         slider1.addChangeListener(_ -> Platform.runLater(() -> imgV.setRotate(slider1.getValue())));
 
         slider2.addChangeListener(_ -> Platform.runLater(() -> {
@@ -76,29 +78,42 @@ public class JfxImageView {
 
         checkBox_preserve.addActionListener(e -> imgV.setPreserveRatio(checkBox_preserve.isSelected()));
 
-        slider3.addChangeListener(_ -> {
+        sliderContrast.addChangeListener(_ -> {
             final ColorAdjust colorAdjust = new ColorAdjust();
-            double v = getAdjust(slider3);
+            double v = getAdjustValue(sliderContrast);
             colorAdjust.setContrast (v);
-            imgV.setEffect (colorAdjust);
+            apply(colorAdjust);
         });
 
-        slider4.addChangeListener(_ -> {
+        sliderBrightness.addChangeListener(_ -> {
             final ColorAdjust colorAdjust = new ColorAdjust();
-            double v = getAdjust(slider4);
+            double v = getAdjustValue(sliderBrightness);
             colorAdjust.setBrightness (v);
-            imgV.setEffect (colorAdjust);
+            apply(colorAdjust);
         });
 
-        slider5.addChangeListener(_ -> {
+        sliderHue.addChangeListener(_ -> {
             final ColorAdjust colorAdjust = new ColorAdjust();
-            double v = getAdjust(slider5);
+            double v = getAdjustValue(sliderHue);
             colorAdjust.setHue (v);
-            imgV.setEffect (colorAdjust);
+            apply(colorAdjust);
+        });
+
+        sliderSaturation.addChangeListener(_ -> {
+            final ColorAdjust colorAdjust = new ColorAdjust();
+            double v = getAdjustValue(sliderSaturation);
+            colorAdjust.setSaturation (v);
+            apply(colorAdjust);
         });
     }
 
-    private double getAdjust (JSlider sl) {
+    private void apply (ColorAdjust ca) {
+        Platform.runLater(() -> {
+            imgV.setEffect(ca);
+        });
+    }
+
+    private double getAdjustValue(JSlider sl) {
         double v = 1.0-((double)sl.getValue()/50.0);
         System.out.println(v);
         return v;

@@ -28,24 +28,25 @@
         </children>
       </scrollpane>
       <grid id="436ca" layout-manager="FormLayout">
-        <rowspec value="center:d:noGrow"/>
-        <colspec value="fill:d:grow"/>
-        <colspec value="left:4dlu:noGrow"/>
-        <colspec value="fill:d:grow"/>
-        <colspec value="left:4dlu:noGrow"/>
+        <rowspec value="center:26px:noGrow"/>
+        <rowspec value="top:4dlu:noGrow"/>
+        <rowspec value="center:max(d;4px):noGrow"/>
+        <colspec value="fill:145px:grow"/>
+        <colspec value="fill:152px:grow"/>
         <colspec value="fill:d:noGrow"/>
         <colspec value="left:4dlu:noGrow"/>
         <colspec value="fill:d:noGrow"/>
-        <colspec value="left:4dlu:noGrow"/>
-        <colspec value="fill:d:grow"/>
         <colspec value="left:4dlu:noGrow"/>
         <colspec value="fill:d:grow"/>
         <colspec value="left:4dlu:noGrow"/>
         <colspec value="fill:d:grow"/>
         <constraints border-constraint="North"/>
         <properties>
+          <alignmentX value="0.1"/>
+          <alignmentY value="0.1"/>
           <foreground color="-16711930"/>
-          <preferredSize width="30" height="30"/>
+          <minimumSize width="520" height="70"/>
+          <preferredSize width="30" height="70"/>
         </properties>
         <border type="none"/>
         <children>
@@ -65,7 +66,7 @@
           </component>
           <component id="99cb1" class="javax.swing.JSlider" binding="slider2" default-binding="true">
             <constraints>
-              <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
+              <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
               <forms defaultalign-horz="false"/>
             </constraints>
             <properties>
@@ -78,7 +79,7 @@
           </component>
           <component id="76d7e" class="javax.swing.JCheckBox" binding="checkBox">
             <constraints>
-              <grid row="0" column="4" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+              <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
               <forms/>
             </constraints>
             <properties>
@@ -87,37 +88,47 @@
           </component>
           <component id="2f1cb" class="javax.swing.JCheckBox" binding="checkBox_preserve">
             <constraints>
-              <grid row="0" column="6" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+              <grid row="0" column="4" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
               <forms/>
             </constraints>
             <properties>
               <text value=""/>
             </properties>
           </component>
-          <component id="e9bd0" class="javax.swing.JSlider" binding="slider3" default-binding="true">
+          <component id="950e9" class="javax.swing.JSlider" binding="sliderSaturation" default-binding="true">
             <constraints>
-              <grid row="0" column="8" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
+              <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
               <forms defaultalign-horz="false"/>
             </constraints>
             <properties>
               <value value="0"/>
             </properties>
           </component>
-          <component id="1fbf1" class="javax.swing.JSlider" binding="slider4" default-binding="true">
+          <component id="e9bd0" class="javax.swing.JSlider" binding="sliderContrast" default-binding="true">
             <constraints>
-              <grid row="0" column="10" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
+              <grid row="2" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
               <forms defaultalign-horz="false"/>
             </constraints>
             <properties>
               <value value="0"/>
             </properties>
           </component>
-          <component id="dfa78" class="javax.swing.JSlider" binding="slider5" default-binding="true">
+          <component id="1fbf1" class="javax.swing.JSlider" binding="sliderBrightness" default-binding="true">
             <constraints>
-              <grid row="0" column="12" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
+              <grid row="2" column="6" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
               <forms defaultalign-horz="false"/>
             </constraints>
             <properties>
+              <value value="0"/>
+            </properties>
+          </component>
+          <component id="dfa78" class="javax.swing.JSlider" binding="sliderHue" default-binding="true">
+            <constraints>
+              <grid row="2" column="8" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
+              <forms defaultalign-horz="false"/>
+            </constraints>
+            <properties>
+              <maximumSize width="32767" height="30"/>
               <value value="0"/>
             </properties>
           </component>
