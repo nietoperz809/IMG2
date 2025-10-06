@@ -49,7 +49,7 @@
         </properties>
         <border type="none"/>
         <children>
-          <component id="1313f" class="javax.swing.JSlider" binding="slider1" default-binding="true">
+          <component id="1313f" class="javax.swing.JSlider" binding="sliderRotate" default-binding="true">
             <constraints>
               <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
                 <preferred-size width="409" height="30"/>
@@ -57,18 +57,27 @@
               <forms defaultalign-horz="false"/>
             </constraints>
             <properties>
+              <background color="-16777216"/>
+              <foreground color="-1"/>
+              <inverted value="false"/>
               <maximum value="360"/>
+              <paintLabels value="false"/>
               <paintTicks value="false"/>
               <paintTrack value="true"/>
               <value value="0"/>
             </properties>
+            <clientProperties>
+              <JSlider.isFilled class="java.lang.Boolean" value="false"/>
+            </clientProperties>
           </component>
-          <component id="99cb1" class="javax.swing.JSlider" binding="slider2" default-binding="true">
+          <component id="99cb1" class="javax.swing.JSlider" binding="sliderSize" default-binding="true">
             <constraints>
               <grid row="0" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
               <forms defaultalign-horz="false"/>
             </constraints>
             <properties>
+              <background color="-16777216"/>
+              <foreground color="-1"/>
               <maximum value="1000"/>
               <minimum value="10"/>
               <requestFocusEnabled value="false"/>
@@ -82,7 +91,7 @@
               <forms defaultalign-horz="false"/>
             </constraints>
             <properties>
-              <value value="0"/>
+              <value value="50"/>
             </properties>
           </component>
           <component id="e9bd0" class="javax.swing.JSlider" binding="sliderContrast" default-binding="true">
@@ -91,7 +100,7 @@
               <forms defaultalign-horz="false"/>
             </constraints>
             <properties>
-              <value value="0"/>
+              <value value="50"/>
             </properties>
           </component>
           <component id="1fbf1" class="javax.swing.JSlider" binding="sliderBrightness" default-binding="true">
@@ -100,7 +109,7 @@
               <forms defaultalign-horz="false"/>
             </constraints>
             <properties>
-              <value value="0"/>
+              <value value="50"/>
             </properties>
           </component>
           <component id="dfa78" class="javax.swing.JSlider" binding="sliderHue" default-binding="true">
@@ -110,7 +119,7 @@
             </constraints>
             <properties>
               <maximumSize width="32767" height="30"/>
-              <value value="0"/>
+              <value value="50"/>
             </properties>
           </component>
           <component id="36d90" class="javax.swing.JLabel">

@@ -24,8 +24,8 @@ public class JfxImageView {
     private JPanel panel1;
     private JFXPanel bridge;
     private JScrollPane scroller;
-    private JSlider slider1;
-    private JSlider slider2;
+    private JSlider sliderRotate;
+    private JSlider sliderSize;
     private JCheckBox checkBox;
     private JCheckBox checkBox_preserve;
     private JSlider sliderContrast;
@@ -66,10 +66,10 @@ public class JfxImageView {
 
         checkBox_preserve.setSelected(true);
 
-        slider1.addChangeListener(_ -> Platform.runLater(() -> imgV.setRotate(slider1.getValue())));
+        sliderRotate.addChangeListener(_ -> Platform.runLater(() -> imgV.setRotate(sliderRotate.getValue())));
 
-        slider2.addChangeListener(_ -> Platform.runLater(() -> {
-            int n = 10*slider2.getValue();
+        sliderSize.addChangeListener(_ -> Platform.runLater(() -> {
+            int n = 10* sliderSize.getValue();
             if (checkBox.isSelected())
                 imgV.setFitHeight(n);
             else
@@ -113,8 +113,13 @@ public class JfxImageView {
         });
     }
 
+    /**
+     * Convert 0...100 to -1.0...+1.0
+     * @param sl Slider to use
+     * @return double value -1 to 1
+     */
     private double getAdjustValue(JSlider sl) {
-        double v = 1.0-((double)sl.getValue()/50.0);
+        double v = (double)(sl.getValue()-50)/50.0;
         System.out.println(v);
         return v;
     }
