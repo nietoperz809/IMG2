@@ -8,6 +8,7 @@ import javafx.application.Platform;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.Scene;
 import javafx.scene.SnapshotParameters;
+import javafx.scene.effect.Bloom;
 import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -22,8 +23,7 @@ import java.util.concurrent.atomic.AtomicReference;
 
 public class JfxImageView {
     private JPanel panel1;
-    private JFXPanel bridge;
-    private JScrollPane scroller;
+    //private final JFXPanel bridge = new JFXPanel();
     private JSlider sliderRotate;
     private JSlider sliderSize;
     private JCheckBox checkBox;
@@ -32,8 +32,14 @@ public class JfxImageView {
     private JSlider sliderBrightness;
     private JSlider sliderHue;
     private JSlider sliderSaturation;
+    private JButton resButton;
+    private JButton testButton1;
+    private JFXPanel jfx;
     private ImageView imgV;
     private Scene scene;
+    private ColorAdjust colorAdjust = new ColorAdjust();
+    private final int HALF = 50;
+    // --Commented out by Inspection (10/6/2025 10:36 AM):private final int FULL = 100;
 
     public JfxImageView (final thegrid.ImgPanel out, final BufferedImage inImg) {
 
@@ -46,8 +52,8 @@ public class JfxImageView {
             StackPane root = new StackPane(imgV);
             scene = new Scene(root);
 
-            bridge.setScene(scene);
-            bridge.setSize(600,600);
+            jfx.setScene(scene);
+            jfx.setSize(600,600);
 
             JFrame frame = new JFrame("JfxImageView");
             frame.addWindowListener(new java.awt.event.WindowAdapter() {
@@ -79,38 +85,47 @@ public class JfxImageView {
         checkBox_preserve.addActionListener(e -> imgV.setPreserveRatio(checkBox_preserve.isSelected()));
 
         sliderContrast.addChangeListener(_ -> {
-            final ColorAdjust colorAdjust = new ColorAdjust();
             double v = getAdjustValue(sliderContrast);
             colorAdjust.setContrast (v);
-            apply(colorAdjust);
+            applyCA();
         });
 
         sliderBrightness.addChangeListener(_ -> {
-            final ColorAdjust colorAdjust = new ColorAdjust();
             double v = getAdjustValue(sliderBrightness);
             colorAdjust.setBrightness (v);
-            apply(colorAdjust);
+            applyCA();
         });
 
         sliderHue.addChangeListener(_ -> {
-            final ColorAdjust colorAdjust = new ColorAdjust();
             double v = getAdjustValue(sliderHue);
             colorAdjust.setHue (v);
-            apply(colorAdjust);
+            applyCA();
         });
 
         sliderSaturation.addChangeListener(_ -> {
-            final ColorAdjust colorAdjust = new ColorAdjust();
             double v = getAdjustValue(sliderSaturation);
             colorAdjust.setSaturation (v);
-            apply(colorAdjust);
+            applyCA();
+        });
+
+        resButton.addActionListener(_ -> {
+            colorAdjust = new ColorAdjust();
+            sliderBrightness.setValue(HALF);
+            sliderContrast.setValue(HALF);
+            sliderHue.setValue(HALF);
+            sliderSaturation.setValue(HALF);
+            applyCA();
+        });
+
+        testButton1.addActionListener(_ -> {
+            Bloom bloom = new Bloom();
+            bloom.setThreshold(0.1);
+            imgV.setEffect(bloom);
         });
     }
 
-    private void apply (ColorAdjust ca) {
-        Platform.runLater(() -> {
-            imgV.setEffect(ca);
-        });
+    private void applyCA() {
+        Platform.runLater(() -> imgV.setEffect(colorAdjust));
     }
 
     /**
@@ -119,7 +134,7 @@ public class JfxImageView {
      * @return double value -1 to 1
      */
     private double getAdjustValue(JSlider sl) {
-        double v = (double)(sl.getValue()-50)/50.0;
+        double v = (double)(sl.getValue()-HALF)/HALF;
         System.out.println(v);
         return v;
     }
@@ -129,7 +144,7 @@ public class JfxImageView {
         final AtomicReference<BufferedImage> ret = new AtomicReference<>();
         Platform.runLater(() -> {
             SnapshotParameters params = new SnapshotParameters();
-            params.setFill(Color.TRANSPARENT); // kein weißer Hintergrund
+            params.setFill(Color.TRANSPARENT); // no white background
             WritableImage fxImage = imgV.snapshot(params, null);
             ret.set(SwingFXUtils.fromFXImage(fxImage, null));
             latch.countDown();
@@ -145,9 +160,5 @@ public class JfxImageView {
     public static JfxImageView create (thegrid.ImgPanel out) {
         return new JfxImageView (out, out.getImage());
     }
-
-//    public static void main(String[] args) {
-//        new JfxImageView(null);
-//    }
 }
 
