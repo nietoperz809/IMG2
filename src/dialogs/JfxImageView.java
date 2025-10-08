@@ -118,7 +118,7 @@ public class JfxImageView {
         });
 
         testButton1.addActionListener(_ -> {
-            PerspectiveTransform ppT = PersValueBox.get();//new PerspectiveTransform();
+            PerspectiveTransform ppT = PersValueBox.get(imgV);//new PerspectiveTransform();
 //            ppT.setUlx(10.0);
 //            ppT.setUly(10.0);
 //            ppT.setUrx(310.0);
@@ -136,14 +136,14 @@ public class JfxImageView {
     }
 
     private void setEffect (Effect ef0) {
-        Effect ef1 = imgV.getEffect();
-        if (ef1 == null || ef1 == ef0)
+//        Effect ef1 = imgV.getEffect();
+//        if (ef1 == null || ef1 == ef0)
             imgV.setEffect(ef0);
-        else {
-            if (ef1 instanceof ColorAdjust)
-                ((ColorAdjust)ef1).setInput(ef0);
-            imgV.setEffect(ef1);
-        }
+//        else {
+//            if (ef1 instanceof ColorAdjust)
+//                ((ColorAdjust)ef1).setInput(ef0);
+//            imgV.setEffect(ef1);
+//        }
     }
 
 
