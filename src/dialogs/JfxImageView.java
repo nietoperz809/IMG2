@@ -1,5 +1,6 @@
 package dialogs;
 
+import common.MsgBox;
 import javafx.embed.swing.JFXPanel;
 
 import javax.swing.*;
@@ -8,8 +9,7 @@ import javafx.application.Platform;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.Scene;
 import javafx.scene.SnapshotParameters;
-import javafx.scene.effect.Bloom;
-import javafx.scene.effect.ColorAdjust;
+import javafx.scene.effect.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.WritableImage;
@@ -23,7 +23,6 @@ import java.util.concurrent.atomic.AtomicReference;
 
 public class JfxImageView {
     private JPanel panel1;
-    //private final JFXPanel bridge = new JFXPanel();
     private JSlider sliderRotate;
     private JSlider sliderSize;
     private JCheckBox checkBox;
@@ -35,6 +34,7 @@ public class JfxImageView {
     private JButton resButton;
     private JButton testButton1;
     private JFXPanel jfx;
+    private JButton bpPerspective;
     private ImageView imgV;
     private Scene scene;
     private ColorAdjust colorAdjust = new ColorAdjust();
@@ -118,14 +118,37 @@ public class JfxImageView {
         });
 
         testButton1.addActionListener(_ -> {
-            Bloom bloom = new Bloom();
-            bloom.setThreshold(0.1);
-            imgV.setEffect(bloom);
+            PerspectiveTransform ppT = PersValueBox.get();//new PerspectiveTransform();
+//            ppT.setUlx(10.0);
+//            ppT.setUly(10.0);
+//            ppT.setUrx(310.0);
+//            ppT.setUry(40.0);
+//            ppT.setLrx(310.0);
+//            ppT.setLry(60.0);
+//            ppT.setLlx(10.0);
+//            ppT.setLly(90.0);
+            Platform.runLater(() -> setEffect(ppT)); //imgV.setEffect(colorAdjust));
+        });
+
+        bpPerspective.addActionListener(e -> {
+            MsgBox.Info ("jallo");
         });
     }
 
+    private void setEffect (Effect ef0) {
+        Effect ef1 = imgV.getEffect();
+        if (ef1 == null || ef1 == ef0)
+            imgV.setEffect(ef0);
+        else {
+            if (ef1 instanceof ColorAdjust)
+                ((ColorAdjust)ef1).setInput(ef0);
+            imgV.setEffect(ef1);
+        }
+    }
+
+
     private void applyCA() {
-        Platform.runLater(() -> imgV.setEffect(colorAdjust));
+        Platform.runLater(() -> setEffect(colorAdjust)); //imgV.setEffect(colorAdjust));
     }
 
     /**
