@@ -94,7 +94,7 @@ public class PersValueBox extends JDialog {
     }
 
     public record PersV (double ulx, double uly, double urx, double ury,
-                         double llx, double lly, double lrx, double lry) {
+                         double lrx, double lry, double llx, double lly) {
         public static PersV getValues() {
             return new PersV(
                     parse(ftext_0), parse(ftext_1), parse(ftext_2), parse(ftext_3),
