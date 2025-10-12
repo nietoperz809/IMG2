@@ -199,6 +199,7 @@
               <forms defaultalign-horz="false" defaultalign-vert="false"/>
             </constraints>
             <properties>
+              <enabled value="false"/>
               <horizontalAlignment value="2"/>
               <horizontalTextPosition value="2"/>
               <minimumSize width="40" height="30"/>
@@ -214,6 +215,7 @@
               <forms/>
             </constraints>
             <properties>
+              <enabled value="true"/>
               <label value="p"/>
               <maximumSize width="30" height="38"/>
               <minimumSize width="30" height="38"/>

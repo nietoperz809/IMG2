@@ -35,7 +35,7 @@ public class JfxImageView {
     private JButton testButton1;
     private JFXPanel jfx;
     private JButton bpPerspective;
-    private ImageView imgV;
+    public ImageView imgV;
     private Scene scene;
     private ColorAdjust colorAdjust = new ColorAdjust();
     private final int HALF = 50;
@@ -119,23 +119,16 @@ public class JfxImageView {
 
         testButton1.addActionListener(_ -> {
             PerspectiveTransform ppT = PersValueBox.get(imgV);//new PerspectiveTransform();
-//            ppT.setUlx(10.0);
-//            ppT.setUly(10.0);
-//            ppT.setUrx(310.0);
-//            ppT.setUry(40.0);
-//            ppT.setLrx(310.0);
-//            ppT.setLry(60.0);
-//            ppT.setLlx(10.0);
-//            ppT.setLly(90.0);
             Platform.runLater(() -> setEffect(ppT)); //imgV.setEffect(colorAdjust));
         });
 
         bpPerspective.addActionListener(e -> {
-            MsgBox.Info ("jallo");
+            PersScroller.start(this);
+            //MsgBox.Info ("jallo");
         });
     }
 
-    private void setEffect (Effect ef0) {
+    public void setEffect (Effect ef0) {
 //        Effect ef1 = imgV.getEffect();
 //        if (ef1 == null || ef1 == ef0)
             imgV.setEffect(ef0);

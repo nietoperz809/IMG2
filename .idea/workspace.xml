@@ -15,10 +15,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ddb69741-e020-4d21-a32f-f00e79c6818a" name="Changes" comment="ensureIndexVisible on list selection">
+    <list default="true" id="ddb69741-e020-4d21-a32f-f00e79c6818a" name="Changes" comment="added reset button in PersValueBox">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/dialogs/JfxImageView.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/dialogs/JfxImageView.form" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/dialogs/JfxImageView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/dialogs/JfxImageView.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dialogs/PersValueBox.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/dialogs/PersValueBox.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -28,11 +29,11 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Record" />
         <option value="package-info" />
         <option value="module-info" />
         <option value="Interface" />
         <option value="Class" />
+        <option value="Record" />
       </list>
     </option>
   </component>
@@ -69,7 +70,7 @@
     <option name="stateVersion" value="1" />
   </component>
   <component name="ProblemsViewState">
-    <option name="selectedTabId" value="DEPENDENCY_CHECKER_PROBLEMS_TAB" />
+    <option name="selectedTabId" value="QODANA_PROBLEMS_VIEW_TAB" />
   </component>
   <component name="ProjectColorInfo">{
   &quot;customColor&quot;: &quot;&quot;,
@@ -102,6 +103,8 @@
     "Application.MainE.executor": "Run",
     "Application.MonitorFrame.executor": "Run",
     "Application.MultiSlider.executor": "Run",
+    "Application.PersScroller.executor": "Run",
+    "Application.PersValues.executor": "Run",
     "Application.RGBScroll.executor": "Run",
     "Application.RandomWord.executor": "Run",
     "Application.SliderBox.executor": "Run",
@@ -130,7 +133,7 @@
     "UI_DESIGNER_EDITOR_MODE.PaletteManager.SHOW": "true",
     "UI_DESIGNER_EDITOR_MODE.PaletteManager.WIDTH": "205",
     "UI_DESIGNER_EDITOR_MODE.UIDesignerToolWindowManager.SHOW": "true",
-    "UI_DESIGNER_EDITOR_MODE.UIDesignerToolWindowManager.WIDTH": "368",
+    "UI_DESIGNER_EDITOR_MODE.UIDesignerToolWindowManager.WIDTH": "237",
     "full.screen.before.presentation.mode": "true",
     "git-widget-placeholder": "withQueue",
     "kotlin-language-version-configured": "true",
@@ -204,19 +207,6 @@
     </option>
   </component>
   <component name="RunManager" selected="Application.MainC">
-    <configuration name="Copier" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="dialogs.Copier" />
-      <module name="IMG2" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="dialogs.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <configuration name="Input" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="dialogs.Input" />
       <module name="IMG2" />
@@ -261,6 +251,32 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="PersScroller" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="dialogs.PersScroller" />
+      <module name="IMG2" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="dialogs.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="PersValueBox" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="dialogs.PersValueBox" />
+      <module name="IMG2" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="dialogs.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="TimedMsg2" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="dialogs.TimedMsg2" />
       <module name="IMG2" />
@@ -277,17 +293,19 @@
     <list>
       <item itemvalue="Application.MainC" />
       <item itemvalue="Application.MainE" />
+      <item itemvalue="Application.PersScroller" />
+      <item itemvalue="Application.PersValueBox" />
       <item itemvalue="Application.Input" />
       <item itemvalue="Application.JfxImageView" />
       <item itemvalue="Application.TimedMsg2" />
-      <item itemvalue="Application.Copier" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.PersScroller" />
+        <item itemvalue="Application.PersValueBox" />
         <item itemvalue="Application.Input" />
         <item itemvalue="Application.JfxImageView" />
         <item itemvalue="Application.TimedMsg2" />
-        <item itemvalue="Application.Copier" />
       </list>
     </recent_temporary>
   </component>
@@ -649,7 +667,7 @@
       <option name="project" value="LOCAL" />
       <updated>1683976691765</updated>
     </task>
-    <option name="localTasksCounter" value="365" />
+    <option name="localTasksCounter" value="371" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -717,12 +735,6 @@
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_NEW_TODO" value="false" />
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="added menu item: remove tags" />
-    <MESSAGE value="new menu item: check external img" />
-    <MESSAGE value="increased stability of loadPerceptiveImgHashes function" />
-    <MESSAGE value="fixed PNG file input" />
-    <MESSAGE value="VideoPlayerBox -&gt; fullscreen" />
-    <MESSAGE value="+ GitRevCount as version number" />
     <MESSAGE value="+ GitRevCount as build number" />
     <MESSAGE value="Copier: + 50MB Chunks" />
     <MESSAGE value="backup" />
@@ -742,7 +754,13 @@
     <MESSAGE value="release 5, some improvements" />
     <MESSAGE value="some improvements&#10;made restart faster" />
     <MESSAGE value="removed some warnings" />
-    <option name="LAST_COMMIT_MESSAGE" value="removed some warnings" />
+    <MESSAGE value="jfx-imageview improvements" />
+    <MESSAGE value="jfx repaired" />
+    <MESSAGE value="perspectivebox added" />
+    <MESSAGE value="corrected arguments in PersV" />
+    <MESSAGE value="some improvements" />
+    <MESSAGE value="added reset button in PersValueBox" />
+    <option name="LAST_COMMIT_MESSAGE" value="added reset button in PersValueBox" />
     <option name="NON_MODAL_COMMIT_POSTPONE_SLOW_CHECKS" value="false" />
   </component>
   <component name="XDebuggerManager">

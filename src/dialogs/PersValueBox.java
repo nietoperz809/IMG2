@@ -23,8 +23,8 @@ public class PersValueBox extends JDialog {
     public PersValueBox(ImageView imv) {
         setLayout(null);
         setTitle("Perspective Params");
-        setResizable(false);
         setSize(300, 200);
+        setResizable(false);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         setModal(true);
