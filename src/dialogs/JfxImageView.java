@@ -1,6 +1,5 @@
 package dialogs;
 
-import common.MsgBox;
 import javafx.embed.swing.JFXPanel;
 
 import javax.swing.*;
@@ -22,6 +21,7 @@ import java.util.concurrent.atomic.AtomicReference;
 
 
 public class JfxImageView {
+    public PersScroller m_scrollfield;
     private JPanel panel1;
     private JSlider sliderRotate;
     private JSlider sliderSize;
@@ -32,14 +32,12 @@ public class JfxImageView {
     private JSlider sliderHue;
     private JSlider sliderSaturation;
     private JButton resButton;
-    private JButton testButton1;
     private JFXPanel jfx;
     private JButton bpPerspective;
     public ImageView imgV;
     private Scene scene;
     private ColorAdjust colorAdjust = new ColorAdjust();
     private final int HALF = 50;
-    // --Commented out by Inspection (10/6/2025 10:36 AM):private final int FULL = 100;
 
     public JfxImageView (final thegrid.ImgPanel out, final BufferedImage inImg) {
 
@@ -60,6 +58,10 @@ public class JfxImageView {
                 @Override
                 public void windowClosing(java.awt.event.WindowEvent windowEvent) {
                     out.setImageCentered(getTransformedImg());
+                    if (m_scrollfield != null) {
+                        m_scrollfield.dispose();
+                        m_scrollfield = null;
+                    }
                     frame.setVisible(false);
                 }
             });
@@ -117,14 +119,8 @@ public class JfxImageView {
             applyCA();
         });
 
-        testButton1.addActionListener(_ -> {
-            PerspectiveTransform ppT = PersValueBox.get(imgV);//new PerspectiveTransform();
-            Platform.runLater(() -> setEffect(ppT)); //imgV.setEffect(colorAdjust));
-        });
-
         bpPerspective.addActionListener(e -> {
-            PersScroller.start(this);
-            //MsgBox.Info ("jallo");
+            m_scrollfield = PersScroller.start(this);
         });
     }
 

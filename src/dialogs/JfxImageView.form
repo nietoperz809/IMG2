@@ -18,10 +18,9 @@
         <colspec value="fill:38px:noGrow"/>
         <colspec value="fill:d:grow"/>
         <colspec value="fill:max(d;4px):noGrow"/>
-        <colspec value="fill:d:grow"/>
+        <colspec value="fill:180px:grow"/>
         <colspec value="left:4dlu:noGrow"/>
         <colspec value="fill:max(d;4px):noGrow"/>
-        <colspec value="left:4dlu:noGrow"/>
         <colspec value="fill:max(d;4px):noGrow"/>
         <constraints border-constraint="North"/>
         <properties>
@@ -193,25 +192,9 @@
               <verticalTextPosition value="1"/>
             </properties>
           </component>
-          <component id="ee47" class="javax.swing.JButton" binding="testButton1">
-            <constraints>
-              <grid row="0" column="9" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="9" fill="0" indent="0" use-parent-layout="false"/>
-              <forms defaultalign-horz="false" defaultalign-vert="false"/>
-            </constraints>
-            <properties>
-              <enabled value="false"/>
-              <horizontalAlignment value="2"/>
-              <horizontalTextPosition value="2"/>
-              <minimumSize width="40" height="30"/>
-              <preferredSize width="40" height="30"/>
-              <text value="test"/>
-              <verticalAlignment value="1"/>
-              <verticalTextPosition value="1"/>
-            </properties>
-          </component>
           <component id="e369c" class="javax.swing.JButton" binding="bpPerspective">
             <constraints>
-              <grid row="0" column="11" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+              <grid row="0" column="9" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
               <forms/>
             </constraints>
             <properties>
@@ -221,6 +204,7 @@
               <minimumSize width="30" height="38"/>
               <preferredSize width="30" height="38"/>
               <text value="p"/>
+              <toolTipText value="Perspective"/>
             </properties>
           </component>
         </children>

@@ -18,6 +18,8 @@ import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
 
 import static common.MsgBox.chooseDir;
+import static java.lang.Math.max;
+import static java.lang.Math.min;
 
 
 public class ImageFrame extends JFrame implements MouseWheelListener {
@@ -200,15 +202,19 @@ public class ImageFrame extends JFrame implements MouseWheelListener {
 
     void setImg (BufferedImage bimg) {
         imgPanel.setImageCentered(bimg);
+//        Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+//        dim.height = min (dim.height, bimg.getHeight());
+//        dim.width = min (dim.width, bimg.getWidth());
+//        this.setSize(dim);
         showInfo(null);
     }
 
-    void setImg(int id) {
-        BufferedImage bimg = loadImgFromStore(id, true);
-        imgPanel.setImageCentered(bimg);
-        int index = grid.imageL.IndexByRowID(id);
-        showInfo(grid.imageL.get(index));
-    }
+//    void setImg(int id) {
+//        BufferedImage bimg = loadImgFromStore(id, true);
+//        imgPanel.setImageCentered(bimg);
+//        int index = grid.imageL.IndexByRowID(id);
+//        showInfo(grid.imageL.get(index));
+//    }
 
     void setImg() {
         BufferedImage bimg = loadImgFromStore(true);
