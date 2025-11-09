@@ -17,7 +17,10 @@ import java.awt.dnd.DnDConstants;
 import java.awt.dnd.DropTarget;
 import java.awt.dnd.DropTargetAdapter;
 import java.awt.dnd.DropTargetDropEvent;
-import java.awt.event.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.File;
 import java.io.IOException;
 import java.lang.ref.SoftReference;
@@ -29,8 +32,6 @@ import java.util.List;
 
 import static common.Sam.speak;
 import static database.VideoFunctions.*;
-import static java.awt.event.KeyEvent.VK_G;
-import static java.awt.event.KeyEvent.VK_W;
 
 public class VideoApp extends JFrame {
     private final List<DBHandler.NameID> entireList = new ArrayList<>();
@@ -54,22 +55,30 @@ public class VideoApp extends JFrame {
     private JButton filterButton;
     private JButton restoreButton;
     private JScrollPane scroller;
-    private JButton buttonW;
-    private JButton buttonG;
 
     public VideoApp() {
         /* define menu bar */
         JMenuBar mb = new JMenuBar();
         JMenu menu = new JMenu("Options");
+
         JMenuItem mi1 = new JMenuItem("MemMonitor");
-        JMenuItem mi2 = new JMenuItem("End Process");
         mi1.addActionListener(_ -> new MonitorFrame());
-        mi2.addActionListener(_ -> Tools.shutdown(this));
         menu.add(mi1);
-        menu.add(mi2);
+
+        mi1 = new JMenuItem("End Process");
+        mi1.addActionListener(_ -> Tools.shutdown(this));
+        menu.add(mi1);
+
+        mi1 = new JMenuItem("First WEBP");
+        mi1.addActionListener(_ -> scrollToValue (webpList.getFirst()));
+        menu.add(mi1);
+
+        mi1 = new JMenuItem("First GIF");
+        mi1.addActionListener(_ -> scrollToValue (gifList.getFirst()));
+        menu.add(mi1);
+
         mb.add(menu);
-        setJMenuBar(mb);
-        setTitle ("Video Player Application!");
+        setJMenuBar(mb);setTitle ("Video Player Application!");
 
         outputDirLabel.setText(snapDir);
         outputDirLabel.setToolTipText("Output Dir, klick to change ...");
@@ -204,16 +213,12 @@ public class VideoApp extends JFrame {
                 }
             }
         });
+    }
 
-        buttonW.addActionListener(e -> {
-            listControl.setSelectedValue(webpList.getFirst(), true);
-            listControl.repaint();
-        });
-
-        buttonG.addActionListener(e -> {
-            listControl.setSelectedValue(gifList.getFirst(), true);
-            listControl.repaint();
-        });
+    private void scrollToValue (DBHandler.NameID nid) {
+        listControl.setSelectedValue(nid, true);
+        listControl.ensureIndexIsVisible(listControl.getSelectedIndex());
+        listControl.repaint();
     }
 
     private SoftReference<byte[]> getVideoBytes (DBHandler.NameID nameid) {
