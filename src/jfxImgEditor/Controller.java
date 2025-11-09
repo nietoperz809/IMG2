@@ -1,4 +1,4 @@
-package sample;
+package jfxImgEditor;
 
 import com.sun.management.OperatingSystemMXBean;
 import javafx.animation.AnimationTimer;
@@ -23,50 +23,49 @@ import java.io.File;
 import java.io.IOException;
 import java.lang.management.ManagementFactory;
 import java.net.MalformedURLException;
-import java.net.URL;
 import java.nio.file.Path;
 import java.util.ArrayList;
 
 public class Controller {
 
-    private Stage stage;
+    private final Stage stage;
     protected Controller(Stage stage) throws MalformedURLException {
         this.stage = stage;
         start();
     }
 
-    private Button applyButton = new Button("Apply");
-    private Slider noiseSlider = new Slider();
-    private Slider randomSlider = new Slider();
-    private Slider reduceSlider = new Slider();
-    private Slider enhanceSlider = new Slider();
-    private CheckBox noiseCheckBox = new CheckBox("Noise:");
-    private CheckBox randomCheckBox = new CheckBox("Random Pixel:");
-    private CheckBox reduceCheckBox = new CheckBox("Down Scale:");
-    private CheckBox enhanceCheckBox = new CheckBox("Up Scale");
+    private final Button applyButton = new Button("Apply");
+    private final Slider noiseSlider = new Slider();
+    private final Slider randomSlider = new Slider();
+    private final Slider reduceSlider = new Slider();
+    private final Slider enhanceSlider = new Slider();
+    private final CheckBox noiseCheckBox = new CheckBox("Noise:");
+    private final CheckBox randomCheckBox = new CheckBox("Random Pixel:");
+    private final CheckBox reduceCheckBox = new CheckBox("Down Scale:");
+    private final CheckBox enhanceCheckBox = new CheckBox("Up Scale");
 
-    String p1 = "C:\\Users\\Administrator\\Desktop\\snaps\\smutdeadbag(13580).jpg";
+    final String p1 = "C:\\Users\\Administrator\\Desktop\\snaps\\smutdeadbag(13580).jpg";
 
-    String url = String.valueOf(Path.of(p1).toUri().toURL());
+    final String url = String.valueOf(Path.of(p1).toUri().toURL());
     private Image image = new Image(url);
-    private ImageView imageView = new ImageView(image);
+    private final ImageView imageView = new ImageView(image);
 
-    private Label memoryLabel = new Label();
-    private Label processorLabel = new Label();
+    private final Label memoryLabel = new Label();
+    private final Label processorLabel = new Label();
 
-    private BorderPane root = new BorderPane();
-    private ScrollPane centerPane = new ScrollPane(imageView);
-    private GridPane bottomPane = new GridPane();
-    private HBox topPane = new HBox();
+    private final BorderPane root = new BorderPane();
+    private final ScrollPane centerPane = new ScrollPane(imageView);
+    private final GridPane bottomPane = new GridPane();
+    private final HBox topPane = new HBox();
 
-    private Scene scene = new Scene(root);
+    private final Scene scene = new Scene(root);
 
-    private MenuBar menuBar = new MenuBar();
-    private Menu file = new Menu("File");
-    private MenuItem exitMenuItem = new MenuItem("Exit");
-    private MenuItem saveMenuItem = new MenuItem("Save");
-    private MenuItem combineMenuItem = new MenuItem("Combine");
-    private MenuItem importImageButton = new MenuItem("Import...");
+    private final MenuBar menuBar = new MenuBar();
+    private final Menu file = new Menu("File");
+    private final MenuItem exitMenuItem = new MenuItem("Exit");
+    private final MenuItem saveMenuItem = new MenuItem("Save");
+    private final MenuItem combineMenuItem = new MenuItem("Combine");
+    private final MenuItem importImageButton = new MenuItem("Import...");
 
 
     private void start(){
@@ -190,14 +189,13 @@ public class Controller {
         if (reduceCheckBox.isSelected())
             image = reduceImage(image,(int) reduceSlider.getValue());
         if (enhanceCheckBox.isSelected()) {
-            Image image1 = enhanceImage(image, (int) enhanceSlider.getValue());
-            image = image1;
+            image = enhanceImage(image, (int) enhanceSlider.getValue());
         }
         imageView.setImage(image);
     }
 
 
-    private ArrayList<Image> images = new ArrayList<>();
+    private final ArrayList<Image> images = new ArrayList<>();
     private void combineImageButtonControl(ActionEvent event){
         FileChooser chooser = new FileChooser();
         FileChooser.ExtensionFilter fileExtensions = new FileChooser.ExtensionFilter("Images", "*.jpg", "*.png", "*.jpeg");
@@ -244,11 +242,10 @@ public class Controller {
         }
     }
 
-    private double scrollSpeed = 50;
-
     //buggy mouse control
     
     private void ScrollWheelControl(ScrollEvent event){
+        double scrollSpeed = 50;
         if (event.getDeltaY() == 40){
                 imageView.setFitWidth(imageView.getFitWidth() + scrollSpeed);
                 imageView.setFitHeight(imageView.getFitWidth() + scrollSpeed);
@@ -454,11 +451,11 @@ public class Controller {
             writableImage = new WritableImage(xVar, yVar);
         } catch (OutOfMemoryError e){
             e.printStackTrace();
-            Dialog dialog = new Alert(Alert.AlertType.ERROR, "Out of memory! This image could not be up-scaled by: " + (int) enhanceSlider.getValue());
+            Dialog<ButtonType> dialog = new Alert(Alert.AlertType.ERROR, "Out of memory! This image could not be up-scaled by: " + (int) enhanceSlider.getValue());
             dialog.showAndWait();
         } catch (Exception e) {
             e.printStackTrace();
-            Dialog dialog = new Alert(Alert.AlertType.ERROR, e.getMessage());
+            Dialog<ButtonType> dialog = new Alert(Alert.AlertType.ERROR, e.getMessage());
             dialog.showAndWait();
         }
         PixelReader pixelReader = image.getPixelReader();

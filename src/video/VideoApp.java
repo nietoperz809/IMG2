@@ -17,23 +17,20 @@ import java.awt.dnd.DnDConstants;
 import java.awt.dnd.DropTarget;
 import java.awt.dnd.DropTargetAdapter;
 import java.awt.dnd.DropTargetDropEvent;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
+import java.awt.event.*;
 import java.io.File;
 import java.io.IOException;
 import java.lang.ref.SoftReference;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.text.NumberFormat;
-import java.util.ArrayList;
-import java.util.Collections;
+import java.util.*;
 import java.util.List;
-import java.util.Locale;
 
 import static common.Sam.speak;
 import static database.VideoFunctions.*;
+import static java.awt.event.KeyEvent.VK_G;
+import static java.awt.event.KeyEvent.VK_W;
 
 public class VideoApp extends JFrame {
     private final List<DBHandler.NameID> entireList = new ArrayList<>();
@@ -57,6 +54,8 @@ public class VideoApp extends JFrame {
     private JButton filterButton;
     private JButton restoreButton;
     private JScrollPane scroller;
+    private JButton buttonW;
+    private JButton buttonG;
 
     public VideoApp() {
         /* define menu bar */
@@ -195,7 +194,7 @@ public class VideoApp extends JFrame {
                         len = getWEBPBlobLen(nid);
                     Sam.speak(NumToText.convert(len) + " Bites");
                     String flen = NumberFormat.getNumberInstance(Locale.GERMAN)
-                            .format(Double.parseDouble(len));
+                            .format(Double.parseDouble(Objects.requireNonNull(len)));
                     MsgBox.Info("Bloblen: " + flen + " Bytes");
                 }
                 // .. left double click
@@ -204,6 +203,16 @@ public class VideoApp extends JFrame {
                     buttonPlay.doClick();
                 }
             }
+        });
+
+        buttonW.addActionListener(e -> {
+            listControl.setSelectedValue(webpList.getFirst(), true);
+            listControl.repaint();
+        });
+
+        buttonG.addActionListener(e -> {
+            listControl.setSelectedValue(gifList.getFirst(), true);
+            listControl.repaint();
         });
     }
 

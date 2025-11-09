@@ -15,16 +15,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ddb69741-e020-4d21-a32f-f00e79c6818a" name="Changes" comment="pers sliders working">
-      <change afterPath="$PROJECT_DIR$/src/dialogs/PersValueBox.__java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/sample/Controller.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/sample/Main.java" afterDir="false" />
+    <list default="true" id="ddb69741-e020-4d21-a32f-f00e79c6818a" name="Changes" comment="added jfx img editor">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/dialogs/JfxImageView.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/dialogs/JfxImageView.form" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/dialogs/JfxImageView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/dialogs/JfxImageView.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/dialogs/PersScroller.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/dialogs/PersScroller.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/dialogs/PersValueBox.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/thegrid/ImageFrame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/thegrid/ImageFrame.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IMG2.iml" beforeDir="false" afterPath="$PROJECT_DIR$/IMG2.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/sample/Controller.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jfxImgEditor/Controller.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/sample/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jfxImgEditor/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/video/GifDecoder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/video/GifDecoder.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/video/VideoApp.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/video/VideoApp.form" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/video/VideoApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/video/VideoApp.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -118,7 +116,7 @@
     "Application.TimedMsg2.executor": "Run",
     "Application.UnlockDialog.executor": "Debug",
     "Application.WebPDecoder.executor": "Run",
-    "Application.imgeditor.executor": "Debug",
+    "Application.imgeditor.executor": "Run",
     "Application.web.executor": "Run",
     "Downloaded.Files.Path.Enabled": "true",
     "GenerateAntBuildDialog.backupFiles": "true",
@@ -136,7 +134,7 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "UI_DESIGNER_EDITOR_MODE.PaletteManager.SHOW": "false",
+    "UI_DESIGNER_EDITOR_MODE.PaletteManager.SHOW": "true",
     "UI_DESIGNER_EDITOR_MODE.PaletteManager.WIDTH": "205",
     "UI_DESIGNER_EDITOR_MODE.UIDesignerToolWindowManager.SHOW": "true",
     "UI_DESIGNER_EDITOR_MODE.UIDesignerToolWindowManager.WIDTH": "237",
@@ -212,46 +210,7 @@
       <command value="ant" />
     </option>
   </component>
-  <component name="RunManager" selected="Application.imgeditor">
-    <configuration name="Input" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="dialogs.Input" />
-      <module name="IMG2" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="dialogs.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="JfxImageView" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="dialogs.JfxImageView" />
-      <module name="IMG2" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="dialogs.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="sample.Main" />
-      <module name="IMG2" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="sample.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
+  <component name="RunManager" selected="Application.MainC">
     <configuration name="MainC" type="Application" factoryName="Application">
       <option name="MAIN_CLASS_NAME" value="thegrid.TheGrid" />
       <module name="IMG2" />
@@ -270,34 +229,8 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="PersScroller" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="dialogs.PersScroller" />
-      <module name="IMG2" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="dialogs.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="PersValueBox" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="dialogs.PersValueBox" />
-      <module name="IMG2" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="dialogs.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <configuration name="imgeditor" type="Application" factoryName="Application">
-      <option name="MAIN_CLASS_NAME" value="sample.Main" />
+      <option name="MAIN_CLASS_NAME" value="jfxImgEditor.Main" />
       <module name="IMG2" />
       <option name="PROGRAM_PARAMETERS" value="dbdir:C:\Databases_copy\Databases\ nopwd" />
       <option name="VM_PARAMETERS" value="-Xmx6g --module-path &quot;C:\Libraries\javafx-sdk-23.0.2/lib&quot; --add-modules javafx.controls,javafx.fxml,javafx.graphics,javafx.base" />
@@ -307,23 +240,9 @@
     </configuration>
     <list>
       <item itemvalue="Application.MainC" />
-      <item itemvalue="Application.imgeditor" />
       <item itemvalue="Application.MainE" />
-      <item itemvalue="Application.Main" />
-      <item itemvalue="Application.Input" />
-      <item itemvalue="Application.JfxImageView" />
-      <item itemvalue="Application.PersScroller" />
-      <item itemvalue="Application.PersValueBox" />
+      <item itemvalue="Application.imgeditor" />
     </list>
-    <recent_temporary>
-      <list>
-        <item itemvalue="Application.Main" />
-        <item itemvalue="Application.PersScroller" />
-        <item itemvalue="Application.PersValueBox" />
-        <item itemvalue="Application.Input" />
-        <item itemvalue="Application.JfxImageView" />
-      </list>
-    </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="SvnConfiguration">
@@ -683,7 +602,7 @@
       <option name="project" value="LOCAL" />
       <updated>1683976691765</updated>
     </task>
-    <option name="localTasksCounter" value="373" />
+    <option name="localTasksCounter" value="374" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -751,7 +670,6 @@
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_NEW_TODO" value="false" />
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="Copier: + 50MB Chunks" />
     <MESSAGE value="backup" />
     <MESSAGE value="video player frame size adjusted" />
     <MESSAGE value="'w' -&gt; change player frame size while running" />
@@ -776,7 +694,8 @@
     <MESSAGE value="some improvements" />
     <MESSAGE value="added reset button in PersValueBox" />
     <MESSAGE value="pers sliders working" />
-    <option name="LAST_COMMIT_MESSAGE" value="pers sliders working" />
+    <MESSAGE value="added jfx img editor" />
+    <option name="LAST_COMMIT_MESSAGE" value="added jfx img editor" />
     <option name="NON_MODAL_COMMIT_POSTPONE_SLOW_CHECKS" value="false" />
   </component>
   <component name="XDebuggerManager">
@@ -800,12 +719,7 @@
           <option name="timeStamp" value="80" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/sample/Controller.java</url>
-          <line>33</line>
-          <option name="timeStamp" value="81" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/sample/Controller.java</url>
+          <url>file://$PROJECT_DIR$/src/jfxImgEditor/Controller.java</url>
           <line>49</line>
           <option name="timeStamp" value="83" />
         </line-breakpoint>

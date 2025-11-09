@@ -1,4 +1,4 @@
-package sample;
+package jfxImgEditor;
 
 import javafx.application.Application;
 import javafx.stage.Stage;

@@ -46,26 +46,52 @@
         </properties>
         <border type="none"/>
         <children>
+          <component id="a6c8a" class="javax.swing.JButton" binding="buttonW">
+            <constraints/>
+            <properties>
+              <font name="Monospaced" size="12"/>
+              <iconTextGap value="0"/>
+              <label value="w"/>
+              <maximumSize width="40" height="38"/>
+              <minimumSize width="40" height="38"/>
+              <preferredSize width="40" height="38"/>
+              <text value="w"/>
+              <toolTipText value="Go to first WEBP"/>
+            </properties>
+          </component>
+          <component id="c1cba" class="javax.swing.JButton" binding="buttonG">
+            <constraints/>
+            <properties>
+              <font name="Monospaced" size="12"/>
+              <iconTextGap value="0"/>
+              <label value="g"/>
+              <maximumSize width="40" height="38"/>
+              <minimumSize width="40" height="38"/>
+              <preferredSize width="40" height="38"/>
+              <text value="g"/>
+              <toolTipText value="Go to first GIF"/>
+            </properties>
+          </component>
           <component id="e7465" class="javax.swing.JButton" binding="buttonPlay">
             <constraints/>
             <properties>
               <focusable value="false"/>
               <minimumSize width="38" height="38"/>
-              <preferredSize width="70" height="38"/>
+              <preferredSize width="60" height="38"/>
               <text value="Play"/>
             </properties>
           </component>
           <component id="5723f" class="javax.swing.JButton" binding="buttonCancel">
             <constraints/>
             <properties>
-              <preferredSize width="70" height="38"/>
+              <preferredSize width="60" height="38"/>
               <text value="Stop"/>
             </properties>
           </component>
           <component id="ede6a" class="javax.swing.JButton" binding="buttonMix">
             <constraints/>
             <properties>
-              <preferredSize width="70" height="38"/>
+              <preferredSize width="60" height="38"/>
               <text value="Mix"/>
             </properties>
           </component>

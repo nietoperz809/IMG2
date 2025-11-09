@@ -6,6 +6,7 @@ import java.awt.image.DataBufferInt;
 import java.io.*;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.concurrent.BlockingQueue;
 
 
@@ -85,29 +86,6 @@ public class GifDecoder implements AnimDecoder {
         public final int delay;
     }
 
-//    /**
-//     * Gets display duration for specified frame.
-//     *
-//     * @param n int index of frame
-//     * @return delay in milliseconds
-//     */
-//    public int getDelay(int n) {
-//        //
-//        delay = -1;
-//        if ((n >= 0) && (n < frameCount)) {
-//            delay =  frames.get(n).delay;
-//        }
-//        return delay;
-//    }
-
-//    /**
-//     * Gets the number of frames read from file.
-//     * @return frame count
-//     */
-//    public int getFrameCount() {
-//        return frameCount;
-//    }
-
     /**
      * Gets the first (or only) image read.
      *
@@ -116,16 +94,6 @@ public class GifDecoder implements AnimDecoder {
     public BufferedImage getImage() {
         return getFrame(0);
     }
-
-//    /**
-//     * Gets the "Netscape" iteration count, if any.
-//     * A count of 0 means repeat indefinitiely.
-//     *
-//     * @return iteration count if one was specified, else 1.
-//     */
-//    public int getLoopCount() {
-//        return loopCount;
-//    }
 
     /**
      * Creates new frame image from current data (and previous
@@ -274,7 +242,7 @@ public class GifDecoder implements AnimDecoder {
             status = STATUS_OPEN_ERROR;
         }
         try {
-            is.close();
+            Objects.requireNonNull(is).close();
         } catch (IOException ignored) {
         }
         return status;
@@ -303,7 +271,7 @@ public class GifDecoder implements AnimDecoder {
             status = STATUS_OPEN_ERROR;
         }
         try {
-            is.close();
+            Objects.requireNonNull(is).close();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -484,7 +452,7 @@ public class GifDecoder implements AnimDecoder {
     protected void init() {
         status = STATUS_OK;
         frameCount = 0;
-        frames = new ArrayList();
+        frames = new ArrayList<>();
         gct = null;
         lct = null;
     }

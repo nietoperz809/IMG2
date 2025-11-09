@@ -7,6 +7,7 @@
       <sourceFolder url="file://$MODULE_DIR$/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Test" isTestSource="true" />
       <excludeFolder url="file://$MODULE_DIR$/out/IMG2_jar" />
+      <excludeFolder url="file://$MODULE_DIR$/src/jfxImgEditor" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
