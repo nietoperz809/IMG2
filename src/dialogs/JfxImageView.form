@@ -221,7 +221,9 @@
             <children>
               <grid id="37f4e" class="javafx.embed.swing.JFXPanel" binding="jfx" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="1">
                 <constraints border-constraint="Center"/>
-                <properties/>
+                <properties>
+                  <toolTipText value="close window to keep changes"/>
+                </properties>
                 <border type="none"/>
                 <children/>
               </grid>
