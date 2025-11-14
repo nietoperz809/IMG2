@@ -31,7 +31,6 @@ public class ImgViewKeyHandler extends KeyAdapter {
     private final ImageFrame imageFrame;
     Timer timer = null;
     private volatile boolean anyReleased = true;
-    private JfxImageView jiv;
 
     public ImgViewKeyHandler(ImageFrame imageFrame) {
         this.imageFrame = imageFrame;
@@ -62,7 +61,7 @@ public class ImgViewKeyHandler extends KeyAdapter {
     private void doForKey (KeyEvent e) {
         switch (e.getKeyCode()) {
             case VK_ENTER -> {
-                jiv = JfxImageView.create (imageFrame.imgPanel);
+                JfxImageView jiv = JfxImageView.create(imageFrame.imgPanel);
             }
             case VK_UP -> {
                 imageFrame.imgPanel.scrollDown(imageFrame.imgPanel);

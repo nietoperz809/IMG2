@@ -315,11 +315,13 @@ public abstract class Runtime implements UsermodeConstants,Registers,Cloneable
 
         if(count != 0) {
             int word = memRead(addr);
-            switch(count) {
-                case 1: word = (word&0x00ffffff)|((buf[x+0]&0xff)<<24); break;
-                case 2: word = (word&0x0000ffff)|((buf[x+0]&0xff)<<24)|((buf[x+1]&0xff)<<16); break;
-                case 3: word = (word&0x000000ff)|((buf[x+0]&0xff)<<24)|((buf[x+1]&0xff)<<16)|((buf[x+2]&0xff)<<8); break;
-            }
+            word = switch (count) {
+                case 1 -> (word & 0x00ffffff) | ((buf[x + 0] & 0xff) << 24);
+                case 2 -> (word & 0x0000ffff) | ((buf[x + 0] & 0xff) << 24) | ((buf[x + 1] & 0xff) << 16);
+                case 3 ->
+                        (word & 0x000000ff) | ((buf[x + 0] & 0xff) << 24) | ((buf[x + 1] & 0xff) << 16) | ((buf[x + 2] & 0xff) << 8);
+                default -> word;
+            };
             memWrite(addr,word);
         }
     }
@@ -396,11 +398,12 @@ public abstract class Runtime implements UsermodeConstants,Registers,Cloneable
         }
         if(count != 0) {
             int word = memRead(addr);
-            switch(count) {
-                case 1: word = (word&0x00ffffff)|(fourBytes&0xff000000); break;
-                case 2: word = (word&0x0000ffff)|(fourBytes&0xffff0000); break;
-                case 3: word = (word&0x000000ff)|(fourBytes&0xffffff00); break;
-            }
+            word = switch (count) {
+                case 1 -> (word & 0x00ffffff) | (fourBytes & 0xff000000);
+                case 2 -> (word & 0x0000ffff) | (fourBytes & 0xffff0000);
+                case 3 -> (word & 0x000000ff) | (fourBytes & 0xffffff00);
+                default -> word;
+            };
             memWrite(addr,word);
         }
     }
@@ -925,14 +928,15 @@ public abstract class Runtime implements UsermodeConstants,Registers,Cloneable
     }
     
     private int sys_sysconf(int n) {
-        switch(n) {
-            case _SC_CLK_TCK: return 1000;
-            case _SC_PAGESIZE: return  writePages.length == 1 ? 4096 : (1<<pageShift);
-            case _SC_PHYS_PAGES: return writePages.length == 1 ? (1<<pageShift)/4096 : writePages.length;
-            default:
-                if(STDERR_DIAG) System.err.println("WARNING: Attempted to use unknown sysconf key: " + n);
-                return -EINVAL;
-        }
+        return switch (n) {
+            case _SC_CLK_TCK -> 1000;
+            case _SC_PAGESIZE -> writePages.length == 1 ? 4096 : (1 << pageShift);
+            case _SC_PHYS_PAGES -> writePages.length == 1 ? (1 << pageShift) / 4096 : writePages.length;
+            default -> {
+                if (STDERR_DIAG) System.err.println("WARNING: Attempted to use unknown sysconf key: " + n);
+                yield -EINVAL;
+            }
+        };
     }
     
     /** The sbrk syscall. This can also be used by subclasses to allocate memory.

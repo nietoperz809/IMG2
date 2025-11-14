@@ -77,13 +77,7 @@ public class GifDecoder implements AnimDecoder {
     protected ArrayList<GifFrame> frames; // frames read from current file
     protected int frameCount;
 
-    static public class GifFrame {
-        public GifFrame(BufferedImage im, int del) {
-            image = im;
-            delay = del;
-        }
-        public final BufferedImage image;
-        public final int delay;
+    public record GifFrame(BufferedImage image, int delay) {
     }
 
     /**

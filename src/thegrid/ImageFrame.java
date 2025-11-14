@@ -18,8 +18,6 @@ import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
 
 import static common.MsgBox.chooseDir;
-import static java.lang.Math.max;
-import static java.lang.Math.min;
 
 
 public class ImageFrame extends JFrame implements MouseWheelListener {

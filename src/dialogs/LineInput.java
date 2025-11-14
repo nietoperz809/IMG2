@@ -1,12 +1,13 @@
 package dialogs;
 
+import common.CopyPastePopupMenu;
 import common.Csv;
 import database.DBHandler;
 
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 import java.awt.*;
-import java.awt.event.KeyEvent;
+import java.awt.event.*;
 import java.util.TreeSet;
 
 public class LineInput extends JDialog {
@@ -73,6 +74,7 @@ public class LineInput extends JDialog {
         dialog.initText = init;
         dialog.textField1.setText(init);
         dialog.textField1.setToolTipText(tooltip);
+        dialog.textField1.addMouseListener(new CopyPastePopupMenu.PopClickListener(dialog.textField1));
         dialog.label.setText(lab);
         if (hasTagList) {
             dialog.setUndecorated(false);

@@ -82,8 +82,7 @@ public class PersScroller extends JDialog {
     }
 
     public static PersScroller start(JfxImageView host) {
-        PersScroller dialog = new PersScroller(host);
-        return dialog;
+        return new PersScroller(host);
     }
 
 }

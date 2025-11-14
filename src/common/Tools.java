@@ -10,6 +10,7 @@ import thegrid.TheGrid;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.io.*;
 import java.nio.file.Files;
@@ -36,6 +37,17 @@ public class Tools {
         //System.out.println(ft);
         return (FutureTask<?>) globalExecutor.submit(r);
     }
+
+    public static void addMenuItem (Object jm, String txt, ActionListener ali) {
+        JMenuItem mi1 = new JMenuItem(txt);
+        mi1.addActionListener (ali);
+        if (jm instanceof JMenu)
+            ((JMenu)jm).add(mi1);
+        else if (jm instanceof JPopupMenu)
+            ((JPopupMenu)jm).add(mi1);
+    }
+
+
 
 //    public static boolean isRunningFromJAR()
 //    {
@@ -252,18 +264,20 @@ public class Tools {
         }
     }
 
-    /**
-     * Git rev count as build number
-     * @return number of revisions from GIT
-     */
-    public static String getGITrevcount() {
-        try {
-            Process process = Runtime.getRuntime().exec(new String[] {"git", "rev-list", "HEAD", "--count"});
-            process.waitFor();
-            return new BufferedReader(new InputStreamReader(process.getInputStream())).readLine();
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-    }
+// --Commented out by Inspection START (11/10/2025 3:57 PM):
+//    /**
+//     * Git rev count as build number
+//     * @return number of revisions from GIT
+//     */
+//    public static String getGITrevcount() {
+//        try {
+//            Process process = Runtime.getRuntime().exec(new String[] {"git", "rev-list", "HEAD", "--count"});
+//            process.waitFor();
+//            return new BufferedReader(new InputStreamReader(process.getInputStream())).readLine();
+//        } catch (Exception e) {
+//            throw new RuntimeException(e);
+//        }
+//    }
+// --Commented out by Inspection STOP (11/10/2025 3:57 PM)
 
 }

@@ -31,13 +31,17 @@ public class DeferredFileDeleter {
         });
     }
 
-    public static void lock() {
-        lock = true;
-    }
+// --Commented out by Inspection START (11/10/2025 3:57 PM):
+//    public static void lock() {
+//        lock = true;
+//    }
+// --Commented out by Inspection STOP (11/10/2025 3:57 PM)
 
-    public static void unlock() {
-        lock = false;
-    }
+// --Commented out by Inspection START (11/10/2025 3:57 PM):
+//    public static void unlock() {
+//        lock = false;
+//    }
+// --Commented out by Inspection STOP (11/10/2025 3:57 PM)
 
     public static void put(String s ) {
         put(new File(s));

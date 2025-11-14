@@ -17,10 +17,7 @@ import java.awt.dnd.DnDConstants;
 import java.awt.dnd.DropTarget;
 import java.awt.dnd.DropTargetAdapter;
 import java.awt.dnd.DropTargetDropEvent;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
+import java.awt.event.*;
 import java.io.File;
 import java.io.IOException;
 import java.lang.ref.SoftReference;
@@ -31,6 +28,7 @@ import java.util.*;
 import java.util.List;
 
 import static common.Sam.speak;
+import static common.Tools.addMenuItem;
 import static database.VideoFunctions.*;
 
 public class VideoApp extends JFrame {
@@ -56,29 +54,20 @@ public class VideoApp extends JFrame {
     private JButton restoreButton;
     private JScrollPane scroller;
 
-    public VideoApp() {
-        /* define menu bar */
+    private void defineMenu (String name)  {
         JMenuBar mb = new JMenuBar();
-        JMenu menu = new JMenu("Options");
-
-        JMenuItem mi1 = new JMenuItem("MemMonitor");
-        mi1.addActionListener(_ -> new MonitorFrame());
-        menu.add(mi1);
-
-        mi1 = new JMenuItem("End Process");
-        mi1.addActionListener(_ -> Tools.shutdown(this));
-        menu.add(mi1);
-
-        mi1 = new JMenuItem("First WEBP");
-        mi1.addActionListener(_ -> scrollToValue (webpList.getFirst()));
-        menu.add(mi1);
-
-        mi1 = new JMenuItem("First GIF");
-        mi1.addActionListener(_ -> scrollToValue (gifList.getFirst()));
-        menu.add(mi1);
-
+        JMenu menu = new JMenu(name);
+        addMenuItem(menu, "MemMonitor", _ -> new MonitorFrame());
+        addMenuItem(menu, "End Process", _ -> Tools.shutdown(this));
+        addMenuItem(menu, "First WEBP", _ -> scrollToValue (webpList.getFirst()));
+        addMenuItem(menu, "First GIF", _ -> scrollToValue (gifList.getFirst()));
         mb.add(menu);
-        setJMenuBar(mb);setTitle ("Video Player Application!");
+        setJMenuBar(mb);
+    }
+
+    public VideoApp() {
+        setTitle ("Video Player Application!");
+        defineMenu("Options");
 
         outputDirLabel.setText(snapDir);
         outputDirLabel.setToolTipText("Output Dir, klick to change ...");

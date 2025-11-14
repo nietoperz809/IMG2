@@ -3,8 +3,6 @@ package dialogs;
 import common.Stepper;
 
 import javax.swing.*;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 import java.awt.event.*;
 import java.text.DecimalFormat;
 
@@ -52,13 +50,13 @@ public class SliderBox extends JDialog {
         dispose();
     }
 
-    public static void main(String[] args) {
-//        SliderBox dialog = new SliderBox(null);
-//        dialog.pack();
-//        dialog.setLocationRelativeTo(null);
-//        dialog.setVisible(true);
-//        System.exit(0);
-    }
+//    public static void main(String[] args) {
+////        SliderBox dialog = new SliderBox(null);
+////        dialog.pack();
+////        dialog.setLocationRelativeTo(null);
+////        dialog.setVisible(true);
+////        System.exit(0);
+//    }
 
     public static float xmain (String name, float from, float to, int steps) {
         SliderBox dialog = new SliderBox(new Stepper(from, to, steps));

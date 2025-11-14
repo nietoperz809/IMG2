@@ -155,6 +155,7 @@ public class DBHandler {
     }
 
     public static void log(String str) {
+        out.println(str);
     }
 
     public static void reduceLog() {
