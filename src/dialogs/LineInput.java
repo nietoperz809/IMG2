@@ -74,7 +74,7 @@ public class LineInput extends JDialog {
         dialog.initText = init;
         dialog.textField1.setText(init);
         dialog.textField1.setToolTipText(tooltip);
-        dialog.textField1.addMouseListener(new CopyPastePopupMenu.PopClickListener(dialog.textField1));
+        new CopyPastePopupMenu (dialog.textField1); // create popup menu
         dialog.label.setText(lab);
         if (hasTagList) {
             dialog.setUndecorated(false);

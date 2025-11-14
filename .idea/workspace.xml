@@ -15,23 +15,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ddb69741-e020-4d21-a32f-f00e79c6818a" name="Changes" comment="added tooltip text">
-      <change afterPath="$PROJECT_DIR$/src/common/CopyPastePopupMenu.java" afterDir="false" />
+    <list default="true" id="ddb69741-e020-4d21-a32f-f00e79c6818a" name="Changes" comment="added popup nenu to taglist editor">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/common/BlockCaret.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/common/BlockCaret.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/common/DeferredFileDeleter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/common/DeferredFileDeleter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/common/CopyPastePopupMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/common/CopyPastePopupMenu.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/common/SystemClipboard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/common/SystemClipboard.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/common/Tools.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/common/Tools.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/database/DBHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/database/DBHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/dialogs/Copier.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/dialogs/Copier.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/dialogs/Input.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/dialogs/Input.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/dialogs/LineInput.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/dialogs/LineInput.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/dialogs/PersScroller.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/dialogs/PersScroller.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/dialogs/SliderBox.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/dialogs/SliderBox.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/org/ibex/nestedvm/Runtime.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/org/ibex/nestedvm/Runtime.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/thegrid/ImageFrame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/thegrid/ImageFrame.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/thegrid/ImgViewKeyHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/thegrid/ImgViewKeyHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/video/GifDecoder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/video/GifDecoder.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/video/VideoApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/video/VideoApp.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -611,7 +600,7 @@
       <option name="project" value="LOCAL" />
       <updated>1683976691765</updated>
     </task>
-    <option name="localTasksCounter" value="377" />
+    <option name="localTasksCounter" value="378" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -679,7 +668,6 @@
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_NEW_TODO" value="false" />
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="'w' -&gt; change player frame size while running" />
     <MESSAGE value="added combine grids menuitem" />
     <MESSAGE value="added newGridforSet" />
     <MESSAGE value="new TimedMsgBox" />
@@ -704,7 +692,8 @@
     <MESSAGE value="added jfx img editor" />
     <MESSAGE value="w&amp;b buttons now menu items" />
     <MESSAGE value="added tooltip text" />
-    <option name="LAST_COMMIT_MESSAGE" value="added tooltip text" />
+    <MESSAGE value="added popup nenu to taglist editor" />
+    <option name="LAST_COMMIT_MESSAGE" value="added popup nenu to taglist editor" />
     <option name="NON_MODAL_COMMIT_POSTPONE_SLOW_CHECKS" value="false" />
   </component>
   <component name="XDebuggerManager">

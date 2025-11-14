@@ -38,16 +38,17 @@ public class Tools {
         return (FutureTask<?>) globalExecutor.submit(r);
     }
 
-    public static void addMenuItem (Object jm, String txt, ActionListener ali) {
+    /**
+     * add new Menu Item
+     * @param jm JMenu or JPopupMenu
+     * @param txt Menu tet
+     * @param ali ActionListener
+     */
+    public static void addMenuItem (JComponent jm, String txt, ActionListener ali) {
         JMenuItem mi1 = new JMenuItem(txt);
         mi1.addActionListener (ali);
-        if (jm instanceof JMenu)
-            ((JMenu)jm).add(mi1);
-        else if (jm instanceof JPopupMenu)
-            ((JPopupMenu)jm).add(mi1);
+        jm.add(mi1);
     }
-
-
 
 //    public static boolean isRunningFromJAR()
 //    {
