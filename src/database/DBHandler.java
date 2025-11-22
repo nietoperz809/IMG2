@@ -150,7 +150,17 @@ public class DBHandler {
         try {
             return statement.executeQuery(txt);
         } catch (SQLException e) {
-            return null; //throw new RuntimeException(e);
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static String queryString (String sql) {
+        try (ResultSet res = query(sql)) {
+            if (Objects.requireNonNull(res).next())
+                return res.getString(1);
+            return null;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -166,15 +176,14 @@ public class DBHandler {
         }
     }
 
+    public static String getDBFileSize() {
+        String sql = "SELECT SETTING_VALUE FROM INFORMATION_SCHEMA.SETTINGS where SETTING_NAME = 'info.FILE_SIZE'";
+        return queryString(sql);
+    }
+
     public static String getH2Version() {
         String sql = "select H2VERSION()";
-        try (ResultSet res = query(sql)) {
-            if (Objects.requireNonNull(res).next())
-                return res.getString(1);
-            return null;
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+        return queryString(sql);
     }
 
     public static ArrayList<LogMessage> getLog() {
@@ -261,17 +270,7 @@ public class DBHandler {
     }
 
     public static String getTags(int rowid) {
-        String strres = null;
-        try {
-            try (ResultSet res = query("select tag from IMAGES where _ROWID_ = " + rowid)) {
-                if (Objects.requireNonNull(res).next()) {
-                    strres = res.getString(1);
-                }
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-        return strres;
+        return queryString("select tag from IMAGES where _ROWID_ = " + rowid);
     }
 
     public static String getTagsCommaReplaced(int rowid) {
@@ -389,6 +388,7 @@ public class DBHandler {
         }
     }
 
+    /*
     public static String querySingleValue(String sql) {
         ResultSet res = query(sql);
         if (res == null)
@@ -404,6 +404,7 @@ public class DBHandler {
         }
         throw new RuntimeException("no query results");
     }
+    */
 
     public static SoftReference<byte[]> loadBytes(String sql) throws Exception {
         ResultSet res = query(sql);
@@ -418,13 +419,13 @@ public class DBHandler {
     }
 
     public static String queryImageLen(int rowid) {
-        return querySingleValue("select LENGTH(IMAGE) from IMAGES where _ROWID_='" + rowid + "'");
+        return queryString("select LENGTH(IMAGE) from IMAGES where _ROWID_='" + rowid + "'");
     }
 
     public static String queryBlobLen(NameID nid, String table, String blobentry) {
-        String s = querySingleValue("select BLOBSIZE from " + table + " where _ROWID_='" + nid.rowid + "'");
+        String s = queryString("select BLOBSIZE from " + table + " where _ROWID_='" + nid.rowid + "'");
         if (s == null) {
-            s = querySingleValue("select LENGTH(" + blobentry + ") from " + table + " where _ROWID_='" + nid.rowid + "'");
+            s = queryString("select LENGTH(" + blobentry + ") from " + table + " where _ROWID_='" + nid.rowid + "'");
             execSQL("update " + table + " set BLOBSIZE=" + s + " where _ROWID_='" + nid.rowid + "'");
         }
         return s;

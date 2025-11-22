@@ -19,12 +19,15 @@ import java.awt.datatransfer.DataFlavor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
-import java.io.*;
+import java.io.File;
+import java.io.IOException;
 import java.sql.SQLException;
-import java.util.*;
+import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.List;
 
 import static common.ImageTools.loadImageFromFile;
+import static common.Tools.commateer;
 import static common.Tools.restartApplication;
 import static thegrid.ImgViewKeyHandler.loadSimilarities;
 
@@ -34,10 +37,18 @@ public class GridMenuBar extends JMenuBar {
         JMenu jm = new JMenu("Menu");
         JMenuItem jmi;
 
-        jm.add (new SubMenuMarked(theGrid));
+        jm.add(new SubMenuMarked(theGrid));
 
         jmi = new JMenuItem("Instructions ...");
         jmi.addActionListener(_ -> Manual.start());
+        jm.add(jmi);
+
+        jmi = new JMenuItem("DBSize?");
+        jmi.addActionListener(_ -> {
+            long fsl = Long.parseLong(DBHandler.getDBFileSize());
+            MsgBox.Info("DB size is: " +
+                    commateer(fsl) + " Bytes");
+        });
         jm.add(jmi);
 
 //        jmi = new JMenuItem("Mail ...");
@@ -55,7 +66,7 @@ public class GridMenuBar extends JMenuBar {
                 try {
                     BufferedImage img = loadImageFromFile(f.getAbsolutePath());
                     HashingAlgorithm hasher = new PerceptiveHash(32);
-                    loadSimilarities (hasher.hash(img), -1);
+                    loadSimilarities(hasher.hash(img), -1);
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
@@ -230,7 +241,7 @@ public class GridMenuBar extends JMenuBar {
         });
         jm.add(cbMenuItem);
 
-        jm.add (DirectoryWatcher.createMenuItem(theGrid));
+        jm.add(DirectoryWatcher.createMenuItem(theGrid));
 
         final JMenuItem jmi2 = new JCheckBoxMenuItem("save image history");
         jmi2.addActionListener(_ -> {

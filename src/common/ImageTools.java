@@ -175,6 +175,14 @@ public class ImageTools {
         return newImage;
     }
 
+    public static BufferedImage toGray(BufferedImage img) {
+        BufferedImage newImage = new BufferedImage(img.getWidth(), img.getHeight(), BufferedImage.TYPE_BYTE_GRAY);
+        Graphics2D g = newImage.createGraphics();
+        g.drawImage(img, 0, 0, img.getWidth(), img.getHeight(), null);
+        g.dispose();
+        return newImage;
+    }
+
     /**
      * Rotate clockwise by 90 degrees
      * @param src source image

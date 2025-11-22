@@ -98,6 +98,12 @@ public class ImgViewKeyHandler extends KeyAdapter {
                 AccessCounter.setAccCounter(id, res);
             }
 
+            case VK_Q -> { // make gray image
+                BufferedImage img = imageFrame.getIconImg();
+                img = ImageTools.toGray(img);
+                imageFrame.imgPanel.setImageCentered(img);
+            }
+
             case VK_R -> {
                 BufferedImage img = imageFrame.getIconImg();
                 img = ImageTools.rotateClockwise90(img);

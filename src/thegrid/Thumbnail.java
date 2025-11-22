@@ -2,6 +2,7 @@ package thegrid;
 
 import common.ImageTools;
 import common.MsgBox;
+import common.Tools;
 import database.DBHandler;
 
 import javax.swing.*;
@@ -74,9 +75,8 @@ public class Thumbnail extends JLabel {
     private void setToolTip() {
         try {
             String len = DBHandler.queryImageLen(thisID.rowid());
-            int ilen = Integer.parseInt(len);
-            String f = String.format("%d Bytes", ilen);
-            setToolTipText (f);
+            String tt = Tools.commateer(Integer.parseInt(len));
+            setToolTipText (String.format(tt+" Bytes"));
         } catch (Exception e) {
             setToolTipText("could not get length of img: "+thisID.rowid());
         }

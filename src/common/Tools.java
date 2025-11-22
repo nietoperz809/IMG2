@@ -16,6 +16,7 @@ import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Objects;
 import java.util.Set;
@@ -239,30 +240,17 @@ public class Tools {
         }
     }
 
-//    public static void copyUsingFileChannel(Path source, Path destination) throws IOException {
-//        try (FileChannel sourceChannel = FileChannel.open(source, StandardOpenOption.READ);
-//             FileChannel destChannel = FileChannel.open(destination,
-//                     StandardOpenOption.CREATE,
-//                     StandardOpenOption.WRITE)) {
-//
-//            long transferred = 0;
-//            long size = sourceChannel.size();
-//            while (transferred < size) {
-//                transferred += sourceChannel.transferTo(
-//                        transferred,
-//                        size - transferred,
-//                        destChannel
-//                );
-//            }
-//        }
-//    }
-
     public static void createMisssingDirs (Path p) {
         try {
             Files.createDirectories(p.getParent());
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public static String commateer (long in) {
+        DecimalFormat df = new DecimalFormat("#,###"); // Pattern for thousands separators
+        return df.format (in);
     }
 
 // --Commented out by Inspection START (11/10/2025 3:57 PM):

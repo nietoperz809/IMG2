@@ -4,6 +4,7 @@ import Catalano.Imaging.FastBitmap;
 import Catalano.Imaging.IApplyInPlace;
 import common.ImageScaler;
 import common.ImageTools;
+import common.Tools;
 import database.AccessCounter;
 import database.DBHandler;
 import dialogs.LineInput;
@@ -159,13 +160,13 @@ public class ImageFrame extends JFrame implements MouseWheelListener {
     }
 
     public String toString(DBHandler.NameID v) {
-        String len = DBHandler.queryImageLen(v.rowid());
+        int len = Integer.parseInt(DBHandler.queryImageLen(v.rowid()));
         BufferedImage bi = loadImgFromStore(false);
         return "IDX:" + indexRing.get() + " ROWID:" +
                 v.rowid() + " TAG:" + v.tag() +
                 " -- x/y: " + bi.getWidth() + "/" + bi.getHeight() +
                 " -- ACC: " + AccessCounter.getAccCounter(v.rowid()) +
-                " -- Size: " + len + " Bytes";
+                " -- Size: " + Tools.commateer(len) + " Bytes";
     }
 
     private void showByIdx() {
