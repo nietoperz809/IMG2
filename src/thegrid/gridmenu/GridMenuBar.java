@@ -51,6 +51,16 @@ public class GridMenuBar extends JMenuBar {
         });
         jm.add(jmi);
 
+        jmi = new JMenuItem("Start DB console server...");
+        jmi.addActionListener(_ -> {
+            try {
+                org.h2.tools.Console.main(null);
+            } catch (Exception e) {
+                MsgBox.Error(e.getMessage());
+            }
+        });
+        jm.add(jmi);
+
 //        jmi = new JMenuItem("Mail ...");
 //        jmi.addActionListener(_ -> EmailUtil.xmain(null));
 //        jm.add(jmi);
