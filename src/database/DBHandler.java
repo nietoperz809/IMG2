@@ -125,6 +125,7 @@ public class DBHandler {
 
     public static boolean execSQL(String sql) {
         try {
+            System.out.println("SQL: "+sql);
             return statement.execute(sql);
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -137,7 +138,9 @@ public class DBHandler {
      */
     public static void closeDatabase(boolean defrag) {
         try {
-            if (!defrag)
+            if (defrag)
+                execSQL("shutdown compact");
+            else
                 execSQL("shutdown immediately");
             connection.close();
             //_inst = null;

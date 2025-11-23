@@ -130,7 +130,7 @@ public class TheGrid extends MyFrame {
         });
 
         UIManager.put("ToolTip.font", new Font("Arial", Font.BOLD, 20));
-        Win32.hideConsoleWindow();
+        Win32.hideConsoleWindow(true);
 
         boolean askPwd = true;
         String dbRoot = "dbdir:";

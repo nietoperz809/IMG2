@@ -21,13 +21,12 @@ public class Win32 {
         }
     }
 
-    public static void hideConsoleWindow() {
+    public static void hideConsoleWindow(boolean hide) {
         WinDef.HWND hw = Kernel32.INSTANCE.GetConsoleWindow();
         System.out.println("console: " + hw);
         if (hw != null) {
-            User32.INSTANCE.ShowWindow(hw, 0);
+            User32.INSTANCE.ShowWindow(hw, hide ? 0 : 5);
         }
-        //Kernel32.INSTANCE.FreeConsole(); // Detach from Console
     }
 
     public static void dialogToTop (@NotNull JDialog target) {

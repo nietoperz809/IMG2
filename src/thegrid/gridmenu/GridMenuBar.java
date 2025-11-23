@@ -111,6 +111,10 @@ public class GridMenuBar extends JMenuBar {
         });
         jm.add(jmi);
 
+        jmi = new JMenuItem("Show Console");
+        jmi.addActionListener(_ -> Win32.hideConsoleWindow(false));
+        jm.add(jmi);
+
         jmi = new JMenuItem("direct sql command");
         jmi.addActionListener(_ -> {
             String sql = LineInput.xmain("select * from (select name,_ROWID_,tag,accnum from IMAGES) order by _rowid_ desc",

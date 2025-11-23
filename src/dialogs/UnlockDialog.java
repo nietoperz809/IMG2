@@ -8,6 +8,7 @@ import java.awt.event.*;
 public class UnlockDialog extends JDialog {
     private JPanel contentPane;
     private JPasswordField passwordField1;
+    private JCheckBox checkBox1;
 
     public UnlockDialog(String title) {
         setContentPane(contentPane);
@@ -27,6 +28,14 @@ public class UnlockDialog extends JDialog {
                 KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
 
         passwordField1.addActionListener(e -> dispose());
+
+        checkBox1.addItemListener(e -> {
+            if (e.getStateChange() == ItemEvent.SELECTED) {
+                passwordField1.setEchoChar((char) 0);
+            } else {
+                passwordField1.setEchoChar('*');
+            }
+        });
     }
 
 
