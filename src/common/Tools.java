@@ -178,12 +178,13 @@ public class Tools {
     }
 
     public static void shutdown(Window gr) {
-        if (TimedMsg2.doTimedBox()) // true if cancelled
+        boolean[] ret = TimedMsg2.doTimedBox();
+        if (ret[0]) // true if cancelled
             return;
         ImageViewController.killAllViews();
         DBHandler.log("--- TheGrid ended");
         gr.setVisible(false);
-        DBHandler.closeDatabase(true);
+        DBHandler.closeDatabase(ret[1]);
         System.exit(1);
     }
 

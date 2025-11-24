@@ -9,6 +9,7 @@ public class UnlockDialog extends JDialog {
     private JPanel contentPane;
     private JPasswordField passwordField1;
     private JCheckBox checkBox1;
+    private static char EC = '╳';
 
     public UnlockDialog(String title) {
         setContentPane(contentPane);
@@ -29,13 +30,9 @@ public class UnlockDialog extends JDialog {
 
         passwordField1.addActionListener(e -> dispose());
 
-        checkBox1.addItemListener(e -> {
-            if (e.getStateChange() == ItemEvent.SELECTED) {
-                passwordField1.setEchoChar((char) 0);
-            } else {
-                passwordField1.setEchoChar('*');
-            }
-        });
+        passwordField1.setEchoChar(EC);
+        checkBox1.addItemListener(e ->
+                passwordField1.setEchoChar (e.getStateChange() == ItemEvent.SELECTED ? (char)0 : EC));
     }
 
 
@@ -50,7 +47,7 @@ public class UnlockDialog extends JDialog {
         dialog.setLocationRelativeTo(null);
         Win32.dialogToTop(dialog);
         dialog.setVisible(true);
-        return dialog.passwordField1.getText();
+        return new String(dialog.passwordField1.getPassword());
     }
 
 //    public static interface User32 extends StdCallLibrary

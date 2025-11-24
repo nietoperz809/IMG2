@@ -10,10 +10,10 @@ public class TimedMsg2 extends JDialog {
     private JButton buttonOK;
     private JButton buttonCancel;
     private JLabel label;
+    private JCheckBox defragCheckBox;
     private boolean retval;
 
     public TimedMsg2 (String head, int seconds) {
-        //thisCB = cb;
         thisSec = seconds;
         setContentPane(contentPane);
         setModal(true);
@@ -59,14 +59,23 @@ public class TimedMsg2 extends JDialog {
         dispose();
     }
 
-    public static boolean doTimedBox() {
+    /**
+     * Show Box & start timer
+     * @return bool array
+     * [0] -> false == time expired
+     * [1] -> defrag checkbox status
+     */
+    public static boolean[] doTimedBox() {
         TimedMsg2 dialog = new TimedMsg2 (
                 "Shutdown the app",
                 30);
         dialog.pack();
         dialog.setLocationRelativeTo(null);
         dialog.setVisible(true);
-        return dialog.retval;
+        boolean[] arr = new boolean[2];
+        arr[0] = dialog.retval;
+        arr[1] = dialog.defragCheckBox.isSelected();
+        return arr;
     }
 
     public static void main(String[] args) {
