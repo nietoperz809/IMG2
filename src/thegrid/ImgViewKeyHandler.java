@@ -29,17 +29,10 @@ import static java.awt.event.KeyEvent.*;
 
 public class ImgViewKeyHandler extends KeyAdapter {
     private final ImageFrame imageFrame;
-    Timer timer = null;
     private volatile boolean anyReleased = true;
 
     public ImgViewKeyHandler(ImageFrame imageFrame) {
         this.imageFrame = imageFrame;
-    }
-
-    void stopTimer() {
-        if (timer != null && timer.isRunning()) {
-            timer.stop();
-        }
     }
 
     public void keyPressed(KeyEvent e) {
@@ -139,21 +132,11 @@ public class ImgViewKeyHandler extends KeyAdapter {
                 imageFrame.adjustOn('h');
             }
 
-            case VK_S -> { // slideshow
-                if (timer == null) {
-                    timer = new Timer(10000, _ -> {
-                        imageFrame.indexRing.set(imageFrame.shuffledRing.getNext());
-                        imageFrame.setImg();
-                        imageFrame.imgPanel.clearOffset();
-                        imageFrame.adjustOn('h');
-                    });
-                    timer.setRepeats(true);
-                    timer.setInitialDelay(0);
-                    timer.start();
-                } else {
-                    timer.stop();
-                    timer = null;
-                    imageFrame.setTitle("Slideshow STOPPED " + imageFrame);
+            case VK_S -> { // Put copy into DB on CTRL-S
+                if (e.isControlDown()) {
+                    BufferedImage img = imageFrame.getIconImg();
+                    boolean b = DBHandler.insertImageRecord(img);
+                    Sam.speak(b? "Copy inserted.":"failed");
                 }
             }
 

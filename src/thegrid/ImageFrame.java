@@ -53,12 +53,12 @@ public class ImageFrame extends JFrame implements MouseWheelListener {
         setExtendedState(JFrame.MAXIMIZED_BOTH);
         setLocationRelativeTo(null);
         setVisible(true);
-        addWindowListener(new WindowAdapter() {
-            @Override
-            public void windowClosed(WindowEvent e) {
-                kh.stopTimer();
-            }
-        });
+//        addWindowListener(new WindowAdapter() {
+//            @Override
+//            public void windowClosed(WindowEvent e) {
+//                kh.stopTimer();
+//            }
+//        });
         ImageViewController.add(this);
     }
 

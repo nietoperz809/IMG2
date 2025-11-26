@@ -22,7 +22,6 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -51,15 +50,15 @@ public class GridMenuBar extends JMenuBar {
         });
         jm.add(jmi);
 
-        jmi = new JMenuItem("Start DB console server...");
-        jmi.addActionListener(_ -> {
-            try {
-                org.h2.tools.Console.main(null);
-            } catch (Exception e) {
-                MsgBox.Error(e.getMessage());
-            }
-        });
-        jm.add(jmi);
+//        jmi = new JMenuItem("Start DB console server...");
+//        jmi.addActionListener(_ -> {
+//            try {
+//                org.h2.tools.Console.main(null);
+//            } catch (Exception e) {
+//                MsgBox.Error(e.getMessage());
+//            }
+//        });
+//        jm.add(jmi);
 
 //        jmi = new JMenuItem("Mail ...");
 //        jmi.addActionListener(_ -> EmailUtil.xmain(null));
@@ -111,7 +110,7 @@ public class GridMenuBar extends JMenuBar {
         });
         jm.add(jmi);
 
-        jmi = new JMenuItem("Show Console");
+        jmi = new ColoredMenuItem("Show Win32Console", Color.MAGENTA);
         jmi.addActionListener(_ -> Win32.hideConsoleWindow(false));
         jm.add(jmi);
 
@@ -210,7 +209,7 @@ public class GridMenuBar extends JMenuBar {
         jmi.addActionListener(_ -> LogBox.xmain());
         jm.add(jmi);
 
-        jmi = new JMenuItem("SQL Console");
+        jmi = new JMenuItem("H2 Console");
         jmi.addActionListener(_ -> {
             try {
                 GUIConsole.main();
