@@ -31,7 +31,6 @@ public class ProgressBox extends JDialog {
         setUndecorated(true);
         setSize(boxlen,30);
         setLocationRelativeTo(owner);
-
         setVisible(true);
     }
 

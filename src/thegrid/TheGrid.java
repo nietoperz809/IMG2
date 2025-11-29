@@ -18,6 +18,7 @@ import static common.ImageTools.JPGByteArrayToImg;
 import static common.MsgBox.AskforPWD;
 import static common.NumToText.convertLessThanOneThousand;
 import static common.Tools.extractResource;
+import static common.Tools.runTask;
 import static database.SqlListFunctions.putQuery;
 
 
@@ -29,8 +30,8 @@ public class TheGrid extends MyFrame {
     public final ImageList imageL = new ImageList();
     public final JPanel rootPane;
     public final JScrollPane scrollPane;
-    private final ProgressBox progress;
-    private final Instant startTime;
+    private ProgressBox progress;
+    private Instant startTime;
     private int imageCount;
     private boolean stopFill = false;
     private String historyPath = null;
@@ -81,8 +82,6 @@ public class TheGrid extends MyFrame {
         }
         imageL.setSQL(sql);
         DBHandler.log("Images in DB: " + this.imageL.size());
-        progress = new ProgressBox(this, this.imageL.size());
-        Win32.dialogToTop(progress);
         rootPane = new JPanel();
         scrollPane = new JScrollPane(rootPane);
         rootPane.setLayout(new GridLayout(0, 8, 1, 1));
@@ -93,8 +92,6 @@ public class TheGrid extends MyFrame {
         new GridListeners(this);
         new GridMenuBar(this);
         // Action ...
-        imageCount = 0;
-        startTime = Instant.now();
         if (thisInstCount > 1) {
             ImageViewController.add(this);
         }
@@ -102,12 +99,25 @@ public class TheGrid extends MyFrame {
             stopThumbViewFill("sql error");
             return;
         }
-        for (int s = 0; s < imageL.size(); s++) {
-            if (stopFill)
-                break;
-            addThumbnail(s);
-        }
-        this.pack();
+        fillThumbs();
+    }
+
+    public void fillThumbs() {
+        Tools.runTask(() -> {
+            imageCount = 0;
+            startTime = Instant.now();
+            progress = new ProgressBox(TheGrid.this, imageL.size());
+            Win32.dialogToTop(progress);
+            imageL.refresh();
+            rootPane.removeAll();
+            stopFill = false;
+            for (int s = 0; s < imageL.size(); s++) {
+                if (stopFill)
+                    break;
+                addThumbnail(s);
+            }
+            pack();
+        });
     }
 
     public static void main(String... input) {

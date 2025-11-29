@@ -15,14 +15,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ddb69741-e020-4d21-a32f-f00e79c6818a" name="Changes" comment="some improvements">
+    <list default="true" id="ddb69741-e020-4d21-a32f-f00e79c6818a" name="Changes" comment="ctrl-s creates new db enry">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resource/manual.html" beforeDir="false" afterPath="$PROJECT_DIR$/resource/manual.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/buildinfo/BuildInfo2.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/buildinfo/BuildInfo2.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/common/Tools.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/common/Tools.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/dialogs/TimedMsg2.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/dialogs/TimedMsg2.form" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/dialogs/TimedMsg2.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/dialogs/TimedMsg2.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/dialogs/UnlockDialog.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/dialogs/UnlockDialog.form" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/dialogs/UnlockDialog.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/dialogs/UnlockDialog.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/database/DBHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/database/DBHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dialogs/ProgressBox.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/dialogs/ProgressBox.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/thegrid/TheGrid.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/thegrid/TheGrid.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/thegrid/gridmenu/GridMenuBar.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/thegrid/gridmenu/GridMenuBar.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -110,6 +110,7 @@
     "Application.MainE.executor": "Run",
     "Application.MonitorFrame.executor": "Run",
     "Application.MultiSlider.executor": "Run",
+    "Application.MyShell.executor": "Debug",
     "Application.PersScroller.executor": "Run",
     "Application.PersValues.executor": "Run",
     "Application.RGBScroll.executor": "Run",
@@ -274,12 +275,12 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="Shell (1)" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="org.h2.tools.Shell" />
+    <configuration name="MyShell" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="database.MyShell" />
       <module name="IMG2" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="org.h2.tools.*" />
+          <option name="PATTERN" value="database.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -287,7 +288,7 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="Shell" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+    <configuration name="Shell (1)" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="org.h2.tools.Shell" />
       <module name="IMG2" />
       <extension name="coverage">
@@ -313,19 +314,19 @@
       <item itemvalue="Application.MainC" />
       <item itemvalue="Application.MainE" />
       <item itemvalue="Application.imgeditor" />
-      <item itemvalue="Application.GUIConsole (2)" />
-      <item itemvalue="Application.Shell (1)" />
-      <item itemvalue="Application.GUIConsole" />
       <item itemvalue="Application.GUIConsole (1)" />
-      <item itemvalue="Application.Shell" />
+      <item itemvalue="Application.GUIConsole (2)" />
+      <item itemvalue="Application.GUIConsole" />
+      <item itemvalue="Application.MyShell" />
+      <item itemvalue="Application.Shell (1)" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.GUIConsole (2)" />
         <item itemvalue="Application.Shell (1)" />
-        <item itemvalue="Application.GUIConsole (1)" />
+        <item itemvalue="Application.MyShell" />
         <item itemvalue="Application.GUIConsole" />
-        <item itemvalue="Application.Shell" />
+        <item itemvalue="Application.GUIConsole (2)" />
+        <item itemvalue="Application.GUIConsole (1)" />
       </list>
     </recent_temporary>
   </component>
@@ -687,7 +688,7 @@
       <option name="project" value="LOCAL" />
       <updated>1683976691765</updated>
     </task>
-    <option name="localTasksCounter" value="382" />
+    <option name="localTasksCounter" value="384" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -755,8 +756,6 @@
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_NEW_TODO" value="false" />
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="release" />
-    <MESSAGE value="taglist - jlist: better display" />
     <MESSAGE value="tagselectordlg appears at 100/100" />
     <MESSAGE value="ensureIndexVisible on list selection" />
     <MESSAGE value="jfximgview first running version" />
@@ -780,7 +779,9 @@
     <MESSAGE value="added commateer" />
     <MESSAGE value="added menuitem: DB console server" />
     <MESSAGE value="some improvements" />
-    <option name="LAST_COMMIT_MESSAGE" value="some improvements" />
+    <MESSAGE value="some improvements, optional h2 defrag" />
+    <MESSAGE value="ctrl-s creates new db enry" />
+    <option name="LAST_COMMIT_MESSAGE" value="ctrl-s creates new db enry" />
     <option name="NON_MODAL_COMMIT_POSTPONE_SLOW_CHECKS" value="false" />
   </component>
   <component name="XDebuggerManager">
@@ -799,9 +800,9 @@
           <option name="timeStamp" value="75" />
         </breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/jfxImgEditor/Controller.java</url>
-          <line>49</line>
-          <option name="timeStamp" value="83" />
+          <url>file://$PROJECT_DIR$/src/database/DBHandler.java</url>
+          <line>315</line>
+          <option name="timeStamp" value="94" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

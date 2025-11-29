@@ -41,6 +41,10 @@ public class DBHandler {
      */
     static Future<?> transferTask;
 
+    public static Connection getConnection() {
+        return connection;
+    }
+
     public static void startDatabase(String root) {
         RootDirectory = root;
         PersistString pers = new PersistString("pwddb", NO_PASS);
@@ -324,7 +328,7 @@ public class DBHandler {
     }
 
     /**
-     * Convert img into INT_RGB, generate thumbnail and put all int the tabke
+     * Convert img into INT_RGB, generate thumbnail and put all in the table
      * @param name image name, can be any string
      * @param img the image
      */
@@ -348,7 +352,16 @@ public class DBHandler {
             throw new RuntimeException(e);
         }
     }
-
+    public static boolean insertImageRecord (BufferedImage img) {
+        String name = UUID.randomUUID().toString();
+        try {
+            insertImageRecord(name, img);
+            return true;
+        } catch (IOException e) {
+            return false;
+            //throw new RuntimeException(e);
+        }
+    }
     /*
     Create Thumbnail 100*100
      */
