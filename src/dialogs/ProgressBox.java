@@ -9,8 +9,16 @@ import java.awt.*;
 public class ProgressBox extends JDialog {
     private final JProgressBar progressBar;
 
+    private static int adjustML (int maxlen) {
+        if (maxlen < 500)
+            maxlen = 500;
+        if (maxlen > 1000)
+            maxlen = 1000;
+        return maxlen;
+    }
+
     public ProgressBox(MyFrame owner, int maxlen) {
-        this (owner, maxlen,Math.min(maxlen, 500));
+        this (owner, maxlen, adjustML(maxlen));
     }
 
     public ProgressBox(MyFrame owner, int maxlen, int boxlen) {

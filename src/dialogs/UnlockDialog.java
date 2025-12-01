@@ -43,22 +43,16 @@ public class UnlockDialog extends JDialog {
 
     public static String xmain(String title) {
         UnlockDialog dialog = new UnlockDialog(title);
-        dialog.pack();
+        dialog.setBounds(0,0,500,100);
+        //dialog.pack();
         dialog.setLocationRelativeTo(null);
         Win32.dialogToTop(dialog);
         dialog.setVisible(true);
         return new String(dialog.passwordField1.getPassword());
     }
 
-//    public static interface User32 extends StdCallLibrary
-//    {
-//
-//        final User32 instance = (User32) Native.loadLibrary ("user32", User32.class);
-//        WinDef.HWND FindWindowA(String className, String windowName);
-//        boolean BringWindowToTop(WinDef.HWND hw);
-//    }
-//
-//    public static void main(String[] args) {
-//        xmain ("hello");
-//    }
+    public static void main(String[] args) {
+        String p = xmain ("hello");
+        System.out.println(p);
+    }
 }

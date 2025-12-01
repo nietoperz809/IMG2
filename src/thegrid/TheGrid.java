@@ -18,7 +18,6 @@ import static common.ImageTools.JPGByteArrayToImg;
 import static common.MsgBox.AskforPWD;
 import static common.NumToText.convertLessThanOneThousand;
 import static common.Tools.extractResource;
-import static common.Tools.runTask;
 import static database.SqlListFunctions.putQuery;
 
 
