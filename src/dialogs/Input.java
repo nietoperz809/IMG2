@@ -7,6 +7,7 @@ import org.jetbrains.annotations.NotNull;
 import thegrid.TheGrid;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
@@ -14,7 +15,6 @@ import java.awt.event.WindowEvent;
 public class Input extends JDialog {
     private JPanel contentPane;
     private JButton buttonOK;
-    //private JButton buttonCancel;
     private JTextField textField1;
     private JTextField tf2;
     private JLabel lab2;
@@ -55,7 +55,7 @@ public class Input extends JDialog {
         Integer p = null;
         do {
             Input dialog = new Input();
-            dialog.setLocationRelativeTo(TheGrid.getMainGrid());
+            dialog.setLocation (MouseInfo.getPointerInfo().getLocation());
             dialog.textField1.setText(defValue);
             dialog.setTitle(desc);
             dialog.lab1.setText(desc);
@@ -65,12 +65,11 @@ public class Input extends JDialog {
             dialog.pack();
             dialog.textField1.setCaret(new BlockCaret());
             dialog.setVisible(true);
-            String t1 = dialog.textField1.getText();
-            dialog.dispose();
+            String valueText = dialog.textField1.getText();
             try {
-                p = Integer.parseInt(t1);
+                p = Integer.parseInt(valueText);
             } catch (NumberFormatException e) {
-                //p = null;
+                dialog.dispose();
             }
         } while (p == null);
         return p;
