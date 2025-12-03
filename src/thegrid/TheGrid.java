@@ -98,24 +98,26 @@ public class TheGrid extends MyFrame {
             stopThumbViewFill("sql error");
             return;
         }
-        fillThumbs();
+        fillThumbs(-1); // Load all thumbs
     }
 
-    public void fillThumbs() {
+    public void fillThumbs (int limit) {
+        final int lim = limit == -1 ? imageL.size() : limit;
         Tools.runTask(() -> {
             imageCount = 0;
             startTime = Instant.now();
-            progress = new ProgressBox(TheGrid.this, imageL.size());
+            progress = new ProgressBox(TheGrid.this, lim);
             Win32.dialogToTop(progress);
             imageL.refresh();
             rootPane.removeAll();
             stopFill = false;
-            for (int s = 0; s < imageL.size(); s++) {
+            for (int s = 0; s < lim ; s++) {
                 if (stopFill)
                     break;
                 addThumbnail(s);
             }
             pack();
+            progress.dispose();
         });
     }
 

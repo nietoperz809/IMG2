@@ -38,8 +38,8 @@ public class GridMenuBar extends JMenuBar {
 
         jm.add(new SubMenuMarked(theGrid));
 
-        jmi = new JMenuItem("Refresh");
-        jmi.addActionListener(_ -> theGrid.fillThumbs());
+        jmi = new JMenuItem("Refresh first 100 thumbs");
+        jmi.addActionListener(_ -> theGrid.fillThumbs(100));
         jm.add(jmi);
 
         jmi = new JMenuItem("Instructions ...");
@@ -53,20 +53,6 @@ public class GridMenuBar extends JMenuBar {
                     commateer(fsl) + " Bytes");
         });
         jm.add(jmi);
-
-//        jmi = new JMenuItem("Start DB console server...");
-//        jmi.addActionListener(_ -> {
-//            try {
-//                org.h2.tools.Console.main(null);
-//            } catch (Exception e) {
-//                MsgBox.Error(e.getMessage());
-//            }
-//        });
-//        jm.add(jmi);
-
-//        jmi = new JMenuItem("Mail ...");
-//        jmi.addActionListener(_ -> EmailUtil.xmain(null));
-//        jm.add(jmi);
 
         jmi = new ColoredMenuItem("Check external image", Color.GREEN);
         jmi.setToolTipText("Find similarities in database");
