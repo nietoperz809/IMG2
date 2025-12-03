@@ -38,8 +38,11 @@ public class GridMenuBar extends JMenuBar {
 
         jm.add(new SubMenuMarked(theGrid));
 
-        jmi = new JMenuItem("Refresh first 100 thumbs");
-        jmi.addActionListener(_ -> theGrid.fillThumbs(100));
+        jmi = new JMenuItem("Refresh first n thumbs");
+        jmi.addActionListener(_ -> {
+            int limit = Input.getInteger("Limit","100");
+            theGrid.fillThumbs(limit);
+        });
         jm.add(jmi);
 
         jmi = new JMenuItem("Instructions ...");
@@ -212,7 +215,7 @@ public class GridMenuBar extends JMenuBar {
         jmi = new JMenuItem("x*x Grid preview");
         jmi.setToolTipText("Create preview image of a grid");
         jmi.addActionListener(_ -> {
-            int xy = Input.getInteger("single value, width & Height of matrix");
+            int xy = Input.getInteger("single value, width & Height of matrix","");
             BufferedImage big = ImageTools.createPreviewImage(theGrid.imageL, xy);
             ImageViewer.xmain(big);
         });

@@ -107,8 +107,7 @@ public class TheGrid extends MyFrame {
             imageCount = 0;
             startTime = Instant.now();
             progress = new ProgressBox(TheGrid.this, lim);
-            Win32.dialogToTop(progress);
-            imageL.refresh();
+            imageL.load();
             rootPane.removeAll();
             stopFill = false;
             for (int s = 0; s < lim ; s++) {

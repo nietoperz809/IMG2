@@ -12,7 +12,7 @@ public class ImageList {
 
     public java.util.List<DBHandler.NameID> allFiles;
 
-    public void refresh() {
+    public void load() {
         allFiles = DBHandler.loadImageInfos(this.sql);
     }
 
@@ -33,12 +33,12 @@ public class ImageList {
     }
 
     public int getLastRowid() {
-        refresh();
+        load();
         return allFiles.get (allFiles.size()-1).rowid();
     }
 
     public int IndexByRowID(int rowid) {
-        refresh();
+        load();
         if (rowid == -1) {  // last rowid
             return size()-1;
         }
@@ -52,7 +52,7 @@ public class ImageList {
 
     public void setSQL(String sql) {
         this.sql = sql;
-        refresh();
+        load();
     }
 
     public String getSql() {

@@ -4,6 +4,7 @@ import common.BlockCaret;
 import common.Pair;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
+import thegrid.TheGrid;
 
 import javax.swing.*;
 import java.awt.event.KeyEvent;
@@ -50,10 +51,12 @@ public class Input extends JDialog {
         dispose();
     }
 
-    public static int getInteger(String desc) {
+    public static int getInteger (String desc, String defValue) {
         Integer p = null;
         do {
             Input dialog = new Input();
+            dialog.setLocationRelativeTo(TheGrid.getMainGrid());
+            dialog.textField1.setText(defValue);
             dialog.setTitle(desc);
             dialog.lab1.setText(desc);
             dialog.textField1.setToolTipText("Enter value here");

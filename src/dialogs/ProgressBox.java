@@ -1,5 +1,6 @@
 package dialogs;
 
+import common.Win32;
 import thegrid.MyFrame;
 
 import javax.swing.*;
@@ -23,7 +24,7 @@ public class ProgressBox extends JDialog {
 
     public ProgressBox(MyFrame owner, int maxlen, int boxlen) {
         super(owner);
-        setTitle("progressbox");
+        //setTitle("progressbox");
         progressBar = new JProgressBar(0, maxlen);
         progressBar.setIndeterminate(false);
         progressBar.setStringPainted(true);
@@ -40,6 +41,7 @@ public class ProgressBox extends JDialog {
         setSize(boxlen,30);
         setLocationRelativeTo(owner);
         setVisible(true);
+        Win32.dialogToTop(this);
     }
 
     public void setTextAndValue(String txt, int v) {
