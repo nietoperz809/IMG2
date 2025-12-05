@@ -1,11 +1,18 @@
 package common;
 
+import com.sun.jna.Native;
 import com.sun.jna.Pointer;
+import com.sun.jna.Ptr2;
 import com.sun.jna.platform.win32.Kernel32;
 import com.sun.jna.platform.win32.User32;
 import com.sun.jna.platform.win32.WinDef;
+import com.sun.jna.win32.StdCallLibrary;
 import org.jetbrains.annotations.NotNull;
+
 import javax.swing.*;
+//import sun.awt.windows.WComponentPeer;
+
+import java.awt.*;
 
 import static com.sun.jna.platform.win32.WinUser.*;
 
@@ -29,17 +36,21 @@ public class Win32 {
         }
     }
 
-    public static void dialogToTop (@NotNull JDialog target) {
-        String tit = target.getTitle();
-        WinDef.HWND hwnd = User32.INSTANCE.FindWindow(null, tit);
-        User32.INSTANCE.SetWindowPos
-                (hwnd, HWND_MinusOne, 0, 0, 0, 0,
-                        SWP_NOMOVE | SWP_NOSIZE | SWP_NOACTIVATE);
+    public static WinDef.HWND getHwndFromJFrame(Window window) {
+        Pointer p = Native.getWindowPointer(window);
+        return new HWND(new Pointer(new Ptr2(p).peer));
     }
 
-    public static boolean CopyFile (String src, String target) {
-        return Kernel32.INSTANCE.CopyFile(src, target, false);
+    public static void dialogToTop (@NotNull JDialog target) {
+        WinDef.HWND hwnd = getHwndFromJFrame(target);
+        User32.INSTANCE.SetWindowPos
+                (hwnd, HWND_MinusOne, 0, 0, 0, 0,
+                        SWP_NOMOVE | SWP_NOSIZE /*| SWP_NOACTIVATE*/);
     }
+
+//    public static boolean CopyFile (String src, String target) {
+//        return Kernel32.INSTANCE.CopyFile(src, target, false);
+//    }
 
 //    public static boolean CopyFileEx (String src, String target) {
 //        return Kernel32.INSTANCE.CopyFileEx

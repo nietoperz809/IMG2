@@ -16,8 +16,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ddb69741-e020-4d21-a32f-f00e79c6818a" name="Changes" comment="minimal changes">
+      <change afterPath="$PROJECT_DIR$/src/com/sun/jna/Ptr2.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/dialogs/Input.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/dialogs/Input.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/common/Win32.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/common/Win32.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dialogs/UnlockDialog.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/dialogs/UnlockDialog.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -101,7 +104,7 @@
     &quot;Application.Main (1).executor&quot;: &quot;Run&quot;,
     &quot;Application.Main (2).executor&quot;: &quot;Run&quot;,
     &quot;Application.Main.executor&quot;: &quot;Run&quot;,
-    &quot;Application.MainC.executor&quot;: &quot;Run&quot;,
+    &quot;Application.MainC.executor&quot;: &quot;Debug&quot;,
     &quot;Application.MainE.executor&quot;: &quot;Run&quot;,
     &quot;Application.MonitorFrame.executor&quot;: &quot;Run&quot;,
     &quot;Application.MultiSlider.executor&quot;: &quot;Run&quot;,
@@ -116,7 +119,7 @@
     &quot;Application.SqlList.executor&quot;: &quot;Run&quot;,
     &quot;Application.Stepper.executor&quot;: &quot;Run&quot;,
     &quot;Application.TimedMsg2.executor&quot;: &quot;Run&quot;,
-    &quot;Application.UnlockDialog.executor&quot;: &quot;Run&quot;,
+    &quot;Application.UnlockDialog.executor&quot;: &quot;Debug&quot;,
     &quot;Application.WebPDecoder.executor&quot;: &quot;Run&quot;,
     &quot;Application.imgeditor.executor&quot;: &quot;Run&quot;,
     &quot;Application.web.executor&quot;: &quot;Run&quot;,
@@ -212,7 +215,7 @@
       <command value="ant" />
     </option>
   </component>
-  <component name="RunManager" selected="Application.MainC">
+  <component name="RunManager" selected="Application.UnlockDialog">
     <configuration name="GUIConsole (2)" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="org.h2.tools.GUIConsole" />
       <module name="IMG2" />
@@ -683,7 +686,7 @@
       <option name="project" value="LOCAL" />
       <updated>1683976691765</updated>
     </task>
-    <option name="localTasksCounter" value="389" />
+    <option name="localTasksCounter" value="390" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

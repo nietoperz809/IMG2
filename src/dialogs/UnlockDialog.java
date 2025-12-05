@@ -1,6 +1,8 @@
 package dialogs;
 
+import common.Tools;
 import common.Win32;
+import thegrid.TheGrid;
 
 import javax.swing.*;
 import java.awt.event.*;
@@ -42,11 +44,15 @@ public class UnlockDialog extends JDialog {
     }
 
     public static String xmain(String title) {
-        UnlockDialog dialog = new UnlockDialog(title);
+        final UnlockDialog dialog = new UnlockDialog(title);
         dialog.setBounds(0,0,500,100);
-        //dialog.pack();
         dialog.setLocationRelativeTo(null);
-        Win32.dialogToTop(dialog);
+        Tools.runTask(() -> {
+            while (!dialog.isVisible()) {
+                Tools.delay(100);
+            }
+            Win32.dialogToTop(dialog);
+        });
         dialog.setVisible(true);
         return new String(dialog.passwordField1.getPassword());
     }
