@@ -2,15 +2,12 @@ package common;
 
 import com.sun.jna.Native;
 import com.sun.jna.Pointer;
-import com.sun.jna.Ptr2;
 import com.sun.jna.platform.win32.Kernel32;
 import com.sun.jna.platform.win32.User32;
 import com.sun.jna.platform.win32.WinDef;
-import com.sun.jna.win32.StdCallLibrary;
 import org.jetbrains.annotations.NotNull;
 
 import javax.swing.*;
-//import sun.awt.windows.WComponentPeer;
 
 import java.awt.*;
 
@@ -36,13 +33,27 @@ public class Win32 {
         }
     }
 
-    public static WinDef.HWND getHwndFromJFrame(Window window) {
-        Pointer p = Native.getWindowPointer(window);
-        return new HWND(new Pointer(new Ptr2(p).peer));
+    public static HWND getHwnd(Window w) {
+        HWND hwnd = new HWND();
+        hwnd.setPointer (Native.getWindowPointer(w));
+        return hwnd;
     }
 
+//    public static WinDef.HWND getHwndFromJFrame(Window window) {
+//        Pointer p = Native.getWindowPointer(window);
+////        long peer = 0;
+////        try {
+////            Field f = p.getClass().getDeclaredField("peer");
+////            f.setAccessible(true);
+////            peer = f.getLong(p);
+////        } catch (Exception e) {
+////            throw new RuntimeException(e);
+////        }
+//        return new HWND(p); //new Pointer(peer));
+//    }
+
     public static void dialogToTop (@NotNull JDialog target) {
-        WinDef.HWND hwnd = getHwndFromJFrame(target);
+        WinDef.HWND hwnd = getHwnd(target);
         User32.INSTANCE.SetWindowPos
                 (hwnd, HWND_MinusOne, 0, 0, 0, 0,
                         SWP_NOMOVE | SWP_NOSIZE /*| SWP_NOACTIVATE*/);
