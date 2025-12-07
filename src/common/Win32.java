@@ -34,23 +34,11 @@ public class Win32 {
     }
 
     public static HWND getHwnd(Window w) {
-        HWND hwnd = new HWND();
-        hwnd.setPointer (Native.getWindowPointer(w));
-        return hwnd;
+//        HWND hwnd = new HWND();
+//        hwnd.setPointer (Native.getWindowPointer(w));
+//        return hwnd;
+        return new HWND(Native.getWindowPointer(w));
     }
-
-//    public static WinDef.HWND getHwndFromJFrame(Window window) {
-//        Pointer p = Native.getWindowPointer(window);
-////        long peer = 0;
-////        try {
-////            Field f = p.getClass().getDeclaredField("peer");
-////            f.setAccessible(true);
-////            peer = f.getLong(p);
-////        } catch (Exception e) {
-////            throw new RuntimeException(e);
-////        }
-//        return new HWND(p); //new Pointer(peer));
-//    }
 
     public static void dialogToTop (@NotNull JDialog target) {
         WinDef.HWND hwnd = getHwnd(target);

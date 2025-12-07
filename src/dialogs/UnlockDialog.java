@@ -52,6 +52,7 @@ public class UnlockDialog extends JDialog {
                 Tools.delay(100);
             }
             Win32.dialogToTop(dialog);
+            System.out.println("toTop");
         });
         dialog.setVisible(true);
         return new String(dialog.passwordField1.getPassword());
