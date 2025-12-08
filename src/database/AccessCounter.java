@@ -14,7 +14,7 @@ public class AccessCounter extends DBHandler {
             cache.put(rowid, val+1);
         String sql = "update IMAGES set ACCNUM = (ACCNUM + 1) where _rowid_ =" + rowid;
         try {
-            statement.execute(sql);
+            stm.execute(sql);
             connection.commit();
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -25,7 +25,7 @@ public class AccessCounter extends DBHandler {
         cache.put(rowid, val);
         String sql = "update IMAGES set ACCNUM = " + val + " where _rowid_ =" + rowid;
         try {
-            statement.execute(sql);
+            stm.execute(sql);
             connection.commit();
         } catch (SQLException e) {
             throw new RuntimeException(e);

@@ -12,19 +12,14 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.io.RandomAccessFile;
 import java.lang.ref.SoftReference;
-import java.nio.MappedByteBuffer;
-import java.nio.channels.FileChannel;
 import java.sql.*;
 import java.util.*;
 import java.util.List;
 import java.util.concurrent.Future;
-import java.util.concurrent.atomic.AtomicReference;
 
 import static common.ImageTools.JPGByteArrayToImg;
 import static common.Tools.extractResource;
-import static database.VideoFunctions.*;
 import static java.lang.System.*;
 
 public class DBHandler {
@@ -35,15 +30,15 @@ public class DBHandler {
             "C:\\Databases_Copy\\Databases\\";
     //"E:\\Databases\\";
     static Connection connection;
-    static Statement statement;
+    static Statement stm;
     /*
         jdbc:h2:C:\peter.home\java\IMG2\datastore\mydb;CIPHER=AES
      */
     static Future<?> transferTask;
 
-    public static Connection getConnection() {
-        return connection;
-    }
+//    public static Connection getConnection() {
+//        return connection;
+//    }
 
     public static void startDatabase(String root) {
         RootDirectory = root;
@@ -64,40 +59,19 @@ public class DBHandler {
             out.println(user + " -- " + pwd);
             out.println("-------------------------");
             connection = DriverManager.getConnection(url, user, pwd);
-            statement = connection.createStatement();
-            String sql;
-            sql = "alter table VIDEOS add if not exists BLOBSiZE INT";
-            statement.execute(sql);
-            sql = "alter table GIFS add if not exists BLOBSiZE INT";
-            statement.execute(sql);
-            sql = "alter table WEBP add if not exists BLOBSiZE INT";
-            statement.execute(sql);
-            sql = "alter table IMAGES add if not exists IMGHASH JAVA_OBJECT";
-            statement.execute(sql);
-
-            sql = "create table if not exists QUERIES (sql varbinary(512) primary key)";
-            statement.execute(sql);
-
-            sql = "create table if not exists LOG " +
-                    "(ltime timestamp GENERATED ALWAYS AS CURRENT_TIMESTAMP, sql varchar(256))";
-            statement.execute(sql);
-            // create video table
-            sql = "create table if not exists VIDEOS " +
-                    "(VID blob, NAME varchar(200), HASHVAL blob(16))";
-            statement.execute(sql);
-            // create GIF table
-            sql = "create table if not exists GIFS " +
-                    "(GIFDATA blob, NAME varchar(200), HASHVAL blob(16), TAG varchar(128))";
-            statement.execute(sql);
-            sql = "create table if not exists WEBP " +
-                    "(WEBPDATA blob, NAME varchar(200), HASHVAL blob(16), TAG varchar(128))";
-            statement.execute(sql);
-            sql = "alter table IMAGES add if not exists TAG varchar(128)";
-            statement.execute(sql);
-            sql = "alter table IMAGES add if not exists ACCNUM integer";
-            statement.execute(sql);
-            sql = "alter table VIDEOS add if not exists TAG varchar(128)";
-            statement.execute(sql);
+            stm = connection.createStatement();
+            stm.execute("alter table VIDEOS add if not exists BLOBSiZE INT");
+            stm.execute("alter table GIFS add if not exists BLOBSiZE INT");
+            stm.execute("alter table WEBP add if not exists BLOBSiZE INT");
+            stm.execute("alter table IMAGES add if not exists IMGHASH JAVA_OBJECT");
+            stm.execute("create table if not exists QUERIES (sql varbinary(512) primary key)");
+            stm.execute("create table if not exists LOG (ltime timestamp GENERATED ALWAYS AS CURRENT_TIMESTAMP, sql varchar(256))");
+            stm.execute("create table if not exists VIDEOS (VID blob, NAME varchar(200), HASHVAL blob(16))");
+            stm.execute("create table if not exists GIFS (GIFDATA blob, NAME varchar(200), HASHVAL blob(16), TAG varchar(128))");
+            stm.execute("create table if not exists WEBP (WEBPDATA blob, NAME varchar(200), HASHVAL blob(16), TAG varchar(128))");
+            stm.execute("alter table IMAGES add if not exists TAG varchar(128)");
+            stm.execute("alter table IMAGES add if not exists ACCNUM integer");
+            stm.execute("alter table VIDEOS add if not exists TAG varchar(128)");
             Sam.speak("deta base is ready!");
         } catch (SQLException e) {
             connection = null;
@@ -130,7 +104,7 @@ public class DBHandler {
     public static boolean execSQL(String sql) {
         try {
             System.out.println("SQL: "+sql);
-            return statement.execute(sql);
+            return stm.execute(sql);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -155,7 +129,7 @@ public class DBHandler {
 
     public static synchronized ResultSet query(String txt) {
         try {
-            return statement.executeQuery(txt);
+            return stm.executeQuery(txt);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -177,7 +151,7 @@ public class DBHandler {
 
     public static void reduceLog() {
         try {
-            statement.execute("delete from log where _rowid_ < (select max (_rowid_)-50 from log)");
+            stm.execute("delete from log where _rowid_ < (select max (_rowid_)-50 from log)");
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -230,7 +204,7 @@ public class DBHandler {
 
     public static boolean deleteImageSilently(int rowid) {
         try {
-            statement.execute("delete from IMAGES where _ROWID_ = " + rowid);
+            stm.execute("delete from IMAGES where _ROWID_ = " + rowid);
             return true;
         } catch (SQLException e) {
             //throw new RuntimeException(e);
@@ -262,7 +236,7 @@ public class DBHandler {
             return;
         }
         try {
-            statement.execute("delete from " + tablename + " where _ROWID_ = " + rowid);
+            stm.execute("delete from " + tablename + " where _ROWID_ = " + rowid);
         } catch (SQLException e) {
             //throw new RuntimeException(e);
         }
@@ -270,7 +244,7 @@ public class DBHandler {
 
     public static void setTag(int rowid, String tag) {
         try {
-            statement.execute("update IMAGES set tag = '" + tag + "' where _ROWID_ = " + rowid);
+            stm.execute("update IMAGES set tag = '" + tag + "' where _ROWID_ = " + rowid);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -312,14 +286,14 @@ public class DBHandler {
     public static synchronized int MoveImageFilesToDB(File[] files, InsertCallback ic) throws Exception {
         int ret = 0;
         for (File file : files) {
-            String name = UUID.randomUUID().toString();
+            //String name = UUID.randomUUID().toString();
             BufferedImage img = ImageTools.loadImageFromFile(file.getPath());
             if (img == null) {
                 err.println("no image");
                 continue;
             }
-            insertImageRecord(name, img);
-            ic.justInserted(img, name);
+            //insertImageRecord(name, img);
+            ic.justInserted(img, "hello");
             DeferredFileDeleter.put(file);
             ret++;
         }
@@ -329,10 +303,10 @@ public class DBHandler {
 
     /**
      * Convert img into INT_RGB, generate thumbnail and put all in the table
-     * @param name image name, can be any string
      * @param img the image
      */
-    public static void insertImageRecord(String name, BufferedImage img) throws IOException {
+    public static void insertImageRecord (BufferedImage img) throws IOException {
+        String name = UUID.randomUUID().toString();
         byte[] buff = ImageTools.imgToJPGByteArray(img);
         BufferedImage thumbnailImage = ImageScaler.scaleExact(img,
                 new Dimension(100, 100));
@@ -352,16 +326,7 @@ public class DBHandler {
             throw new RuntimeException(e);
         }
     }
-    public static boolean insertImageRecord (BufferedImage img) {
-        String name = UUID.randomUUID().toString();
-        try {
-            insertImageRecord(name, img);
-            return true;
-        } catch (IOException e) {
-            return false;
-            //throw new RuntimeException(e);
-        }
-    }
+
     /*
     Create Thumbnail 100*100
      */
@@ -404,24 +369,6 @@ public class DBHandler {
         }
     }
 
-    /*
-    public static String querySingleValue(String sql) {
-        ResultSet res = query(sql);
-        if (res == null)
-            throw new RuntimeException("no query results");
-        try {
-            if (res.next()) {
-                String len = res.getString(1);
-                res.close();
-                return len;
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-        throw new RuntimeException("no query results");
-    }
-    */
-
     public static SoftReference<byte[]> loadBytes(String sql) throws Exception {
         ResultSet res = query(sql);
         if (res == null)
@@ -451,47 +398,10 @@ public class DBHandler {
         transferTask.cancel(true);
     }
 
-    public static File transferIntoFile(NameID nid, String type) throws Exception {
-        AtomicReference<File> f = new AtomicReference<>();
-        transferTask = Tools.runTask(() -> {
-            try {
-                f.set(transferIntoFileInternal(nid, type));
-            } catch (Exception e) {
-                throw new RuntimeException(e);
-            }
-        });
-        transferTask.get(); // wait
-        return f.get();
-    }
-
-    /**
-     * Load DB record into mapped file
-     * @return file name of file on disk
-     * @throws Exception if smth gone wrong
-     */
-    private static File transferIntoFileInternal(NameID nid, String type) throws Exception {
-        SoftReference<byte[]> bt = switch (type) {
-            case "GIF" -> loadGifBytes(nid);
-            case "WEBP" -> loadWEBPBytes(nid);
-            default ->  // regular vid
-                    loadVideoBytes(nid);
-        };
-        File fi = new File(getProperty("java.io.tmpdir") + File.separator + "tempfile-" + "myra.dat");
-        fi.deleteOnExit();
-        try (RandomAccessFile rafile = new RandomAccessFile(fi, "rw")) {
-            MappedByteBuffer out = rafile.getChannel()
-                    .map(FileChannel.MapMode.READ_WRITE, 0, Objects.requireNonNull(bt.get()).length);
-            out.put(Objects.requireNonNull(bt.get()));
-            out.load();
-        }
-        return fi;
-    }
-
-
     public static void changeName(String table, String name, int rowid) {
         String sql = "update " + table + " set name ='" + name + "' where _rowid_ =" + rowid;
         try {
-            statement.execute(sql);
+            stm.execute(sql);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

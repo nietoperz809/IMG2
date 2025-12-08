@@ -20,6 +20,7 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
@@ -135,8 +136,12 @@ public class ImgViewKeyHandler extends KeyAdapter {
             case VK_S -> { // Put copy into DB on CTRL-S
                 if (e.isControlDown()) {
                     BufferedImage img = imageFrame.getIconImg();
-                    boolean b = DBHandler.insertImageRecord(img);
-                    Sam.speak(b? "Copy inserted.":"failed");
+                    try {
+                        DBHandler.insertImageRecord(img);
+                        Sam.speak("copy inserted");
+                    } catch (IOException _) {
+                        Sam.speak("copy failed");
+                    }
                 }
             }
 

@@ -15,11 +15,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ddb69741-e020-4d21-a32f-f00e79c6818a" name="Changes" comment="new: public static HWND getHwnd(Window w)">
+    <list default="true" id="ddb69741-e020-4d21-a32f-f00e79c6818a" name="Changes" comment="getHwnd simplified">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/sun/jna/Ptr2.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/common/Win32.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/common/Win32.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/dialogs/UnlockDialog.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/dialogs/UnlockDialog.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/database/AccessCounter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/database/AccessCounter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/database/DBHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/database/DBHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/database/VideoFunctions.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/database/VideoFunctions.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/thegrid/ImgViewKeyHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/thegrid/ImgViewKeyHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/video/VideoApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/video/VideoApp.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -103,7 +106,7 @@
     &quot;Application.Main (1).executor&quot;: &quot;Run&quot;,
     &quot;Application.Main (2).executor&quot;: &quot;Run&quot;,
     &quot;Application.Main.executor&quot;: &quot;Run&quot;,
-    &quot;Application.MainC.executor&quot;: &quot;Debug&quot;,
+    &quot;Application.MainC.executor&quot;: &quot;Run&quot;,
     &quot;Application.MainE.executor&quot;: &quot;Run&quot;,
     &quot;Application.MonitorFrame.executor&quot;: &quot;Run&quot;,
     &quot;Application.MultiSlider.executor&quot;: &quot;Run&quot;,
@@ -173,11 +176,11 @@
       <recent name="C:\peter.home\java\IMG2\resource" />
     </key>
     <key name="MoveMembersDialog.RECENTS_KEY">
+      <recent name="database.VideoFunctions" />
       <recent name="common.CopyPastePopuMenu" />
       <recent name="common.Channelcopy" />
       <recent name="common.Tools" />
       <recent name="common.Audio" />
-      <recent name="database.AccessCounter" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\peter.home\java\IMG3\resource" />
@@ -214,7 +217,7 @@
       <command value="ant" />
     </option>
   </component>
-  <component name="RunManager" selected="Application.UnlockDialog">
+  <component name="RunManager" selected="Application.MainC">
     <configuration name="GUIConsole (2)" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="org.h2.tools.GUIConsole" />
       <module name="IMG2" />
@@ -685,7 +688,7 @@
       <option name="project" value="LOCAL" />
       <updated>1683976691765</updated>
     </task>
-    <option name="localTasksCounter" value="392" />
+    <option name="localTasksCounter" value="393" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -753,7 +756,6 @@
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_NEW_TODO" value="false" />
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="updata" />
     <MESSAGE value="jfx: added preserve ratio checkbox" />
     <MESSAGE value="release 5, some improvements" />
     <MESSAGE value="some improvements&#10;made restart faster" />
@@ -778,7 +780,8 @@
     <MESSAGE value="minimal changes" />
     <MESSAGE value="added getHwndFromJFrame&#10;to get HWND without FindWindow" />
     <MESSAGE value="new: public static HWND getHwnd(Window w)" />
-    <option name="LAST_COMMIT_MESSAGE" value="new: public static HWND getHwnd(Window w)" />
+    <MESSAGE value="getHwnd simplified" />
+    <option name="LAST_COMMIT_MESSAGE" value="getHwnd simplified" />
     <option name="NON_MODAL_COMMIT_POSTPONE_SLOW_CHECKS" value="false" />
   </component>
   <component name="XDebuggerManager">
@@ -796,11 +799,6 @@
           <properties class="java.lang.RuntimeException" package="java.lang" />
           <option name="timeStamp" value="75" />
         </breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/database/DBHandler.java</url>
-          <line>315</line>
-          <option name="timeStamp" value="94" />
-        </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
     <watches-manager>

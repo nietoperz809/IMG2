@@ -33,10 +33,12 @@ public class Win32 {
         }
     }
 
+    /**
+     * Get Win32 hwnd from window, Jframe or JDialog
+     * @param w the Window
+     * @return new HWND object
+     */
     public static HWND getHwnd(Window w) {
-//        HWND hwnd = new HWND();
-//        hwnd.setPointer (Native.getWindowPointer(w));
-//        return hwnd;
         return new HWND(Native.getWindowPointer(w));
     }
 

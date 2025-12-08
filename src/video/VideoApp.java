@@ -111,7 +111,7 @@ public class VideoApp extends JFrame {
 
         deleteButton.addActionListener(_ -> {
             DBHandler.NameID nameid = listControl.getSelectedValue();
-            if (!MsgBox.Question("Really delete " + nameid.name() + "?")) {
+            if (!MsgBox.Question("Really delete " + nameid.rowid() + "?")) {
                 return;
             }
             if (gifList.contains(nameid)) {

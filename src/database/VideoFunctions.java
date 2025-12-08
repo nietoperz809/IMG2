@@ -1,11 +1,20 @@
 package database;
 
+import common.Tools;
+
 import java.io.File;
+import java.io.RandomAccessFile;
 import java.lang.ref.SoftReference;
+import java.nio.MappedByteBuffer;
+import java.nio.channels.FileChannel;
 import java.nio.file.Files;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Objects;
+import java.util.concurrent.atomic.AtomicReference;
+
+import static java.lang.System.getProperty;
 
 public class VideoFunctions extends DBHandler{
     public static void addVideoFile(File file) {
@@ -140,5 +149,41 @@ public class VideoFunctions extends DBHandler{
 
     public static List<NameID> getWebPFileNames() {
         return getAnimatedFileNames("WEBP");
+    }
+
+    public static File transferIntoFile(NameID nid, String type) throws Exception {
+        AtomicReference<File> f = new AtomicReference<>();
+        transferTask = Tools.runTask(() -> {
+            try {
+                f.set(transferIntoFileInternal(nid, type));
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        });
+        transferTask.get(); // wait
+        return f.get();
+    }
+
+    /**
+     * Load DB record into mapped file
+     * @return file name of file on disk
+     * @throws Exception if smth gone wrong
+     */
+    private static File transferIntoFileInternal(NameID nid, String type) throws Exception {
+        SoftReference<byte[]> bt = switch (type) {
+            case "GIF" -> loadGifBytes(nid);
+            case "WEBP" -> loadWEBPBytes(nid);
+            default ->  // regular vid
+                    loadVideoBytes(nid);
+        };
+        File fi = new File(getProperty("java.io.tmpdir") + File.separator + "tempfile-" + "myra.dat");
+        fi.deleteOnExit();
+        try (RandomAccessFile rafile = new RandomAccessFile(fi, "rw")) {
+            MappedByteBuffer out = rafile.getChannel()
+                    .map(FileChannel.MapMode.READ_WRITE, 0, Objects.requireNonNull(bt.get()).length);
+            out.put(Objects.requireNonNull(bt.get()));
+            out.load();
+        }
+        return fi;
     }
 }
