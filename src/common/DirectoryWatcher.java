@@ -66,7 +66,7 @@ public class DirectoryWatcher {
                                 System.out.println("delete fail in DirectoryWatcher");
                         } else try {
                             // move to DB and delete from disk
-                            DBHandler.MoveImageFilesToDB(new File[]{f}, (img, name) -> Sam.speak("file added"));
+                            DBHandler.MoveImageFilesToDB(new File[]{f}, (img) -> Sam.speak("file added"));
                         } catch (Exception e) {
                             throw new RuntimeException(e);
                         }

@@ -1,0 +1,2 @@
+// last 10 names
+SELECT name FROM images WHERE _rowid_ >= (SELECT MAX(_rowid_) - 10 from images)

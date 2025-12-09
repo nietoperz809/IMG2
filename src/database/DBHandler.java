@@ -24,6 +24,7 @@ import static java.lang.System.*;
 
 public class DBHandler {
     static final String NO_PASS = "NoPass";
+    public static final Dimension thumbDimension = new Dimension(100,100);
     public static final String DB_FILE = "mydb";
     public static final String DB_EXT = ".mv.db";
     static String RootDirectory =
@@ -286,14 +287,13 @@ public class DBHandler {
     public static synchronized int MoveImageFilesToDB(File[] files, InsertCallback ic) throws Exception {
         int ret = 0;
         for (File file : files) {
-            //String name = UUID.randomUUID().toString();
             BufferedImage img = ImageTools.loadImageFromFile(file.getPath());
             if (img == null) {
                 err.println("no image");
                 continue;
             }
-            //insertImageRecord(name, img);
-            ic.justInserted(img, "hello");
+            insertImageRecord(img);
+            ic.justInserted(img);
             DeferredFileDeleter.put(file);
             ret++;
         }
@@ -301,26 +301,27 @@ public class DBHandler {
         return ret;
     }
 
+    private static byte[] createThumbBytes (BufferedImage img) throws IOException {
+        BufferedImage thumbnailImage = ImageScaler.scaleExact(img, thumbDimension);
+        return ImageTools.imgToJPGByteArray(thumbnailImage);
+    }
+
     /**
      * Convert img into INT_RGB, generate thumbnail and put all in the table
      * @param img the image
      */
     public static void insertImageRecord (BufferedImage img) throws IOException {
-        String name = UUID.randomUUID().toString();
         byte[] buff = ImageTools.imgToJPGByteArray(img);
-        BufferedImage thumbnailImage = ImageScaler.scaleExact(img,
-                new Dimension(100, 100));
-        byte[] buff2 = ImageTools.imgToJPGByteArray(thumbnailImage);
+        byte[] buff2 = createThumbBytes(img);
         PreparedStatement prep;
         HashingAlgorithm hasher = new PerceptiveHash(32);
         Hash hash0 = hasher.hash(img);
         try {
             prep = connection.prepareStatement(
-                    "insert into IMAGES (image,thumb,name,imghash) values (?,?,?,?)");
+                    "insert into IMAGES (image,thumb,imghash) values (?,?,?)");
             prep.setBytes(1, buff);
             prep.setBytes(2, buff2);
-            prep.setString(3, name);
-            prep.setObject(4, hash0);
+            prep.setObject(3, hash0);
             prep.execute();
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -338,9 +339,7 @@ public class DBHandler {
                 out.println("bigimg load fail: " + id);
                 bigImg = JPGByteArrayToImg(extractResource("fail.png"));
             }
-            BufferedImage thumbnailImage = ImageScaler.scaleExact(bigImg,
-                    new Dimension(100, 100));
-            byte[] buff = ImageTools.imgToJPGByteArray(thumbnailImage);
+            byte[] buff = createThumbBytes(bigImg);
             PreparedStatement prep;
             prep = connection.prepareStatement(
                     "update IMAGES set thumb=? where _rowid_ = " + id);

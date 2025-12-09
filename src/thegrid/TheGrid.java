@@ -162,10 +162,10 @@ public class TheGrid extends MyFrame {
     }
 
     public void addImageFilesToDatabase(File[] files) throws Exception {
-        int numadd = DBHandler.MoveImageFilesToDB(files, (img, name) -> {
+        int numadd = DBHandler.MoveImageFilesToDB(files, (img) -> {
             BufferedImage thumbnailImage = ImageScaler.scaleExact(img,
                     new Dimension(100, 100));
-            Thumbnail lab = new Thumbnail(this, thumbnailImage, rootPane, name);
+            Thumbnail lab = new Thumbnail(this, thumbnailImage, rootPane);
             rootPane.add(lab);
         });
         rootPane.doLayout();

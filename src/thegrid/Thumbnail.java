@@ -131,11 +131,10 @@ public class Thumbnail extends JLabel {
      * Constructor for later insertion of new Images
      * @param iconImage smaller Icon image
      * @param rootPane the Imagegrid itself
-     * @param ImageName name of the new Image
      */
-    Thumbnail(TheGrid grid, Image iconImage, JPanel rootPane, String ImageName) {
+    Thumbnail(TheGrid grid, Image iconImage, JPanel rootPane) {
         super(new ImageIcon(iconImage));
-        grid.imageL.addNameID(new DBHandler.NameID(ImageName, grid.imageL.getLastRowid(), null));
+        grid.imageL.addNameID(new DBHandler.NameID("dummy", grid.imageL.getLastRowid(), null));
         int index = grid.imageL.size()-1;
         init (grid, index, rootPane);
     }
