@@ -163,6 +163,21 @@ public class DBHandler {
         return queryString(sql);
     }
 
+    public static ArrayList<String> getDBStructure() {
+        ArrayList<String> al = new ArrayList<>();
+        try (ResultSet res = query("script nodata")) {
+            if (res == null)
+                return al;
+            while (res.next()) {
+                al.add(res.getString(1));
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return al;
+
+    }
+
     public static String getH2Version() {
         String sql = "select H2VERSION()";
         return queryString(sql);
@@ -199,7 +214,6 @@ public class DBHandler {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-
         return al;
     }
 

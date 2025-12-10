@@ -57,6 +57,13 @@ public class GridMenuBar extends JMenuBar {
         });
         jm.add(jmi);
 
+        jmi = new JMenuItem("DBStructure?");
+        jmi.addActionListener(_ -> {
+            ArrayList<String> al = DBHandler.getDBStructure();
+            MsgBox.Info(al.toString());
+        });
+        jm.add(jmi);
+
         jmi = new ColoredMenuItem("Check external image", Color.GREEN);
         jmi.setToolTipText("Find similarities in database");
         jmi.addActionListener(_ -> {

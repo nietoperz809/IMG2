@@ -16,13 +16,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ddb69741-e020-4d21-a32f-f00e79c6818a" name="Changes" comment="getHwnd simplified">
-      <change afterPath="$PROJECT_DIR$/src/database/sql-example.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/common/DirectoryWatcher.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/common/DirectoryWatcher.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/database/DBHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/database/DBHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/database/InsertCallback.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/database/InsertCallback.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/thegrid/TheGrid.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/thegrid/TheGrid.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/thegrid/Thumbnail.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/thegrid/Thumbnail.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/thegrid/gridmenu/GridMenuBar.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/thegrid/gridmenu/GridMenuBar.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -106,7 +102,7 @@
     "Application.Main (1).executor": "Run",
     "Application.Main (2).executor": "Run",
     "Application.Main.executor": "Run",
-    "Application.MainC.executor": "Run",
+    "Application.MainC.executor": "Debug",
     "Application.MainE.executor": "Run",
     "Application.MonitorFrame.executor": "Run",
     "Application.MultiSlider.executor": "Run",
@@ -695,7 +691,7 @@
       <option name="project" value="LOCAL" />
       <updated>1683976691765</updated>
     </task>
-    <option name="localTasksCounter" value="394" />
+    <option name="localTasksCounter" value="395" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
