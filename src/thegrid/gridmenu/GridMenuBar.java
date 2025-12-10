@@ -52,15 +52,14 @@ public class GridMenuBar extends JMenuBar {
         jmi = new JMenuItem("DBSize?");
         jmi.addActionListener(_ -> {
             long fsl = Long.parseLong(DBHandler.getDBFileSize());
-            MsgBox.Info("DB size is: " +
-                    commateer(fsl) + " Bytes");
+            MsgBox.Info("DB size is: " + commateer(fsl) + " Bytes");
         });
         jm.add(jmi);
 
         jmi = new JMenuItem("DBStructure?");
         jmi.addActionListener(_ -> {
-            ArrayList<String> al = DBHandler.getDBStructure();
-            MsgBox.Info(al.toString());
+            String s = DBHandler.getDBStructure();
+            MsgBox.Info(s);
         });
         jm.add(jmi);
 

@@ -146,6 +146,20 @@ public class DBHandler {
         }
     }
 
+    public static ArrayList<String> queryStringList (String sql) {
+        ArrayList<String> al = new ArrayList<>();
+        try (ResultSet res = query(sql)) {
+            if (res == null)
+                return al;
+            while (res.next()) {
+                al.add(res.getString(1));
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return al;
+    }
+
     public static void log(String str) {
         out.println(str);
     }
@@ -163,19 +177,14 @@ public class DBHandler {
         return queryString(sql);
     }
 
-    public static ArrayList<String> getDBStructure() {
-        ArrayList<String> al = new ArrayList<>();
-        try (ResultSet res = query("script nodata")) {
-            if (res == null)
-                return al;
-            while (res.next()) {
-                al.add(res.getString(1));
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
+    public static String getDBStructure() {
+        ArrayList<String> al =  queryStringList("script nodata");
+        StringBuilder sb = new StringBuilder();
+        for (String s : al) {
+            if (s.startsWith("CREATE") || s.startsWith("ALTER") || s.startsWith("SET"))
+                sb.append(s).append ("\n");
         }
-        return al;
-
+        return sb.toString();
     }
 
     public static String getH2Version() {
