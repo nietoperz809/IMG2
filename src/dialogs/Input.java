@@ -51,6 +51,22 @@ public class Input extends JDialog {
         dispose();
     }
 
+    public static String getText (String desc, String defValue) {
+        Input dialog = new Input();
+        dialog.setLocation (MouseInfo.getPointerInfo().getLocation());
+        dialog.textField1.setText(defValue);
+        dialog.setTitle(desc);
+        dialog.lab1.setText(desc);
+        dialog.textField1.setToolTipText("Enter text here");
+        dialog.tf2.setVisible(false);
+        dialog.lab2.setVisible(false);
+        dialog.pack();
+        dialog.textField1.setCaret(new BlockCaret());
+        dialog.setVisible(true);
+
+        return dialog.textField1.getText();
+    }
+
     public static int getInteger (String desc, String defValue) {
         Integer p = null;
         do {

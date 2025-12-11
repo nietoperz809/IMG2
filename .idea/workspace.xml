@@ -15,17 +15,16 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ddb69741-e020-4d21-a32f-f00e79c6818a" name="Changes" comment="improved db structure message">
-      <change afterPath="$PROJECT_DIR$/src/BezierPlotter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/dialogs/MyTextViewer.form" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/dialogs/MyTextViewer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/h2_2_3_232.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/lib.xml" beforeDir="false" />
+    <list default="true" id="ddb69741-e020-4d21-a32f-f00e79c6818a" name="Changes" comment="added experimental BezierPlotter">
+      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/javafx_lib.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/lib1.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/h2_2_3_232.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/h2_2_1_214.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/IMG2.iml" beforeDir="false" afterPath="$PROJECT_DIR$/IMG2.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/common/Tools.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/common/Tools.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/thegrid/ImageFrame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/thegrid/ImageFrame.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/thegrid/Thumbnail.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/thegrid/Thumbnail.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/BezierPlotter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jfxapps/BezierTextPlotter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dialogs/Input.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/dialogs/Input.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/jfxImgEditor/Controller.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/jfxImgEditor/Main.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/thegrid/gridmenu/GridMenuBar.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/thegrid/gridmenu/GridMenuBar.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -224,7 +223,7 @@
       <command value="ant" />
     </option>
   </component>
-  <component name="RunManager" selected="Application.imgeditor">
+  <component name="RunManager" selected="Application.MainC">
     <configuration name="MainC" type="Application" factoryName="Application">
       <option name="MAIN_CLASS_NAME" value="thegrid.TheGrid" />
       <module name="IMG2" />
@@ -244,7 +243,7 @@
       </method>
     </configuration>
     <configuration name="imgeditor" type="Application" factoryName="Application">
-      <option name="MAIN_CLASS_NAME" value="BezierPlotter" />
+      <option name="MAIN_CLASS_NAME" value="jfxapps.BezierTextPlotter" />
       <module name="IMG2" />
       <option name="PROGRAM_PARAMETERS" value="dbdir:C:\Databases_copy\Databases\ nopwd" />
       <option name="VM_PARAMETERS" value="-Xmx6g --module-path &quot;C:\Libraries\javafx-sdk-23.0.2/lib&quot; --add-modules javafx.controls,javafx.fxml,javafx.graphics,javafx.base" />
@@ -623,7 +622,7 @@
       <option name="project" value="LOCAL" />
       <updated>1683976691765</updated>
     </task>
-    <option name="localTasksCounter" value="397" />
+    <option name="localTasksCounter" value="398" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -691,7 +690,6 @@
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_NEW_TODO" value="false" />
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="some improvements&#10;made restart faster" />
     <MESSAGE value="removed some warnings" />
     <MESSAGE value="jfx-imageview improvements" />
     <MESSAGE value="jfx repaired" />
@@ -716,7 +714,8 @@
     <MESSAGE value="getHwnd simplified" />
     <MESSAGE value="show db structure (menu item)" />
     <MESSAGE value="improved db structure message" />
-    <option name="LAST_COMMIT_MESSAGE" value="improved db structure message" />
+    <MESSAGE value="added experimental BezierPlotter" />
+    <option name="LAST_COMMIT_MESSAGE" value="added experimental BezierPlotter" />
     <option name="NON_MODAL_COMMIT_POSTPONE_SLOW_CHECKS" value="false" />
   </component>
   <component name="XDebuggerManager">

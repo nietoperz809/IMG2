@@ -49,6 +49,17 @@ public class GridMenuBar extends JMenuBar {
         jmi.addActionListener(_ -> Manual.start());
         jm.add(jmi);
 
+        jmi = new JMenuItem("Curved Text ...");
+        jmi.addActionListener(_ -> {
+            try {
+                String s = Input.getText("Enter Text", "Hello World");
+                jfxapps.BezierTextPlotter.setup(s);
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        });
+        jm.add(jmi);
+
         jmi = new JMenuItem("DBSize?");
         jmi.addActionListener(_ -> {
             long fsl = Long.parseLong(DBHandler.getDBFileSize());

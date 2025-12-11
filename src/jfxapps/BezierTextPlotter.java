@@ -1,4 +1,4 @@
-// Source - https://stackoverflow.com/a/17374726
+package jfxapps;// Source - https://stackoverflow.com/a/17374726
 // Posted by jewelsea, modified by community. See post 'Timeline' for change history
 // Retrieved 2025-12-11, License - CC BY-SA 3.0
 
@@ -21,10 +21,16 @@ import javafx.util.Duration;
  * Example of drawing text along a cubic curve.
  * Drag the anchors around to change the curve.
  */
-public class BezierPlotter extends Application {
-    private static final String CURVED_TEXT = "Bézier Curve";
+public class BezierTextPlotter extends Application {
+    private static String CURVED_TEXT;
+
+    public static void setup(String txt) throws Exception {
+        CURVED_TEXT = txt;
+        launch();
+    }
 
     public static void main(String[] args) throws Exception {
+        CURVED_TEXT = "motherfucker";
         launch(args);
     }
 
