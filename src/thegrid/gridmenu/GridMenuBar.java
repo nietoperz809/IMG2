@@ -26,7 +26,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static common.ImageTools.loadImageFromFile;
-import static common.Tools.commateer;
+import static common.Tools.commatize;
 import static common.Tools.restartApplication;
 import static thegrid.ImgViewKeyHandler.loadSimilarities;
 
@@ -52,14 +52,15 @@ public class GridMenuBar extends JMenuBar {
         jmi = new JMenuItem("DBSize?");
         jmi.addActionListener(_ -> {
             long fsl = Long.parseLong(DBHandler.getDBFileSize());
-            MsgBox.Info("DB size is: " + commateer(fsl) + " Bytes");
+            MsgBox.Info("DB size is: " + commatize(fsl) + " Bytes");
         });
         jm.add(jmi);
 
         jmi = new JMenuItem("DBStructure?");
         jmi.addActionListener(_ -> {
-            String s = DBHandler.getDBStructure();
-            MsgBox.Info(s);
+            MyTextViewer.showDatabase();
+            //String s = DBHandler.getDBStructure();
+            //MsgBox.Info(s);
         });
         jm.add(jmi);
 

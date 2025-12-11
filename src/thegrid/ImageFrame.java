@@ -14,8 +14,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
 
@@ -167,7 +165,7 @@ public class ImageFrame extends JFrame implements MouseWheelListener {
                 v.rowid() + " TAG:" + v.tag() +
                 " -- x/y: " + bi.getWidth() + "/" + bi.getHeight() +
                 " -- ACC: " + AccessCounter.getAccCounter(v.rowid()) +
-                " -- Size: " + Tools.commateer(len) + " Bytes";
+                " -- Size: " + Tools.commatize(len) + " Bytes";
     }
 
     private void showByIdx() {

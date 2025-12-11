@@ -249,7 +249,7 @@ public class Tools {
         }
     }
 
-    public static String commateer (long in) {
+    public static String commatize(long in) {
         DecimalFormat df = new DecimalFormat("#,###"); // Pattern for thousands separators
         return df.format (in);
     }

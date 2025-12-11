@@ -15,9 +15,17 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ddb69741-e020-4d21-a32f-f00e79c6818a" name="Changes" comment="show db structure (menu item)">
+    <list default="true" id="ddb69741-e020-4d21-a32f-f00e79c6818a" name="Changes" comment="improved db structure message">
+      <change afterPath="$PROJECT_DIR$/src/BezierPlotter.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/dialogs/MyTextViewer.form" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/dialogs/MyTextViewer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/h2_2_3_232.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/lib.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/database/DBHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/database/DBHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IMG2.iml" beforeDir="false" afterPath="$PROJECT_DIR$/IMG2.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/common/Tools.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/common/Tools.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/thegrid/ImageFrame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/thegrid/ImageFrame.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/thegrid/Thumbnail.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/thegrid/Thumbnail.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/thegrid/gridmenu/GridMenuBar.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/thegrid/gridmenu/GridMenuBar.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -87,6 +95,7 @@
   "keyToString": {
     "ASKED_ADD_EXTERNAL_FILES": "true",
     "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "Application.BezierPlotter.executor": "Run",
     "Application.ConBright.executor": "Run",
     "Application.Console (1).executor": "Run",
     "Application.Console (2).executor": "Run",
@@ -98,6 +107,7 @@
     "Application.GUIConsole.executor": "Run",
     "Application.ImageViewer.executor": "Run",
     "Application.Input.executor": "Run",
+    "Application.JfxApp.executor": "Run",
     "Application.JfxImageView.executor": "Run",
     "Application.Main (1).executor": "Run",
     "Application.Main (2).executor": "Run",
@@ -107,6 +117,7 @@
     "Application.MonitorFrame.executor": "Run",
     "Application.MultiSlider.executor": "Run",
     "Application.MyShell.executor": "Debug",
+    "Application.MyTextViewer.executor": "Run",
     "Application.PersScroller.executor": "Run",
     "Application.PersValues.executor": "Run",
     "Application.RGBScroll.executor": "Run",
@@ -213,33 +224,7 @@
       <command value="ant" />
     </option>
   </component>
-  <component name="RunManager" selected="Application.MainC">
-    <configuration name="GUIConsole (2)" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="org.h2.tools.GUIConsole" />
-      <module name="IMG2" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="org.h2.tools.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="GUIConsole" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="org.h2.tools.GUIConsole" />
-      <module name="IMG2" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="org.h2.tools.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
+  <component name="RunManager" selected="Application.imgeditor">
     <configuration name="MainC" type="Application" factoryName="Application">
       <option name="MAIN_CLASS_NAME" value="thegrid.TheGrid" />
       <module name="IMG2" />
@@ -258,47 +243,8 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="MyShell" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="database.MyShell" />
-      <module name="IMG2" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="database.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="Shell (1)" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="org.h2.tools.Shell" />
-      <module name="IMG2" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="org.h2.tools.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="UnlockDialog" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="dialogs.UnlockDialog" />
-      <module name="IMG2" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="dialogs.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <configuration name="imgeditor" type="Application" factoryName="Application">
-      <option name="MAIN_CLASS_NAME" value="jfxImgEditor.Main" />
+      <option name="MAIN_CLASS_NAME" value="BezierPlotter" />
       <module name="IMG2" />
       <option name="PROGRAM_PARAMETERS" value="dbdir:C:\Databases_copy\Databases\ nopwd" />
       <option name="VM_PARAMETERS" value="-Xmx6g --module-path &quot;C:\Libraries\javafx-sdk-23.0.2/lib&quot; --add-modules javafx.controls,javafx.fxml,javafx.graphics,javafx.base" />
@@ -310,21 +256,7 @@
       <item itemvalue="Application.MainC" />
       <item itemvalue="Application.MainE" />
       <item itemvalue="Application.imgeditor" />
-      <item itemvalue="Application.UnlockDialog" />
-      <item itemvalue="Application.GUIConsole (2)" />
-      <item itemvalue="Application.GUIConsole" />
-      <item itemvalue="Application.MyShell" />
-      <item itemvalue="Application.Shell (1)" />
     </list>
-    <recent_temporary>
-      <list>
-        <item itemvalue="Application.UnlockDialog" />
-        <item itemvalue="Application.Shell (1)" />
-        <item itemvalue="Application.MyShell" />
-        <item itemvalue="Application.GUIConsole" />
-        <item itemvalue="Application.GUIConsole (2)" />
-      </list>
-    </recent_temporary>
   </component>
   <component name="SharedIndexes">
     <attachedChunks>
@@ -691,7 +623,7 @@
       <option name="project" value="LOCAL" />
       <updated>1683976691765</updated>
     </task>
-    <option name="localTasksCounter" value="396" />
+    <option name="localTasksCounter" value="397" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -759,7 +691,6 @@
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_NEW_TODO" value="false" />
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="release 5, some improvements" />
     <MESSAGE value="some improvements&#10;made restart faster" />
     <MESSAGE value="removed some warnings" />
     <MESSAGE value="jfx-imageview improvements" />
@@ -784,7 +715,8 @@
     <MESSAGE value="new: public static HWND getHwnd(Window w)" />
     <MESSAGE value="getHwnd simplified" />
     <MESSAGE value="show db structure (menu item)" />
-    <option name="LAST_COMMIT_MESSAGE" value="show db structure (menu item)" />
+    <MESSAGE value="improved db structure message" />
+    <option name="LAST_COMMIT_MESSAGE" value="improved db structure message" />
     <option name="NON_MODAL_COMMIT_POSTPONE_SLOW_CHECKS" value="false" />
   </component>
   <component name="XDebuggerManager">
