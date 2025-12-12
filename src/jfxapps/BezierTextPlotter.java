@@ -4,6 +4,7 @@ package jfxapps;// Source - https://stackoverflow.com/a/17374726
 
 import javafx.animation.*;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.beans.property.DoubleProperty;
 import javafx.collections.*;
 import javafx.event.*;
@@ -24,9 +25,33 @@ import javafx.util.Duration;
 public class BezierTextPlotter extends Application {
     private static String CURVED_TEXT;
 
-    public static void setup(String txt) throws Exception {
+// Source - https://stackoverflow.com/a/61771424
+// Posted by sergioFC, modified by community. See post 'Timeline' for change history
+// Retrieved 2025-12-12, License - CC BY-SA 4.0
+
+    private static volatile boolean javaFxLaunched = false;
+
+    public static void myLaunch(Class<? extends Application> applicationClass) {
+        if (!javaFxLaunched) { // First time
+            Platform.setImplicitExit(false);
+            new Thread(()->Application.launch(applicationClass)).start();
+            javaFxLaunched = true;
+        } else { // Next times
+            Platform.runLater(()->{
+                try {
+                    Application application = applicationClass.newInstance();
+                    Stage primaryStage = new Stage();
+                    application.start(primaryStage);
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
+            });
+        }
+    }
+
+    public static void runApp(String txt) throws Exception {
         CURVED_TEXT = txt;
-        launch();
+        myLaunch (BezierTextPlotter.class);
     }
 
     public static void main(String[] args) throws Exception {
@@ -73,6 +98,12 @@ public class BezierTextPlotter extends Application {
         stage.setTitle("Cubic Curve Manipulation Sample");
         stage.setScene(new Scene(content, 400, 400, Color.ALICEBLUE));
         stage.show();
+    }
+
+    @Override
+    public void stop() throws Exception {
+        super.stop();
+        System.out.println("jfx app stop");
     }
 
     private PathTransition createPathTransition(CubicCurve curve, Text text) {
