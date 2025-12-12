@@ -16,10 +16,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ddb69741-e020-4d21-a32f-f00e79c6818a" name="Changes" comment="javadocs removed">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/dev_brachtendorf_JImageHash.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/dev_brachtendorf_JImageHash.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/javafx-graphics-11.0.2-win.jar" beforeDir="false" afterPath="$PROJECT_DIR$/lib/javafx-graphics-11.0.2-win.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/JImageHash-1.0.0.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/forms-1.2.1.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/h2-2.1.214.jar" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -616,7 +616,7 @@
       <option name="project" value="LOCAL" />
       <updated>1683976691765</updated>
     </task>
-    <option name="localTasksCounter" value="404" />
+    <option name="localTasksCounter" value="405" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
