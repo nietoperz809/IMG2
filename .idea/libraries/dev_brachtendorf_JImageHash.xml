@@ -6,7 +6,6 @@
       <root url="jar://$PROJECT_DIR$/lib/UtilityCode-2.0.1.jar!/" />
       <root url="jar://$PROJECT_DIR$/lib/pcg-java-10-1.0.1.jar!/" />
       <root url="jar://$PROJECT_DIR$/lib/javafx-graphics-11.0.2.jar!/" />
-      <root url="jar://$PROJECT_DIR$/lib/javafx-graphics-11.0.2-win.jar!/" />
       <root url="jar://$PROJECT_DIR$/lib/javafx-base-11.0.2.jar!/" />
       <root url="jar://$PROJECT_DIR$/lib/javafx-base-11.0.2-win.jar!/" />
       <root url="jar://$PROJECT_DIR$/lib/javafx-swing-11.0.2.jar!/" />
