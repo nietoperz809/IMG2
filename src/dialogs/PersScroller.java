@@ -1,6 +1,7 @@
 package dialogs;
 
 import javafx.scene.effect.PerspectiveTransform;
+import jfxapps.JfxImageView;
 
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;

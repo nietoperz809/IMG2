@@ -1,5 +1,6 @@
-package dialogs;
+package jfxapps;
 
+import dialogs.PersScroller;
 import javafx.embed.swing.JFXPanel;
 
 import javax.swing.*;

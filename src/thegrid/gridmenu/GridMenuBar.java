@@ -53,7 +53,7 @@ public class GridMenuBar extends JMenuBar {
         jmi.addActionListener(_ -> {
             try {
                 String s = Input.getText("Enter Text", "Hello World");
-                jfxapps.BezierTextPlotter.setup(s);
+                jfxapps.BezierTextPlotter.runApp(s);
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }

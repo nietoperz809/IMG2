@@ -1,4 +1,6 @@
-package jfxapps;// Source - https://stackoverflow.com/a/17374726
+package jfxapps;
+
+// Source - https://stackoverflow.com/a/17374726
 // Posted by jewelsea, modified by community. See post 'Timeline' for change history
 // Retrieved 2025-12-11, License - CC BY-SA 3.0
 
@@ -7,16 +9,25 @@ import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.beans.property.DoubleProperty;
 import javafx.collections.*;
+import javafx.embed.swing.SwingFXUtils;
 import javafx.event.*;
 import javafx.scene.*;
+import javafx.scene.control.Button;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.effect.Glow;
+import javafx.scene.image.WritableImage;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.*;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+
+import java.awt.image.BufferedImage;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.atomic.AtomicReference;
+
+import static common.ImageTools.imageToClipboard;
 
 /**
  * Example of drawing text along a cubic curve.
@@ -92,7 +103,15 @@ public class BezierTextPlotter extends Application {
         final ToggleButton plot = new ToggleButton("Plot Text");
         plot.setOnAction(new PlotHandler(plot, parts, transitions, controls));
 
-        Group content = new Group(controlLine1, controlLine2, curve, start, control1, control2, end, plot);
+        final Button button = new Button("ImgToClip");
+        button.setLayoutX(100);
+        button.setOnAction(_ -> {
+            BufferedImage img = SwingFXUtils.fromFXImage(stage.getScene().snapshot(null), null);
+            imageToClipboard(img);
+            //System.out.println(img);
+        });
+
+        Group content = new Group(controlLine1, controlLine2, curve, start, control1, control2, end, plot, button);
         content.getChildren().addAll(parts);
 
         stage.setTitle("Cubic Curve Manipulation Sample");
@@ -100,11 +119,32 @@ public class BezierTextPlotter extends Application {
         stage.show();
     }
 
+//    public BufferedImage getTransformedImg() {
+//        final CountDownLatch latch = new CountDownLatch(1);
+//        final AtomicReference<BufferedImage> ret = new AtomicReference<>();
+//        Platform.runLater(() -> {
+//            SnapshotParameters params = new SnapshotParameters();
+//            params.setFill(Color.TRANSPARENT); // no white background
+//            WritableImage fxImage = imgV.snapshot(params, null);
+//            ret.set(SwingFXUtils.fromFXImage(fxImage, null));
+//            latch.countDown();
+//        });
+//        try {
+//            latch.await();
+//        } catch (InterruptedException e) {
+//            throw new RuntimeException(e);
+//        }
+//        return ret.get();
+//    }
+
+
+    /*
     @Override
     public void stop() throws Exception {
         super.stop();
         System.out.println("jfx app stop");
     }
+*/
 
     private PathTransition createPathTransition(CubicCurve curve, Text text) {
         final PathTransition transition = new PathTransition(Duration.seconds(10), curve, text);
@@ -126,7 +166,7 @@ public class BezierTextPlotter extends Application {
         curve.setControlX2(250);
         curve.setControlY2(50);
         curve.setEndX(350);
-        curve.setEndY(150);
+        curve.setEndY(200);
         curve.setStroke(Color.FORESTGREEN);
         curve.setStrokeWidth(4);
         curve.setStrokeLineCap(StrokeLineCap.ROUND);
@@ -134,7 +174,7 @@ public class BezierTextPlotter extends Application {
         return curve;
     }
 
-    class BoundLine extends Line {
+    static class BoundLine extends Line {
         BoundLine(DoubleProperty startX, DoubleProperty startY, DoubleProperty endX, DoubleProperty endY) {
             startXProperty().bind(startX);
             startYProperty().bind(startY);
@@ -148,7 +188,7 @@ public class BezierTextPlotter extends Application {
     }
 
     // a draggable anchor displayed around a point.
-    class Anchor extends Circle {
+    static class Anchor extends Circle {
         Anchor(Color color, DoubleProperty x, DoubleProperty y) {
             super(x.get(), y.get(), 10);
             setFill(color.deriveColor(1, 1, 1, 0.5));
@@ -211,7 +251,7 @@ public class BezierTextPlotter extends Application {
         }
 
         // records relative x and y co-ordinates.
-        private class Delta {
+        private static class Delta {
             double x, y;
         }
     }
