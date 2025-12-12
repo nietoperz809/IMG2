@@ -15,15 +15,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ddb69741-e020-4d21-a32f-f00e79c6818a" name="Changes" comment="allowed multiple launches">
+    <list default="true" id="ddb69741-e020-4d21-a32f-f00e79c6818a" name="Changes" comment="moved jfx dialog to jfx folder">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/buildinfo/BuildInfo2.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/buildinfo/BuildInfo2.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/dialogs/JfxImageView.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/jfxapps/JfxImageView.form" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/dialogs/JfxImageView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jfxapps/JfxImageView.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/dialogs/PersScroller.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/dialogs/PersScroller.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/jfxapps/BezierTextPlotter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jfxapps/BezierTextPlotter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/thegrid/ImgViewKeyHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/thegrid/ImgViewKeyHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/thegrid/gridmenu/GridMenuBar.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/thegrid/gridmenu/GridMenuBar.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -620,7 +613,7 @@
       <option name="project" value="LOCAL" />
       <updated>1683976691765</updated>
     </task>
-    <option name="localTasksCounter" value="400" />
+    <option name="localTasksCounter" value="401" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -688,7 +681,6 @@
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_NEW_TODO" value="false" />
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="jfx-imageview improvements" />
     <MESSAGE value="jfx repaired" />
     <MESSAGE value="perspectivebox added" />
     <MESSAGE value="corrected arguments in PersV" />
@@ -713,7 +705,8 @@
     <MESSAGE value="improved db structure message" />
     <MESSAGE value="added experimental BezierPlotter" />
     <MESSAGE value="allowed multiple launches" />
-    <option name="LAST_COMMIT_MESSAGE" value="allowed multiple launches" />
+    <MESSAGE value="moved jfx dialog to jfx folder" />
+    <option name="LAST_COMMIT_MESSAGE" value="moved jfx dialog to jfx folder" />
     <option name="NON_MODAL_COMMIT_POSTPONE_SLOW_CHECKS" value="false" />
   </component>
   <component name="XDebuggerManager">
