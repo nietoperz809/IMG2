@@ -139,7 +139,10 @@ public class ImageTools {
             fis.close();
             return buff;
         } else {
-            return ImageIO.read(new File(name));
+            BufferedImage img = BImgFromFile(name);
+            if (img == null)
+                return ImageIO.read(new File(name));
+            return img;
         }
     }
 
@@ -225,6 +228,38 @@ public class ImageTools {
         ImageIO.write(img, "jpg", baos);
         return baos.toByteArray();
     }
+
+    /**
+     * Loading JPEGs the imageJ style, avoiding color bugs in imageIO
+     * @param path path to jpeg
+     * @return image or NULL
+     */
+    public static BufferedImage BImgFromFile (String path) {
+        BufferedImage wimg = null;
+        try {
+            Image img = Toolkit.getDefaultToolkit().createImage(path);
+            int width, height;
+            do {
+                Thread.sleep(10);
+                width = img.getWidth(null);
+                height = img.getHeight(null);
+            } while (width == -1 || height == -1);
+            int[] pixels = new int[width * height];
+            PixelGrabber pg = new PixelGrabber(img, 0, 0, width, height, pixels, 0, width);
+            pg.grabPixels();
+            DirectColorModel cm = new DirectColorModel(24, 0xff0000, 0xff00, 0xff);
+            WritableRaster wr = cm.createCompatibleWritableRaster(1, 1);
+            SampleModel sampleModel = wr.getSampleModel();
+            sampleModel = sampleModel.createCompatibleSampleModel(width, height);
+            DataBuffer dataBuffer = new DataBufferInt(pixels, width * height, 0);
+            WritableRaster rgbRaster = Raster.createWritableRaster(sampleModel, dataBuffer, null);
+            wimg = new BufferedImage(cm, rgbRaster, false, null);
+        } catch (InterruptedException e) {
+            return null;
+        }
+        return wimg;
+    }
+
 
     /**
      * make image from byte array

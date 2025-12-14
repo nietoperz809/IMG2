@@ -6,6 +6,7 @@ import database.DBHandler;
 import dialogs.ProgressBox;
 import thegrid.gridmenu.GridMenuBar;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -124,6 +125,8 @@ public class TheGrid extends MyFrame {
 //        Thread hook = new Thread(() ->
 //                DBHandler.log("SHUTDOWN"));
 //        Runtime.getRuntime().addShutdownHook(hook);
+
+        ImageIO.scanForPlugins();
 
         Thread.setDefaultUncaughtExceptionHandler((_, e) -> {
             try {
