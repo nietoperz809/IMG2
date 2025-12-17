@@ -2,7 +2,6 @@ package dialogs;
 
 import common.Tools;
 import common.Win32;
-import thegrid.TheGrid;
 
 import javax.swing.*;
 import java.awt.event.*;
@@ -11,7 +10,8 @@ public class UnlockDialog extends JDialog {
     private JPanel contentPane;
     private JPasswordField passwordField1;
     private JCheckBox checkBox1;
-    private static char EC = '╳';
+    private JButton OKButton;
+    private static final char EC = '╳';
 
     public UnlockDialog(String title) {
         setContentPane(contentPane);
@@ -27,16 +27,16 @@ public class UnlockDialog extends JDialog {
         });
 
         // call onCancel() on ESCAPE
-        contentPane.registerKeyboardAction(e -> onCancel(),
+        contentPane.registerKeyboardAction(_ -> onCancel(),
                 KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
 
-        passwordField1.addActionListener(e -> dispose());
+        passwordField1.addActionListener(_ -> dispose());
 
         passwordField1.setEchoChar(EC);
         checkBox1.addItemListener(e ->
                 passwordField1.setEchoChar (e.getStateChange() == ItemEvent.SELECTED ? (char)0 : EC));
+        OKButton.addActionListener(_ -> dispose());
     }
-
 
     private void onCancel() {
         // add your code here if necessary

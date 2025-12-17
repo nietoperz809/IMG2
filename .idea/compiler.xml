@@ -11,7 +11,7 @@
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
-      <module name="IMG2" options="--add-exports java.desktop/sun.awt.windows=ALL-UNNAMED" />
+      <module name="IMG2" options="--add-exports java.desktop/sun.awt.windows=ALL-UNNAMED --add-exports java.desktop/com.sun.imageio.plugins.jpeg=ALL-UNNAMED" />
     </option>
   </component>
 </project>

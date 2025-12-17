@@ -17,6 +17,7 @@ import java.util.Objects;
 import static common.Tools.hasExtension;
 import static database.DBHandler.loadThumbnail;
 
+
 public class ImageTools {
     /**
      Make Preview from first dim*dim tiles of a Grid
@@ -34,7 +35,7 @@ public class ImageTools {
             for (int y = 2; y < k; y += 102) {
                 try {
                     ig2.drawImage(JPGByteArrayToImg(loadThumbnail(list.get(i++).rowid())),
-                            x, y, 100,100,null);
+                            x, y, 100, 100, null);
                 } catch (RuntimeException e) {
                     //throw new RuntimeException(e);
                 }
@@ -114,7 +115,7 @@ public class ImageTools {
         TransferableImage trans = new TransferableImage(bi);
         Clipboard c = Toolkit.getDefaultToolkit().getSystemClipboard();
         c.setContents(trans, trans);
-        Sam.speak ("Image posted to clipboard");
+        Sam.speak("Image posted to clipboard");
     }
 
     public static String[] getImageExtensions() {
@@ -139,10 +140,17 @@ public class ImageTools {
             fis.close();
             return buff;
         } else {
-            BufferedImage img = BImgFromFile(name);
-            if (img == null)
-                return ImageIO.read(new File(name));
-            return img;
+//            final Iterator<ImageReader> readers = ImageIO.getImageReadersByMIMEType("image/jpeg");
+//            while(readers.hasNext()) {
+//                System.out.println(readers.next());
+//            }
+//            BufferedImage img = ImageIO.read(new File(name));
+//            if (img == null)
+            try {
+                return readJPGwithAWT(name);
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
         }
     }
 
@@ -232,32 +240,26 @@ public class ImageTools {
     /**
      * Loading JPEGs the imageJ style, avoiding color bugs in imageIO
      * @param path path to jpeg
-     * @return image or NULL
+     * @return The image
      */
-    public static BufferedImage BImgFromFile (String path) {
-        BufferedImage wimg = null;
-        try {
-            Image img = Toolkit.getDefaultToolkit().createImage(path);
-            int width, height;
-            do {
-                Thread.sleep(10);
-                width = img.getWidth(null);
-                height = img.getHeight(null);
-            } while (width == -1 || height == -1);
-            int[] pixels = new int[width * height];
-            PixelGrabber pg = new PixelGrabber(img, 0, 0, width, height, pixels, 0, width);
-            pg.grabPixels();
-            DirectColorModel cm = new DirectColorModel(24, 0xff0000, 0xff00, 0xff);
-            WritableRaster wr = cm.createCompatibleWritableRaster(1, 1);
-            SampleModel sampleModel = wr.getSampleModel();
-            sampleModel = sampleModel.createCompatibleSampleModel(width, height);
-            DataBuffer dataBuffer = new DataBufferInt(pixels, width * height, 0);
-            WritableRaster rgbRaster = Raster.createWritableRaster(sampleModel, dataBuffer, null);
-            wimg = new BufferedImage(cm, rgbRaster, false, null);
-        } catch (InterruptedException e) {
-            return null;
+    public static BufferedImage readJPGwithAWT(String path) throws Exception {
+        Image img = Toolkit.getDefaultToolkit().createImage(path);
+        MediaTracker mt = new MediaTracker(new Canvas());
+        mt.addImage(img, 0);
+        mt.waitForID(0);
+        int width = img.getWidth(null);
+        int height = img.getHeight(null);
+        if ((long) width * height > 100_000_000L) {
+            throw new IllegalStateException("image too large");
         }
-        return wimg;
+        int[] pixels = new int[width * height];
+        new PixelGrabber(img, 0, 0, width, height, pixels, 0, width).grabPixels();
+        DirectColorModel cm = new DirectColorModel(24, 0xff0000, 0xff00, 0xff);
+        SampleModel sampleModel = cm.createCompatibleWritableRaster(1, 1).
+                getSampleModel().createCompatibleSampleModel(width, height);
+        DataBuffer dataBuffer = new DataBufferInt(pixels, width * height, 0);
+        WritableRaster rgbRaster = Raster.createWritableRaster(sampleModel, dataBuffer, null);
+        return new BufferedImage(cm, rgbRaster, false, null);
     }
 
 
