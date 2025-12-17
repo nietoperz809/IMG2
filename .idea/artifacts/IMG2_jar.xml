@@ -49,6 +49,7 @@
       <element id="extracted-dir" path="$PROJECT_DIR$/lib/common-lang-3.9.4.jar" path-in-jar="/" />
       <element id="extracted-dir" path="$PROJECT_DIR$/lib/common-io-3.9.4.jar" path-in-jar="/" />
       <element id="extracted-dir" path="$PROJECT_DIR$/lib/common-image-3.9.4.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/lib/commons-imaging-1.0a1.jar" path-in-jar="/" />
     </root>
   </artifact>
 </component>

@@ -87,7 +87,7 @@ public class GridMenuBar extends JMenuBar {
                     BufferedImage img = loadImageFromFile(f.getAbsolutePath());
                     HashingAlgorithm hasher = new PerceptiveHash(32);
                     loadSimilarities(hasher.hash(img), -1);
-                } catch (IOException e) {
+                } catch (Exception e) {
                     throw new RuntimeException(e);
                 }
             }

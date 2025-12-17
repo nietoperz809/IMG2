@@ -1,6 +1,7 @@
 package common;
 
 import com.luciad.imageio.webp.WebPReadParam;
+import org.apache.commons.imaging.Imaging;
 import org.jetbrains.annotations.NotNull;
 import thegrid.ImageList;
 
@@ -14,7 +15,6 @@ import java.awt.image.*;
 import java.io.*;
 import java.util.Objects;
 
-import static common.Tools.hasExtension;
 import static database.DBHandler.loadThumbnail;
 
 
@@ -122,35 +122,42 @@ public class ImageTools {
         return new String[]{"jpg", "jpeg", "png", "bmp", "gif", "jfif", "webp"};
     }
 
-    public static BufferedImage loadImageFromFile(String name) throws IOException {
-        if (Tools.isGIF(name)) {
-            MsgBox.Info("Please put animated gifs in video app");
-            return ImageIO.read(new File(name));
-        } else if (hasExtension(name, ".webp")) {
-            // Obtain a WebP ImageReader instance
-            ImageReader reader = ImageIO.getImageReadersByMIMEType("image/webp").next();
-            // Configure decoding parameters
-            WebPReadParam readParam = new WebPReadParam();
-            readParam.setBypassFiltering(true);
-            // Configure the input on the ImageReader
-            FileImageInputStream fis = new FileImageInputStream(new File(name));
-            reader.setInput(fis);
-            // Decode the image
-            BufferedImage buff = reader.read(0, readParam);
-            fis.close();
-            return buff;
-        } else {
-//            final Iterator<ImageReader> readers = ImageIO.getImageReadersByMIMEType("image/jpeg");
-//            while(readers.hasNext()) {
-//                System.out.println(readers.next());
-//            }
-//            BufferedImage img = ImageIO.read(new File(name));
-//            if (img == null)
-            try {
-                return readJPGwithAWT(name);
-            } catch (Exception e) {
-                throw new RuntimeException(e);
+    public static boolean isWEBP(File f) {
+        try {
+            InputStream in = new FileInputStream(f);
+            byte[] header = new byte[12];
+            if (in.read(header) == header.length) {
+                if (header[0] == 'R' && header[1] == 'I' && header[2] == 'F' && header[3] == 'F' &&
+                        header[8] == 'W' && header[9] == 'E' && header[10] == 'B' && header[11] == 'P') {
+                    in.close();
+                    return true;
+                }
             }
+        } catch (Exception _) {
+        }
+        return false;
+    }
+
+    public static BufferedImage loadImageFromFile(String name) {
+        try {
+            if (isWEBP(new File(name))) {
+                // Obtain a WebP ImageReader instance
+                ImageReader reader = ImageIO.getImageReadersByMIMEType("image/webp").next();
+                // Configure decoding parameters
+                WebPReadParam readParam = new WebPReadParam();
+                readParam.setBypassFiltering(true);
+                // Configure the input on the ImageReader
+                FileImageInputStream fis = new FileImageInputStream(new File(name));
+                reader.setInput(fis);
+                // Decode the image
+                BufferedImage buff = reader.read(0, readParam);
+                fis.close();
+                return buff;
+            }
+            return Imaging.getBufferedImage(new File(name));
+        } catch (Exception _) {
+            System.out.println("img decoding fail");
+            return null;
         }
     }
 
@@ -241,6 +248,7 @@ public class ImageTools {
      * Loading JPEGs the imageJ style, avoiding color bugs in imageIO
      * @param path path to jpeg
      * @return The image
+     * @throws Exception if smth. gone wrong
      */
     public static BufferedImage readJPGwithAWT(String path) throws Exception {
         Image img = Toolkit.getDefaultToolkit().createImage(path);
@@ -249,15 +257,16 @@ public class ImageTools {
         mt.waitForID(0);
         int width = img.getWidth(null);
         int height = img.getHeight(null);
-        if ((long) width * height > 100_000_000L) {
-            throw new IllegalStateException("image too large");
+        int dim = Math.toIntExact((long) width * height);
+        if (dim > 100_000_000L) {
+            throw new IllegalStateException("image too big");
         }
-        int[] pixels = new int[width * height];
+        int[] pixels = new int[dim];
         new PixelGrabber(img, 0, 0, width, height, pixels, 0, width).grabPixels();
         DirectColorModel cm = new DirectColorModel(24, 0xff0000, 0xff00, 0xff);
         SampleModel sampleModel = cm.createCompatibleWritableRaster(1, 1).
                 getSampleModel().createCompatibleSampleModel(width, height);
-        DataBuffer dataBuffer = new DataBufferInt(pixels, width * height, 0);
+        DataBuffer dataBuffer = new DataBufferInt(pixels, dim, 0);
         WritableRaster rgbRaster = Raster.createWritableRaster(sampleModel, dataBuffer, null);
         return new BufferedImage(cm, rgbRaster, false, null);
     }
