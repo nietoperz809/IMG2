@@ -72,7 +72,7 @@ public class ImageFrame extends JFrame implements MouseWheelListener {
     private long imgSavetime;
 
     /**
-     * Save img to disk
+     * Save image to disk
      * @param orig true == from database, false == from icon
      * @param outPath pazh where to write to
      */

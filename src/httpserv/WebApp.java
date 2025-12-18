@@ -94,7 +94,7 @@ public class WebApp extends NanoHTTPD {
         for (DBHandler.NameID nid : allFiles) {
             msg.append("<a href=\"")
                     .append(nid.rowid())
-                    .append(".lnk\" target=\"_blank\"><img src=\"")
+                    .append(".lnk\" target=\"_blank\"><image src=\"")
                     .append(nid.rowid())
                     .append(".tmb\" width=\"50\" height=\"50\"></a>\n");
         }
@@ -126,7 +126,7 @@ public class WebApp extends NanoHTTPD {
      */
     private Response switchImage(IHTTPSession session) {
         int rowid;
-        String parm = session.getParms().get("img");
+        String parm = session.getParms().get("image");
         if (parm.equals("@@PRV")) {
             rowid = allFiles.get(ring.getPrev()).rowid();
         } else if (parm.equals("@@NXT")) {

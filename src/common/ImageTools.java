@@ -153,17 +153,26 @@ public class ImageTools {
         return buff;
     }
 
-    public static BufferedImage loadImageFromFile(String name) {
+    public enum Decoder {AWTHACK, IMAGING, LOCALCOPY, WEBPREADER}
+    public record ImageImport(Decoder dec, BufferedImage image) {}
+
+    /**
+     * Import images from file
+     * @param name path to image
+     * @return a valid ImageImport or null on error
+     */
+    public static ImageImport importImageFromFile(String name) {
         try {
             if (isWEBP(new File(name))) {
-                return loadWEBP(name);
+                return new ImageImport(Decoder.WEBPREADER, loadWEBP(name));
             }
-            return Imaging.getBufferedImage(new File(name));
+            // Imaging.getBufferedImage(new File(name));
+            return new ImageImport(Decoder.IMAGING, Imaging.getBufferedImage(new File(name)));
         } catch (Exception _) {
             try {
-                return readJPGwithAWT(name);
+                return new ImageImport(Decoder.AWTHACK, readJPGwithAWT(name));
             } catch (Exception _) {
-                System.out.println("img decoding fail");
+                System.out.println("image decoding fail");
                 return null;
             }
         }

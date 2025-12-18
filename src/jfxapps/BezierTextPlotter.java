@@ -108,7 +108,7 @@ public class BezierTextPlotter extends Application {
         button.setOnAction(_ -> {
             BufferedImage img = SwingFXUtils.fromFXImage(stage.getScene().snapshot(null), null);
             imageToClipboard(img);
-            //System.out.println(img);
+            //System.out.println(image);
         });
 
         Group content = new Group(controlLine1, controlLine2, curve, start, control1, control2, end, plot, button);

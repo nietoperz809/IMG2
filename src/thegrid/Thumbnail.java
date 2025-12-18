@@ -78,7 +78,7 @@ public class Thumbnail extends JLabel {
             String tt = Tools.commatize(Integer.parseInt(len));
             setToolTipText (String.format(tt+" Bytes"));
         } catch (Exception e) {
-            setToolTipText("could not get length of img: "+thisID.rowid());
+            setToolTipText("could not get length of image: "+thisID.rowid());
         }
     }
 

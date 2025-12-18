@@ -61,7 +61,7 @@ public class MultiSlider extends JDialog {
 //            final Stepper stepper = new Stepper(-3.0f, 3.0f, 256);
 //            float val = stepper.get(sc4.getValue());
 //            la4.setText(""+val);
-//            BufferedImage out = ImageTools.contrast(img, val);
+//            BufferedImage out = ImageTools.contrast(image, val);
 //            imgPanel.setImage(out);
 //        });
     }

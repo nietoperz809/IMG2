@@ -15,9 +15,21 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ddb69741-e020-4d21-a32f-f00e79c6818a" name="Changes" comment="new jpeg reader">
+    <list default="true" id="ddb69741-e020-4d21-a32f-f00e79c6818a" name="Changes" comment="stabilized image import from files">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/buildinfo/BuildInfo2.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/buildinfo/BuildInfo2.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/common/ImageTools.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/common/ImageTools.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/database/DBHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/database/DBHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dialogs/MultiSlider.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/dialogs/MultiSlider.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/httpserv/WebApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/httpserv/WebApp.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/jfxapps/BezierTextPlotter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jfxapps/BezierTextPlotter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/thegrid/GridListeners.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/thegrid/GridListeners.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/thegrid/ImageFrame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/thegrid/ImageFrame.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/thegrid/ImgViewKeyHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/thegrid/ImgViewKeyHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/thegrid/Thumbnail.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/thegrid/Thumbnail.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/thegrid/gridmenu/GridMenuBar.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/thegrid/gridmenu/GridMenuBar.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/video/GifDecoder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/video/GifDecoder.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/video/WebPDecoder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/video/WebPDecoder.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -105,7 +117,7 @@
     &quot;Application.Main (1).executor&quot;: &quot;Run&quot;,
     &quot;Application.Main (2).executor&quot;: &quot;Run&quot;,
     &quot;Application.Main.executor&quot;: &quot;Run&quot;,
-    &quot;Application.MainC.executor&quot;: &quot;Debug&quot;,
+    &quot;Application.MainC.executor&quot;: &quot;Run&quot;,
     &quot;Application.MainE.executor&quot;: &quot;Run&quot;,
     &quot;Application.MonitorFrame.executor&quot;: &quot;Run&quot;,
     &quot;Application.MultiSlider.executor&quot;: &quot;Run&quot;,
@@ -660,7 +672,7 @@
       <option name="project" value="LOCAL" />
       <updated>1683976691765</updated>
     </task>
-    <option name="localTasksCounter" value="410" />
+    <option name="localTasksCounter" value="411" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -728,7 +740,6 @@
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_NEW_TODO" value="false" />
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="pers sliders working" />
     <MESSAGE value="added jfx img editor" />
     <MESSAGE value="w&amp;b buttons now menu items" />
     <MESSAGE value="added tooltip text" />
@@ -753,7 +764,8 @@
     <MESSAGE value="javadocs removed" />
     <MESSAGE value="bugfix for java ImageIO" />
     <MESSAGE value="new jpeg reader" />
-    <option name="LAST_COMMIT_MESSAGE" value="new jpeg reader" />
+    <MESSAGE value="stabilized image import from files" />
+    <option name="LAST_COMMIT_MESSAGE" value="stabilized image import from files" />
     <option name="NON_MODAL_COMMIT_POSTPONE_SLOW_CHECKS" value="false" />
   </component>
   <component name="XDebuggerManager">

@@ -20,12 +20,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import static common.ImageTools.loadImageFromFile;
+import static common.ImageTools.importImageFromFile;
 import static common.Tools.commatize;
 import static common.Tools.restartApplication;
 import static thegrid.ImgViewKeyHandler.loadSimilarities;
@@ -84,9 +83,9 @@ public class GridMenuBar extends JMenuBar {
             if (fc.showOpenDialog(theGrid.rootPane) == JFileChooser.APPROVE_OPTION) {
                 File f = fc.getSelectedFile();
                 try {
-                    BufferedImage img = loadImageFromFile(f.getAbsolutePath());
+                    ImageTools.ImageImport imgin = importImageFromFile(f.getAbsolutePath());
                     HashingAlgorithm hasher = new PerceptiveHash(32);
-                    loadSimilarities(hasher.hash(img), -1);
+                    loadSimilarities(hasher.hash(imgin.image()), -1);
                 } catch (Exception e) {
                     throw new RuntimeException(e);
                 }

@@ -65,6 +65,7 @@ public class DBHandler {
             stm.execute("alter table GIFS add if not exists BLOBSiZE INT");
             stm.execute("alter table WEBP add if not exists BLOBSiZE INT");
             stm.execute("alter table IMAGES add if not exists IMGHASH JAVA_OBJECT");
+            stm.execute("alter table IMAGES add if not exists DECODER varchar(20)");
             stm.execute("create table if not exists QUERIES (sql varbinary(512) primary key)");
             stm.execute("create table if not exists LOG (ltime timestamp GENERATED ALWAYS AS CURRENT_TIMESTAMP, sql varchar(256))");
             stm.execute("create table if not exists VIDEOS (VID blob, NAME varchar(200), HASHVAL blob(16))");
@@ -310,13 +311,13 @@ public class DBHandler {
     public static synchronized int MoveImageFilesToDB(File[] files, InsertCallback ic) throws Exception {
         int ret = 0;
         for (File file : files) {
-            BufferedImage img = ImageTools.loadImageFromFile(file.getPath());
-            if (img == null) {
+            ImageTools.ImageImport imgin = ImageTools.importImageFromFile(file.getPath());
+            if (imgin == null) {
                 err.println("no image");
                 continue;
             }
-            insertImageRecord(img);
-            ic.justInserted(img);
+            insertImageRecord (imgin);
+            ic.justInserted (imgin.image());
             DeferredFileDeleter.put(file);
             ret++;
         }
@@ -330,27 +331,36 @@ public class DBHandler {
     }
 
     /**
-     * Convert img into INT_RGB, generate thumbnail and put all in the table
-     * @param img the image
+     * Convert image into INT_RGB, generate thumbnail and put all in the table
+     * @param imgin the imported image
+     * @throws IOException if smth. gone wrong
      */
-    public static void insertImageRecord (BufferedImage img) throws IOException {
-        byte[] buff = ImageTools.imgToJPGByteArray(img);
-        byte[] buff2 = createThumbBytes(img);
+    public static void insertImageRecord (ImageTools.ImageImport imgin) throws IOException {
+        byte[] buff = ImageTools.imgToJPGByteArray(imgin.image());
+        byte[] buff2 = createThumbBytes(imgin.image());
         PreparedStatement prep;
         HashingAlgorithm hasher = new PerceptiveHash(32);
-        Hash hash0 = hasher.hash(img);
+        Hash hash0 = hasher.hash(imgin.image());
         try {
             prep = connection.prepareStatement(
-                    "insert into IMAGES (image,thumb,imghash) values (?,?,?)");
+                    "insert into IMAGES (image,thumb,imghash,decoder) values (?,?,?,?)");
             prep.setBytes(1, buff);
             prep.setBytes(2, buff2);
             prep.setObject(3, hash0);
+            prep.setString(4,imgin.dec().toString());
             prep.execute();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
+/*
+CREATE TABLE users (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR(100) NOT NULL,
+    status VARCHAR(20) NOT NULL
+);
 
+ */
     /*
     Create Thumbnail 100*100
      */
@@ -375,7 +385,7 @@ public class DBHandler {
 
     public static void changeBigImg(BufferedImage img, int id) {
         try {
-            //img = ImageTools.removeAlpha(img);
+            //image = ImageTools.removeAlpha(image);
             byte[] buff = ImageTools.imgToJPGByteArray(img);
             HashingAlgorithm hasher = new PerceptiveHash(32);
             Hash hash0 = hasher.hash(img);

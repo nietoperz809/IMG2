@@ -679,7 +679,7 @@ public class WebPDecoder implements AnimDecoder {
 //
 //        for (WebPImageFrame f : image.frames) {
 //            System.out.println(f.delay);
-//            System.out.println(f.img);
+//            System.out.println(f.image);
 //        }
 //    }
 }

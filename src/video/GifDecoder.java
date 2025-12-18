@@ -195,9 +195,9 @@ public class GifDecoder implements AnimDecoder {
 
 //    public void saveFrames (String dir, int from, int to) {
 //        for (int s = from; s<=to; s++) {
-//            BufferedImage img = getFrame(s);
+//            BufferedImage image = getFrame(s);
 //            try {
-//                ImageIO.write(img, "png",
+//                ImageIO.write(image, "png",
 //                        new File(dir + File.separator + (from+s) + ".png"));
 //            } catch (IOException e) {
 //                throw new RuntimeException(e);

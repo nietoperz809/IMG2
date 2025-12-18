@@ -115,14 +115,14 @@ public class ImgViewKeyHandler extends KeyAdapter {
                 imageFrame.adjustOn('w');
             }
 
-            case VK_T -> { // next img
+            case VK_T -> { // next image
                 imageFrame.indexRing.set(imageFrame.shuffledRing.getNext());
                 imageFrame.setImg();
                 imageFrame.imgPanel.clearOffset();
                 imageFrame.adjustOn('h');
             }
 
-            case VK_Z -> { // prev img, ctrlZ -> undo
+            case VK_Z -> { // prev image, ctrlZ -> undo
                 if (e.isControlDown()) {
                     imageFrame.imgPanel.undoImage();
                     return;
@@ -137,7 +137,7 @@ public class ImgViewKeyHandler extends KeyAdapter {
                 if (e.isControlDown()) {
                     BufferedImage img = imageFrame.getIconImg();
                     try {
-                        DBHandler.insertImageRecord(img);
+                        DBHandler.insertImageRecord (new ImageTools.ImageImport(ImageTools.Decoder.LOCALCOPY, img));
                         Sam.speak("copy inserted");
                     } catch (IOException _) {
                         Sam.speak("copy failed");
