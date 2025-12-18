@@ -138,26 +138,34 @@ public class ImageTools {
         return false;
     }
 
+    public static BufferedImage loadWEBP (String name) throws Exception {
+        // Obtain a WebP ImageReader instance
+        ImageReader reader = ImageIO.getImageReadersByMIMEType("image/webp").next();
+        // Configure decoding parameters
+        WebPReadParam readParam = new WebPReadParam();
+        readParam.setBypassFiltering(true);
+        // Configure the input on the ImageReader
+        FileImageInputStream fis = new FileImageInputStream(new File(name));
+        reader.setInput(fis);
+        // Decode the image
+        BufferedImage buff = reader.read(0, readParam);
+        fis.close();
+        return buff;
+    }
+
     public static BufferedImage loadImageFromFile(String name) {
         try {
             if (isWEBP(new File(name))) {
-                // Obtain a WebP ImageReader instance
-                ImageReader reader = ImageIO.getImageReadersByMIMEType("image/webp").next();
-                // Configure decoding parameters
-                WebPReadParam readParam = new WebPReadParam();
-                readParam.setBypassFiltering(true);
-                // Configure the input on the ImageReader
-                FileImageInputStream fis = new FileImageInputStream(new File(name));
-                reader.setInput(fis);
-                // Decode the image
-                BufferedImage buff = reader.read(0, readParam);
-                fis.close();
-                return buff;
+                return loadWEBP(name);
             }
             return Imaging.getBufferedImage(new File(name));
         } catch (Exception _) {
-            System.out.println("img decoding fail");
-            return null;
+            try {
+                return readJPGwithAWT(name);
+            } catch (Exception _) {
+                System.out.println("img decoding fail");
+                return null;
+            }
         }
     }
 
