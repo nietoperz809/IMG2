@@ -9,6 +9,7 @@ import com.jhlabs.image.*;
 import common.*;
 import database.AccessCounter;
 import database.DBHandler;
+import database.ImageImport;
 import dev.brachtendorf.jimagehash.hash.Hash;
 import dev.brachtendorf.jimagehash.hashAlgorithms.HashingAlgorithm;
 import dev.brachtendorf.jimagehash.hashAlgorithms.PerceptiveHash;
@@ -137,7 +138,7 @@ public class ImgViewKeyHandler extends KeyAdapter {
                 if (e.isControlDown()) {
                     BufferedImage img = imageFrame.getIconImg();
                     try {
-                        DBHandler.insertImageRecord (new ImageTools.ImageImport(ImageTools.Decoder.LOCALCOPY, img));
+                        DBHandler.insertImageRecord (new ImageImport(ImageImport.Decoder.LOCALCOPY, img));
                         Sam.speak("copy inserted");
                     } catch (IOException _) {
                         Sam.speak("copy failed");

@@ -311,7 +311,7 @@ public class DBHandler {
     public static synchronized int MoveImageFilesToDB(File[] files, InsertCallback ic) throws Exception {
         int ret = 0;
         for (File file : files) {
-            ImageTools.ImageImport imgin = ImageTools.importImageFromFile(file.getPath());
+            ImageImport imgin = ImageTools.importImageFromFile(file.getPath());
             if (imgin == null) {
                 err.println("no image");
                 continue;
@@ -335,7 +335,7 @@ public class DBHandler {
      * @param imgin the imported image
      * @throws IOException if smth. gone wrong
      */
-    public static void insertImageRecord (ImageTools.ImageImport imgin) throws IOException {
+    public static void insertImageRecord (@NotNull ImageImport imgin) throws IOException {
         byte[] buff = ImageTools.imgToJPGByteArray(imgin.image());
         byte[] buff2 = createThumbBytes(imgin.image());
         PreparedStatement prep;
@@ -353,14 +353,7 @@ public class DBHandler {
             throw new RuntimeException(e);
         }
     }
-/*
-CREATE TABLE users (
-    id INT PRIMARY KEY AUTO_INCREMENT,
-    name VARCHAR(100) NOT NULL,
-    status VARCHAR(20) NOT NULL
-);
 
- */
     /*
     Create Thumbnail 100*100
      */

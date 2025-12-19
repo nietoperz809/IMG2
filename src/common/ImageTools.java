@@ -1,6 +1,7 @@
 package common;
 
 import com.luciad.imageio.webp.WebPReadParam;
+import database.ImageImport;
 import org.apache.commons.imaging.Imaging;
 import org.jetbrains.annotations.NotNull;
 import thegrid.ImageList;
@@ -122,9 +123,9 @@ public class ImageTools {
         return new String[]{"jpg", "jpeg", "png", "bmp", "gif", "jfif", "webp"};
     }
 
-    public static boolean isWEBP(File f) {
+    public static boolean isWEBP (String path) {
         try {
-            InputStream in = new FileInputStream(f);
+            InputStream in = new FileInputStream(path);
             byte[] header = new byte[12];
             if (in.read(header) == header.length) {
                 if (header[0] == 'R' && header[1] == 'I' && header[2] == 'F' && header[3] == 'F' &&
@@ -153,9 +154,6 @@ public class ImageTools {
         return buff;
     }
 
-    public enum Decoder {AWTHACK, IMAGING, LOCALCOPY, WEBPREADER}
-    public record ImageImport(Decoder dec, BufferedImage image) {}
-
     /**
      * Import images from file
      * @param name path to image
@@ -163,14 +161,13 @@ public class ImageTools {
      */
     public static ImageImport importImageFromFile(String name) {
         try {
-            if (isWEBP(new File(name))) {
-                return new ImageImport(Decoder.WEBPREADER, loadWEBP(name));
+            if (isWEBP (name)) {
+                return new ImageImport(ImageImport.Decoder.WEBPREADER, loadWEBP(name));
             }
-            // Imaging.getBufferedImage(new File(name));
-            return new ImageImport(Decoder.IMAGING, Imaging.getBufferedImage(new File(name)));
+            return new ImageImport(ImageImport.Decoder.IMAGING, Imaging.getBufferedImage(new File(name)));
         } catch (Exception _) {
             try {
-                return new ImageImport(Decoder.AWTHACK, readJPGwithAWT(name));
+                return new ImageImport(ImageImport.Decoder.AWTHACK, readJPGwithAWT(name));
             } catch (Exception _) {
                 System.out.println("image decoding fail");
                 return null;

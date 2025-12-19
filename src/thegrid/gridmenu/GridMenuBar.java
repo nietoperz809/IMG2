@@ -2,6 +2,7 @@ package thegrid.gridmenu;
 
 import common.*;
 import database.DBHandler;
+import database.ImageImport;
 import dev.brachtendorf.jimagehash.hashAlgorithms.HashingAlgorithm;
 import dev.brachtendorf.jimagehash.hashAlgorithms.PerceptiveHash;
 import dialogs.*;
@@ -83,7 +84,7 @@ public class GridMenuBar extends JMenuBar {
             if (fc.showOpenDialog(theGrid.rootPane) == JFileChooser.APPROVE_OPTION) {
                 File f = fc.getSelectedFile();
                 try {
-                    ImageTools.ImageImport imgin = importImageFromFile(f.getAbsolutePath());
+                    ImageImport imgin = importImageFromFile(f.getAbsolutePath());
                     HashingAlgorithm hasher = new PerceptiveHash(32);
                     loadSimilarities(hasher.hash(imgin.image()), -1);
                 } catch (Exception e) {
