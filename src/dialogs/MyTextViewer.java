@@ -37,8 +37,13 @@ public class MyTextViewer extends JDialog {
 
     public static void showDatabase() {
         MyTextViewer dialog = new MyTextViewer();
+        String i1 = DBHandler.getTableCount("IMAGES");
+        String i2 = DBHandler.getTableCount("VIDEOS");
+        String i3 = DBHandler.getTableCount("GIFS");
+        String i4 = DBHandler.getTableCount("WEBP");
+        String count = "-- "+i1+" "+i2+" "+i3+" "+i4;
         dialog.textPane1.setContentType("text/html");
-        String s = DBHandler.getDBStructure();
+        String s = DBHandler.getDBStructure()+"\n"+count;
         s = s.replace ("\n", "<br>");
         dialog.textPane1.setText("<html><b>"+s+"</b></html>");
         dialog.setSize(800, 600);

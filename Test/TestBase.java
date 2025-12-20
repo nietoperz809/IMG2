@@ -1,4 +1,5 @@
 import common.Stepper;
+import database.DBHandler;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -14,4 +15,13 @@ public class TestBase {
         Assert.assertEquals(10f, st.get(255), 0.1f);
         Assert.assertEquals(10f, st.get(256), 0.1f);
     }
+
+    @Test
+    public void askForDel() {
+        for(;;) {
+            boolean b = !DBHandler.askForDel("Hello");
+            System.out.println(b);
+        }
+    }
+
 }

@@ -93,14 +93,17 @@ public class DBHandler {
      *
      * @return true if user clicked OK
      */
-    private static boolean askForDel(String imgName) {
+    public static boolean askForDel(String imgName) {
         Object[] options = {"OK", "NO! NEVER!!"};
-        return JOptionPane.showOptionDialog(null,
+        int i = JOptionPane.showOptionDialog(null,
                 "Delete " + imgName + " from DB?",
                 "Warning",
                 JOptionPane.DEFAULT_OPTION,
-                JOptionPane.WARNING_MESSAGE, null, options, options[1]
-        ) != 0;
+                JOptionPane.WARNING_MESSAGE, null, options, options[1]);
+        return switch (i) {
+            case 0 -> true;
+            default -> false;
+        };
     }
 
     public static boolean execSQL(String sql) {
@@ -188,6 +191,18 @@ public class DBHandler {
         return sb.toString();
     }
 
+    public static String getTableCount(String tableName) {
+        String sql = "select count(*) as totalcnt from "+tableName;
+        try (ResultSet res = query(sql)) {
+            if (Objects.requireNonNull(res).next()) {
+                return tableName+":"+res.getNString("totalcnt");
+            }
+        }  catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return null;
+    }
+
     public static String getH2Version() {
         String sql = "select H2VERSION()";
         return queryString(sql);
@@ -227,9 +242,9 @@ public class DBHandler {
         return al;
     }
 
-    public static boolean deleteImageSilently(int rowid) {
+    public static boolean deleteSilently(String table, int rowid) {
         try {
-            stm.execute("delete from IMAGES where _ROWID_ = " + rowid);
+            stm.execute("delete from "+table+" where _ROWID_ = " + rowid);
             return true;
         } catch (SQLException e) {
             //throw new RuntimeException(e);
@@ -238,10 +253,9 @@ public class DBHandler {
     }
 
     public static boolean deleteImage(int rowid) {
-        if (askForDel(String.valueOf(rowid))) {
-            return false;
-        }
-        return deleteImageSilently(rowid);
+        if (askForDel(String.valueOf(rowid)))
+            return deleteSilently("IMAGES",rowid);
+        return false;
     }
 
     public static void deleteVideo(int rowid) {
@@ -257,14 +271,8 @@ public class DBHandler {
     }
 
     public static void deleteGifOrVideo(String tablename, int rowid) {
-        if (askForDel(String.valueOf(rowid))) {
-            return;
-        }
-        try {
-            stm.execute("delete from " + tablename + " where _ROWID_ = " + rowid);
-        } catch (SQLException e) {
-            //throw new RuntimeException(e);
-        }
+        if (askForDel(String.valueOf(rowid)))
+            deleteSilently(tablename, rowid);
     }
 
     public static void setTag(int rowid, String tag) {
@@ -430,7 +438,6 @@ public class DBHandler {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-
     }
 
     public static synchronized byte[] loadThumbnail(int rowid) {

@@ -61,7 +61,7 @@ public class SubMenuMarked extends JMenu {
             final JPanel jp = grid.rootPane;
             for (Thumbnail gi : marked) {
                 int id = gi.getRowID();
-                DBHandler.deleteImageSilently(id);
+                DBHandler.deleteSilently("IMAGES",id);
                 jp.remove(gi);
             }
             jp.doLayout();
