@@ -88,8 +88,7 @@ public class ImgViewKeyHandler extends KeyAdapter {
             case VK_J -> {
                 int id = imageFrame.grid.imageL.get(imageFrame.indexRing.get()).rowid();
                 String init = "" + AccessCounter.getAccCounter(id);
-                int res = LineInput.onlyPosNumber(init, "new acc counter for: " + id,
-                        Color.orange);
+                int res = Input.getInteger("acc counter for: "+id, init);
                 AccessCounter.setAccCounter(id, res);
             }
 
@@ -206,7 +205,7 @@ public class ImgViewKeyHandler extends KeyAdapter {
 
             case VK_A -> {  // Tags
                 int rowid = imageFrame.grid.imageL.get(imageFrame.indexRing.get()).rowid();
-                String tag = LineInput.tagList(DBHandler.getTags(rowid), "Tag:", Color.YELLOW);
+                String tag = Tagger.tagList(DBHandler.getTags(rowid), "Tag:", Color.YELLOW);
                 DBHandler.setTag(rowid, tag);
             }
 

@@ -7,7 +7,8 @@ import common.ImageTools;
 import common.Tools;
 import database.AccessCounter;
 import database.DBHandler;
-import dialogs.LineInput;
+import dialogs.Input;
+import dialogs.Tagger;
 import org.jetbrains.annotations.NotNull;
 
 import javax.swing.*;
@@ -115,8 +116,9 @@ public class ImageFrame extends JFrame implements MouseWheelListener {
     public void selectAnotherImage(int rowid_in) {
         int n;
         if (rowid_in == -1) {
-            String str = LineInput.xmain("?", "Goto:", Color.GREEN,
-                    "rowid or 'last/first' keyword", false);
+            String str = Input.getText("rowid or 'last/first' keyword","?");
+//                    Tagger.xmain("?", "Goto:", Color.GREEN,
+//                    "rowid or 'last/first' keyword", false);
             if (str.startsWith("?")) {
                 str = str.substring(1);
             }

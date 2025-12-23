@@ -2,7 +2,7 @@ package thegrid.gridmenu;
 
 import common.*;
 import database.DBHandler;
-import dialogs.LineInput;
+import dialogs.Tagger;
 import net.lingala.zip4j.ZipFile;
 import net.lingala.zip4j.exception.ZipException;
 import net.lingala.zip4j.model.ZipParameters;
@@ -27,14 +27,14 @@ public class SubMenuMarked extends JMenu {
 
     private void changeTags(final TheGrid grid, boolean remove) {
         final Thumbnail[] marked = Thumbnail.getMarked(grid);
-        String tagsnew = LineInput.tagList("", "Tag:", Color.YELLOW);
+        String tagsnew = Tagger.tagList("", "Tag:", Color.YELLOW);
         if (tagsnew.isEmpty())
             return;
-        TreeSet<String> tnew = Csv.SetFromCSVString(tagsnew);
+        TreeSet<String> tnew = Csv.getSetFromCSVString(tagsnew);
         for (Thumbnail gi : marked) {
             int id = gi.getRowID();
             String tags = DBHandler.getTags(id);
-            TreeSet<String> tset = Csv.SetFromCSVString(tags);
+            TreeSet<String> tset = Csv.getSetFromCSVString(tags);
             if (remove)
                 tset.removeAll(tnew);
             else

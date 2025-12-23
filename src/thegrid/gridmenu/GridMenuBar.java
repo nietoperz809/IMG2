@@ -97,7 +97,7 @@ public class GridMenuBar extends JMenuBar {
         jmi = new JMenuItem("Speak Integer");
         jmi.setToolTipText("Say number using SAM");
         jmi.addActionListener(_ -> {
-            int num = LineInput.onlyPosNumber("", "Num", Color.MAGENTA);
+            int num = Input.getInteger("Say this", "4711");
             String s = NumToText.convert(num);
             Sam.speak(s);
         });
@@ -127,7 +127,7 @@ public class GridMenuBar extends JMenuBar {
 
         jmi = new JMenuItem("direct sql command");
         jmi.addActionListener(_ -> {
-            String sql = LineInput.xmain("select * from (select name,_ROWID_,tag,accnum from IMAGES) order by _rowid_ desc",
+            String sql = Tagger.xmain("select * from (select name,_ROWID_,tag,accnum from IMAGES) order by _rowid_ desc",
                     "direct SQL", Color.BLUE);
             if (!sql.isEmpty()) {
                 boolean b = DBHandler.execSQL(sql);
@@ -138,7 +138,7 @@ public class GridMenuBar extends JMenuBar {
 
         jmi = new JMenuItem("Open another Grid ...");
         jmi.addActionListener(_ -> (new Thread(() -> {
-            String sql = LineInput.xmain("select * from (select name,_ROWID_,tag,accnum from IMAGES) order by _rowid_ desc",
+            String sql = Tagger.xmain("select * from (select name,_ROWID_,tag,accnum from IMAGES) order by _rowid_ desc",
                     "SQL", Color.BLUE);
             if (!sql.isEmpty())
                 new TheGrid(sql, "child ");

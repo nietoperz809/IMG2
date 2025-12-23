@@ -7,10 +7,11 @@ import database.DBHandler;
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 import java.awt.*;
-import java.awt.event.*;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.util.TreeSet;
 
-public class LineInput extends JDialog {
+public class Tagger extends JDialog {
     private JPanel contentPane;
     private JTextField textField1;
     private JLabel label;
@@ -18,18 +19,19 @@ public class LineInput extends JDialog {
     private JList<String> list1;
     private JButton buttonOK;
     private JPanel innerPanel;
+    private JTextField searchField;
     private String initText;
+    private MyListCellRenderer this_ml;
 
     private void listToText() {
-        TreeSet<String> set2 = Csv.SetFromCSVString(textField1.getText());
+        TreeSet<String> set2 = Csv.getSetFromCSVString(textField1.getText());
         Csv.combineSpecial(set2, list1.getSelectedValuesList());
-        set2.remove("");
         textField1.setText(Csv.CsvStringFromSet(set2));
         System.out.println(textField1.getText());
     }
 
-    public LineInput(Color col) {
-
+    public Tagger(Color col) {
+        list1.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
         buttonOK.addActionListener(e -> {
             if (innerPanel.isVisible()) {
                 String str = Csv.normalizeCSVString(textField1.getText());
@@ -58,14 +60,39 @@ public class LineInput extends JDialog {
         setUndecorated(true);
         LineBorder border = new LineBorder(col, 4, false);
         contentPane.setBorder(border);
+
+        // Handle searchbox actions
+        searchField.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyReleased(KeyEvent e) {
+                super.keyReleased(e);
+                this_ml.setMark(-1); // clear all
+                String ss = searchField.getText();
+                if (ss.isEmpty()) {
+                    list1.repaint(); // clear all
+                    return;
+                }
+                ListModel<String> lm = list1.getModel();
+                for (int n = 0; n < lm.getSize(); n++) {
+                    if (lm.getElementAt(n).contains(ss)) {
+                        //System.out.println(lm.getElementAt(n));
+                        final int nn = n;
+                        SwingUtilities.invokeLater(() -> {
+                            this_ml.setMark(nn);
+                            list1.repaint();
+                        });
+                    }
+                }
+            }
+        });
     }
 
     public static String xmain(String init, String lab, Color col) {
         return xmain(init, lab, col, null, false);
     }
 
-    public static String xmain(String init, String lab, Color col, String tooltip, boolean hasTagList) {
-        LineInput dialog = new LineInput(col);
+    private static String xmain(String init, String lab, Color col, String tooltip, boolean hasTagList) {
+        Tagger dialog = new Tagger(col);
         int len = Integer.max(600, init == null ? 100 : init.length() * 20);
         if (!hasTagList) {
             dialog.innerPanel.setVisible(false);
@@ -74,7 +101,7 @@ public class LineInput extends JDialog {
         dialog.initText = init;
         dialog.textField1.setText(init);
         dialog.textField1.setToolTipText(tooltip);
-        new CopyPastePopupMenu (dialog.textField1); // create popup menu
+        new CopyPastePopupMenu(dialog.textField1); // create popup menu
         dialog.label.setText(lab);
         if (hasTagList) {
             dialog.setUndecorated(false);
@@ -89,21 +116,9 @@ public class LineInput extends JDialog {
         return xmain(init, lab, col, null, true).trim().toLowerCase();
     }
 
-    public static int onlyPosNumber(String init, String lab, Color col) {
-        String res = xmain(init, lab, col, null, false);
-        try {
-            int i = Integer.parseInt(res);
-            if (i < 0)
-                throw new RuntimeException("no neg number");
-            return i;
-        } catch (NumberFormatException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
     private void onCancel() {
         if (label.getText().equals("newSQL")) {
-            textField1.setText ("");
+            textField1.setText("");
         } else {
             textField1.setText(initText); // restore initial tag list
         }
@@ -113,6 +128,7 @@ public class LineInput extends JDialog {
     private void createUIComponents() {
         TreeSet<String> tags = DBHandler.getImageTagList();
         list1 = new JList<>(tags.toArray(new String[0]));
-        list1.setCellRenderer (new MyListCellRenderer());
+        list1.setCellRenderer(new MyListCellRenderer());
+        this_ml = (MyListCellRenderer)list1.getCellRenderer();
     }
 }

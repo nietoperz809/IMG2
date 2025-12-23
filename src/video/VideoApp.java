@@ -3,7 +3,8 @@ package video;
 import common.*;
 import database.DBHandler;
 import database.VideoFunctions;
-import dialogs.LineInput;
+import dialogs.Input;
+import dialogs.Tagger;
 import dialogs.MonitorFrame;
 import dialogs.TimedMsg2;
 import net.lingala.zip4j.ZipFile;
@@ -137,7 +138,8 @@ public class VideoApp extends JFrame {
 
         renameButton.addActionListener(_ -> {
             DBHandler.NameID nameid = listControl.getSelectedValue();
-            String res = LineInput.xmain(nameid.name(), "NewName", Color.orange);
+            String res = Input.getText("New name", nameid.name());
+                    //Tagger.xmain(nameid.name(), "NewName", Color.orange);
             if (res.isEmpty())
                 return;
             if (gifList.contains(nameid)) {

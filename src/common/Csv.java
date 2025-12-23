@@ -5,7 +5,7 @@ import java.util.TreeSet;
 
 public class Csv {
     public static String normalizeCSVString(String in) {
-        TreeSet<String> set = SetFromCSVString(in);
+        TreeSet<String> set = getSetFromCSVString(in);
         return CsvStringFromSet(set);
     }
 
@@ -24,16 +24,17 @@ public class Csv {
         }
     }
 
-    public static TreeSet<String> SetFromCSVString(String csv) {
+    public static TreeSet<String> getSetFromCSVString(String csv) {
         TreeSet<String> tset = new TreeSet<>();
         if (csv == null)
             return tset; // return empty treeset if input is null
-        String[] arr = csv.split(",");
+        String[] arr = csv.replace(" ","").split(",");
         for (int n = 0; n < arr.length; n++) {
             arr[n] = arr[n].trim();
             if (arr[n].length() > 1) // ignore single-char strings
                 tset.add(arr[n]);
         }
+        tset.remove("");
         return tset;
     }
 

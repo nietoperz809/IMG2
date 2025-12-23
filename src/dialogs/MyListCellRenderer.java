@@ -3,11 +3,23 @@ package dialogs;
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 import java.awt.*;
+import java.util.HashSet;
+import java.util.Set;
 
 public class MyListCellRenderer extends JLabel implements ListCellRenderer<String>{
 
+    private final Set<Integer> markedIndices = new HashSet<>();
     public MyListCellRenderer() {
         setOpaque(true);
+    }
+
+    public void setMark (int idx) {
+        if (idx == -1) {
+            markedIndices.clear();
+        }
+        else {
+            markedIndices.add(idx);
+        }
     }
 
     @Override
@@ -25,6 +37,9 @@ public class MyListCellRenderer extends JLabel implements ListCellRenderer<Strin
         } else {
             background = Color.WHITE;
             foreground = Color.BLACK;
+        }
+        if (markedIndices.contains(index)) {
+            background = Color.ORANGE;
         }
         setBackground(background);
         setForeground(foreground);
