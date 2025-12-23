@@ -3,7 +3,10 @@ package dialogs;
 import database.DBHandler;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.*;
+
+import static common.Tools.commatize;
 
 public class MyTextViewer extends JDialog {
     private JPanel contentPane;
@@ -44,6 +47,7 @@ public class MyTextViewer extends JDialog {
         String count = "-- "+i1+" "+i2+" "+i3+" "+i4;
         dialog.textPane1.setContentType("text/html");
         String s = DBHandler.getDBStructure()+"\n"+count;
+        s += ("\n-- Total DB size: " + commatize(Long.parseLong(DBHandler.getDBFileSize())));
         s = s.replace ("\n", "<br>");
         dialog.textPane1.setText("<html><b>"+s+"</b></html>");
         dialog.setSize(800, 600);
@@ -52,8 +56,15 @@ public class MyTextViewer extends JDialog {
 
     public static void main(String[] args) {
         MyTextViewer dialog = new MyTextViewer();
+        dialog.textPane1.setText("Hello World");
         dialog.setSize(800, 600);
         dialog.setVisible(true);
         System.exit(0);
+    }
+
+    private void createUIComponents() {
+        textPane1 = new JTextPane();
+        Font customFont = new Font("Serif", Font.BOLD, 20);
+        textPane1.setFont(customFont);
     }
 }

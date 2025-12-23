@@ -56,9 +56,11 @@
             <properties/>
             <border type="none"/>
             <children>
-              <component id="540e0" class="javax.swing.JTextPane" binding="textPane1" default-binding="true">
+              <component id="540e0" class="javax.swing.JTextPane" binding="textPane1" custom-create="true" default-binding="true">
                 <constraints/>
-                <properties/>
+                <properties>
+                  <font name="Droid Sans Mono" size="16" style="1"/>
+                </properties>
               </component>
             </children>
           </scrollpane>

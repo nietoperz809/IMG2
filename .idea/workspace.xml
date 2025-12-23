@@ -15,20 +15,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ddb69741-e020-4d21-a32f-f00e79c6818a" name="Changes" comment="added table counts to db structure text">
+    <list default="true" id="ddb69741-e020-4d21-a32f-f00e79c6818a" name="Changes" comment="some changes">
+      <change beforePath="$PROJECT_DIR$/.idea/artifacts/IMG2_jar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/artifacts/IMG2_jar.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/buildinfo/BuildInfo2.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/buildinfo/BuildInfo2.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/common/Csv.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/common/Csv.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/database/DBHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/database/DBHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/dialogs/LineInput.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/dialogs/Tagger.form" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/dialogs/LineInput.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/dialogs/Tagger.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/dialogs/MyListCellRenderer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/dialogs/MyListCellRenderer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/dialogs/TagSelectorDlg.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/dialogs/TagSelectorDlg.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/thegrid/ImageFrame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/thegrid/ImageFrame.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/thegrid/ImgViewKeyHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/thegrid/ImgViewKeyHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dialogs/MyTextViewer.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/dialogs/MyTextViewer.form" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dialogs/MyTextViewer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/dialogs/MyTextViewer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dialogs/Tagger.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/dialogs/Tagger.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/thegrid/gridmenu/GridMenuBar.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/thegrid/gridmenu/GridMenuBar.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/thegrid/gridmenu/SubMenuMarked.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/thegrid/gridmenu/SubMenuMarked.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/video/VideoApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/video/VideoApp.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -156,7 +149,7 @@
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "UI_DESIGNER_EDITOR_MODE.PaletteManager.SHOW": "true",
     "UI_DESIGNER_EDITOR_MODE.PaletteManager.WIDTH": "205",
-    "UI_DESIGNER_EDITOR_MODE.UIDesignerToolWindowManager.SHOW": "false",
+    "UI_DESIGNER_EDITOR_MODE.UIDesignerToolWindowManager.SHOW": "true",
     "UI_DESIGNER_EDITOR_MODE.UIDesignerToolWindowManager.WIDTH": "329",
     "full.screen.before.presentation.mode": "true",
     "git-widget-placeholder": "withQueue",
@@ -172,7 +165,7 @@
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.2984206",
     "run.code.analysis.last.selected.profile": "pProject Default",
-    "settings.editor.selected.configurable": "preferences.pluginManager",
+    "settings.editor.selected.configurable": "reference.settings.project.maven.runner",
     "vue.rearranger.settings.migration": "true"
   },
   "keyToStringList": {
@@ -273,6 +266,19 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="MyTextViewer" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="dialogs.MyTextViewer" />
+      <module name="IMG2" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="dialogs.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="Tagger" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="dialogs.Tagger" />
       <module name="IMG2" />
@@ -322,6 +328,7 @@
       <item itemvalue="Application.MainC" />
       <item itemvalue="Application.MainE" />
       <item itemvalue="Application.imgeditor" />
+      <item itemvalue="Application.MyTextViewer" />
       <item itemvalue="Application.Tagger" />
       <item itemvalue="Application.UnlockDialog" />
       <item itemvalue="Application.ImageReaderBase" />
@@ -329,6 +336,7 @@
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.MyTextViewer" />
         <item itemvalue="Application.Tagger" />
         <item itemvalue="JUnit.TestBase.askForDel" />
         <item itemvalue="Application.UnlockDialog" />
@@ -339,7 +347,7 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-jdk-30f59d01ecdd-cffe25b9f5b3-intellij.indexing.shared.core-IU-253.28294.334" />
+        <option value="bundled-jdk-30f59d01ecdd-26cb7f24e5b0-intellij.indexing.shared.core-IU-253.29346.138" />
       </set>
     </attachedChunks>
   </component>
@@ -701,7 +709,7 @@
       <option name="project" value="LOCAL" />
       <updated>1683976691765</updated>
     </task>
-    <option name="localTasksCounter" value="414" />
+    <option name="localTasksCounter" value="415" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -769,7 +777,6 @@
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_NEW_TODO" value="false" />
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="added popup nenu to taglist editor" />
     <MESSAGE value="little code improvement" />
     <MESSAGE value="added commateer" />
     <MESSAGE value="added menuitem: DB console server" />
@@ -794,7 +801,8 @@
     <MESSAGE value="added decoder info to db table" />
     <MESSAGE value="moved things around" />
     <MESSAGE value="added table counts to db structure text" />
-    <option name="LAST_COMMIT_MESSAGE" value="added table counts to db structure text" />
+    <MESSAGE value="some changes" />
+    <option name="LAST_COMMIT_MESSAGE" value="some changes" />
     <option name="NON_MODAL_COMMIT_POSTPONE_SLOW_CHECKS" value="false" />
   </component>
   <component name="XDebuggerManager">

@@ -67,9 +67,9 @@ public class Tagger extends JDialog {
             public void keyReleased(KeyEvent e) {
                 super.keyReleased(e);
                 this_ml.setMark(-1); // clear all
-                String ss = searchField.getText();
+                String ss = searchField.getText().toLowerCase();
                 if (ss.isEmpty()) {
-                    list1.repaint(); // clear all
+                    list1.repaint(); // all clear?
                     return;
                 }
                 ListModel<String> lm = list1.getModel();
@@ -88,10 +88,10 @@ public class Tagger extends JDialog {
     }
 
     public static String xmain(String init, String lab, Color col) {
-        return xmain(init, lab, col, null, false);
+        return xmain(init, lab, col, false);
     }
 
-    private static String xmain(String init, String lab, Color col, String tooltip, boolean hasTagList) {
+    private static String xmain(String init, String lab, Color col, boolean hasTagList) {
         Tagger dialog = new Tagger(col);
         int len = Integer.max(600, init == null ? 100 : init.length() * 20);
         if (!hasTagList) {
@@ -100,7 +100,7 @@ public class Tagger extends JDialog {
         dialog.setSize(new Dimension(len, 50));
         dialog.initText = init;
         dialog.textField1.setText(init);
-        dialog.textField1.setToolTipText(tooltip);
+        //dialog.textField1.setToolTipText(null);
         new CopyPastePopupMenu(dialog.textField1); // create popup menu
         dialog.label.setText(lab);
         if (hasTagList) {
@@ -113,7 +113,7 @@ public class Tagger extends JDialog {
     }
 
     public static String tagList(String init, String lab, Color col) {
-        return xmain(init, lab, col, null, true).trim().toLowerCase();
+        return xmain(init, lab, col, true).trim().toLowerCase();
     }
 
     private void onCancel() {
