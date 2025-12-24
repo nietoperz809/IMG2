@@ -35,6 +35,7 @@ public class TagSelectorDlg extends JDialog {
         cancelButton.addActionListener(_ -> onCancel());
         radioAND.addActionListener(_ -> andMode = true);
         radioOR.addActionListener(_ -> andMode = false);
+        pack();
     }
 
     public static JList<String> open() {
@@ -61,8 +62,9 @@ public class TagSelectorDlg extends JDialog {
     private void createUIComponents() {
         TreeSet<String> tags = DBHandler.getImageTagList();
         list1 = new JList<>(tags.toArray(new String[0]));
-        //list1.setFixedCellWidth(65);
         list1.setCellRenderer (new MyListCellRenderer());
+        list1.setVisibleRowCount(20);
+        list1.setLayoutOrientation(JList.HORIZONTAL_WRAP);
     }
 
     public static void worker_for_tagList() {
