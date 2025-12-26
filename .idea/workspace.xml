@@ -15,8 +15,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ddb69741-e020-4d21-a32f-f00e79c6818a" name="Changes" comment="some changes">
+    <list default="true" id="ddb69741-e020-4d21-a32f-f00e79c6818a" name="Changes" comment="tagselector improved">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/buildinfo/BuildInfo2.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/buildinfo/BuildInfo2.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/dialogs/TagSelectorDlg.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/dialogs/TagSelectorDlg.form" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/dialogs/TagSelectorDlg.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/dialogs/TagSelectorDlg.java" afterDir="false" />
     </list>
@@ -147,7 +148,7 @@
     "UI_DESIGNER_EDITOR_MODE.PaletteManager.SHOW": "true",
     "UI_DESIGNER_EDITOR_MODE.PaletteManager.WIDTH": "205",
     "UI_DESIGNER_EDITOR_MODE.UIDesignerToolWindowManager.SHOW": "true",
-    "UI_DESIGNER_EDITOR_MODE.UIDesignerToolWindowManager.WIDTH": "466",
+    "UI_DESIGNER_EDITOR_MODE.UIDesignerToolWindowManager.WIDTH": "240",
     "full.screen.before.presentation.mode": "true",
     "git-widget-placeholder": "withQueue",
     "kotlin-language-version-configured": "true",
@@ -706,7 +707,7 @@
       <option name="project" value="LOCAL" />
       <updated>1683976691765</updated>
     </task>
-    <option name="localTasksCounter" value="416" />
+    <option name="localTasksCounter" value="417" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -774,7 +775,6 @@
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_NEW_TODO" value="false" />
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="little code improvement" />
     <MESSAGE value="added commateer" />
     <MESSAGE value="added menuitem: DB console server" />
     <MESSAGE value="some improvements" />
@@ -799,7 +799,8 @@
     <MESSAGE value="moved things around" />
     <MESSAGE value="added table counts to db structure text" />
     <MESSAGE value="some changes" />
-    <option name="LAST_COMMIT_MESSAGE" value="some changes" />
+    <MESSAGE value="tagselector improved" />
+    <option name="LAST_COMMIT_MESSAGE" value="tagselector improved" />
     <option name="NON_MODAL_COMMIT_POSTPONE_SLOW_CHECKS" value="false" />
   </component>
   <component name="XDebuggerManager">

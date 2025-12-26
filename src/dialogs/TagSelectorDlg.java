@@ -4,6 +4,8 @@ import database.DBHandler;
 import thegrid.TheGrid;
 
 import javax.swing.*;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.TreeSet;
@@ -15,8 +17,10 @@ public class TagSelectorDlg extends JDialog {
     private JRadioButton radioAND;
     private JRadioButton radioOR;
     private JButton cancelButton;
+    private JTextField searchField;
     private boolean cancelled = false;
     private boolean andMode = true;
+    private MyListCellRenderer this_ml;
 
     public TagSelectorDlg() {
         setContentPane(contentPane);
@@ -36,6 +40,28 @@ public class TagSelectorDlg extends JDialog {
         radioAND.addActionListener(_ -> andMode = true);
         radioOR.addActionListener(_ -> andMode = false);
         pack();
+        searchField.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyReleased(KeyEvent e) {
+                super.keyReleased(e);
+                this_ml.setMark(-1); // clear all
+                String ss = searchField.getText().toLowerCase();
+                if (ss.isEmpty()) {
+                    list1.repaint(); // all clear?
+                    return;
+                }
+                ListModel<String> lm = list1.getModel();
+                for (int n = 0; n < lm.getSize(); n++) {
+                    if (lm.getElementAt(n).contains(ss)) {
+                        final int nn = n;
+                        SwingUtilities.invokeLater(() -> {
+                            this_ml.setMark(nn);
+                            list1.repaint();
+                        });
+                    }
+                }
+            }
+        });
     }
 
     public static JList<String> open() {
@@ -63,6 +89,7 @@ public class TagSelectorDlg extends JDialog {
         TreeSet<String> tags = DBHandler.getImageTagList();
         list1 = new JList<>(tags.toArray(new String[0]));
         list1.setCellRenderer (new MyListCellRenderer());
+        this_ml = (MyListCellRenderer)list1.getCellRenderer();
         list1.setVisibleRowCount(20);
         list1.setLayoutOrientation(JList.HORIZONTAL_WRAP);
     }
