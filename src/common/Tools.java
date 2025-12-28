@@ -1,6 +1,7 @@
 package common;
 
 import database.DBHandler;
+import dialogs.TagListCellRenderer;
 import dialogs.TimedMsg2;
 import net.lingala.zip4j.model.ZipParameters;
 import net.lingala.zip4j.model.enums.CompressionLevel;
@@ -12,7 +13,10 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
-import java.io.*;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -40,14 +44,39 @@ public class Tools {
     }
 
     /**
+     * mark selected items of JList
+     * @param searchField contains items to mark
+     * @param list1 target JList
+     */
+    public static void implementSearchboxAction(final JTextField searchField, final JList<String> list1) {
+        TagListCellRenderer this_ml = (TagListCellRenderer) list1.getCellRenderer();
+        this_ml.setMark(-1); // clear all
+        String ss = searchField.getText().toLowerCase();
+        if (ss.isEmpty())
+            list1.repaint(); // all clear?
+        else {
+            ListModel<String> lm = list1.getModel();
+            for (int n = 0; n < lm.getSize(); n++) {
+                if (lm.getElementAt(n).contains(ss)) {
+                    final int nn = n;
+                    SwingUtilities.invokeLater(() -> {
+                        this_ml.setMark(nn);
+                        list1.repaint();
+                    });
+                }
+            }
+        }
+    }
+
+    /**
      * add new Menu Item
      * @param jm JMenu or JPopupMenu
      * @param txt Menu tet
      * @param ali ActionListener
      */
-    public static void addMenuItem (JComponent jm, String txt, ActionListener ali) {
+    public static void addMenuItem(JComponent jm, String txt, ActionListener ali) {
         JMenuItem mi1 = new JMenuItem(txt);
-        mi1.addActionListener (ali);
+        mi1.addActionListener(ali);
         jm.add(mi1);
     }
 
@@ -241,7 +270,7 @@ public class Tools {
         }
     }
 
-    public static void createMisssingDirs (Path p) {
+    public static void createMisssingDirs(Path p) {
         try {
             Files.createDirectories(p.getParent());
         } catch (IOException e) {
@@ -251,7 +280,7 @@ public class Tools {
 
     public static String commatize(long in) {
         DecimalFormat df = new DecimalFormat("#,###"); // Pattern for thousands separators
-        return df.format (in);
+        return df.format(in);
     }
 
 // --Commented out by Inspection START (11/10/2025 3:57 PM):

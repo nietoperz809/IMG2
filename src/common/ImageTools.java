@@ -22,8 +22,8 @@ import static database.DBHandler.loadThumbnail;
 public class ImageTools {
     /**
      Make Preview from first dim*dim tiles of a Grid
-     @param list ImageList
-     @param rowcol  rows and columns of new image
+     @param list ImageList of all imgs
+     @param rowcol  rows and columns of new big image
      */
     public static BufferedImage createPreviewImage(ImageList list, final int rowcol) {
         final int k = rowcol * 102 + 2;

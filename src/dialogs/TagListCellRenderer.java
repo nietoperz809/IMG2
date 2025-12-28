@@ -6,10 +6,11 @@ import java.awt.*;
 import java.util.HashSet;
 import java.util.Set;
 
-public class MyListCellRenderer extends JLabel implements ListCellRenderer<String>{
+public class TagListCellRenderer extends JLabel implements ListCellRenderer<String>{
 
     private final Set<Integer> markedIndices = new HashSet<>();
-    public MyListCellRenderer() {
+
+    public TagListCellRenderer() {
         setOpaque(true);
     }
 

@@ -65,16 +65,16 @@ public class AnimPlayerBox implements PlayerBox {
             @Override
             public void keyTyped(KeyEvent keyEvent) {
                 switch (keyEvent.getKeyChar()) {
-                    case '\u001B' ->  // Escape key
-                            SwingUtilities.invokeLater(() -> stop());
+                    case KeyEvent.VK_ESCAPE -> SwingUtilities.invokeLater(() -> stop());
                     case 'w' -> {
                         winflag = !winflag;
                         window.dispose();
                         if (winflag) {
                             window.setBounds(0, 0, 600, 600);
                             window.setUndecorated(false);
-                        } else {
-                            window.setBounds(0, 0, screenSize.height, screenSize.height);
+                        } else { //
+                            Dimension ss = Toolkit.getDefaultToolkit().getScreenSize();
+                            window.setBounds(0, 0, ss.width, ss.height);
                             window.setUndecorated(true);
                         }
                         window.setLocationRelativeTo(null); // center on screen
@@ -90,6 +90,7 @@ public class AnimPlayerBox implements PlayerBox {
                         sleepTime.getAndAdd(100);
                         if (sleepTime.get() > 5000) sleepTime.set(5000);
                     }
+                    default -> System.out.println("wrong key!");
                 }
             }
         });

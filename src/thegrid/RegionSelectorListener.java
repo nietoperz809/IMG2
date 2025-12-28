@@ -20,8 +20,8 @@ public class RegionSelectorListener extends MouseAdapter {
 
     public RegionSelectorListener(BufferedImage img, ImgPanel thePanel, ImageFrame p) {
         theView = p;
-        float a = img.getHeight();
-        float b = img.getWidth();
+//        float a = img.getHeight();
+//        float b = img.getWidth();
         this.imgPanel = thePanel;
         parent = p;
         thePanel.addMouseListener(this);
