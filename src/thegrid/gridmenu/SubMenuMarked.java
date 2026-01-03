@@ -117,7 +117,7 @@ public class SubMenuMarked extends JMenu {
                         Thumbnail.markAll(grid, false);
                         zipFile.close();
                         //DeferredFileDeleter.unlock();
-                        MsgBox.Info("Password (posted to clipboard) is: " + pwd);
+                        MsgBox.AsyncInfo("Password (posted to clipboard) is: " + pwd);
                         SystemClipboard.setString(pwd);
                     } catch (IOException ex) {
                         //System.out.println("Zipping err: "+ex);

@@ -97,7 +97,7 @@ public class Thumbnail extends JLabel {
                 if (e.getButton() == MouseEvent.BUTTON3) { // right click
                     if (e.isShiftDown()) {
                         DBHandler.createNewThumb(thisID.rowid());
-                        MsgBox.Info("New thumbnail created for: "+thisID.rowid());
+                        MsgBox.AsyncInfo("New thumbnail created for: "+thisID.rowid());
                         return;
                     }
                     if (MsgBox.Question("Really delete "+thisID.rowid()+"?")) {

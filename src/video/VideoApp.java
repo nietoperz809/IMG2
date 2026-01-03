@@ -195,7 +195,7 @@ public class VideoApp extends JFrame {
                     Sam.speak(NumToText.convert(len) + " Bites");
                     String flen = NumberFormat.getNumberInstance(Locale.GERMAN)
                             .format(Double.parseDouble(Objects.requireNonNull(len)));
-                    MsgBox.Info("Bloblen: " + flen + " Bytes");
+                    MsgBox.AsyncInfo("Bloblen: " + flen + " Bytes");
                 }
                 // .. left double click
                 else if (e.getClickCount() == 2) {

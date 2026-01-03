@@ -17,18 +17,33 @@ public class MsgBox {
                 JOptionPane.ERROR_MESSAGE);
     }
 
-    public static void Info(String msg) {
-        JFrame parentFrame = new JFrame();
-        parentFrame.setLocation(new Point (100, 100));
-        parentFrame.setUndecorated(true);
-        parentFrame.setVisible(true);
-        JOptionPane.showMessageDialog(parentFrame, msg, "Info",
-                JOptionPane.PLAIN_MESSAGE);
-        parentFrame.dispose();
+    private static void msgbox(Point pos, String text) {
+        SwingUtilities.invokeLater(() -> {
+            JDialog dlg = new JDialog((Frame) null, "Message");
+            dlg.setModal(false);
+            dlg.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+            JLabel lbl = new JLabel("<html><h1>&nbsp;" +
+                    text.replace("\n", "<br>") +
+                    "&nbsp;</h1></html>");
+            dlg.getContentPane().add(lbl);
+            dlg.pack();
+            dlg.setLocation(pos);
+            dlg.setVisible(true);
+        });
     }
 
+//    public static void Info(String msg) {
+//        JFrame parentFrame = new JFrame();
+//        parentFrame.setLocation(new Point (100, 100));
+//        parentFrame.setUndecorated(true);
+//        parentFrame.setVisible(true);
+//        JOptionPane.showMessageDialog(parentFrame, msg, "Info",
+//                JOptionPane.PLAIN_MESSAGE);
+//        parentFrame.dispose();
+//    }
+
     public static void AsyncInfo (final String msg) {
-        runTask(() -> Info(msg));
+        runTask(() -> msgbox(new Point(100,100), msg));
     }
 
     public static boolean Question(String msg) {

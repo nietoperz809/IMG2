@@ -357,7 +357,7 @@ public class ImgViewKeyHandler extends KeyAdapter {
             }
         }
         if(foundSet.isEmpty()){
-            MsgBox.Info("No similarities found!");
+            MsgBox.AsyncInfo("No similarities found!");
         }
         return foundSet;
     }

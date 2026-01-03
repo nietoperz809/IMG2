@@ -13,7 +13,7 @@ import java.nio.file.Paths;
 import java.time.Duration;
 import java.time.Instant;
 
-import static common.MsgBox.Info;
+import static common.MsgBox.AsyncInfo;
 import static common.Tools.*;
 import static database.DBHandler.closeDatabase;
 
@@ -125,7 +125,7 @@ public class Copier extends JDialog {
                             return false; // true will stop the copy
                         });
                 buttonOK.setEnabled(true);
-                Info("DB backup took: " + elapsed(startTime));
+                AsyncInfo("DB backup took: " + elapsed(startTime));
             } catch (IOException e) {
                 MsgBox.Error (e.toString());
                 buttonOK.setVisible(true);
