@@ -18,8 +18,13 @@ public class MsgBox {
     }
 
     public static void Info(String msg) {
-        JOptionPane.showMessageDialog(null, msg, "Info",
+        JFrame parentFrame = new JFrame();
+        parentFrame.setLocation(new Point (100, 100));
+        parentFrame.setUndecorated(true);
+        parentFrame.setVisible(true);
+        JOptionPane.showMessageDialog(parentFrame, msg, "Info",
                 JOptionPane.PLAIN_MESSAGE);
+        parentFrame.dispose();
     }
 
     public static void AsyncInfo (final String msg) {

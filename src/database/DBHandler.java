@@ -22,6 +22,7 @@ import java.util.concurrent.Future;
 
 import static common.ImageTools.JPGByteArrayToImg;
 import static common.MsgBox.AsyncInfo;
+import static common.Tools.commatize;
 import static common.Tools.extractResource;
 import static java.lang.System.*;
 
@@ -65,7 +66,7 @@ public class DBHandler {
             Instant startI = Instant.now();
             connection = DriverManager.getConnection(url, user, pwd);
             Instant endI = Instant.now();
-            AsyncInfo ("DB connect took: " + Duration.between(startI, endI).toMillis() + " ms");
+            AsyncInfo ("DB connect took: " + commatize (Duration.between(startI, endI).toMillis()) + " ms");
             stm = connection.createStatement();
             stm.execute("alter table VIDEOS add if not exists BLOBSiZE INT");
             stm.execute("alter table GIFS add if not exists BLOBSiZE INT");

@@ -15,15 +15,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ddb69741-e020-4d21-a32f-f00e79c6818a" name="Changes" comment="AnimPlayerBox improved image size">
+    <list default="true" id="ddb69741-e020-4d21-a32f-f00e79c6818a" name="Changes" comment="some improvements">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/buildinfo/BuildInfo2.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/buildinfo/BuildInfo2.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/common/ImageTools.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/common/ImageTools.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/common/MsgBox.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/common/MsgBox.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/common/Tools.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/common/Tools.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/database/DBHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/database/DBHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/dialogs/TagSelectorDlg.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/dialogs/TagSelectorDlg.form" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/thegrid/ImgViewKeyHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/thegrid/ImgViewKeyHandler.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -727,7 +722,7 @@
       <option name="project" value="LOCAL" />
       <updated>1683976691765</updated>
     </task>
-    <option name="localTasksCounter" value="420" />
+    <option name="localTasksCounter" value="421" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -796,7 +791,6 @@
     <option name="CHECK_NEW_TODO" value="false" />
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
     <MESSAGE value="added menuitem: DB console server" />
-    <MESSAGE value="some improvements" />
     <MESSAGE value="some improvements, optional h2 defrag" />
     <MESSAGE value="ctrl-s creates new db enry" />
     <MESSAGE value="added refresh feature in theGrid-iconview" />
@@ -820,7 +814,8 @@
     <MESSAGE value="some changes" />
     <MESSAGE value="tagselector improved" />
     <MESSAGE value="AnimPlayerBox improved image size" />
-    <option name="LAST_COMMIT_MESSAGE" value="AnimPlayerBox improved image size" />
+    <MESSAGE value="some improvements" />
+    <option name="LAST_COMMIT_MESSAGE" value="some improvements" />
     <option name="NON_MODAL_COMMIT_POSTPONE_SLOW_CHECKS" value="false" />
   </component>
   <component name="XDebuggerManager">
