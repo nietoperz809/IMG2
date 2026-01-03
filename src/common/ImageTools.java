@@ -1,5 +1,8 @@
 package common;
 
+import Catalano.Imaging.FastBitmap;
+import Catalano.Imaging.Filters.Invert;
+import Catalano.Imaging.Tools.ImageStatistics;
 import com.luciad.imageio.webp.WebPReadParam;
 import database.ImageImport;
 import org.apache.commons.imaging.Imaging;
@@ -9,6 +12,7 @@ import thegrid.ImageList;
 import javax.imageio.ImageIO;
 import javax.imageio.ImageReader;
 import javax.imageio.stream.FileImageInputStream;
+import javax.swing.*;
 import java.awt.*;
 import java.awt.datatransfer.*;
 import java.awt.geom.AffineTransform;
@@ -20,6 +24,73 @@ import static database.DBHandler.loadThumbnail;
 
 
 public class ImageTools {
+
+    public static class Heatmap {
+
+        public static int selectColorOrder() {
+            Object[] options = {"RGB", "BGR", "GRB"};
+            return JOptionPane.showOptionDialog(
+                    null,
+                    "Please select ...",
+                    "Heatmap colorization",
+                    JOptionPane.YES_NO_CANCEL_OPTION,
+                    JOptionPane.QUESTION_MESSAGE,
+                    null,
+                    options,
+                    options[2] // Default option
+            );
+        }
+
+        public static void applyInPlace(FastBitmap fastBitmap) {
+            if (fastBitmap.isRGB()) {
+                fastBitmap.toGrayscale();
+            }
+
+            //(new Invert()).applyInPlace(fastBitmap);
+
+            int size = fastBitmap.getWidth() * fastBitmap.getHeight();
+            int min = ImageStatistics.Minimum(fastBitmap);
+            int max = ImageStatistics.Maximum(fastBitmap);
+            fastBitmap.toRGB();
+
+            int cord = selectColorOrder();
+
+            for (int i = 0; i < size; ++i) {
+                int[] rgb = GrayscaleToHeatMap (cord, fastBitmap.getRed(i), min, max);
+                fastBitmap.setRGB(i, rgb);
+            }
+        }
+
+        private static int[] GrayscaleToHeatMap (int order, double gray, double min, double max) {
+            int r = 0;
+            int g = 0;
+            int b = 0;
+            gray = (gray - min) / (max - min);
+            if (gray <= 0.2) {
+                b = (int) (gray / 0.2 * (double) 255.0F);
+            } else if (gray > 0.2 && gray <= 0.7) {
+                b = (int) (((double) 1.0F - (gray - 0.2) / (double) 0.5F) * (double) 255.0F);
+            }
+
+            if (gray >= 0.2 && gray <= 0.6) {
+                g = (int) ((gray - 0.2) / 0.4 * (double) 255.0F);
+            } else if (gray > 0.6 && gray <= 0.9) {
+                g = (int) (((double) 1.0F - (gray - 0.6) / 0.3) * (double) 255.0F);
+            }
+
+            if (gray >= (double) 0.5F) {
+                r = (int) ((gray - (double) 0.5F) / (double) 0.5F * (double) 255.0F);
+            }
+
+            return switch (order) {
+                case 0 -> new int[]{r, g, b};
+                case 1 -> new int[]{b, g, r};
+                case 2 -> new int[]{g, r, b};
+                default -> throw new RuntimeException("please choose color order");
+            };
+        }
+    }
+
     /**
      Make Preview from first dim*dim tiles of a Grid
      @param list ImageList of all imgs
@@ -123,7 +194,7 @@ public class ImageTools {
         return new String[]{"jpg", "jpeg", "png", "bmp", "gif", "jfif", "webp"};
     }
 
-    public static boolean isWEBP (String path) {
+    public static boolean isWEBP(String path) {
         try {
             InputStream in = new FileInputStream(path);
             byte[] header = new byte[12];
@@ -139,7 +210,7 @@ public class ImageTools {
         return false;
     }
 
-    public static BufferedImage loadWEBP (String name) throws Exception {
+    public static BufferedImage loadWEBP(String name) throws Exception {
         // Obtain a WebP ImageReader instance
         ImageReader reader = ImageIO.getImageReadersByMIMEType("image/webp").next();
         // Configure decoding parameters
@@ -161,7 +232,7 @@ public class ImageTools {
      */
     public static ImageImport importImageFromFile(String name) {
         try {
-            if (isWEBP (name)) {
+            if (isWEBP(name)) {
                 return new ImageImport(ImageImport.Decoder.WEBPREADER, loadWEBP(name));
             }
             return new ImageImport(ImageImport.Decoder.IMAGING, Imaging.getBufferedImage(new File(name)));

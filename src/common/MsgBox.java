@@ -9,6 +9,8 @@ import java.nio.charset.Charset;
 import java.security.MessageDigest;
 import java.util.Arrays;
 
+import static common.Tools.runTask;
+
 public class MsgBox {
     public static void Error(String msg) {
         JOptionPane.showMessageDialog(null, msg, "Error",
@@ -18,6 +20,10 @@ public class MsgBox {
     public static void Info(String msg) {
         JOptionPane.showMessageDialog(null, msg, "Info",
                 JOptionPane.PLAIN_MESSAGE);
+    }
+
+    public static void AsyncInfo (final String msg) {
+        runTask(() -> Info(msg));
     }
 
     public static boolean Question(String msg) {

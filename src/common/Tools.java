@@ -80,22 +80,6 @@ public class Tools {
         jm.add(mi1);
     }
 
-//    public static boolean isRunningFromJAR()
-//    {
-//        URL path = Tools.class.getResource("Tools.class");
-//        return path.toString().startsWith("jar:");
-//    }
-
-//    public static ArrayList<Object> convertObjectToList(Object obj) {
-//        ArrayList<Object> list = new ArrayList<>();
-//        if (obj.getClass().isArray()) {
-//            list = (ArrayList<Object>) Arrays.asList((Object[])obj);
-//        } else if (obj instanceof Collection) {
-//            list = new ArrayList<>((Collection<?>)obj);
-//        }
-//        return list;
-//    }
-
     /**
      * Checks if a filename has one of n extensions
      *

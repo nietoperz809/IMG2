@@ -320,9 +320,10 @@ public class ImgViewKeyHandler extends KeyAdapter {
 
             case VK_Y -> {   //  heatmap
                 FastBitmap fb = imageFrame.getIconAsFastBitmap();
-                boolean inv = SliderBox.xmain("Heatmap", 0f, 1f, 2) == 1f;
-                HeatMap bl = new HeatMap(inv);
-                bl.applyInPlace(fb);
+                ImageTools.Heatmap.applyInPlace (fb);
+//                //boolean inv = SliderBox.xmain("Heatmap", 0f, 1f, 2) == 1f;
+//                HeatMap bl = new HeatMap(true);
+//                bl.applyInPlace(fb);
                 imageFrame.imgPanel.setImage(fb);
             }
 
