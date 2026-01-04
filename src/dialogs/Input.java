@@ -53,7 +53,7 @@ public class Input extends JDialog {
 
     public static String getText (String desc, String defValue) {
         Input dialog = new Input();
-        dialog.setLocation (MouseInfo.getPointerInfo().getLocation());
+        dialog.setLocation (new Point(100,100));  // MouseInfo.getPointerInfo().getLocation());
         dialog.textField1.setText(defValue);
         dialog.setTitle(desc);
         dialog.lab1.setText(desc);
@@ -63,7 +63,6 @@ public class Input extends JDialog {
         dialog.pack();
         dialog.textField1.setCaret(new BlockCaret());
         dialog.setVisible(true);
-
         return dialog.textField1.getText();
     }
 

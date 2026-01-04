@@ -193,28 +193,6 @@ public class GifDecoder implements AnimDecoder {
         return im;
     }
 
-//    public void saveFrames (String dir, int from, int to) {
-//        for (int s = from; s<=to; s++) {
-//            BufferedImage image = getFrame(s);
-//            try {
-//                ImageIO.write(image, "png",
-//                        new File(dir + File.separator + (from+s) + ".png"));
-//            } catch (IOException e) {
-//                throw new RuntimeException(e);
-//            }
-//        }
-//    }
-
-
-//    /**
-//     * Gets image size.
-//     *
-//     * @return GIF image dimensions
-//     */
-//    public Dimension getFrameSize() {
-//        return new Dimension(width, height);
-//    }
-
     /**
      * Reads GIF image from stream
      *

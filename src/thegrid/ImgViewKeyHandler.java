@@ -27,6 +27,8 @@ import java.util.Collections;
 import java.util.HashSet;
 
 import static common.Tools.newGridForSet;
+import static database.DBHandler.getImageInfo;
+import static database.DBHandler.setImageInfo;
 import static java.awt.event.KeyEvent.*;
 
 public class ImgViewKeyHandler extends KeyAdapter {
@@ -131,6 +133,12 @@ public class ImgViewKeyHandler extends KeyAdapter {
                 imageFrame.setImg();
                 imageFrame.imgPanel.clearOffset();
                 imageFrame.adjustOn('h');
+            }
+
+            case VK_O -> { // Image Info
+                int id = imageFrame.grid.imageL.get(imageFrame.indexRing.get()).rowid();
+                String newInfo = Input.getText("Image info", getImageInfo(id));
+                setImageInfo (id, newInfo);
             }
 
             case VK_S -> { // Put copy into DB on CTRL-S

@@ -80,6 +80,7 @@ public class DBHandler {
             stm.execute("create table if not exists WEBP (WEBPDATA blob, NAME varchar(200), HASHVAL blob(16), TAG varchar(128))");
             stm.execute("alter table IMAGES add if not exists TAG varchar(128)");
             stm.execute("alter table IMAGES add if not exists ACCNUM integer");
+            stm.execute("alter table IMAGES add if not exists INFO varchar(512)");
             stm.execute("alter table VIDEOS add if not exists TAG varchar(128)");
             Sam.speak("deta base is ready!");
         } catch (SQLException e) {
@@ -288,6 +289,18 @@ public class DBHandler {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public static void setImageInfo(int rowid, String info) {
+        try {
+            stm.execute("update IMAGES set info = '" + info + "' where _ROWID_ = " + rowid);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static String getImageInfo(int rowid) {
+        return queryString("select info from IMAGES where _ROWID_ = " + rowid);
     }
 
     public static String getTags(int rowid) {

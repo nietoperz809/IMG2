@@ -4,6 +4,7 @@ import Catalano.Imaging.FastBitmap;
 import Catalano.Imaging.Filters.Invert;
 import Catalano.Imaging.Tools.ImageStatistics;
 import com.luciad.imageio.webp.WebPReadParam;
+import database.DBHandler;
 import database.ImageImport;
 import org.apache.commons.imaging.Imaging;
 import org.jetbrains.annotations.NotNull;
@@ -119,20 +120,25 @@ public class ImageTools {
     /**
      * save IMG zo Disk
      * @param img the Image
-     * @param anum arbitrary ID
+     * @param anum arbitrary ID (rowid in database)
      * @param outPath path were the Img goes
      */
     public static String saveImg2Disk(BufferedImage img, int anum, String outPath, String name) {
         outPath += File.separator;
         outPath += Objects.requireNonNullElseGet(name, () -> RandomWord.generateWord(-1));
         outPath += "(" + anum + ").jpg";
-        System.out.println(outPath);
         try {
             boolean success = ImageIO.write(img, "jpg", new File(outPath));
-            if (!success)
-                System.err.println("imgIO write fail ");
+            if (!success )
+                throw new Exception ("imgIO write fail");
+            // Insert EXIF
+            String infoTxt = DBHandler.getImageInfo(anum);
+            if (!infoTxt.isEmpty()) {
+                String epath = outPath.replace(".jpg", "2.jpg");
+                ExifWriter.setImageDescription(new File(outPath), new File(epath), infoTxt);
+                DeferredFileDeleter.put(outPath);
+            }
         } catch (Exception ex) {
-            System.err.println("imgIO write fail " + ex);
             throw new RuntimeException(ex);
         }
         return outPath;
@@ -173,14 +179,15 @@ public class ImageTools {
         }
     }
 
-    public static void writeToFile(Image im2, String format, String dir, String name) {
+    public static String writeToFile(Image im2, String format, String dir, String name) {
         try {
+            String path = dir + File.separator + name + "." + format;
             ImageIO.write(ImageTools.toBufferedImage(im2), format,
-                    new File(dir + File.separator + name + "." + format));
+                    new File(path));
+            return path;
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-
     }
 
     public static void imageToClipboard(Image bi) {
