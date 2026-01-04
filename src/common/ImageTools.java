@@ -1,8 +1,9 @@
 package common;
 
 import Catalano.Imaging.FastBitmap;
-import Catalano.Imaging.Filters.Invert;
 import Catalano.Imaging.Tools.ImageStatistics;
+import com.google.common.jimfs.Configuration;
+import com.google.common.jimfs.Jimfs;
 import com.luciad.imageio.webp.WebPReadParam;
 import database.DBHandler;
 import database.ImageImport;
@@ -21,6 +22,7 @@ import java.awt.image.*;
 import java.io.*;
 import java.util.Objects;
 
+import static com.google.common.jimfs.Jimfs.newFileSystem;
 import static database.DBHandler.loadThumbnail;
 
 
@@ -127,13 +129,16 @@ public class ImageTools {
         outPath += File.separator;
         outPath += Objects.requireNonNullElseGet(name, () -> RandomWord.generateWord(-1));
         outPath += "(" + anum + ").jpg";
+
+        //var fs = newFileSystem(Configuration.unix());
+
         try {
             boolean success = ImageIO.write(img, "jpg", new File(outPath));
             if (!success )
                 throw new Exception ("imgIO write fail");
             // Insert EXIF
             String infoTxt = DBHandler.getImageInfo(anum);
-            if (!infoTxt.isEmpty()) {
+            if (infoTxt != null || !infoTxt.isEmpty()) {
                 String epath = outPath.replace(".jpg", "exif.jpg");
                 ExifWriter.setImageDescription(new File(outPath), new File(epath), infoTxt);
                 DeferredFileDeleter.put(outPath);

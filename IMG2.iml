@@ -28,5 +28,6 @@
     <orderEntry type="library" name="h2-2.1.214" level="project" />
     <orderEntry type="library" name="lib1" level="project" />
     <orderEntry type="library" name="github.mike10004.commons.imaging" level="project" />
+    <orderEntry type="library" name="google.jimfs" level="project" />
   </component>
 </module>
