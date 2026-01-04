@@ -134,7 +134,7 @@ public class ImageTools {
             // Insert EXIF
             String infoTxt = DBHandler.getImageInfo(anum);
             if (!infoTxt.isEmpty()) {
-                String epath = outPath.replace(".jpg", "2.jpg");
+                String epath = outPath.replace(".jpg", "exif.jpg");
                 ExifWriter.setImageDescription(new File(outPath), new File(epath), infoTxt);
                 DeferredFileDeleter.put(outPath);
             }
