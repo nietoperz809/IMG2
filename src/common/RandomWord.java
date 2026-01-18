@@ -3,6 +3,7 @@ package common;
 import java.util.Random;
 
 public class RandomWord {
+    static Random random = new Random(System.nanoTime());
     private static final String[] SYLLABLES = {"ba", "be", "bi", "bo", "bu", "ca", "ce", "ci", "co", "cu",
             "da", "de", "di", "do", "du", "fa", "fe", "fi", "fo", "fu",
             "ley", "end", "fux", "dir", "puf", "ass", "for", "vox", "lax", "don", "ald", "sex", "bag",
@@ -11,7 +12,6 @@ public class RandomWord {
     };
 
     public static String generateWord(int syllableCount) {
-        Random random = new Random(System.nanoTime());
         StringBuilder word = new StringBuilder();
 
         if (syllableCount <=0) {
@@ -26,10 +26,12 @@ public class RandomWord {
     }
 
     public static void main(String[] args) {
+        System.out.println(".."+SYLLABLES.length);
         for (int i = 1; i < 100; i++) {
-            System.out.print (generateWord(0)+" -- ");
-            if (i%10 == 0)
-                System.out.println();
+//            System.out.print (generateWord(0)+" -- ");
+//            if (i%10 == 0)
+//                System.out.println();
+            System.out.println(random.nextInt(SYLLABLES.length));
         }
     }
 }

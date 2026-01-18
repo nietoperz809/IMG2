@@ -13,16 +13,11 @@ import java.io.*;
 
 public class ExifWriter {
 
-    public static void setImageDescription(
-            File inputJpeg,
-            File outputJpeg,
-            String description
-    ) throws Exception {
-
+    public static void setImageDescription(File inputJ, File outputJ, String desc) throws Exception {
         TiffOutputSet outputSet;
 
         // vorhandene EXIF-Daten lesen (falls vorhanden)
-        ImageMetadata metadata = Imaging.getMetadata(inputJpeg);
+        ImageMetadata metadata = Imaging.getMetadata(inputJ);
         if (metadata instanceof JpegImageMetadata jpegMetadata) {
             TiffImageMetadata exif = jpegMetadata.getExif();
             if (exif != null) {
@@ -46,15 +41,15 @@ public class ExifWriter {
         // neuen Wert setzen
         exifDir.add(
                 TiffTagConstants.TIFF_TAG_IMAGE_DESCRIPTION,
-                description
+                desc
         );
 
         // Schreiben
         try (OutputStream os = new BufferedOutputStream(
-                new FileOutputStream(outputJpeg))) {
+                new FileOutputStream(outputJ))) {
 
             new ExifRewriter().updateExifMetadataLossless(
-                    inputJpeg, os, outputSet
+                    inputJ, os, outputSet
             );
         }
     }

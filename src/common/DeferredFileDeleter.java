@@ -6,22 +6,27 @@ import java.util.concurrent.BlockingQueue;
 
 public class DeferredFileDeleter {
     private static final BlockingQueue<File> __delQue = new ArrayBlockingQueue<>(500);
-    private static volatile boolean lock;
+
+    public static void shellDelFile (String filePath) throws Exception{
+        ProcessBuilder processBuilder = new ProcessBuilder("cmd.exe", "/c", "del", "/f", "/q", filePath);
+        Process process = processBuilder.start();
+        if (process.waitFor() != 0)
+            throw new Exception("Can't delete");
+    }
 
     static {
         Tools.runTask(() -> {
             while (true) {
                 try {
-                    if (lock) {
-                        Thread.sleep(1000);
-                        continue;
-                    }
                     File file = __delQue.take();
                     Tools.runTask(() -> {
-                        boolean del = file.delete();
-                        if (!del) {
-                            System.out.println("delete of queue entry failed");
-                            put (file);
+                        try {
+                            Thread.sleep(1000);
+                            String fp = file.getPath();
+                            System.out.println("del: "+fp);
+                            shellDelFile(fp);
+                        } catch (Exception e) {
+                            throw new RuntimeException(e);
                         }
                     });
                 } catch (InterruptedException e) {
@@ -30,18 +35,6 @@ public class DeferredFileDeleter {
             }
         });
     }
-
-// --Commented out by Inspection START (11/10/2025 3:57 PM):
-//    public static void lock() {
-//        lock = true;
-//    }
-// --Commented out by Inspection STOP (11/10/2025 3:57 PM)
-
-// --Commented out by Inspection START (11/10/2025 3:57 PM):
-//    public static void unlock() {
-//        lock = false;
-//    }
-// --Commented out by Inspection STOP (11/10/2025 3:57 PM)
 
     public static void put(String s ) {
         put(new File(s));
