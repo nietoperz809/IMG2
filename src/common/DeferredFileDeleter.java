@@ -20,10 +20,10 @@ public class DeferredFileDeleter {
                 try {
                     File file = __delQue.take();
                     Tools.runTask(() -> {
+                        String fp = file.getPath();
+                        System.out.println("del: "+fp);
                         try {
                             Thread.sleep(1000);
-                            String fp = file.getPath();
-                            System.out.println("del: "+fp);
                             shellDelFile(fp);
                         } catch (Exception e) {
                             throw new RuntimeException(e);
