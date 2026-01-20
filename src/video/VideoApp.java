@@ -417,7 +417,7 @@ public class VideoApp extends JFrame {
                                     VideoFunctions.addVideoFile(f);
                                     speak("Regular video added");
                                 }
-                                DeferredFileDeleter.put(f);
+                                DeferredFileDeleter.put(f.getPath());
                             }
                             setAndSortJListContent();
                             repaint();

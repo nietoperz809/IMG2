@@ -112,7 +112,7 @@ public class SubMenuMarked extends JMenu {
                                     }
                                 }
                             } while (repeats != 0);
-                            DeferredFileDeleter.put(new File(imgFile));
+                            DeferredFileDeleter.put(imgFile);
                         }
                         Thumbnail.markAll(grid, false);
                         zipFile.close();

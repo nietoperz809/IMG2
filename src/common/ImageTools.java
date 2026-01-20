@@ -113,6 +113,7 @@ public class ImageTools {
                 }
             }
         }
+        ig2.dispose();
         return big;
     }
 
@@ -203,13 +204,14 @@ public class ImageTools {
 
     public static boolean isWEBP(String path) {
         try {
-            InputStream in = new FileInputStream(path);
-            byte[] header = new byte[12];
-            if (in.read(header) == header.length) {
-                if (header[0] == 'R' && header[1] == 'I' && header[2] == 'F' && header[3] == 'F' &&
-                        header[8] == 'W' && header[9] == 'E' && header[10] == 'B' && header[11] == 'P') {
-                    in.close();
-                    return true;
+            try (InputStream in = new FileInputStream(path)) {
+                byte[] header = new byte[12];
+                if (in.read(header) == header.length) {
+                    if (header[0] == 'R' && header[1] == 'I' && header[2] == 'F' && header[3] == 'F' &&
+                            header[8] == 'W' && header[9] == 'E' && header[10] == 'B' && header[11] == 'P') {
+                        in.close();
+                        return true;
+                    }
                 }
             }
         } catch (Exception _) {
@@ -307,6 +309,7 @@ public class ImageTools {
         graphics2D.translate((height - width) / 2, (height - width) / 2);
         graphics2D.rotate(Math.PI / 2, height / 2, width / 2);
         graphics2D.drawRenderedImage(src, null);
+        graphics2D.dispose();
         return dest;
     }
 
@@ -331,9 +334,10 @@ public class ImageTools {
      */
     public static byte[] imgToJPGByteArray(BufferedImage img) throws IOException {
         img = removeAlpha(img);
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        ImageIO.write(img, "jpg", baos);
-        return baos.toByteArray();
+        try (ByteArrayOutputStream baos = new ByteArrayOutputStream()) {
+            ImageIO.write(img, "jpg", baos);
+            return baos.toByteArray();
+        }
     }
 
     /**

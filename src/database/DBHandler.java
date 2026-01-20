@@ -346,7 +346,7 @@ public class DBHandler {
             }
             insertImageRecord (imgin);
             ic.justInserted (imgin.image());
-            DeferredFileDeleter.put(file);
+            DeferredFileDeleter.put(file.getPath());
             ret++;
         }
         connection.commit();
@@ -377,6 +377,7 @@ public class DBHandler {
             prep.setObject(3, hash0);
             prep.setString(4,imgin.dec().toString());
             prep.execute();
+            prep.close();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
