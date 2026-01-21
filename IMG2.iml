@@ -29,5 +29,6 @@
     <orderEntry type="library" name="lib1" level="project" />
     <orderEntry type="library" name="github.mike10004.commons.imaging" level="project" />
     <orderEntry type="library" name="google.jimfs" level="project" />
+    <orderEntry type="library" name="jsoup" level="project" />
   </component>
 </module>

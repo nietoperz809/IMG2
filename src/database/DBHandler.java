@@ -36,6 +36,8 @@ public class DBHandler {
     //"E:\\Databases\\";
     static Connection connection;
     static Statement stm;
+    public static final String Url = "jdbc:h2:" + RootDirectory + DB_FILE + ";CIPHER=AES";
+    ;
     /*
         jdbc:h2:C:\peter.home\java\IMG2\datastore\mydb;CIPHER=AES
      */
@@ -56,15 +58,14 @@ public class DBHandler {
             } else {
                 aes_pwd = pers.get();
             }
-            String url = "jdbc:h2:" + RootDirectory + DB_FILE + ";CIPHER=AES";
             String user = "LALA";
             String pwd = aes_pwd + " dumm";
             out.println("-------------------------");
-            out.println(url);
+            out.println(Url);
             out.println(user + " -- " + pwd);
             out.println("-------------------------");
             Instant startI = Instant.now();
-            connection = DriverManager.getConnection(url, user, pwd);
+            connection = DriverManager.getConnection(Url, user, pwd);
             Instant endI = Instant.now();
             AsyncInfo ("DB connect took: " + commatize (Duration.between(startI, endI).toMillis()) + " ms");
             stm = connection.createStatement();
@@ -94,6 +95,10 @@ public class DBHandler {
 
     public static String getDBRoot() {
         return RootDirectory;
+    }
+
+    public static String getUrl() {
+        return Url;
     }
 
     /**
@@ -199,7 +204,7 @@ public class DBHandler {
         return sb.toString();
     }
 
-    public static String getTableCount(String tableName) {
+    public static String getRowCount(String tableName) {
         String sql = "select count(*) as totalcnt from "+tableName;
         try (ResultSet res = query(sql)) {
             if (Objects.requireNonNull(res).next()) {
@@ -395,11 +400,12 @@ public class DBHandler {
                 bigImg = JPGByteArrayToImg(extractResource("fail.png"));
             }
             byte[] buff = createThumbBytes(bigImg);
-            PreparedStatement prep;
-            prep = connection.prepareStatement(
-                    "update IMAGES set thumb=? where _rowid_ = " + id);
-            prep.setBytes(1, buff);
-            prep.execute();
+            try (PreparedStatement prep = connection.prepareStatement(
+                        "update IMAGES set thumb=? where _rowid_ = " + id)) {
+
+                prep.setBytes(1, buff);
+                prep.execute();
+            };
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -411,13 +417,13 @@ public class DBHandler {
             byte[] buff = ImageTools.imgToJPGByteArray(img);
             HashingAlgorithm hasher = new PerceptiveHash(32);
             Hash hash0 = hasher.hash(img);
-            PreparedStatement prep;
-            prep = connection.prepareStatement(
-                    "update IMAGES set image=?,imghash=? where _rowid_ = " + id);
-            prep.setBytes(1, buff);
-            prep.setObject(2, hash0);
-            prep.execute();
-            connection.commit();
+            try (PreparedStatement prep = connection.prepareStatement(
+                    "update IMAGES set image=?,imghash=? where _rowid_ = " + id)) {
+                prep.setBytes(1, buff);
+                prep.setObject(2, hash0);
+                prep.execute();
+                connection.commit();
+            }
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -504,10 +510,11 @@ public class DBHandler {
                     BufferedImage bi = JPGByteArrayToImg(img);
                     HashingAlgorithm hasher = new PerceptiveHash(32);
                     hash = hasher.hash(bi);
-                    PreparedStatement prep = connection.prepareStatement(
-                            "update IMAGES set imghash=? where _rowid_ = " + rowid);
-                    prep.setObject(1, hash);
-                    prep.execute();
+                    try (PreparedStatement prep = connection.prepareStatement(
+                            "update IMAGES set imghash=? where _rowid_ = " + rowid)) {
+                        prep.setObject(1, hash);
+                        prep.execute();
+                    }
                 }
                 return img;
             }

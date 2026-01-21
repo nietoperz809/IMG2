@@ -44,11 +44,25 @@ public class VideoFunctions extends DBHandler{
         }
     }
 
+    /*
+
+        private static void insertWEBPRecord(byte[] webp, String name) {
+        try (PreparedStatement prep = connection.prepareStatement(
+                    "insert into WEBP (webpdata,name,blobsize) values (?,?,?)")) {
+            prep.setBytes(1, webp);
+            prep.setString(2, name);
+            prep.setString(3, String.valueOf(webp.length));
+            prep.execute();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+     */
+
     private static void insertVideoRecord(byte[] vid, String name) {
-        PreparedStatement prep;
-        try {
-            prep = connection.prepareStatement(
-                    "insert into VIDEOS (vid,name,blobsize) values (?,?,?)");
+        try (PreparedStatement prep = connection.prepareStatement(
+                    "insert into VIDEOS (vid,name,blobsize) values (?,?,?)")) {
             prep.setBytes(1, vid);
             prep.setString(2, name);
             prep.setString(3, String.valueOf(vid.length));
@@ -59,10 +73,8 @@ public class VideoFunctions extends DBHandler{
     }
 
     private static void insertGifRecord(byte[] gif, String name) {
-        PreparedStatement prep;
-        try {
-            prep = connection.prepareStatement(
-                    "insert into GiFS (gifdata,name,blobsize) values (?,?,?)");
+        try (PreparedStatement prep = connection.prepareStatement(
+                    "insert into GiFS (gifdata,name,blobsize) values (?,?,?)")) {
             prep.setBytes(1, gif);
             prep.setString(2, name);
             prep.setString(3, String.valueOf(gif.length));
@@ -73,10 +85,8 @@ public class VideoFunctions extends DBHandler{
     }
 
     private static void insertWEBPRecord(byte[] webp, String name) {
-        PreparedStatement prep;
-        try {
-            prep = connection.prepareStatement(
-                    "insert into WEBP (webpdata,name,blobsize) values (?,?,?)");
+        try (PreparedStatement prep = connection.prepareStatement(
+                    "insert into WEBP (webpdata,name,blobsize) values (?,?,?)")) {
             prep.setBytes(1, webp);
             prep.setString(2, name);
             prep.setString(3, String.valueOf(webp.length));

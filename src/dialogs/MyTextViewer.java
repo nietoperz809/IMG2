@@ -1,6 +1,9 @@
 package dialogs;
 
+import common.SystemClipboard;
 import database.DBHandler;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
 
 import javax.swing.*;
 import java.awt.*;
@@ -18,7 +21,7 @@ public class MyTextViewer extends JDialog {
         setModal(true);
         getRootPane().setDefaultButton(buttonOK);
 
-        buttonOK.addActionListener(e -> onOK());
+        buttonOK.addActionListener(_ -> onOK());
 
         // close dialog
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
@@ -34,19 +37,23 @@ public class MyTextViewer extends JDialog {
     }
 
     private void onOK() {
-        // add your code here
+        String t = textPane1.getText();
+        Document doc = Jsoup.parse(t);
+        SystemClipboard.setString(doc.text());
         dispose();
     }
 
     public static void showDatabase() {
         MyTextViewer dialog = new MyTextViewer();
-        String i1 = DBHandler.getTableCount("IMAGES");
-        String i2 = DBHandler.getTableCount("VIDEOS");
-        String i3 = DBHandler.getTableCount("GIFS");
-        String i4 = DBHandler.getTableCount("WEBP");
+        String i1 = DBHandler.getRowCount("IMAGES");
+        String i2 = DBHandler.getRowCount("VIDEOS");
+        String i3 = DBHandler.getRowCount("GIFS");
+        String i4 = DBHandler.getRowCount("WEBP");
+        String root = "\n-- Root: "+DBHandler.getUrl();
         String count = "-- "+i1+" "+i2+" "+i3+" "+i4;
         dialog.textPane1.setContentType("text/html");
         String s = DBHandler.getDBStructure()+"\n"+count;
+        s += root;
         s += ("\n-- Total DB size: " + commatize(Long.parseLong(DBHandler.getDBFileSize())));
         s = s.replace ("\n", "<br>");
         dialog.textPane1.setText("<html><b>"+s+"</b></html>");
