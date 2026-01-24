@@ -15,6 +15,7 @@ import thegrid.UniqueRng;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Map;
 
 import static common.Tools.extractResource;
 
@@ -124,18 +125,18 @@ public class WebApp extends NanoHTTPD {
      * @param session request object from browser
      * @return response object
      */
-    private Response switchImage(IHTTPSession session) {
-        int rowid;
-        String parm = session.getParms().get("image");
-        if (parm.equals("@@PRV")) {
-            rowid = allFiles.get(ring.getPrev()).rowid();
-        } else if (parm.equals("@@NXT")) {
-            rowid = allFiles.get(ring.getNext()).rowid();
-        } else /* @@RES */ {
-            rowid = 0;
-        }
-        return sendImagePage(rowid);
-    }
+//    private Response switchImage(IHTTPSession session) {
+//        int rowid;
+//        String parm = session.getParms().get("image"); // should be img not image
+//        if (parm.equals("@@PRV")) {
+//            rowid = allFiles.get(ring.getPrev()).rowid();
+//        } else if (parm.equals("@@NXT")) {
+//            rowid = allFiles.get(ring.getNext()).rowid();
+//        } else /* @@RES */ {
+//            rowid = 0;
+//        }
+//        return sendImagePage(rowid);
+//    }
 
 
     /**
@@ -177,7 +178,16 @@ public class WebApp extends NanoHTTPD {
         } else if (uri.endsWith(".ico")) {
             return sendIcon(uri);
         } else if (uri.startsWith("/show.html")) {
-            return switchImage(session);
+            Map<String, String> map = session.getParms();
+            String parm = map.get("img");
+            if (parm.equals("@@PRV")) {
+                rowid = allFiles.get(ring.getPrev()).rowid();
+            } else if (parm.equals("@@NXT")) {
+                rowid = allFiles.get(ring.getNext()).rowid();
+            } else /* @@RES */ {
+                rowid = 0;
+            }
+            return sendImagePage(rowid);
         }
         return null;
     }
