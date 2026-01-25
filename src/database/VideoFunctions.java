@@ -1,19 +1,13 @@
 package database;
 
-import common.Tools;
-
 import java.io.*;
 import java.lang.ref.SoftReference;
-import java.nio.MappedByteBuffer;
-import java.nio.channels.FileChannel;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
-import java.util.Objects;
-import java.util.concurrent.atomic.AtomicReference;
 
 import static java.lang.System.getProperty;
 
@@ -98,23 +92,16 @@ public static void addVideoFile(File file) {
         }
     }
 
-    public static SoftReference<byte[]> loadVideoBytes(NameID nid) throws Exception {
-        return loadBytes("select VID from VIDEOS where _ROWID_='" + nid.rowid() + "'");
-    }
-
-public static OutputStream getVideoStream (NameID nid, String filename) {
+public static File getVideoFromStream(NameID nid) {
+    final String filename = getProperty("java.io.tmpdir") + File.separator + "tempfile-" + "myra.dat";
     try (PreparedStatement ps = connection.prepareStatement(
-            "SELECT vid FROM VIDEOS WHERE _ROWID_=?")) {
-
-        ps.setLong(1, nid.rowid());
-
+            "SELECT vid FROM VIDEOS WHERE _ROWID_='"+ nid.rowid() + "'")) {
         try (ResultSet rs = ps.executeQuery()) {
             if (rs.next()) {
                 try (InputStream in = rs.getBinaryStream(1);
-                     OutputStream out = Files.newOutputStream(Path.of( filename /*"out.mp4"*/))) {
-
+                     OutputStream out = Files.newOutputStream(Path.of(filename))) {
                     in.transferTo(out);
-                    return out;
+                    return new File(filename);
                 }
             }
         }

@@ -4,7 +4,6 @@ import common.*;
 import database.DBHandler;
 import database.VideoFunctions;
 import dialogs.Input;
-import dialogs.Tagger;
 import dialogs.MonitorFrame;
 import dialogs.TimedMsg2;
 import net.lingala.zip4j.ZipFile;
@@ -21,7 +20,6 @@ import java.awt.dnd.DropTargetDropEvent;
 import java.awt.event.*;
 import java.io.File;
 import java.io.IOException;
-import java.lang.ref.SoftReference;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.text.NumberFormat;
@@ -212,18 +210,18 @@ public class VideoApp extends JFrame {
         listControl.repaint();
     }
 
-    private SoftReference<byte[]> getVideoBytes (DBHandler.NameID nameid) {
-        try {
-            if (gifList.contains(nameid)) {
-                return loadGifBytes(nameid);
-            } else if (webpList.contains(nameid)) {
-                return loadWEBPBytes(nameid);
-            }
-            return loadVideoBytes(nameid);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-    }
+//    private SoftReference<byte[]> getVideoBytes (DBHandler.NameID nameid) {
+//        try {
+//            if (gifList.contains(nameid)) {
+//                return loadGifBytes(nameid);
+//            } else if (webpList.contains(nameid)) {
+//                return loadWEBPBytes(nameid);
+//            }
+//            return loadVideoBytes(nameid);
+//        } catch (Exception e) {
+//            throw new RuntimeException(e);
+//        }
+//    }
 
     private void saveMultiAsZip (List<DBHandler.NameID> selectedValuesList) {
         ZipParameters zipParameters = Tools.getStandardZipParams();
@@ -242,8 +240,8 @@ public class VideoApp extends JFrame {
                         filename = filename + ".mp4";
                     }
                 }
-                SoftReference<byte[]> bt = getVideoBytes (nid);
-                Files.write (Path.of(filename), bt.get());
+                File vidFile = getVideoFromStream(nid);
+                Files.write (Path.of(filename), Files.readAllBytes(vidFile.toPath()));
                 zipFile.addFile(filename, zipParameters);
                 DeferredFileDeleter.put (filename);
             }
@@ -262,8 +260,8 @@ public class VideoApp extends JFrame {
             int option = fileChooser.showSaveDialog(VideoApp.this);
             if (option == JFileChooser.APPROVE_OPTION) {
                 File f = fileChooser.getSelectedFile();
-                SoftReference<byte[]> bt = getVideoBytes (nameid);
-                Files.write(f.toPath(), bt.get());
+                File vidFile = getVideoFromStream(nameid);
+                Files.write(f.toPath(), Files.readAllBytes(vidFile.toPath()));
             }
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -318,8 +316,7 @@ public class VideoApp extends JFrame {
             nid = listControl.getSelectedValue();
         }
         if (gifList.contains(nid)) try {
-            getVideoStream (nid, "myra.dat");
-            File f = new File ("myra.dat");
+            File f = getVideoFromStream(nid);
 
             //File f = transferGifIntoFile(nid);
             playerBox = new AnimPlayerBox(f, this,
@@ -328,9 +325,7 @@ public class VideoApp extends JFrame {
             throw new RuntimeException(e);
         }
         else if (webpList.contains(nid)) try {
-            getVideoStream (nid, "myra.dat");
-            File f = new File ("myra.dat");
-            //File f = transferwEBPIntoFile(nid);
+            File f = getVideoFromStream(nid);
             playerBox = new AnimPlayerBox(f, this,
                     new WebPDecoder(), checkBoxAC.isSelected());
         } catch (Exception e) {
