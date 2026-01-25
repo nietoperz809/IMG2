@@ -15,16 +15,16 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ddb69741-e020-4d21-a32f-f00e79c6818a" name="Changes" comment="try to find mem leaks">
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/google_jimfs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/artifacts/IMG2_jar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/artifacts/IMG2_jar.xml" afterDir="false" />
+    <list default="true" id="ddb69741-e020-4d21-a32f-f00e79c6818a" name="Changes" comment="fixed prev/next image switching">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/IMG2.iml" beforeDir="false" afterPath="$PROJECT_DIR$/IMG2.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/buildinfo/BuildInfo2.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/buildinfo/BuildInfo2.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/database/DBHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/database/DBHandler.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/database/VideoFunctions.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/database/VideoFunctions.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/dialogs/MyTextViewer.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/dialogs/MyTextViewer.form" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/dialogs/MyTextViewer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/dialogs/MyTextViewer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/httpserv/NanoHTTPD.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/httpserv/NanoHTTPD.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/httpserv/WebApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/httpserv/WebApp.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/video/GifDecoder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/video/GifDecoder.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/video/MP4PlayerBox.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/video/MP4PlayerBox.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/video/VideoApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/video/VideoApp.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -76,7 +76,7 @@
     <option name="stateVersion" value="1" />
   </component>
   <component name="ProblemsViewState">
-    <option name="selectedTabId" value="QODANA_PROBLEMS_VIEW_TAB" />
+    <option name="selectedTabId" value="CurrentFile" />
   </component>
   <component name="ProjectColorInfo">{
   &quot;customColor&quot;: &quot;&quot;,
@@ -723,7 +723,7 @@
       <option name="project" value="LOCAL" />
       <updated>1683976691765</updated>
     </task>
-    <option name="localTasksCounter" value="430" />
+    <option name="localTasksCounter" value="432" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -791,8 +791,6 @@
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_NEW_TODO" value="false" />
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="minimal changes" />
-    <MESSAGE value="added getHwndFromJFrame&#10;to get HWND without FindWindow" />
     <MESSAGE value="new: public static HWND getHwnd(Window w)" />
     <MESSAGE value="getHwnd simplified" />
     <MESSAGE value="show db structure (menu item)" />
@@ -816,7 +814,9 @@
     <MESSAGE value="bugfix" />
     <MESSAGE value="changed DeferredFileDeleter to use CMD.exe" />
     <MESSAGE value="try to find mem leaks" />
-    <option name="LAST_COMMIT_MESSAGE" value="try to find mem leaks" />
+    <MESSAGE value="fixed file-deletion-problem" />
+    <MESSAGE value="fixed prev/next image switching" />
+    <option name="LAST_COMMIT_MESSAGE" value="fixed prev/next image switching" />
     <option name="NON_MODAL_COMMIT_POSTPONE_SLOW_CHECKS" value="false" />
   </component>
   <component name="XDebuggerManager">

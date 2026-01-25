@@ -318,14 +318,19 @@ public class VideoApp extends JFrame {
             nid = listControl.getSelectedValue();
         }
         if (gifList.contains(nid)) try {
-            File f = transferGifIntoFile(nid);
+            getVideoStream (nid, "myra.dat");
+            File f = new File ("myra.dat");
+
+            //File f = transferGifIntoFile(nid);
             playerBox = new AnimPlayerBox(f, this,
                     new GifDecoder(), checkBoxAC.isSelected());
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
         else if (webpList.contains(nid)) try {
-            File f = transferwEBPIntoFile(nid);
+            getVideoStream (nid, "myra.dat");
+            File f = new File ("myra.dat");
+            //File f = transferwEBPIntoFile(nid);
             playerBox = new AnimPlayerBox(f, this,
                     new WebPDecoder(), checkBoxAC.isSelected());
         } catch (Exception e) {
@@ -353,9 +358,9 @@ public class VideoApp extends JFrame {
     private void onCancel() {
         if (playerBox == null)
             return;
-        DBHandler.cancelFileTransfer();
+        //DBHandler.cancelFileTransfer();
         playerBox.stop();
-        DBHandler.cancelFileTransfer();
+        //DBHandler.cancelFileTransfer();
     }
 
     private void listToListControl(List<DBHandler.NameID> list) {

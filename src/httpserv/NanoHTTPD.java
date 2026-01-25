@@ -1029,8 +1029,8 @@ public abstract class NanoHTTPD {
                 if (baos != null) {
                     fbuf = ByteBuffer.wrap(baos.toByteArray(), 0, baos.size());
                 } else {
-                    fbuf = randomAccessFile.getChannel().map(FileChannel.MapMode.READ_ONLY, 0, randomAccessFile.length());
-                    randomAccessFile.seek(0);
+                        fbuf = randomAccessFile.getChannel().map(FileChannel.MapMode.READ_ONLY, 0, randomAccessFile.length());
+                        randomAccessFile.seek(0);
                 }
 
                 // If the method is POST, there may be parameters

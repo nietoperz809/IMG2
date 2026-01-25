@@ -119,12 +119,12 @@ public class WebApp extends NanoHTTPD {
         }
     }
 
-    /**
-     * send adjusted image page regarding user action
-     *
-     * @param session request object from browser
-     * @return response object
-     */
+//    /**
+//     * send adjusted image page regarding user action
+//     *
+//     * @param session request object from browser
+//     * @return response object
+//     */
 //    private Response switchImage(IHTTPSession session) {
 //        int rowid;
 //        String parm = session.getParms().get("image"); // should be img not image
@@ -168,11 +168,11 @@ public class WebApp extends NanoHTTPD {
         } else if (uri.endsWith(".jpg")) {
             byte[] bytes = DBHandler.loadImage(rowid);
 
-            /////////////////
+            // -----
             System.out.println("send img2: "+rowid);
             int i = findIndex(rowid);
             ring.set(i);
-            /////////////////
+            // -----
 
             return sendImageBytes(bytes);
         } else if (uri.endsWith(".ico")) {

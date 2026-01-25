@@ -16,7 +16,9 @@ import java.io.File;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
-import static database.VideoFunctions.transferVideoIntoFile;
+import static database.VideoFunctions.getVideoStream;
+
+//import static database.VideoFunctions.transferVideoIntoFile;
 
 public class MP4PlayerBox implements PlayerBox {
     private static final Lock lock = new ReentrantLock();
@@ -74,8 +76,9 @@ public class MP4PlayerBox implements PlayerBox {
         try {
             speed = new UpDown(new float[]{0.01f, 0.1f, 0.3f, 1.0f, 2.0f, 3.0f, 5.0f}, 3);
             sbar.setValue(0);
-            File tempFile = transferVideoIntoFile(nid);
-            System.out.println(tempFile);
+            //File tempFile = transferVideoIntoFile(nid);
+            getVideoStream (nid, "myra.dat");
+            File tempFile = new File ("myra.dat");//transferVideoIntoFile(nid);
             mediaPlayerComponent = new EmbeddedMediaPlayerComponent();
             playerFrame = new JFrame();
             playerFrame.requestFocus();

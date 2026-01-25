@@ -247,6 +247,9 @@ public class GifDecoder implements AnimDecoder {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+        finally {
+
+        }
         return status;
     }
 

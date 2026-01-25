@@ -41,7 +41,7 @@ public class DBHandler {
     /*
         jdbc:h2:C:\peter.home\java\IMG2\datastore\mydb;CIPHER=AES
      */
-    static Future<?> transferTask;
+    //static Future<?> transferTask;
 
 //    public static Connection getConnection() {
 //        return connection;
@@ -70,6 +70,7 @@ public class DBHandler {
             AsyncInfo ("DB connect took: " + commatize (Duration.between(startI, endI).toMillis()) + " ms");
             stm = connection.createStatement();
             stm.execute("alter table VIDEOS add if not exists BLOBSiZE INT");
+            stm.execute("ALTER TABLE VIDEOS ALTER COLUMN BLOBSIZE BIGINT;");
             stm.execute("alter table GIFS add if not exists BLOBSiZE INT");
             stm.execute("alter table WEBP add if not exists BLOBSiZE INT");
             stm.execute("alter table IMAGES add if not exists IMGHASH JAVA_OBJECT");
@@ -454,9 +455,9 @@ public class DBHandler {
         return s;
     }
 
-    public static void cancelFileTransfer() {
-        transferTask.cancel(true);
-    }
+//    public static void cancelFileTransfer() {
+//        transferTask.cancel(true);
+//    }
 
     public static void changeName(String table, String name, int rowid) {
         String sql = "update " + table + " set name ='" + name + "' where _rowid_ =" + rowid;
