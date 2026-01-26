@@ -1,35 +1,33 @@
 package database;
 
-import java.io.*;
-import java.lang.ref.SoftReference;
+import common.Pair;
+
+import java.io.BufferedInputStream;
+import java.io.File;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.List;
 
 import static java.lang.System.getProperty;
 
-public class VideoFunctions extends DBHandler{
-//    public static void addVideoFile(File file) {
-//        try {
-//            byte[] fileContent = Files.readAllBytes(file.toPath());
-//            insertVideoRecord(fileContent, file.getName());
-//        } catch (Exception e) {
-//            throw new RuntimeException(e);
-//        }
-//    }
-public static void addVideoFile(File file) {
-    try (InputStream in = new BufferedInputStream(
-            Files.newInputStream(file.toPath()))) {
+public class VideoFunctions extends DBHandler {
 
-        insertVideoRecord(in, file.getName(), file.length());
+    public static void addVideoFile(File file) {
+        try (InputStream in = new BufferedInputStream(
+                Files.newInputStream(file.toPath()))) {
 
-    } catch (Exception e) {
-        throw new RuntimeException(e);
+            insertVideoRecord(in, file.getName(), file.length());
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
-}
 
     public static void addGifFile(File file) {
         try {
@@ -70,7 +68,7 @@ public static void addVideoFile(File file) {
 
     private static void insertGifRecord(byte[] gif, String name) {
         try (PreparedStatement prep = connection.prepareStatement(
-                    "insert into GiFS (gifdata,name,blobsize) values (?,?,?)")) {
+                "insert into GiFS (gifdata,name,blobsize) values (?,?,?)")) {
             prep.setBytes(1, gif);
             prep.setString(2, name);
             prep.setString(3, String.valueOf(gif.length));
@@ -82,7 +80,7 @@ public static void addVideoFile(File file) {
 
     private static void insertWEBPRecord(byte[] webp, String name) {
         try (PreparedStatement prep = connection.prepareStatement(
-                    "insert into WEBP (webpdata,name,blobsize) values (?,?,?)")) {
+                "insert into WEBP (webpdata,name,blobsize) values (?,?,?)")) {
             prep.setBytes(1, webp);
             prep.setString(2, name);
             prep.setString(3, String.valueOf(webp.length));
@@ -92,30 +90,23 @@ public static void addVideoFile(File file) {
         }
     }
 
-public static File getVideoFromStream(NameID nid) {
-    final String filename = getProperty("java.io.tmpdir") + File.separator + "tempfile-" + "myra.dat";
-    try (PreparedStatement ps = connection.prepareStatement(
-            "SELECT vid FROM VIDEOS WHERE _ROWID_='"+ nid.rowid() + "'")) {
-        try (ResultSet rs = ps.executeQuery()) {
-            if (rs.next()) {
-                try (InputStream in = rs.getBinaryStream(1);
-                     OutputStream out = Files.newOutputStream(Path.of(filename))) {
-                    in.transferTo(out);
-                    return new File(filename);
+    public static File getVideoAsFile(NameID nid, Pair p) {
+        final String filename = getProperty("java.io.tmpdir") + File.separator + "tempfile-" + "myra.dat";
+        try (PreparedStatement ps = connection.prepareStatement(
+                "SELECT "+p.first+" FROM "+p.second+" WHERE _ROWID_='" + nid.rowid() + "'")) {
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    try (InputStream in = rs.getBinaryStream(1);
+                         OutputStream out = Files.newOutputStream(Path.of(filename))) {
+                        in.transferTo(out);
+                        return new File(filename);
+                    }
                 }
             }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
-    } catch (Exception e) {
-        throw new RuntimeException(e);
-    }
-    return null;
-}
-    public static SoftReference<byte[]> loadGifBytes(NameID nid) throws Exception {
-        return loadBytes("select GIFDATA from GIFS where _ROWID_='" + nid.rowid() + "'");
-    }
-
-    public static SoftReference<byte[]> loadWEBPBytes(NameID nid) throws Exception {
-        return loadBytes("select WEBPDATA from WEBP where _ROWID_='" + nid.rowid() + "'");
+        return null;
     }
 
     public static String getVideoBlobLen(NameID nid) {
@@ -129,18 +120,6 @@ public static File getVideoFromStream(NameID nid) {
     public static String getWEBPBlobLen(NameID nid) {
         return queryBlobLen(nid, "WEBP", "WEBPDATA");
     }
-
-//    public static File transferGifIntoFile(NameID nid) throws Exception {
-//        return transferIntoFile(nid, "GIF");
-//    }
-//
-//    public static File transferwEBPIntoFile(NameID nid) throws Exception {
-//        return transferIntoFile(nid, "WEBP");
-//    }
-
-//    public static File transferVideoIntoFile(NameID nid) throws Exception {
-//        return transferIntoFile(nid, "VID");
-//    }
 
     public static void changeVideoName(String name, int rowid) {
         changeName("VIDEOS", name, rowid);
@@ -170,45 +149,4 @@ public static File getVideoFromStream(NameID nid) {
     public static List<NameID> getWebPFileNames() {
         return getAnimatedFileNames("WEBP");
     }
-
-//    public static File transferIntoFile(NameID nid, String type) throws Exception {
-//
-//        AtomicReference<File> f = new AtomicReference<>();
-//        transferTask = Tools.runTask(() -> {
-//            try {
-//                f.set(transferIntoFileInternal(nid, type));
-//            } catch (Exception e) {
-//                throw new RuntimeException(e);
-//            }
-//        });
-//        transferTask.get(); // wait
-//        return f.get();
-//    }
-
-    /**
-     * Load DB record into mapped file
-     * @return file name of file on disk
-     * @throws Exception if smth gone wrong
-     */
-//    private static File transferIntoFileInternal(NameID nid, String type) throws Exception {
-//        SoftReference<byte[]> bt = switch (type) {
-//            case "GIF" -> loadGifBytes(nid);
-//            case "WEBP" -> loadWEBPBytes(nid);
-//           default ->  // regular vid
-//                    loadVideoBytes(nid);
-////            {
-////                getVideoStream(nid, "out.mp4");
-////                //return new File ("out.mp4");
-////            }
-//        };
-//        File fi = new File(getProperty("java.io.tmpdir") + File.separator + "tempfile-" + "myra.dat");
-//        fi.deleteOnExit();
-//        try (RandomAccessFile rafile = new RandomAccessFile(fi, "rw")) {
-//            MappedByteBuffer out = rafile.getChannel()
-//                    .map(FileChannel.MapMode.READ_WRITE, 0, Objects.requireNonNull(bt.get()).length);
-//            out.put(Objects.requireNonNull(bt.get()));
-//            out.load();
-//        }
-//        return fi;
-//    }
 }

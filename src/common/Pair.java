@@ -5,12 +5,12 @@ public final class Pair<U, V> {
     /**
      * The first element of this <code>Pair</code>
      */
-    private final U first;
+    public final U first;
 
     /**
      * The second element of this <code>Pair</code>
      */
-    private final V second;
+    public final V second;
 
     /**
      * Constructs a new <code>Pair</code> with the given values.
@@ -26,6 +26,6 @@ public final class Pair<U, V> {
 
     @Override
     public String toString() {
-        return "Pair{" + first + "," + second + '}';
+        return first + "," + second;
     }
 }

@@ -1,5 +1,6 @@
 package video;
 
+import common.Pair;
 import common.Tools;
 import common.UpDown;
 import database.DBHandler;
@@ -16,9 +17,8 @@ import java.io.File;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
-import static database.VideoFunctions.getVideoFromStream;
-
-//import static database.VideoFunctions.transferVideoIntoFile;
+import static database.VideoFunctions.getVideoAsFile;
+import static video.VideoType.pVideo;
 
 public class MP4PlayerBox implements PlayerBox {
     private static final Lock lock = new ReentrantLock();
@@ -76,8 +76,12 @@ public class MP4PlayerBox implements PlayerBox {
         try {
             speed = new UpDown(new float[]{0.01f, 0.1f, 0.3f, 1.0f, 2.0f, 3.0f, 5.0f}, 3);
             sbar.setValue(0);
-            File tempFile = getVideoFromStream(nid);
+            File tempFile = getVideoAsFile (nid, pVideo);
             mediaPlayerComponent = new EmbeddedMediaPlayerComponent();
+            MediaPlayer mp = mediaPlayerComponent.mediaPlayer();
+            //mediaPlayerComponent.mediaPlayer().fullScreen().set (true);
+            //mp.video().setAdjustVideo(true);
+            //mp.inter
             playerFrame = new JFrame();
             playerFrame.requestFocus();
             //playerFrame.setTitle("Hit 's' to start and stop, 'p' to take snapshot, +/- for speed, 'b' to show sliders");
