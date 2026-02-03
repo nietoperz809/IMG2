@@ -1,6 +1,6 @@
 package database;
 
-import common.Pair;
+import common.UnrelatedPair;
 
 import java.io.BufferedInputStream;
 import java.io.File;
@@ -11,7 +11,6 @@ import java.nio.file.Path;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.HashMap;
 import java.util.List;
 
 import static java.lang.System.getProperty;
@@ -90,16 +89,17 @@ public class VideoFunctions extends DBHandler {
         }
     }
 
-    public static File getVideoAsFile(NameID nid, Pair p) {
-        final String filename = getProperty("java.io.tmpdir") + File.separator + "tempfile-" + "myra.dat";
+    public static File getVideoAsFile(NameID nid, UnrelatedPair videoType, String outfile) {
+        if (outfile == null)
+            outfile = getProperty("java.io.tmpdir") + File.separator + "tempfile-" + "myra.dat";
         try (PreparedStatement ps = connection.prepareStatement(
-                "SELECT "+p.first+" FROM "+p.second+" WHERE _ROWID_='" + nid.rowid() + "'")) {
+                "SELECT "+videoType.second+" FROM "+videoType.first+" WHERE _ROWID_='" + nid.rowid() + "'")) {
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
                     try (InputStream in = rs.getBinaryStream(1);
-                         OutputStream out = Files.newOutputStream(Path.of(filename))) {
+                         OutputStream out = Files.newOutputStream(Path.of(outfile))) {
                         in.transferTo(out);
-                        return new File(filename);
+                        return new File(outfile);
                     }
                 }
             }

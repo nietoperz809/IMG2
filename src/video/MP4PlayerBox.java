@@ -1,6 +1,5 @@
 package video;
 
-import common.Pair;
 import common.Tools;
 import common.UpDown;
 import database.DBHandler;
@@ -76,7 +75,7 @@ public class MP4PlayerBox implements PlayerBox {
         try {
             speed = new UpDown(new float[]{0.01f, 0.1f, 0.3f, 1.0f, 2.0f, 3.0f, 5.0f}, 3);
             sbar.setValue(0);
-            File tempFile = getVideoAsFile (nid, pVideo);
+            File tempFile = getVideoAsFile (nid, pVideo, null);
             mediaPlayerComponent = new EmbeddedMediaPlayerComponent();
             MediaPlayer mp = mediaPlayerComponent.mediaPlayer();
             //mediaPlayerComponent.mediaPlayer().fullScreen().set (true);

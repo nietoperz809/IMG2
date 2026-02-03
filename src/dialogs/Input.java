@@ -1,10 +1,9 @@
 package dialogs;
 
 import common.BlockCaret;
-import common.Pair;
+import common.UnrelatedPair;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
-import thegrid.TheGrid;
 
 import javax.swing.*;
 import java.awt.*;
@@ -91,8 +90,8 @@ public class Input extends JDialog {
     }
 
     @Contract("_ -> new")
-    public static @NotNull Pair<Integer, Integer> getIntPair(String desc) {
-        Pair<Integer, Integer> p = null;
+    public static @NotNull UnrelatedPair<Integer, Integer> getIntPair(String desc) {
+        UnrelatedPair<Integer, Integer> p = null;
         do {
             Input dialog = new Input();
             dialog.setTitle(desc);
@@ -104,7 +103,7 @@ public class Input extends JDialog {
             String t2 = dialog.tf2.getText();
             dialog.dispose();
             try {
-                p = new Pair<>(Integer.parseInt(t1), Integer.parseInt(t2));
+                p = new UnrelatedPair<>(Integer.parseInt(t1), Integer.parseInt(t2));
             } catch (NumberFormatException e) {
                 //p = null;
             }
@@ -113,7 +112,7 @@ public class Input extends JDialog {
     }
 
     public static void main(String[] args) {
-        Pair<Integer, Integer> p = getIntPair("hello world");
+        UnrelatedPair<Integer, Integer> p = getIntPair("hello world");
         //Integer p = getInteger("hello");
         System.out.println(p);
         System.exit(0);

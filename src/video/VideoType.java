@@ -1,9 +1,9 @@
 package video;
 
-import common.Pair;
+import common.UnrelatedPair;
 
 public class VideoType {
-    public static Pair pVideo = new Pair("videos", "vid");
-    public static Pair pGif = new Pair("gifs","gifdata");
-    public static Pair pWebp = new Pair("webp","webpdata");
+    public static UnrelatedPair pVideo = new UnrelatedPair("videos", "vid");
+    public static UnrelatedPair pGif = new UnrelatedPair("gifs","gifdata");
+    public static UnrelatedPair pWebp = new UnrelatedPair("webp","webpdata");
 }

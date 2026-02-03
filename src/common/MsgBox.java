@@ -20,14 +20,14 @@ public class MsgBox {
     private static void msgbox(Point pos, String text) {
         SwingUtilities.invokeLater(() -> {
             JDialog dlg = new JDialog((Frame) null, "Message");
-            dlg.setModal(false);
-            dlg.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+            dlg.setDefaultCloseOperation(WindowConstants.HIDE_ON_CLOSE);
             JLabel lbl = new JLabel("<html><h1>&nbsp;" +
                     text.replace("\n", "<br>") +
                     "&nbsp;</h1></html>");
             dlg.getContentPane().add(lbl);
             dlg.pack();
             dlg.setLocation(pos);
+            dlg.setModal(false);
             dlg.setVisible(true);
         });
     }
