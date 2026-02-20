@@ -1,6 +1,9 @@
 package video;
 
 import common.UnrelatedPair;
+import database.DBHandler;
+
+import java.util.List;
 
 public class VideoType {
     public static UnrelatedPair pVideo = new UnrelatedPair("videos", "vid");

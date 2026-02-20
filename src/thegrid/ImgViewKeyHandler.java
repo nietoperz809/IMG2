@@ -181,6 +181,21 @@ public class ImgViewKeyHandler extends KeyAdapter {
                 }
             }
 
+            case VK_DELETE -> {
+                int id = 0;
+                try {
+                    id = GlobalImageStack.pop();
+                } catch (Exception ex) {
+                    return;
+                    //throw new RuntimeException(ex);
+                }
+                byte[] b = DBHandler.loadImage(id);
+                BufferedImage b2 = ImageTools.JPGByteArrayToImg(b);
+                imageFrame.imgPanel.setImageCentered(b2);
+
+                //System.out.println(id);
+            }
+
             case VK_H -> {
                 imageFrame.imgPanel.clearOffset();
                 imageFrame.adjustOn('h');

@@ -6,7 +6,7 @@ import java.util.Stack;
 public class UndoStack<T> extends Stack<T> {
     private final int maxSize;
 
-    public static UndoStack<BufferedImage> globalImageStack = new UndoStack<>(20);
+    public static UndoStack<BufferedImage> undoStack = new UndoStack<>(20);
 
     public UndoStack(int size) {
         super();

@@ -16,14 +16,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ddb69741-e020-4d21-a32f-f00e79c6818a" name="Changes" comment="introduced stream instead of array">
-      <change afterPath="$PROJECT_DIR$/src/video/VideoType.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/uk_co_caprica_vlcj.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/uk_co_caprica_vlcj.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/thegrid/GlobalImageStack.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/net_lingala_zip4j.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/net_lingala_zip4j.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/buildinfo/BuildInfo2.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/buildinfo/BuildInfo2.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/common/Pair.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/common/Pair.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/database/VideoFunctions.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/database/VideoFunctions.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/video/MP4PlayerBox.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/video/MP4PlayerBox.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/video/VideoApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/video/VideoApp.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/common/UndoStack.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/common/UndoStack.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/thegrid/ImageFrame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/thegrid/ImageFrame.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/thegrid/ImgPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/thegrid/ImgPanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/thegrid/ImgViewKeyHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/thegrid/ImgViewKeyHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/video/VideoType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/video/VideoType.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -154,7 +155,7 @@
     "UI_DESIGNER_EDITOR_MODE.PaletteManager.SHOW": "true",
     "UI_DESIGNER_EDITOR_MODE.PaletteManager.WIDTH": "205",
     "UI_DESIGNER_EDITOR_MODE.UIDesignerToolWindowManager.SHOW": "true",
-    "UI_DESIGNER_EDITOR_MODE.UIDesignerToolWindowManager.WIDTH": "359",
+    "UI_DESIGNER_EDITOR_MODE.UIDesignerToolWindowManager.WIDTH": "206",
     "full.screen.before.presentation.mode": "true",
     "git-widget-placeholder": "withQueue",
     "kotlin-language-version-configured": "true",
@@ -722,7 +723,7 @@
       <option name="project" value="LOCAL" />
       <updated>1683976691765</updated>
     </task>
-    <option name="localTasksCounter" value="434" />
+    <option name="localTasksCounter" value="436" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

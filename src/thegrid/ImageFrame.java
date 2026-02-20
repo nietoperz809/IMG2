@@ -52,12 +52,6 @@ public class ImageFrame extends JFrame implements MouseWheelListener {
         setExtendedState(JFrame.MAXIMIZED_BOTH);
         setLocationRelativeTo(null);
         setVisible(true);
-//        addWindowListener(new WindowAdapter() {
-//            @Override
-//            public void windowClosed(WindowEvent e) {
-//                kh.stopTimer();
-//            }
-//        });
         ImageViewController.add(this);
     }
 
@@ -117,8 +111,6 @@ public class ImageFrame extends JFrame implements MouseWheelListener {
         int n;
         if (rowid_in == -1) {
             String str = Input.getText("rowid or 'last/first' keyword","?");
-//                    Tagger.xmain("?", "Goto:", Color.GREEN,
-//                    "rowid or 'last/first' keyword", false);
             if (str.startsWith("?")) {
                 str = str.substring(1);
             }
@@ -144,6 +136,7 @@ public class ImageFrame extends JFrame implements MouseWheelListener {
             n = grid.imageL.IndexByRowID(rowid_in);
         }
         indexRing.set(n);
+        GlobalImageStack.push (n);
         adjustOn('h');
         showByIdx();
     }
@@ -201,6 +194,7 @@ public class ImageFrame extends JFrame implements MouseWheelListener {
     }
 
     void setImg (BufferedImage bimg) {
+        GlobalImageStack.push (grid.imageL.get(indexRing.get()).rowid());
         imgPanel.setImageCentered(bimg);
 //        Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
 //        dim.height = min (dim.height, bimg.getHeight());

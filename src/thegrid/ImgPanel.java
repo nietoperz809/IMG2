@@ -13,7 +13,7 @@ import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import javax.swing.*;
 
-import static common.UndoStack.globalImageStack;
+import static common.UndoStack.undoStack;
 
 public class ImgPanel extends JPanel implements Positioner {
 
@@ -57,7 +57,7 @@ public class ImgPanel extends JPanel implements Positioner {
     }
 
     public void undoImage() {
-        BufferedImage img = globalImageStack.pop();
+        BufferedImage img = undoStack.pop();
         if (img != null) {
             image = img;
             SwingUtilities.invokeLater(this::repaint);
@@ -76,7 +76,7 @@ public class ImgPanel extends JPanel implements Positioner {
 
     public void setImage(BufferedImage img) {
         if (image != null)
-            globalImageStack.push (ImageTools.deepCopy(image));
+            undoStack.push (ImageTools.deepCopy(image));
         image = img;
         autoSaveImage();
         SwingUtilities.invokeLater(this::repaint);
@@ -108,7 +108,7 @@ public class ImgPanel extends JPanel implements Positioner {
 
     public void setWatermark(Watermark watermark) {
         if (image != null) {
-            globalImageStack.push (ImageTools.deepCopy(image));
+            undoStack.push (ImageTools.deepCopy(image));
             paintText(image.createGraphics(), watermark.pos, watermark.font,
                     watermark.text, watermark.col, watermark.alpha, watermark.fillground);
             autoSaveImage();
