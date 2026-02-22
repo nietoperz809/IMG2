@@ -5,6 +5,7 @@ import dev.brachtendorf.jimagehash.hash.Hash;
 import dev.brachtendorf.jimagehash.hashAlgorithms.HashingAlgorithm;
 import dev.brachtendorf.jimagehash.hashAlgorithms.PerceptiveHash;
 import dialogs.UnlockDialog;
+import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
 import javax.swing.*;
@@ -25,6 +26,7 @@ import static common.MsgBox.AsyncInfo;
 import static common.Tools.commatize;
 import static common.Tools.extractResource;
 import static java.lang.System.*;
+import static java.sql.DriverManager.getConnection;
 
 public class DBHandler {
     static final String NO_PASS = "NoPass";
@@ -36,8 +38,8 @@ public class DBHandler {
     //"E:\\Databases\\";
     static Connection connection;
     static Statement stm;
-    public static final String Url = "jdbc:h2:" + RootDirectory + DB_FILE + ";CIPHER=AES";
-    ;
+    //public static final String Url = "jdbc:h2:" + RootDirectory + DB_FILE + ";CIPHER=AES";
+
     /*
         jdbc:h2:C:\peter.home\java\IMG2\datastore\mydb;CIPHER=AES
      */
@@ -46,6 +48,11 @@ public class DBHandler {
 //    public static Connection getConnection() {
 //        return connection;
 //    }
+
+    @Contract(pure = true)
+    public static @NotNull String getUrl() {
+        return "jdbc:h2:" + RootDirectory + DB_FILE + ";CIPHER=AES";
+    }
 
     public static void startDatabase(String root) {
         RootDirectory = root;
@@ -61,11 +68,11 @@ public class DBHandler {
             String user = "LALA";
             String pwd = aes_pwd + " dumm";
             out.println("-------------------------");
-            out.println(Url);
+            out.println(getUrl());
             out.println(user + " -- " + pwd);
             out.println("-------------------------");
             Instant startI = Instant.now();
-            connection = DriverManager.getConnection(Url, user, pwd);
+            connection = getConnection(getUrl(), user, pwd);
             Instant endI = Instant.now();
             AsyncInfo ("DB connect took: " + commatize (Duration.between(startI, endI).toMillis()) + " ms");
             stm = connection.createStatement();
@@ -96,10 +103,6 @@ public class DBHandler {
 
     public static String getDBRoot() {
         return RootDirectory;
-    }
-
-    public static String getUrl() {
-        return Url;
     }
 
     /**

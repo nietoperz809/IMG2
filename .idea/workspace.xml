@@ -15,16 +15,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ddb69741-e020-4d21-a32f-f00e79c6818a" name="Changes" comment="introduced stream instead of array">
-      <change afterPath="$PROJECT_DIR$/src/thegrid/GlobalImageStack.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/net_lingala_zip4j.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/net_lingala_zip4j.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+    <list default="true" id="ddb69741-e020-4d21-a32f-f00e79c6818a" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/common/UndoStack.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/common/UndoStack.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/thegrid/ImageFrame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/thegrid/ImageFrame.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/thegrid/ImgPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/thegrid/ImgPanel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/thegrid/ImgViewKeyHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/thegrid/ImgViewKeyHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/video/VideoType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/video/VideoType.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/database/DBHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/database/DBHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dialogs/Copier.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/dialogs/Copier.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -158,6 +152,7 @@
     "UI_DESIGNER_EDITOR_MODE.UIDesignerToolWindowManager.WIDTH": "206",
     "full.screen.before.presentation.mode": "true",
     "git-widget-placeholder": "withQueue",
+    "ignore.preview.features.used": "true",
     "kotlin-language-version-configured": "true",
     "last_directory_selection": "C:/peter.home/java/IMG3/src/database",
     "last_opened_file_path": "C:/peter.home/java/IMG3/lib",
@@ -723,7 +718,7 @@
       <option name="project" value="LOCAL" />
       <updated>1683976691765</updated>
     </task>
-    <option name="localTasksCounter" value="436" />
+    <option name="localTasksCounter" value="437" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -791,7 +786,6 @@
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_NEW_TODO" value="false" />
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="getHwnd simplified" />
     <MESSAGE value="show db structure (menu item)" />
     <MESSAGE value="improved db structure message" />
     <MESSAGE value="added experimental BezierPlotter" />
@@ -816,7 +810,8 @@
     <MESSAGE value="fixed file-deletion-problem" />
     <MESSAGE value="fixed prev/next image switching" />
     <MESSAGE value="introduced stream instead of array" />
-    <option name="LAST_COMMIT_MESSAGE" value="introduced stream instead of array" />
+    <MESSAGE value="added global img stack" />
+    <option name="LAST_COMMIT_MESSAGE" value="added global img stack" />
     <option name="NON_MODAL_COMMIT_POSTPONE_SLOW_CHECKS" value="false" />
   </component>
   <component name="XDebuggerManager">
@@ -839,12 +834,12 @@
           <line>15</line>
           <option name="timeStamp" value="89" />
         </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
+        <line-breakpoint type="java-line">
           <url>file://$PROJECT_DIR$/src/video/GifDecoder.java</url>
           <line>202</line>
           <option name="timeStamp" value="98" />
         </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
+        <line-breakpoint type="java-line">
           <url>file://$PROJECT_DIR$/src/video/GifDecoder.java</url>
           <line>229</line>
           <option name="timeStamp" value="99" />
