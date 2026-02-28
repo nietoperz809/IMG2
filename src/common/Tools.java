@@ -49,21 +49,16 @@ public class Tools {
      * @param list1 target JList
      */
     public static void implementSearchboxAction(final JTextField searchField, final JList<String> list1) {
-        TagListCellRenderer this_ml = (TagListCellRenderer) list1.getCellRenderer();
-        this_ml.setMark(-1); // clear all
+        TagListCellRenderer tlcr = (TagListCellRenderer) list1.getCellRenderer();
+        tlcr.setMark(-1, true); // clear all
         String ss = searchField.getText().toLowerCase();
         if (ss.isEmpty())
             list1.repaint(); // all clear?
         else {
             ListModel<String> lm = list1.getModel();
             for (int n = 0; n < lm.getSize(); n++) {
-                if (lm.getElementAt(n).contains(ss)) {
-                    final int nn = n;
-                    SwingUtilities.invokeLater(() -> {
-                        this_ml.setMark(nn);
-                        list1.repaint();
-                    });
-                }
+                tlcr.setMark(n, lm.getElementAt(n).contains(ss));
+                list1.repaint();
             }
         }
     }

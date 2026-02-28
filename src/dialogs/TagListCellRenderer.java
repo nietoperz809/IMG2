@@ -6,7 +6,7 @@ import java.awt.*;
 import java.util.HashSet;
 import java.util.Set;
 
-public class TagListCellRenderer extends JLabel implements ListCellRenderer<String>{
+public class TagListCellRenderer extends JLabel implements ListCellRenderer<String> {
 
     private final Set<Integer> markedIndices = new HashSet<>();
 
@@ -14,13 +14,15 @@ public class TagListCellRenderer extends JLabel implements ListCellRenderer<Stri
         setOpaque(true);
     }
 
-    public void setMark (int idx) {
+    public void setMark(int idx, boolean set) {
         if (idx == -1) {
             markedIndices.clear();
+            return;
         }
-        else {
+        if (set)
             markedIndices.add(idx);
-        }
+        else
+            markedIndices.remove(idx);
     }
 
     @Override
