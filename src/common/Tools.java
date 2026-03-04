@@ -50,7 +50,7 @@ public class Tools {
      */
     public static void implementSearchboxAction(final JTextField searchField, final JList<String> list1) {
         TagListCellRenderer tlcr = (TagListCellRenderer) list1.getCellRenderer();
-        tlcr.setMark(-1, true); // clear all
+        tlcr.removeAll(); // clear all
         String ss = searchField.getText().toLowerCase();
         if (ss.isEmpty())
             list1.repaint(); // all clear?

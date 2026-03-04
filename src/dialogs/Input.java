@@ -70,6 +70,7 @@ public class Input extends JDialog {
         do {
             Input dialog = new Input();
             dialog.setLocation (MouseInfo.getPointerInfo().getLocation());
+            //dialog.textField1.setToolTipText("single number or two numbers n-m");
             dialog.textField1.setText(defValue);
             dialog.setTitle(desc);
             dialog.lab1.setText(desc);
@@ -112,7 +113,7 @@ public class Input extends JDialog {
     }
 
     public static void main(String[] args) {
-        UnrelatedPair<Integer, Integer> p = getIntPair("hello world");
+        UnrelatedPair<Integer, Integer> p = Input.getIntPair ("hello world");
         //Integer p = getInteger("hello");
         System.out.println(p);
         System.exit(0);

@@ -99,27 +99,49 @@ public class TheGrid extends MyFrame {
             stopThumbViewFill("sql error");
             return;
         }
-        fillThumbs(-1); // Load all thumbs
+        fillThumbs (new UnrelatedPair<>(0,101)); // Load initial thumbs
     }
 
-    public void fillThumbs (int limit) {
-        final int lim = limit == -1 ? imageL.size() : limit;
+    public void fillThumbs (UnrelatedPair<Integer, Integer> pair) {
+        //final int lim = imageL.size();
+        imageCount = 0;
+        final int maxlen = Math.max((pair.second - pair.first), 100);
+        startTime = Instant.now();
         Tools.runTask(() -> {
-            imageCount = 0;
-            startTime = Instant.now();
-            progress = new ProgressBox(TheGrid.this, lim);
+            progress = new ProgressBox(TheGrid.this, maxlen);
             imageL.load();
             rootPane.removeAll();
             stopFill = false;
-            for (int s = 0; s < lim ; s++) {
+            for (int s = pair.first; s < pair.second ; s++) {
+                //System.out.println(pair.first+ " - "+pair.second+ " - "+ s);
                 if (stopFill)
                     break;
                 addThumbnail(s);
             }
             pack();
+            this.setVisible(true);
             progress.dispose();
         });
     }
+
+//    public void fillThumbs (int limit) {
+//        final int lim = limit == -1 ? imageL.size() : limit;
+//        Tools.runTask(() -> {
+//            imageCount = 0;
+//            startTime = Instant.now();
+//            progress = new ProgressBox(TheGrid.this, lim);
+//            imageL.load();
+//            rootPane.removeAll();
+//            stopFill = false;
+//            for (int s = 0; s < lim ; s++) {
+//                if (stopFill)
+//                    break;
+//                addThumbnail(s);
+//            }
+//            pack();
+//            progress.dispose();
+//        });
+//    }
 
     public static void main(String... input) {
 //        Thread hook = new Thread(() ->

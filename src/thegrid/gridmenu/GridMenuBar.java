@@ -40,8 +40,8 @@ public class GridMenuBar extends JMenuBar {
 
         jmi = new JMenuItem("Refresh first n thumbs");
         jmi.addActionListener(_ -> {
-            int limit = Input.getInteger("Limit","100");
-            theGrid.fillThumbs(limit);
+            common.UnrelatedPair<Integer, Integer> pair = Input.getIntPair("from ... to"); //.getInteger("Limit","100");
+            theGrid.fillThumbs(pair);
         });
         jm.add(jmi);
 
