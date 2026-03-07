@@ -5,8 +5,6 @@ import dev.brachtendorf.jimagehash.hash.Hash;
 import dev.brachtendorf.jimagehash.hashAlgorithms.HashingAlgorithm;
 import dev.brachtendorf.jimagehash.hashAlgorithms.PerceptiveHash;
 import dialogs.UnlockDialog;
-import org.jetbrains.annotations.Contract;
-import org.jetbrains.annotations.NotNull;
 
 import javax.swing.*;
 import java.awt.*;
@@ -49,8 +47,8 @@ public class DBHandler {
 //        return connection;
 //    }
 
-    @Contract(pure = true)
-    public static @NotNull String getUrl() {
+//    @Contract(pure = true)
+    public static String getUrl() {
         return "jdbc:h2:" + RootDirectory + DB_FILE + ";CIPHER=AES";
     }
 
@@ -372,7 +370,7 @@ public class DBHandler {
      * @param imgin the imported image
      * @throws IOException if smth. gone wrong
      */
-    public static void insertImageRecord (@NotNull ImageImport imgin) throws IOException {
+    public static void insertImageRecord (ImageImport imgin) throws IOException {
         byte[] buff = ImageTools.imgToJPGByteArray(imgin.image());
         byte[] buff2 = createThumbBytes(imgin.image());
         PreparedStatement prep;
@@ -533,7 +531,7 @@ public class DBHandler {
 
     public record NameID(String name, int rowid, String tag) {
         @Override
-        public @NotNull String toString() {
+        public String toString() {
             return name + " : (" + rowid + ") ";
         }
     }
@@ -542,7 +540,7 @@ public class DBHandler {
         static final String DELIM = "--";
 
         @Override
-        public @NotNull String toString() {
+        public String toString() {
             return rowid + DELIM + sql;
         }
 
@@ -554,7 +552,7 @@ public class DBHandler {
 
     public record LogMessage(String time, String entry) {
         @Override
-        public @NotNull String toString() {
+        public String toString() {
             return time + " : " + entry + "\n";
         }
     }

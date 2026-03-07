@@ -2,8 +2,6 @@ package dialogs;
 
 import common.BlockCaret;
 import common.UnrelatedPair;
-import org.jetbrains.annotations.Contract;
-import org.jetbrains.annotations.NotNull;
 
 import javax.swing.*;
 import java.awt.*;
@@ -90,8 +88,8 @@ public class Input extends JDialog {
         return p;
     }
 
-    @Contract("_ -> new")
-    public static @NotNull UnrelatedPair<Integer, Integer> getIntPair(String desc) {
+    //@Contract("_ -> new")
+    public static UnrelatedPair<Integer, Integer> getIntPair(String desc) {
         UnrelatedPair<Integer, Integer> p = null;
         do {
             Input dialog = new Input();

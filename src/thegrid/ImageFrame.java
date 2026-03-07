@@ -9,7 +9,6 @@ import database.AccessCounter;
 import database.DBHandler;
 import dialogs.Input;
 import dialogs.Tagger;
-import org.jetbrains.annotations.NotNull;
 
 import javax.swing.*;
 import java.awt.*;
@@ -153,7 +152,7 @@ public class ImageFrame extends JFrame implements MouseWheelListener {
         return toString (grid.imageL.get(indexRing.get()));
     }
 
-    public String toString(@NotNull DBHandler.NameID v) {
+    public String toString(DBHandler.NameID v) {
         int len = Integer.parseInt(DBHandler.queryImageLen(v.rowid()));
         BufferedImage bi = loadImgFromStore(false);
         return "IDX:" + indexRing.get() + " ROWID:" +

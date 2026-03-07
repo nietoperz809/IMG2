@@ -5,7 +5,7 @@ import com.sun.jna.Pointer;
 import com.sun.jna.platform.win32.Kernel32;
 import com.sun.jna.platform.win32.User32;
 import com.sun.jna.platform.win32.WinDef;
-import org.jetbrains.annotations.NotNull;
+//import org.jetbrains.annotations.NotNull;
 
 import javax.swing.*;
 
@@ -42,7 +42,7 @@ public class Win32 {
         return new HWND(Native.getWindowPointer(w));
     }
 
-    public static void dialogToTop (@NotNull JDialog target) {
+    public static void dialogToTop (JDialog target) {
         WinDef.HWND hwnd = getHwnd(target);
         User32.INSTANCE.SetWindowPos
                 (hwnd, HWND_MinusOne, 0, 0, 0, 0,

@@ -6,7 +6,6 @@ import com.luciad.imageio.webp.WebPReadParam;
 import database.DBHandler;
 import database.ImageImport;
 import org.apache.commons.imaging.Imaging;
-import org.jetbrains.annotations.NotNull;
 import thegrid.ImageList;
 
 import javax.imageio.ImageIO;
@@ -147,7 +146,7 @@ public class ImageTools {
 
     private record TransferableImage(Image i) implements Transferable, ClipboardOwner {
         @Override
-        public @NotNull Object getTransferData(DataFlavor flavor)
+        public Object getTransferData(DataFlavor flavor)
                 throws UnsupportedFlavorException {
             if (flavor.equals(DataFlavor.imageFlavor) && i != null) {
                 return i;

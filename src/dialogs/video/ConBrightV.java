@@ -1,7 +1,7 @@
 package dialogs.video;
 
 import common.Stepper;
-import org.jetbrains.annotations.NotNull;
+//import org.jetbrains.annotations.NotNull;
 import uk.co.caprica.vlcj.player.base.VideoApi;
 
 import javax.swing.*;
@@ -25,7 +25,7 @@ public class ConBrightV extends JDialog {
     private JButton resetButton;
     private final VideoApi vapi;
 
-    public ConBrightV(@NotNull VideoApi v) {
+    public ConBrightV(VideoApi v) {
         vapi = v;
         vapi.setAdjustVideo(true);
         setContentPane(contentPane);
@@ -61,7 +61,7 @@ public class ConBrightV extends JDialog {
         }
     }
 
-    public static void popup(@NotNull VideoApi v) {
+    public static void popup(VideoApi v) {
         ConBrightV dialog = new ConBrightV(v);
         dialog.pack();
         dialog.reset();
