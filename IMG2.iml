@@ -8,6 +8,7 @@
       <sourceFolder url="file://$MODULE_DIR$/Test" isTestSource="true" />
       <excludeFolder url="file://$MODULE_DIR$/out/IMG2_jar" />
       <excludeFolder url="file://$MODULE_DIR$/src/jfxImgEditor" />
+      <excludeFolder url="file://$MODULE_DIR$/src/jfxapps" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
@@ -24,7 +25,6 @@
         <SOURCES />
       </library>
     </orderEntry>
-    <orderEntry type="library" name="javafx.base" level="project" />
     <orderEntry type="library" name="h2-2.1.214" level="project" />
     <orderEntry type="library" name="lib1" level="project" />
     <orderEntry type="library" name="github.mike10004.commons.imaging" level="project" />
