@@ -65,7 +65,6 @@ public class TheGrid extends MyFrame {
 
 
     public TheGrid (String sql, String dbRoot) {
-
         instCount++;
         thisInstCount = instCount;
         setTitle(dbRoot);
@@ -99,37 +98,48 @@ public class TheGrid extends MyFrame {
         this.pack();
     }
 
-    public static void main(String... input) {
-//        Thread hook = new Thread(() ->
-//                DBHandler.getInst().log("SHUTDOWN"));
-//        Runtime.getRuntime().addShutdownHook(hook);
-
-        Tools.hideConsoleWindow();
-
-        try {
-            boolean askPwd = true;
-            String dbRoot = "dbdir:";
-            for (String s : input) {
-                if (s.startsWith(dbRoot)) {
-                    dbRoot = s.substring(dbRoot.length());
-                    DBHandler.setDBRoot(dbRoot);
-                    //System.out.println(dbRoot);
-                }
-                else if (s.equals("nopwd")) {
-                    askPwd = false;
-                }
-            }
-            if (askPwd)
-                Tools.AskforPWD();
-
-            DBHandler.getInst().log("+++ TheGrid started");
-            new TheGrid (mainSQL.get(), dbRoot);
-            System.out.println("end main");
-        } catch (Exception e) {
-            System.out.println("FAIL: " + e);
-            DBHandler.getInst().log("FAIL: " + e);
-        }
+    /**
+     * simple start
+     * @param args ???
+     */
+    public static void main(String[] args) {
+        String dbRoot = "C:\\Databases_Copy\\Databases\\";
+        DBHandler.setDBRoot(dbRoot);
+        new TheGrid (mainSQL.get(), dbRoot);
     }
+
+
+//    public static void main(String... input) {
+////        Thread hook = new Thread(() ->
+////                DBHandler.getInst().log("SHUTDOWN"));
+////        Runtime.getRuntime().addShutdownHook(hook);
+//
+//        Tools.hideConsoleWindow();
+//
+//        try {
+//            boolean askPwd = true;
+//            String dbRoot = "dbdir:";
+//            for (String s : input) {
+//                if (s.startsWith(dbRoot)) {
+//                    dbRoot = s.substring(dbRoot.length());
+//                    DBHandler.setDBRoot(dbRoot);
+//                    //System.out.println(dbRoot);
+//                }
+//                else if (s.equals("nopwd")) {
+//                    askPwd = false;
+//                }
+//            }
+//            if (askPwd)
+//                Tools.AskforPWD();
+//
+//            DBHandler.getInst().log("+++ TheGrid started");
+//            new TheGrid (mainSQL.get(), dbRoot);
+//            System.out.println("end main");
+//        } catch (Exception e) {
+//            System.out.println("FAIL: " + e);
+//            DBHandler.getInst().log("FAIL: " + e);
+//        }
+//    }
 
     public static void restartApplication() throws Exception {
         final String javaBin = System.getProperty("java.home") + File.separator + "bin" + File.separator + "java";

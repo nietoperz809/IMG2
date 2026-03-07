@@ -16,11 +16,10 @@
   <component name="ChangeListManager">
     <list default="true" id="ddb69741-e020-4d21-a32f-f00e79c6818a" name="Changes" comment="works now with loom threads">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/buildinfo/BuildInfo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/buildinfo/BuildInfo.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/buildinfo/build.number" beforeDir="false" afterPath="$PROJECT_DIR$/src/buildinfo/build.number" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/thegrid/GridMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/thegrid/GridMenu.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/thegrid/UniqueRng.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/thegrid/UniqueRng.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/thegrid/WebApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/httpserv/WebApp.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IMG2.iml" beforeDir="false" afterPath="$PROJECT_DIR$/IMG2.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IMG2_jar/IMG2.jar" beforeDir="false" afterPath="$PROJECT_DIR$/IMG2_jar/IMG2.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IMG2_jar/runC.bat" beforeDir="false" afterPath="$PROJECT_DIR$/IMG2_jar/runC.bat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/thegrid/TheGrid.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/thegrid/TheGrid.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -47,7 +46,7 @@
   <component name="GithubPullRequestsUISettings">{
   &quot;selectedUrlAndAccountId&quot;: {
     &quot;url&quot;: &quot;https://github.com/nietoperz809/IMG2&quot;,
-    &quot;accountId&quot;: &quot;8a0fcd97-d93e-4716-a413-e082f42b9365&quot;
+    &quot;accountId&quot;: &quot;241bc538-b0cf-4ae9-852b-4d7ab6008efe&quot;
   }
 }</component>
   <component name="HighlightingSettingsPerFile">
@@ -64,7 +63,7 @@
   &quot;associatedIndex&quot;: 6
 }</component>
   <component name="ProjectId" id="2Gjc7adzp2KGrxTuOD6fCgHjxU7" />
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+  <component name="ProjectLevelVcsManager">
     <ConfirmationsSetting value="2" id="Add" />
   </component>
   <component name="ProjectViewState">
@@ -77,8 +76,11 @@
     "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "Application.Main.executor": "Run",
     "Application.MonitorFrame.executor": "Run",
+    "Application.Tester.executor": "Run",
     "Application.WebPDecoder.executor": "Run",
     "Application.web.executor": "Run",
+    "Batch.runC.executor": "Run",
+    "Batch.runD.executor": "Run",
     "Downloaded.Files.Path.Enabled": "true",
     "GenerateAntBuildDialog.backupFiles": "true",
     "GenerateAntBuildDialog.enableUiFormCompile": "true",
@@ -99,6 +101,7 @@
     "UI_DESIGNER_EDITOR_MODE.UIDesignerToolWindowManager.WIDTH": "334",
     "full.screen.before.presentation.mode": "true",
     "git-widget-placeholder": "master",
+    "kotlin-language-version-configured": "true",
     "last_opened_file_path": "C:/peter.home/java/IMG2/resource/win32-x86-64/libwebp_animdecoder.dll",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
@@ -157,8 +160,43 @@
     <configuration name="Main" type="Application" factoryName="Application">
       <option name="MAIN_CLASS_NAME" value="thegrid.TheGrid" />
       <module name="IMG2" />
-      <option name="PROGRAM_PARAMETERS" value="dbdir:D:\Databases\ nopwd" />
+      <option name="PROGRAM_PARAMETERS" value="dbdir:C:\Databases_Copy\Databases nopwd" />
       <option name="VM_PARAMETERS" value="-Xmx6g" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Tester" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="thegrid.Tester" />
+      <module name="IMG2" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="thegrid.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="runC" type="BatchConfigurationType" factoryName="Batch" temporary="true">
+      <module name="IMG2" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="WORKING_DIRECTORY" value="./IMG2_jar" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SCRIPT_NAME" value="runC.bat" />
+      <option name="PARAMETERS" value="" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="runD" type="BatchConfigurationType" factoryName="Batch" temporary="true">
+      <module name="IMG2" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="WORKING_DIRECTORY" value="./IMG2_jar" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SCRIPT_NAME" value="runD.bat" />
+      <option name="PARAMETERS" value="" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -179,15 +217,28 @@
     </configuration>
     <list>
       <item itemvalue="Application.Main" />
+      <item itemvalue="Application.Tester" />
+      <item itemvalue="Batch.runD" />
+      <item itemvalue="Batch.runC" />
       <item itemvalue="JAR Application.IMG2.jar" />
       <item itemvalue="Java Scratch.Scratch" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Java Scratch.Scratch" />
+        <item itemvalue="Application.Tester" />
+        <item itemvalue="Batch.runC" />
+        <item itemvalue="Batch.runD" />
         <item itemvalue="JAR Application.IMG2.jar" />
+        <item itemvalue="Java Scratch.Scratch" />
       </list>
     </recent_temporary>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-30f59d01ecdd-2fc7cc6b9a17-intellij.indexing.shared.core-IU-253.31033.145" />
+      </set>
+    </attachedChunks>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="SvnConfiguration">
@@ -636,13 +687,6 @@
           <option name="timeStamp" value="72" />
         </breakpoint>
       </breakpoints>
-      <default-breakpoints>
-        <breakpoint type="python-exception">
-          <properties notifyOnTerminate="true" exception="BaseException">
-            <option name="notifyOnTerminate" value="true" />
-          </properties>
-        </breakpoint>
-      </default-breakpoints>
     </breakpoint-manager>
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">

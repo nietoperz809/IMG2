@@ -13,8 +13,8 @@
     <orderEntry type="library" name="sejda.webp.imageio" level="project" />
     <orderEntry type="library" name="h2database.h2" level="project" />
     <orderEntry type="library" name="vlcj" level="project" />
-    <orderEntry type="library" name="Catalano.Image" level="project" />
     <orderEntry type="library" name="jgoodies.forms" level="project" />
     <orderEntry type="library" name="net.java.dev.jna.platform" level="project" />
+    <orderEntry type="library" name="Catalano.Image" level="project" />
   </component>
 </module>
