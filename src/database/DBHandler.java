@@ -7,6 +7,8 @@ import dev.brachtendorf.jimagehash.hashAlgorithms.PerceptiveHash;
 import dialogs.UnlockDialog;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
+//import org.jetbrains.annotations.*;
+//import org.jetbrains.annotations.NotNull;
 
 import javax.swing.*;
 import java.awt.*;
