@@ -2,10 +2,12 @@ package thegrid.gridmenu;
 
 import common.*;
 import database.DBHandler;
+import dialogs.Input;
 import dialogs.Tagger;
 import net.lingala.zip4j.ZipFile;
 import net.lingala.zip4j.exception.ZipException;
 import net.lingala.zip4j.model.ZipParameters;
+import org.jetbrains.annotations.NotNull;
 import thegrid.TheGrid;
 import thegrid.Thumbnail;
 
@@ -55,6 +57,12 @@ public class SubMenuMarked extends JMenu {
 
         addItem("Toggle",
                 _ -> Thumbnail.toggleMarks(grid));
+
+        addItem("Toggle from...to",
+                _ -> {
+                    @NotNull UnrelatedPair<Integer, Integer> pair = Input.getIntPair("hello");
+                    Thumbnail.toggleMarksFromTo(grid, pair.first, pair.second);
+                });
 
         addItem("Delete from DB", _ -> {
             final Thumbnail[] marked = Thumbnail.getMarked(grid);

@@ -15,49 +15,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ddb69741-e020-4d21-a32f-f00e79c6818a" name="Changes" comment="fixed database &quot;Url&quot; problem">
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/jsoup.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/sejda_imageio_webp.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/Catalano.Image.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/JLargeArrays-1.5.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/JTransforms-3.1-with-dependencies.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/activation-1.1.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/annotations-26.0.2.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/checker-qual-3.33.0.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/commons-math3-3.5.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/error_prone_annotations-2.18.0.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/failureaccess-1.0.1.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/forms-1.2.1.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/guava-32.1.1-jre.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/hamcrest-core-1.3.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/j2objc-annotations-2.8.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/javafx-base-11.0.2-win.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/javafx-base-11.0.2.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/javafx-graphics-11.0.2-win.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/javafx-swing-11.0.2-win.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/javafx-swing-11.0.2.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/javax.mail-1.5.5.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/jimfs-1.3.0.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/jna-platform-jpms-5.16.0.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/jsoup-1.22.1.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/jsr305-3.0.2.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/junit-4.13.1.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/listenablefuture-9999.0-empty-to-avoid-conflict-with-guava.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/webp-imageio-0.1.6.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/zip4j-2.11.6.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.name" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Catalano_Image.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Catalano_Image.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/dev_brachtendorf_JImageHash.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/dev_brachtendorf_JImageHash.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/h2_2_1_214.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/h2_2_1_214.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/sejda_webp_imageio.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+    <list default="true" id="ddb69741-e020-4d21-a32f-f00e79c6818a" name="Changes" comment="reborn">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/IMG2.iml" beforeDir="false" afterPath="$PROJECT_DIR$/IMG2.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/common/ImageTools.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/common/ImageTools.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/database/DBHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/database/DBHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/thegrid/ImageFrame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/thegrid/ImageFrame.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/thegrid/Thumbnail.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/thegrid/Thumbnail.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/thegrid/gridmenu/SubMenuMarked.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/thegrid/gridmenu/SubMenuMarked.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -84,7 +45,7 @@
     </option>
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="master" />
+        <entry key="$PROJECT_DIR$" value="withQueue" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -760,7 +721,7 @@
       <option name="project" value="LOCAL" />
       <updated>1683976691765</updated>
     </task>
-    <option name="localTasksCounter" value="439" />
+    <option name="localTasksCounter" value="441" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -828,7 +789,6 @@
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_NEW_TODO" value="false" />
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="improved db structure message" />
     <MESSAGE value="added experimental BezierPlotter" />
     <MESSAGE value="allowed multiple launches" />
     <MESSAGE value="moved jfx dialog to jfx folder" />
@@ -853,7 +813,8 @@
     <MESSAGE value="introduced stream instead of array" />
     <MESSAGE value="added global img stack" />
     <MESSAGE value="fixed database &quot;Url&quot; problem" />
-    <option name="LAST_COMMIT_MESSAGE" value="fixed database &quot;Url&quot; problem" />
+    <MESSAGE value="reborn" />
+    <option name="LAST_COMMIT_MESSAGE" value="reborn" />
     <option name="NON_MODAL_COMMIT_POSTPONE_SLOW_CHECKS" value="false" />
   </component>
   <component name="XDebuggerManager">

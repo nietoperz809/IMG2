@@ -40,6 +40,18 @@ public class Thumbnail extends JLabel {
         }
     }
 
+    static public void toggleMarksFromTo (TheGrid grid, int from, int to) {
+        Component[] comp = grid.rootPane.getComponents();
+        for (Component c : comp) {
+            Thumbnail img = (Thumbnail)c;
+            int rowid = img.getRowID();
+            if (rowid <= to && rowid >= from) {
+                img.setMarked(!img.isMarked());
+            }
+            img.repaint();
+        }
+    }
+
     static public Thumbnail[] getMarked(TheGrid grid) {
         ArrayList<Thumbnail> marked = new ArrayList<>();
         Component[] comp = grid.rootPane.getComponents();
