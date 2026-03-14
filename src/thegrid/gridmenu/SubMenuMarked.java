@@ -60,7 +60,8 @@ public class SubMenuMarked extends JMenu {
 
         addItem("Toggle from...to",
                 _ -> {
-                    @NotNull UnrelatedPair<Integer, Integer> pair = Input.getIntPair("hello");
+                    @NotNull UnrelatedPair<Integer,
+                            Integer> pair = Input.getIntPair("hello",null);
                     Thumbnail.toggleMarksFromTo(grid, pair.first, pair.second);
                 });
 

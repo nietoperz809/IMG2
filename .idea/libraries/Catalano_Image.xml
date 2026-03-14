@@ -1,9 +1,0 @@
-<component name="libraryTable">
-  <library name="Catalano.Image">
-    <CLASSES>
-      <root url="jar://$PROJECT_DIR$/../../java/Catalano-Framework/out/artifacts/Catalano_Image_jar/Catalano.Image.jar!/" />
-    </CLASSES>
-    <JAVADOC />
-    <SOURCES />
-  </library>
-</component>
