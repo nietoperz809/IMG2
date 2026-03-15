@@ -15,16 +15,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ddb69741-e020-4d21-a32f-f00e79c6818a" name="Changes" comment="update">
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/IMG2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/IMG2.iml" beforeDir="false" afterPath="$PROJECT_DIR$/IMG2.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/common/UnrelatedPair.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/common/UnrelatedPair.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/dialogs/Input.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/dialogs/Input.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/thegrid/Thumbnail.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/thegrid/Thumbnail.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/thegrid/gridmenu/SubMenuMarked.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/thegrid/gridmenu/SubMenuMarked.java" afterDir="false" />
-    </list>
+    <list default="true" id="ddb69741-e020-4d21-a32f-f00e79c6818a" name="Changes" comment="unrel pair reduced to 1 type argument" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -50,7 +41,7 @@
     </option>
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="master" />
+        <entry key="$PROJECT_DIR$" value="Reborn-IMG2" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -726,7 +717,7 @@
       <option name="project" value="LOCAL" />
       <updated>1683976691765</updated>
     </task>
-    <option name="localTasksCounter" value="443" />
+    <option name="localTasksCounter" value="444" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -794,7 +785,6 @@
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_NEW_TODO" value="false" />
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="allowed multiple launches" />
     <MESSAGE value="moved jfx dialog to jfx folder" />
     <MESSAGE value="backup" />
     <MESSAGE value="javadocs removed" />
@@ -819,7 +809,8 @@
     <MESSAGE value="fixed database &quot;Url&quot; problem" />
     <MESSAGE value="reborn" />
     <MESSAGE value="update" />
-    <option name="LAST_COMMIT_MESSAGE" value="update" />
+    <MESSAGE value="unrel pair reduced to 1 type argument" />
+    <option name="LAST_COMMIT_MESSAGE" value="unrel pair reduced to 1 type argument" />
     <option name="NON_MODAL_COMMIT_POSTPONE_SLOW_CHECKS" value="false" />
   </component>
   <component name="XDebuggerManager">
