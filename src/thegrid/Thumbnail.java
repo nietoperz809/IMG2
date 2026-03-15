@@ -3,6 +3,7 @@ package thegrid;
 import common.ImageTools;
 import common.MsgBox;
 import common.Tools;
+import common.UnrelatedPair;
 import database.DBHandler;
 
 import javax.swing.*;
@@ -40,12 +41,12 @@ public class Thumbnail extends JLabel {
         }
     }
 
-    static public void toggleMarksFromTo (TheGrid grid, int from, int to) {
+    static public void toggleMarksFromTo (TheGrid grid, UnrelatedPair<Integer> fromTo) {
         Component[] comp = grid.rootPane.getComponents();
         for (Component c : comp) {
             Thumbnail img = (Thumbnail)c;
             int rowid = img.getRowID();
-            if (rowid <= to && rowid >= from) {
+            if (rowid <= fromTo.second && rowid >= fromTo.first) {
                 img.setMarked(!img.isMarked());
             }
             img.repaint();

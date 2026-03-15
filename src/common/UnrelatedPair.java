@@ -1,6 +1,6 @@
 package common;
 
-public final class UnrelatedPair<U, V> {
+public final class UnrelatedPair<U> {
 
     /**
      * The first element of this <code>Pair</code>
@@ -10,7 +10,7 @@ public final class UnrelatedPair<U, V> {
     /**
      * The second element of this <code>Pair</code>
      */
-    public final V second;
+    public final U second;
 
     /**
      * Constructs a new <code>Pair</code> with the given values.
@@ -18,7 +18,7 @@ public final class UnrelatedPair<U, V> {
      * @param first  the first element
      * @param second the second element
      */
-    public UnrelatedPair(U first, V second) {
+    public UnrelatedPair(U first, U second) {
 
         this.first = first;
         this.second = second;

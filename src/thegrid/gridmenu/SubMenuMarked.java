@@ -60,9 +60,8 @@ public class SubMenuMarked extends JMenu {
 
         addItem("Toggle from...to",
                 _ -> {
-                    @NotNull UnrelatedPair<Integer,
-                            Integer> pair = Input.getIntPair("hello",null);
-                    Thumbnail.toggleMarksFromTo(grid, pair.first, pair.second);
+                    @NotNull UnrelatedPair<Integer> pair = Input.getIntPair("hello", null);
+                    Thumbnail.toggleMarksFromTo(grid, pair);
                 });
 
         addItem("Delete from DB", _ -> {
@@ -70,7 +69,7 @@ public class SubMenuMarked extends JMenu {
             final JPanel jp = grid.rootPane;
             for (Thumbnail gi : marked) {
                 int id = gi.getRowID();
-                DBHandler.deleteSilently("IMAGES",id);
+                DBHandler.deleteSilently("IMAGES", id);
                 jp.remove(gi);
             }
             jp.doLayout();

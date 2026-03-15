@@ -91,9 +91,9 @@ public class Input extends JDialog {
     }
 
     @Contract("_ -> new")
-    public static @NotNull UnrelatedPair<Integer, Integer>
-    getIntPair(String desc, UnrelatedPair<Integer, Integer> preset) {
-        UnrelatedPair<Integer, Integer> p = null;
+    public static @NotNull UnrelatedPair<Integer>
+    getIntPair(String desc, UnrelatedPair<Integer> preset) {
+        UnrelatedPair<Integer> p = null;
         do {
             Input dialog = new Input();
             dialog.setTitle(desc);
@@ -118,7 +118,7 @@ public class Input extends JDialog {
     }
 
     public static void main(String[] args) {
-        UnrelatedPair<Integer, Integer> p = Input.getIntPair ("hello world", null);
+        UnrelatedPair<Integer> p = Input.getIntPair ("hello world", null);
         //Integer p = getInteger("hello");
         System.out.println(p);
         System.exit(0);

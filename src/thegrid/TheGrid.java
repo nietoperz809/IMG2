@@ -102,7 +102,7 @@ public class TheGrid extends MyFrame {
         fillThumbs (new UnrelatedPair<>(0,101)); // Load initial thumbs
     }
 
-    public void fillThumbs (UnrelatedPair<Integer, Integer> pair) {
+    public void fillThumbs (UnrelatedPair<Integer> pair) {
         //final int lim = imageL.size();
         imageCount = 0;
         final int maxlen = Math.max((pair.second - pair.first), 100);
