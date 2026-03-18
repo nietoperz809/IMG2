@@ -20,6 +20,12 @@ import java.awt.geom.AffineTransform;
 import java.awt.image.*;
 import java.io.*;
 import java.util.Objects;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+
 
 import static database.DBHandler.loadThumbnail;
 
@@ -437,4 +443,71 @@ public class ImageTools {
         g.dispose();
         return b;
     }
+////
+
+//    public class ImageTypeDetector {
+
+        // Map of known image signatures (magic numbers) to type names
+        private static final Map<String, String> IMAGE_SIGNATURES = new HashMap<>();
+
+        static {
+            IMAGE_SIGNATURES.put("FFD8FF", "JPEG");
+            IMAGE_SIGNATURES.put("89504E47", "PNG");
+            IMAGE_SIGNATURES.put("47494638", "GIF");
+            IMAGE_SIGNATURES.put("424D", "BMP");
+            IMAGE_SIGNATURES.put("49492A00", "TIFF (little-endian)");
+            IMAGE_SIGNATURES.put("4D4D002A", "TIFF (big-endian)");
+            IMAGE_SIGNATURES.put("52494646", "WEBP/RIFF container");
+        }
+
+        /**
+         * Reads the first few bytes of a file and returns its hex string.
+         */
+        private static String getFileHeader(File file, int numBytes) throws IOException {
+            try (FileInputStream fis = new FileInputStream(file)) {
+                byte[] buffer = new byte[numBytes];
+                int bytesRead = fis.read(buffer, 0, numBytes);
+                if (bytesRead <= 0) {
+                    return "";
+                }
+                StringBuilder sb = new StringBuilder();
+                for (int i = 0; i < bytesRead; i++) {
+                    sb.append(String.format("%02X", buffer[i]));
+                }
+                return sb.toString();
+            }
+        }
+
+        /**
+         * Detects the image type based on magic bytes.
+         */
+        public static String detectImageType(File file) throws IOException {
+            if (!file.exists() || !file.isFile()) {
+                throw new IllegalArgumentException("Invalid file path: " + file);
+            }
+
+            // Read first 8 bytes (enough for most formats)
+            String header = getFileHeader(file, 8);
+
+            for (Map.Entry<String, String> entry : IMAGE_SIGNATURES.entrySet()) {
+                if (header.startsWith(entry.getKey())) {
+                    return entry.getValue();
+                }
+            }
+            return "Unknown";
+        }
+
+//        public static void main(String[] args) {
+//            try {
+//                File imageFile = new File("test_image.png"); // Change to your file path
+//                String type = detectImageType(imageFile);
+//                System.out.println("Detected image type: " + type);
+//            } catch (IOException e) {
+//                System.err.println("Error reading file: " + e.getMessage());
+//            } catch (IllegalArgumentException e) {
+//                System.err.println(e.getMessage());
+//            }
+//        }
+//    }
+
 }
