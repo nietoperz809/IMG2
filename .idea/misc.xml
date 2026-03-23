@@ -5,6 +5,7 @@
     <option name="originalFiles">
       <list>
         <option value="$PROJECT_DIR$/imghash.pom" />
+        <option value="$PROJECT_DIR$/jfxtools/pom.xml" />
       </list>
     </option>
   </component>

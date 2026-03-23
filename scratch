@@ -1,0 +1,30 @@
+
+
+    public static File getVideoAsFile(NameID nid, UnrelatedPair videoType, String outfile) {
+        Path filePath;
+        if (outfile == null) {
+            try (FileSystem fs = Jimfs.newFileSystem(Configuration.unix())) {
+                filePath = fs.getPath("hello.txt");
+            } catch (IOException e) {
+                throw new RuntimeException("jimfs exception");
+            }
+            outfile = filePath.toString();
+        }
+//        if (outfile == null)
+//            outfile = getProperty("java.io.tmpdir") + File.separator + "tempfile-" + "myra.dat";
+        try (PreparedStatement ps = connection.prepareStatement(
+                "SELECT "+videoType.second+" FROM "+videoType.first+" WHERE _ROWID_='" + nid.rowid() + "'")) {
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    try (InputStream in = rs.getBinaryStream(1);
+                         OutputStream out = Files.newOutputStream(Path.of(outfile))) {
+                        in.transferTo(out);
+                        return new File(outfile);
+                    }
+                }
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        return null;
+    }
