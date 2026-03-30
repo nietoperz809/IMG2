@@ -1,5 +1,5 @@
 <component name="libraryTable">
-  <library name="jgoodies.forms" type="repository">
+  <library name="jgoodies.forms1" type="repository">
     <properties maven-id="com.jgoodies:forms:1.2.1" />
     <CLASSES>
       <root url="jar://$PROJECT_DIR$/lib/forms-1.2.1.jar!/" />

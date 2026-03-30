@@ -20,6 +20,7 @@ import static common.MsgBox.AskforPWD;
 import static common.NumToText.convertLessThanOneThousand;
 import static common.Tools.extractResource;
 import static database.SqlListFunctions.putQuery;
+import static java.awt.event.KeyEvent.*;
 
 
 public class TheGrid extends MyFrame {
@@ -143,12 +144,19 @@ public class TheGrid extends MyFrame {
 //        });
 //    }
 
-    public static void main(String... input) {
+    public static void main(String... input) throws Exception {
 //        Thread hook = new Thread(() ->
 //                DBHandler.log("SHUTDOWN"));
 //        Runtime.getRuntime().addShutdownHook(hook);
 
         ImageIO.scanForPlugins();
+
+        // move shift, alt, win up
+        Robot r = new Robot();
+        r.keyRelease(VK_SHIFT);
+        r.keyRelease(VK_CONTROL);
+        r.keyRelease(VK_CAPS_LOCK);
+        r.keyRelease(VK_WINDOWS);
 
         Thread.setDefaultUncaughtExceptionHandler((_, e) -> {
             try {

@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="apache.commons.imaging" type="repository">
+    <properties maven-id="org.apache.commons:commons-imaging:1.0.0-alpha6" />
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/lib/commons-imaging-1.0.0-alpha6.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/commons-io-2.19.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/commons-lang3-3.17.0.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

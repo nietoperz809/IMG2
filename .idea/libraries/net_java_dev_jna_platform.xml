@@ -5,10 +5,7 @@
       <root url="jar://$PROJECT_DIR$/lib/jna-platform-5.6.0.jar!/" />
       <root url="jar://$PROJECT_DIR$/lib/jna-5.6.0.jar!/" />
     </CLASSES>
-    <JAVADOC>
-      <root url="jar://$PROJECT_DIR$/lib/jna-platform-5.6.0-javadoc.jar!/" />
-      <root url="jar://$PROJECT_DIR$/lib/jna-5.6.0-javadoc.jar!/" />
-    </JAVADOC>
+    <JAVADOC />
     <SOURCES />
   </library>
 </component>

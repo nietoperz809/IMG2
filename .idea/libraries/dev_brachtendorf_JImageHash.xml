@@ -15,20 +15,7 @@
       <root url="jar://$PROJECT_DIR$/lib/commons-math3-3.5.jar!/" />
       <root url="jar://$PROJECT_DIR$/lib/JLargeArrays-1.5.jar!/" />
     </CLASSES>
-    <JAVADOC>
-      <root url="jar://$PROJECT_DIR$/lib/JImageHash-1.0.0-javadoc.jar!/" />
-      <root url="jar://$PROJECT_DIR$/lib/UtilityCode-2.0.1-javadoc.jar!/" />
-      <root url="jar://$PROJECT_DIR$/lib/pcg-java-10-1.0.1-javadoc.jar!/" />
-      <root url="jar://$PROJECT_DIR$/lib/javafx-graphics-11.0.2-javadoc.jar!/" />
-      <root url="jar://$PROJECT_DIR$/lib/javafx-graphics-11.0.2-javadoc.jar!/" />
-      <root url="jar://$PROJECT_DIR$/lib/javafx-base-11.0.2-javadoc.jar!/" />
-      <root url="jar://$PROJECT_DIR$/lib/javafx-base-11.0.2-javadoc.jar!/" />
-      <root url="jar://$PROJECT_DIR$/lib/javafx-swing-11.0.2-javadoc.jar!/" />
-      <root url="jar://$PROJECT_DIR$/lib/javafx-swing-11.0.2-javadoc.jar!/" />
-      <root url="jar://$PROJECT_DIR$/lib/JTransforms-3.1-javadoc.jar!/" />
-      <root url="jar://$PROJECT_DIR$/lib/commons-math3-3.5-javadoc.jar!/" />
-      <root url="jar://$PROJECT_DIR$/lib/JLargeArrays-1.5-javadoc.jar!/" />
-    </JAVADOC>
+    <JAVADOC />
     <SOURCES />
   </library>
 </component>
