@@ -16,39 +16,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ddb69741-e020-4d21-a32f-f00e79c6818a" name="Changes" comment="added scratchfile">
-      <change afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Catalano_Image.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/jetbrains_annotations.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/hello.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/commons-imaging-1.0.0-alpha6.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/dev_brachtendorf_JImageHash.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/dev_brachtendorf_JImageHash.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/github_mike10004_commons_imaging.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/google_jimfs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/google_jimfs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/jgoodies_forms.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/jgoodies_forms.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/jsoup.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/jsoup.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/lib1.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/net_java_dev_jna_platform.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/net_java_dev_jna_platform.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/net_lingala_zip4j.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/net_lingala_zip4j.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/sejda_imageio_webp.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/sejda_imageio_webp.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/uk_co_caprica_vlcj.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/uk_co_caprica_vlcj.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/IMG24.iml" beforeDir="false" afterPath="$PROJECT_DIR$/IMG24.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/activation-1.1.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/annotations-26.0.2.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/forms-1.2.1.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/javax.mail-1.5.5.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/jna-5.6.0.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/jna-platform-5.6.0.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/common/ImageTools.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/common/ImageTools.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/dialogs/PersScroller.form" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/dialogs/PersScroller.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/dialogs/PersValueBox.__java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/jfxapps/BezierTextPlotter.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/jfxapps/JfxImageView.form" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/jfxapps/JfxImageView.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/thegrid/ImgViewKeyHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/thegrid/ImgViewKeyHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/thegrid/TheGrid.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/thegrid/TheGrid.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/thegrid/gridmenu/GridMenuBar.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/thegrid/gridmenu/GridMenuBar.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/annotations-26.0.2.jar" beforeDir="false" afterPath="$PROJECT_DIR$/lib/annotations-26.1.0.jar" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -169,6 +137,7 @@
     "GenerateAntBuildDialog.enableUiFormCompile": "true",
     "GenerateAntBuildDialog.forceTargetJdk": "true",
     "GenerateAntBuildDialog.outputFileNameProperty": "img2.iml",
+    "Git.Working.Tree.Tab.closed.by.user": "opened",
     "JAR Application.IMG2.jar.executor": "Run",
     "JAR Application.javafx-fatjar-demo-1.0.0.jar.executor": "Run",
     "JAR Application.javafx-fatjar-demo-1.0.jar.executor": "Run",
@@ -740,7 +709,7 @@
       <option name="project" value="LOCAL" />
       <updated>1683976691765</updated>
     </task>
-    <option name="localTasksCounter" value="447" />
+    <option name="localTasksCounter" value="448" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -829,11 +798,11 @@
     <MESSAGE value="added global img stack" />
     <MESSAGE value="fixed database &quot;Url&quot; problem" />
     <MESSAGE value="reborn" />
-    <MESSAGE value="update" />
     <MESSAGE value="unrel pair reduced to 1 type argument" />
     <MESSAGE value="added &quot;detectImageType&quot;" />
     <MESSAGE value="added scratchfile" />
-    <option name="LAST_COMMIT_MESSAGE" value="added scratchfile" />
+    <MESSAGE value="update" />
+    <option name="LAST_COMMIT_MESSAGE" value="update" />
     <option name="NON_MODAL_COMMIT_POSTPONE_SLOW_CHECKS" value="false" />
   </component>
   <component name="XDebuggerManager">
