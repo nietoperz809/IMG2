@@ -18,6 +18,7 @@ import static buildinfo.BuildInfo2.GIT_REV;
 import static common.ImageTools.JPGByteArrayToImg;
 import static common.MsgBox.AskforPWD;
 import static common.NumToText.convertLessThanOneThousand;
+import static common.Tools.delay;
 import static common.Tools.extractResource;
 import static database.SqlListFunctions.putQuery;
 import static java.awt.event.KeyEvent.*;
@@ -173,7 +174,6 @@ public class TheGrid extends MyFrame {
         });
 
         UIManager.put("ToolTip.font", new Font("Arial", Font.BOLD, 20));
-        Win32.hideConsoleWindow(true);
 
         boolean askPwd = true;
         String dbRoot = "dbdir:";
@@ -192,7 +192,9 @@ public class TheGrid extends MyFrame {
         DBHandler.log("+++ TheGrid started");
         new TheGrid(ImageList.mainSQL, dbRoot);
         System.out.println("end main");
-    }
+        delay(1000);
+        Win32.hideConsoleWindow(true);
+   }
 
     public void addImageFilesToDatabase(File[] files) throws Exception {
         int numadd = DBHandler.MoveImageFilesToDB(files, (img) -> {
