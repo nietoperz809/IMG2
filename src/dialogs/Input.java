@@ -21,6 +21,7 @@ public class Input extends JDialog {
 
     public Input() {
         setContentPane(contentPane);
+        this.setLocationRelativeTo(null);
         setModal(true);
         getRootPane().setDefaultButton(buttonOK);
 
