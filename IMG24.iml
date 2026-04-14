@@ -62,5 +62,7 @@
     <orderEntry type="library" name="net.lingala.zip4j" level="project" />
     <orderEntry type="library" name="apache.commons.imaging" level="project" />
     <orderEntry type="library" name="jgoodies.forms1" level="project" />
+    <orderEntry type="library" name="jna-5.6.0" level="project" />
+    <orderEntry type="library" name="jna-platform-5.6.0" level="project" />
   </component>
 </module>

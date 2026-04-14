@@ -21,7 +21,6 @@ import java.time.Duration;
 import java.time.Instant;
 import java.util.*;
 import java.util.List;
-import java.util.concurrent.Future;
 
 import static common.ImageTools.JPGByteArrayToImg;
 import static common.MsgBox.AsyncInfo;
@@ -47,12 +46,13 @@ public class DBHandler {
     }
 
     public static void startDatabase(String root) {
+        Thread.currentThread().setPriority(Thread.MAX_PRIORITY);
         RootDirectory = root;
         PersistString pers = new PersistString("pwddb", NO_PASS);
         try {
             String aes_pwd;
             if (pers.get().equals(NO_PASS)) {
-                aes_pwd = UnlockDialog.xmain(null);
+                aes_pwd = UnlockDialog.getPWD(null);
                 pers.set(aes_pwd);
             } else {
                 aes_pwd = pers.get();

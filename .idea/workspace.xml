@@ -15,8 +15,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ddb69741-e020-4d21-a32f-f00e79c6818a" name="Changes" comment="added scratchfile">
-      <change beforePath="$PROJECT_DIR$/lib/annotations-26.0.2.jar" beforeDir="false" afterPath="$PROJECT_DIR$/lib/annotations-26.1.0.jar" afterDir="false" />
+    <list default="true" id="ddb69741-e020-4d21-a32f-f00e79c6818a" name="Changes" comment="setLocationRelativeTo(null) on start.">
+      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IMG24.iml" beforeDir="false" afterPath="$PROJECT_DIR$/IMG24.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/common/MsgBox.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/common/MsgBox.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/database/DBHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/database/DBHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dialogs/UnlockDialog.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/dialogs/UnlockDialog.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/thegrid/TheGrid.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/thegrid/TheGrid.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -142,6 +148,8 @@
     "JAR Application.javafx-fatjar-demo-1.0.0.jar.executor": "Run",
     "JAR Application.javafx-fatjar-demo-1.0.jar.executor": "Run",
     "JAR Application.javafx-graphics-11.0.2-javadoc.jar.executor": "Run",
+    "JAR Application.jna-5.6.0.jar.executor": "Run",
+    "JAR Application.jna-platform-5.6.0.jar.executor": "Run",
     "JAR Application.minimal-javafx-1.0-SNAPSHOT.jar.executor": "Run",
     "JAR Application.original-javafx-fatjar-demo-1.0.0.jar.executor": "Run",
     "JAR Application.original-javafx-fatjar-demo-1.0.jar.executor": "Run",
@@ -248,13 +256,13 @@
       <command value="ant" />
     </option>
   </component>
-  <component name="RunManager" selected="Application.MainC">
-    <configuration name="App" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="com.example.App" />
-      <module name="javafx-fatjar-demo" />
+  <component name="RunManager" selected="Application.MainC (1)">
+    <configuration name="Input" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="dialogs.Input" />
+      <module name="IMG24" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="com.example.*" />
+          <option name="PATTERN" value="dialogs.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -307,12 +315,12 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="javafx-fatjar-demo-1.0.0.jar" type="JarApplication" temporary="true">
-      <option name="JAR_PATH" value="$PROJECT_DIR$/jfxtools/target/javafx-fatjar-demo-1.0.0.jar" />
+    <configuration name="jna-5.6.0.jar" type="JarApplication" temporary="true">
+      <option name="JAR_PATH" value="$PROJECT_DIR$/lib/jna-5.6.0.jar" />
       <method v="2" />
     </configuration>
-    <configuration name="minimal-javafx-1.0-SNAPSHOT.jar" type="JarApplication" temporary="true">
-      <option name="JAR_PATH" value="$PROJECT_DIR$/jfxtools/target/minimal-javafx-1.0-SNAPSHOT.jar" />
+    <configuration name="jna-platform-5.6.0.jar" type="JarApplication" temporary="true">
+      <option name="JAR_PATH" value="$PROJECT_DIR$/lib/jna-platform-5.6.0.jar" />
       <method v="2" />
     </configuration>
     <configuration name="original-javafx-fatjar-demo-1.0.0.jar" type="JarApplication" temporary="true">
@@ -328,19 +336,19 @@
       <item itemvalue="Application.MainC" />
       <item itemvalue="Application.MainE" />
       <item itemvalue="Application.imgeditor" />
-      <item itemvalue="Application.App" />
-      <item itemvalue="JAR Application.javafx-fatjar-demo-1.0.0.jar" />
-      <item itemvalue="JAR Application.minimal-javafx-1.0-SNAPSHOT.jar" />
+      <item itemvalue="Application.Input" />
+      <item itemvalue="JAR Application.jna-5.6.0.jar" />
+      <item itemvalue="JAR Application.jna-platform-5.6.0.jar" />
       <item itemvalue="JAR Application.original-javafx-fatjar-demo-1.0.0.jar" />
       <item itemvalue="JAR Application.original-javafx-fatjar-demo-1.0.jar" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="JAR Application.original-javafx-fatjar-demo-1.0.0.jar" />
-        <item itemvalue="JAR Application.javafx-fatjar-demo-1.0.0.jar" />
-        <item itemvalue="JAR Application.minimal-javafx-1.0-SNAPSHOT.jar" />
-        <item itemvalue="Application.App" />
+        <item itemvalue="Application.Input" />
+        <item itemvalue="JAR Application.jna-5.6.0.jar" />
+        <item itemvalue="JAR Application.jna-platform-5.6.0.jar" />
         <item itemvalue="JAR Application.original-javafx-fatjar-demo-1.0.jar" />
+        <item itemvalue="JAR Application.original-javafx-fatjar-demo-1.0.0.jar" />
       </list>
     </recent_temporary>
   </component>
@@ -709,7 +717,7 @@
       <option name="project" value="LOCAL" />
       <updated>1683976691765</updated>
     </task>
-    <option name="localTasksCounter" value="448" />
+    <option name="localTasksCounter" value="452" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -777,8 +785,6 @@
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_NEW_TODO" value="false" />
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="javadocs removed" />
-    <MESSAGE value="bugfix for java ImageIO" />
     <MESSAGE value="new jpeg reader" />
     <MESSAGE value="stabilized image import from files" />
     <MESSAGE value="added decoder info to db table" />
@@ -800,9 +806,11 @@
     <MESSAGE value="reborn" />
     <MESSAGE value="unrel pair reduced to 1 type argument" />
     <MESSAGE value="added &quot;detectImageType&quot;" />
-    <MESSAGE value="added scratchfile" />
     <MESSAGE value="update" />
-    <option name="LAST_COMMIT_MESSAGE" value="update" />
+    <MESSAGE value="added scratchfile" />
+    <MESSAGE value="hide console much later" />
+    <MESSAGE value="setLocationRelativeTo(null) on start." />
+    <option name="LAST_COMMIT_MESSAGE" value="setLocationRelativeTo(null) on start." />
     <option name="NON_MODAL_COMMIT_POSTPONE_SLOW_CHECKS" value="false" />
   </component>
   <component name="XDebuggerManager">
@@ -820,20 +828,10 @@
           <properties class="java.lang.RuntimeException" package="java.lang" />
           <option name="timeStamp" value="75" />
         </breakpoint>
-        <line-breakpoint type="java-line">
-          <url>file://$PROJECT_DIR$/src/com/twelvemonkeys/imageio/plugins/jpeg/ApeReader.java</url>
-          <line>15</line>
-          <option name="timeStamp" value="89" />
-        </line-breakpoint>
-        <line-breakpoint type="java-line">
-          <url>file://$PROJECT_DIR$/src/video/GifDecoder.java</url>
-          <line>202</line>
-          <option name="timeStamp" value="98" />
-        </line-breakpoint>
-        <line-breakpoint type="java-line">
-          <url>file://$PROJECT_DIR$/src/video/GifDecoder.java</url>
-          <line>229</line>
-          <option name="timeStamp" value="99" />
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/thegrid/TheGrid.java</url>
+          <line>210</line>
+          <option name="timeStamp" value="83" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

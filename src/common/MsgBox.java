@@ -78,7 +78,7 @@ public class MsgBox {
     }
 
     public static void AskforPWD() throws RuntimeException {
-        byte[] bt = UnlockDialog.xmain("PWD?").getBytes(Charset.defaultCharset());
+        byte[] bt = UnlockDialog.getPWD("PWD?").getBytes(Charset.defaultCharset());
         try {
             MessageDigest md = MessageDigest.getInstance("MD5");
             byte[] theMD5digest = md.digest(bt);

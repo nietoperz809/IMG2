@@ -212,6 +212,11 @@ public class TheGrid extends MyFrame {
         progress.dispose();
         rootPane.doLayout();
         scrollPane.getViewport().setView(rootPane);
+        setVisible(true);
+        Tools.gc_now();
+    }
+
+    void setFinalTitle(String info) {
         if (this.thisInstCount == 1)
             setTitle(getTitle() + " -- " + BuildInfo2.BUILD_NUMBER + " -- " +
                     BuildInfo2.BUILD_DATE +
@@ -220,8 +225,6 @@ public class TheGrid extends MyFrame {
                     " -- " + info);
         else
             setTitle(imageL.getSql());
-        setVisible(true);
-        Tools.gc_now();
     }
 
     /**
@@ -242,8 +245,9 @@ public class TheGrid extends MyFrame {
         String info = "Loaded " + (++imageCount) + " Thumbs in " +
                 Duration.between(startTime, end).toSeconds() + " Seconds";
         progress.setTextAndValue(info, imageCount);
-        if (imageCount >= imageL.size()) {
+        if (imageCount >= 100) {
             stopThumbViewFill(info);
+            setFinalTitle(info);
         }
     }
 }

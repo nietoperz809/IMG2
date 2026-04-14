@@ -43,7 +43,7 @@ public class UnlockDialog extends JDialog {
         dispose();
     }
 
-    public static String xmain(String title) {
+    public static String getPWD(String title) {
         final UnlockDialog dialog = new UnlockDialog(title);
         dialog.setBounds(0,0,500,100);
         dialog.setLocationRelativeTo(null);
@@ -59,7 +59,7 @@ public class UnlockDialog extends JDialog {
     }
 
     public static void main(String[] args) {
-        String p = xmain ("hello");
+        String p = getPWD("hello");
         System.out.println(p);
     }
 }
