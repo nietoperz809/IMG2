@@ -40,16 +40,6 @@ public class DBHandler {
     //"E:\\Databases\\";
     static Connection connection;
     static Statement stm;
-    //public static final String Url = "jdbc:h2:" + RootDirectory + DB_FILE + ";CIPHER=AES";
-
-    /*
-        jdbc:h2:C:\peter.home\java\IMG2\datastore\mydb;CIPHER=AES
-     */
-    //static Future<?> transferTask;
-
-//    public static Connection getConnection() {
-//        return connection;
-//    }
 
     @Contract(pure = true)
     public static @NotNull String getUrl() {
