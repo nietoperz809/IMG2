@@ -101,7 +101,7 @@ public class TheGrid extends MyFrame {
             stopThumbViewFill("sql error");
             return;
         }
-        fillThumbs (new UnrelatedPair<>(0,101)); // Load initial thumbs
+        fillThumbs (new UnrelatedPair<>(0,imageL.size())); // Load initial thumbs
     }
 
     public void fillThumbs (UnrelatedPair<Integer> pair) {
