@@ -1,6 +1,6 @@
 package database;
 
-import common.UnrelatedPair;
+import dev.brachtendorf.datastructures.Pair;
 
 import java.io.BufferedInputStream;
 import java.io.File;
@@ -89,11 +89,11 @@ public class VideoFunctions extends DBHandler {
         }
     }
 
-    public static File getVideoAsFile(NameID nid, UnrelatedPair videoType, String outfile) {
+    public static File getVideoAsFile(NameID nid, Pair videoType, String outfile) {
         if (outfile == null)
             outfile = getProperty("java.io.tmpdir") + File.separator + "tempfile-" + "myra.dat";
         try (PreparedStatement ps = connection.prepareStatement(
-                "SELECT "+videoType.second+" FROM "+videoType.first+" WHERE _ROWID_='" + nid.rowid() + "'")) {
+                "SELECT "+videoType.getSecond()+" FROM "+videoType.getFirst()+" WHERE _ROWID_='" + nid.rowid() + "'")) {
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
                     try (InputStream in = rs.getBinaryStream(1);

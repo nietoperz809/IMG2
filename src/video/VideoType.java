@@ -1,12 +1,12 @@
 package video;
 
-import common.UnrelatedPair;
 import database.DBHandler;
+import dev.brachtendorf.datastructures.Pair;
 
 import java.util.List;
 
 public class VideoType {
-    public static UnrelatedPair pVideo = new UnrelatedPair("videos", "vid");
-    public static UnrelatedPair pGif = new UnrelatedPair("gifs","gifdata");
-    public static UnrelatedPair pWebp = new UnrelatedPair("webp","webpdata");
+    public static Pair pVideo = new Pair("videos", "vid");
+    public static Pair pGif = new Pair("gifs","gifdata");
+    public static Pair pWebp = new Pair("webp","webpdata");
 }

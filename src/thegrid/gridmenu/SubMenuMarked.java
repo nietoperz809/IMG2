@@ -2,6 +2,7 @@ package thegrid.gridmenu;
 
 import common.*;
 import database.DBHandler;
+import dev.brachtendorf.datastructures.Pair;
 import dialogs.Input;
 import dialogs.Tagger;
 import net.lingala.zip4j.ZipFile;
@@ -60,7 +61,7 @@ public class SubMenuMarked extends JMenu {
 
         addItem("Toggle from...to",
                 _ -> {
-                    @NotNull UnrelatedPair<Integer> pair = Input.getIntPair("hello", null);
+                    @NotNull Pair<Integer, Integer> pair = Input.getIntPair("hello", null);
                     Thumbnail.toggleMarksFromTo(grid, pair);
                 });
 

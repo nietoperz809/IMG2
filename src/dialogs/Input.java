@@ -1,7 +1,7 @@
 package dialogs;
 
 import common.BlockCaret;
-import common.UnrelatedPair;
+import dev.brachtendorf.datastructures.Pair;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
@@ -92,9 +92,9 @@ public class Input extends JDialog {
     }
 
     @Contract("_ -> new")
-    public static @NotNull UnrelatedPair<Integer>
-    getIntPair(String desc, UnrelatedPair<Integer> preset) {
-        UnrelatedPair<Integer> p = null;
+    public static @NotNull Pair<Integer,Integer>
+    getIntPair(String desc, Pair<Integer,Integer> preset) {
+        Pair<Integer, Integer> p = null;
         do {
             Input dialog = new Input();
             dialog.setTitle(desc);
@@ -102,15 +102,15 @@ public class Input extends JDialog {
             dialog.textField1.setCaret(new BlockCaret());
             dialog.tf2.setCaret(new BlockCaret());
             if (preset != null) {
-                dialog.textField1.setText(preset.first.toString());
-                dialog.tf2.setText(preset.second.toString());
+                dialog.textField1.setText(preset.getFirst().toString());
+                dialog.tf2.setText(preset.getSecond().toString());
             }
             dialog.setVisible(true);
             String t1 = dialog.textField1.getText();
             String t2 = dialog.tf2.getText();
             dialog.dispose();
             try {
-                p = new UnrelatedPair<>(Integer.parseInt(t1), Integer.parseInt(t2));
+                p = new Pair<>(Integer.parseInt(t1), Integer.parseInt(t2));
             } catch (NumberFormatException e) {
                 //p = null;
             }
@@ -119,7 +119,7 @@ public class Input extends JDialog {
     }
 
     public static void main(String[] args) {
-        UnrelatedPair<Integer> p = Input.getIntPair ("hello world", null);
+        Pair<Integer, Integer> p = Input.getIntPair ("hello world", null);
         //Integer p = getInteger("hello");
         System.out.println(p);
         System.exit(0);

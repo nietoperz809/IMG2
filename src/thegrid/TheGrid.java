@@ -3,6 +3,7 @@ package thegrid;
 import buildinfo.BuildInfo2;
 import common.*;
 import database.DBHandler;
+import dev.brachtendorf.datastructures.Pair;
 import dialogs.ProgressBox;
 import thegrid.gridmenu.GridMenuBar;
 
@@ -101,20 +102,20 @@ public class TheGrid extends MyFrame {
             stopThumbViewFill("sql error");
             return;
         }
-        fillThumbs (new UnrelatedPair<>(0,imageL.size())); // Load initial thumbs
+        fillThumbs (new Pair<>(0,imageL.size())); // Load initial thumbs
     }
 
-    public void fillThumbs (UnrelatedPair<Integer> pair) {
+    public void fillThumbs (Pair<Integer, Integer> pair) {
         //final int lim = imageL.size();
         imageCount = 0;
-        final int maxlen = Math.max((pair.second - pair.first), 100);
+        final int maxlen = Math.max((pair.getSecond() - pair.getFirst()), 100);
         startTime = Instant.now();
         Tools.runTask(() -> {
             progress = new ProgressBox(TheGrid.this, maxlen);
             imageL.load();
             rootPane.removeAll();
             stopFill = false;
-            for (int s = pair.first; s < pair.second ; s++) {
+            for (int s = pair.getFirst(); s < pair.getSecond(); s++) {
                 //System.out.println(pair.first+ " - "+pair.second+ " - "+ s);
                 if (stopFill)
                     break;

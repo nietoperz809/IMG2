@@ -3,6 +3,7 @@ package thegrid.gridmenu;
 import common.*;
 import database.DBHandler;
 import database.ImageImport;
+import dev.brachtendorf.datastructures.Pair;
 import dev.brachtendorf.jimagehash.hashAlgorithms.HashingAlgorithm;
 import dev.brachtendorf.jimagehash.hashAlgorithms.PerceptiveHash;
 import dialogs.*;
@@ -40,8 +41,8 @@ public class GridMenuBar extends JMenuBar {
 
         jmi = new JMenuItem("Refresh first n thumbs");
         jmi.addActionListener(_ -> {
-            common.UnrelatedPair<Integer> pair =
-                    Input.getIntPair("from ... to", new UnrelatedPair<>(0,100)); //.getInteger("Limit","100");
+            Pair<Integer, Integer> pair =
+                    Input.getIntPair("from ... to", new Pair<>(0,100)); //.getInteger("Limit","100");
             theGrid.fillThumbs(pair);
         });
         jm.add(jmi);

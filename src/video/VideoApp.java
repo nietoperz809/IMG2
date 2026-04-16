@@ -3,6 +3,7 @@ package video;
 import common.*;
 import database.DBHandler;
 import database.VideoFunctions;
+import dev.brachtendorf.datastructures.Pair;
 import dialogs.Input;
 import dialogs.MonitorFrame;
 import dialogs.TimedMsg2;
@@ -214,7 +215,7 @@ public class VideoApp extends JFrame {
 
     private void saveSingle (DBHandler.NameID nameid) {
         try {
-            UnrelatedPair type = pVideo;
+            Pair type = pVideo;
             JFileChooser fileChooser = new JFileChooser();
             fileChooser.setSelectedFile(new File(nameid.name()));
             int option = fileChooser.showSaveDialog(VideoApp.this);
