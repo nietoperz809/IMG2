@@ -2,7 +2,7 @@ package thegrid.gridmenu;
 
 import common.*;
 import database.DBHandler;
-import dev.brachtendorf.datastructures.Pair;
+import org.javatuples.Pair;
 import dialogs.Input;
 import dialogs.Tagger;
 import net.lingala.zip4j.ZipFile;

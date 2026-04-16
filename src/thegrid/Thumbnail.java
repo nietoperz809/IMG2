@@ -4,7 +4,7 @@ import common.ImageTools;
 import common.MsgBox;
 import common.Tools;
 import database.DBHandler;
-import dev.brachtendorf.datastructures.Pair;
+import org.javatuples.Pair;
 
 import javax.swing.*;
 import java.awt.*;
@@ -46,7 +46,7 @@ public class Thumbnail extends JLabel {
         for (Component c : comp) {
             Thumbnail img = (Thumbnail)c;
             int rowid = img.getRowID();
-            if (rowid <= fromTo.getSecond() && rowid >= fromTo.getFirst()) {
+            if (rowid <= fromTo.getValue1() && rowid >= fromTo.getValue0()) {
                 img.setMarked(!img.isMarked());
             }
             img.repaint();

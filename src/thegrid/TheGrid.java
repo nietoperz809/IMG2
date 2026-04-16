@@ -3,7 +3,7 @@ package thegrid;
 import buildinfo.BuildInfo2;
 import common.*;
 import database.DBHandler;
-import dev.brachtendorf.datastructures.Pair;
+import org.javatuples.Pair;
 import dialogs.ProgressBox;
 import thegrid.gridmenu.GridMenuBar;
 
@@ -108,14 +108,14 @@ public class TheGrid extends MyFrame {
     public void fillThumbs (Pair<Integer, Integer> pair) {
         //final int lim = imageL.size();
         imageCount = 0;
-        final int maxlen = Math.max((pair.getSecond() - pair.getFirst()), 100);
+        final int maxlen = Math.max((pair.getValue1() - pair.getValue0()), 100);
         startTime = Instant.now();
         Tools.runTask(() -> {
             progress = new ProgressBox(TheGrid.this, maxlen);
             imageL.load();
             rootPane.removeAll();
             stopFill = false;
-            for (int s = pair.getFirst(); s < pair.getSecond(); s++) {
+            for (int s = pair.getValue0(); s < pair.getValue1(); s++) {
                 //System.out.println(pair.first+ " - "+pair.second+ " - "+ s);
                 if (stopFill)
                     break;

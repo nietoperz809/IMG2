@@ -1,7 +1,7 @@
 package dialogs;
 
 import common.BlockCaret;
-import dev.brachtendorf.datastructures.Pair;
+import org.javatuples.Pair;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
@@ -102,8 +102,8 @@ public class Input extends JDialog {
             dialog.textField1.setCaret(new BlockCaret());
             dialog.tf2.setCaret(new BlockCaret());
             if (preset != null) {
-                dialog.textField1.setText(preset.getFirst().toString());
-                dialog.tf2.setText(preset.getSecond().toString());
+                dialog.textField1.setText(preset.getValue0().toString());
+                dialog.tf2.setText(preset.getValue1().toString());
             }
             dialog.setVisible(true);
             String t1 = dialog.textField1.getText();

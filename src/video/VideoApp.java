@@ -3,7 +3,7 @@ package video;
 import common.*;
 import database.DBHandler;
 import database.VideoFunctions;
-import dev.brachtendorf.datastructures.Pair;
+import org.javatuples.Pair;
 import dialogs.Input;
 import dialogs.MonitorFrame;
 import dialogs.TimedMsg2;

@@ -3,7 +3,7 @@ package thegrid.gridmenu;
 import common.*;
 import database.DBHandler;
 import database.ImageImport;
-import dev.brachtendorf.datastructures.Pair;
+import org.javatuples.Pair;
 import dev.brachtendorf.jimagehash.hashAlgorithms.HashingAlgorithm;
 import dev.brachtendorf.jimagehash.hashAlgorithms.PerceptiveHash;
 import dialogs.*;

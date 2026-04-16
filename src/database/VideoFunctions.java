@@ -1,6 +1,6 @@
 package database;
 
-import dev.brachtendorf.datastructures.Pair;
+import org.javatuples.Pair;
 
 import java.io.BufferedInputStream;
 import java.io.File;
@@ -93,7 +93,7 @@ public class VideoFunctions extends DBHandler {
         if (outfile == null)
             outfile = getProperty("java.io.tmpdir") + File.separator + "tempfile-" + "myra.dat";
         try (PreparedStatement ps = connection.prepareStatement(
-                "SELECT "+videoType.getSecond()+" FROM "+videoType.getFirst()+" WHERE _ROWID_='" + nid.rowid() + "'")) {
+                "SELECT "+videoType.getValue1()+" FROM "+videoType.getValue0()+" WHERE _ROWID_='" + nid.rowid() + "'")) {
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
                     try (InputStream in = rs.getBinaryStream(1);

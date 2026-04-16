@@ -1,7 +1,7 @@
 package video;
 
 import database.DBHandler;
-import dev.brachtendorf.datastructures.Pair;
+import org.javatuples.Pair;
 
 import java.util.List;
 
