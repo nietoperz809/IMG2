@@ -253,10 +253,10 @@ public class ImageTools {
             if (isWEBP(name)) {
                 return new ImageImport(ImageImport.Decoder.WEBPREADER, loadWEBP(name));
             }
-            return new ImageImport(ImageImport.Decoder.IMAGING, Imaging.getBufferedImage(new File(name)));
+            return new ImageImport(ImageImport.Decoder.AWTHACK, readJPGwithAWT(name));
         } catch (Exception _) {
             try {
-                return new ImageImport(ImageImport.Decoder.AWTHACK, readJPGwithAWT(name));
+                return new ImageImport(ImageImport.Decoder.IMAGING, Imaging.getBufferedImage(new File(name)));
             } catch (Exception _) {
                 System.out.println("image decoding fail");
                 return null;
