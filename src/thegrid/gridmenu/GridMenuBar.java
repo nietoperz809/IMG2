@@ -47,6 +47,12 @@ public class GridMenuBar extends JMenuBar {
         });
         jm.add(jmi);
 
+        jmi = new JMenuItem("Refresh thumbs");
+        jmi.addActionListener(_ -> {
+            theGrid.fillThumbs();
+        });
+        jm.add(jmi);
+
         jmi = new JMenuItem("Instructions ...");
         jmi.addActionListener(_ -> Manual.start());
         jm.add(jmi);

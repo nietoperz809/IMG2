@@ -36,7 +36,7 @@ public class TheGrid extends MyFrame {
     private ProgressBox progress;
     private Instant startTime;
     private int imageCount;
-    private boolean stopFill = false;
+    private volatile boolean stopFill = false;
     private String historyPath = null;
 
     public static TheGrid getMainGrid() {
@@ -103,6 +103,10 @@ public class TheGrid extends MyFrame {
             return;
         }
         fillThumbs (new Pair<>(0,imageL.size())); // Load initial thumbs
+    }
+
+    public void fillThumbs () {
+        fillThumbs(new Pair (0, rootPane.getComponentCount()));
     }
 
     public void fillThumbs (Pair<Integer, Integer> pair) {

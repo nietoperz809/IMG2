@@ -103,6 +103,9 @@ public class Tools {
     public static boolean isGIF(String filename) {
         return hasExtension(filename, ".gif");
     }
+    public static boolean isMp3(String filename) {
+        return hasExtension(filename, ".mp3");
+    }
 
     public static boolean isWEBP(String filename) {
         return hasExtension(filename, ".webp");

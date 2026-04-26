@@ -89,9 +89,55 @@ public class VideoFunctions extends DBHandler {
         }
     }
 
+    private static void insertMp3Record(byte[] mp3, String name) {
+        try (PreparedStatement prep = connection.prepareStatement(
+                "insert into MP3 (song,name,blobsize) values (?,?,?)")) {
+            prep.setBytes(1, mp3);
+            prep.setString(2, name);
+            prep.setInt(3, mp3.length);
+            prep.execute();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static void addMP3(File file) {
+        try {
+            byte[] fileContent = Files.readAllBytes(file.toPath());
+            insertMp3Record(fileContent, file.getName());
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static File loadMP3 (String name,  String outfile) {
+        if (outfile == null)
+            outfile = getOutfile();
+        try (PreparedStatement ps = connection.prepareStatement(
+                "SELECT SONG FROM MP3 WHERE NAME ='" + name + "'")) {
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    try (InputStream in = rs.getBinaryStream(1);
+                         OutputStream out = Files.newOutputStream(Path.of(outfile))) {
+                        in.transferTo(out);
+                        return new File(outfile);
+                    }
+                }
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        return null;
+    }
+
+    private static String _outfile = getProperty("java.io.tmpdir") + File.separator + "tempfile-" + "myra.dat";
+    public static String getOutfile() {
+        return _outfile;
+    }
+
     public static File getVideoAsFile(NameID nid, Pair videoType, String outfile) {
         if (outfile == null)
-            outfile = getProperty("java.io.tmpdir") + File.separator + "tempfile-" + "myra.dat";
+            outfile = getOutfile();
         try (PreparedStatement ps = connection.prepareStatement(
                 "SELECT "+videoType.getValue1()+" FROM "+videoType.getValue0()+" WHERE _ROWID_='" + nid.rowid() + "'")) {
             try (ResultSet rs = ps.executeQuery()) {
@@ -140,6 +186,10 @@ public class VideoFunctions extends DBHandler {
 
     public static List<NameID> getVideoFileNames() {
         return getAnimatedFileNames("VIDEOS");
+    }
+
+    public static List<NameID> getMp3FileNames() {
+        return getAnimatedFileNames("MP3");
     }
 
     public static List<NameID> getGifFileNames() {

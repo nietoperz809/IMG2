@@ -68,6 +68,7 @@ public class DBHandler {
             Instant endI = Instant.now();
             AsyncInfo ("DB connect took: " + commatize (Duration.between(startI, endI).toMillis()) + " ms");
             stm = connection.createStatement();
+            stm.execute("create table if not exists MP3 (SONG blob, NAME varchar(100), BLOBSIZE integer)");
             stm.execute("alter table VIDEOS add if not exists BLOBSiZE INT");
             stm.execute("ALTER TABLE VIDEOS ALTER COLUMN BLOBSIZE BIGINT;");
             stm.execute("alter table GIFS add if not exists BLOBSiZE INT");

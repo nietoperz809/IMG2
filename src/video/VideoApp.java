@@ -1,8 +1,10 @@
 package video;
 
+import Music.MyMp3Player;
 import common.*;
 import database.DBHandler;
 import database.VideoFunctions;
+import javazoom.jl.decoder.JavaLayerException;
 import org.javatuples.Pair;
 import dialogs.Input;
 import dialogs.MonitorFrame;
@@ -20,6 +22,7 @@ import java.awt.dnd.DropTargetAdapter;
 import java.awt.dnd.DropTargetDropEvent;
 import java.awt.event.*;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -35,6 +38,7 @@ import static video.VideoType.*;
 public class VideoApp extends JFrame {
     private final List<DBHandler.NameID> entireList = new ArrayList<>();
     public String snapDir = "C:\\Users\\Administrator\\Desktop\\snaps";
+    public List<DBHandler.NameID> mp3List;
     public List<DBHandler.NameID> videoList;
     public List<DBHandler.NameID> gifList;
     public List<DBHandler.NameID> webpList;
@@ -294,6 +298,14 @@ public class VideoApp extends JFrame {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+        else if (mp3List.contains(nid)) {
+            File f = loadMP3 (nid.name(), null);
+            try {
+                MyMp3Player.play(f);
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        }
         else playerBox = new MP4PlayerBox(this, nid, checkBoxAC.isSelected());
         playerBox.start();
     }
@@ -328,17 +340,20 @@ public class VideoApp extends JFrame {
         listControl.repaint();
     }
 
+    private void addAll (List... arr) {
+        for (List lx : arr) entireList.addAll(lx);
+    }
+
     /**
      * Initial filling the JList
      */
     private void setAndSortJListContent() {
         entireList.clear();
+        mp3List = getMp3FileNames();
         videoList = getVideoFileNames();
         gifList = getGifFileNames();
         webpList = getWebPFileNames();
-        entireList.addAll(videoList);
-        entireList.addAll(gifList);
-        entireList.addAll(webpList);
+        addAll (videoList, gifList, webpList, mp3List);
         listToListControl(entireList);
     }
 
@@ -350,6 +365,7 @@ public class VideoApp extends JFrame {
         mixedList.addAll(videoList);
         mixedList.addAll(gifList);
         mixedList.addAll(webpList);
+        mixedList.addAll(mp3List);
         Collections.shuffle(mixedList);
         listToListControl(mixedList);
     }
@@ -373,6 +389,9 @@ public class VideoApp extends JFrame {
                                 if (Tools.isGIF(f.getPath())) {
                                     VideoFunctions.addGifFile(f);
                                     speak("GIF file added");
+                                } else if (Tools.isMp3 (f.getPath())) {
+                                    VideoFunctions.addMP3(f);
+                                    speak("MP3 file added");
                                 } else if (Tools.isWEBP(f.getPath())) {
                                     VideoFunctions.addWebPFile(f);
                                     speak("WEBP file added");
@@ -416,7 +435,10 @@ public class VideoApp extends JFrame {
                 setForeground(Color.RED);
             } else if (m_va.webpList.contains(value)) {
                 setForeground(Color.BLUE);
-            } else {
+            } else if (m_va.mp3List.contains(value)) {
+                setForeground(Color.GREEN);
+            }
+            else {
                 setForeground(Color.BLACK);
             }
 

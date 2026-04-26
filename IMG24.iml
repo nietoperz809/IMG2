@@ -65,5 +65,6 @@
     <orderEntry type="library" name="jna-5.6.0" level="project" />
     <orderEntry type="library" name="jna-platform-5.6.0" level="project" />
     <orderEntry type="library" name="javatuples" level="project" />
+    <orderEntry type="library" name="javazoom.jlayer" level="project" />
   </component>
 </module>

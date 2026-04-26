@@ -78,9 +78,6 @@ public class MP4PlayerBox implements PlayerBox {
             File tempFile = getVideoAsFile (nid, pVideo, null);
             mediaPlayerComponent = new EmbeddedMediaPlayerComponent();
             MediaPlayer mp = mediaPlayerComponent.mediaPlayer();
-            //mediaPlayerComponent.mediaPlayer().fullScreen().set (true);
-            //mp.video().setAdjustVideo(true);
-            //mp.inter
             playerFrame = new JFrame();
             playerFrame.requestFocus();
             //playerFrame.setTitle("Hit 's' to start and stop, 'p' to take snapshot, +/- for speed, 'b' to show sliders");
