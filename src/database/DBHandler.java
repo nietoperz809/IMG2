@@ -451,9 +451,7 @@ public class DBHandler {
         return s;
     }
 
-//    public static void cancelFileTransfer() {
-//        transferTask.cancel(true);
-//    }
+// "create table if not exists MP3 (SONG blob, NAME varchar(100), BLOBSIZE integer)");
 
     public static void changeName(String table, String name, int rowid) {
         String sql = "update " + table + " set name ='" + name + "' where _rowid_ =" + rowid;

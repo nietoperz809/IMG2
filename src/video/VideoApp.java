@@ -1,16 +1,13 @@
 package video;
 
-import Music.MyMp3Player;
+import Music.Mp3Service;
 import common.*;
 import database.DBHandler;
 import database.VideoFunctions;
-import javazoom.jl.decoder.JavaLayerException;
 import org.javatuples.Pair;
 import dialogs.Input;
 import dialogs.MonitorFrame;
 import dialogs.TimedMsg2;
-import net.lingala.zip4j.ZipFile;
-import net.lingala.zip4j.model.ZipParameters;
 
 import javax.swing.*;
 import java.awt.*;
@@ -22,10 +19,6 @@ import java.awt.dnd.DropTargetAdapter;
 import java.awt.dnd.DropTargetDropEvent;
 import java.awt.event.*;
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.text.NumberFormat;
 import java.util.*;
 import java.util.List;
@@ -66,6 +59,7 @@ public class VideoApp extends JFrame {
         addMenuItem(menu, "End Process", _ -> Tools.shutdown(this));
         addMenuItem(menu, "First WEBP", _ -> scrollToValue (webpList.getFirst()));
         addMenuItem(menu, "First GIF", _ -> scrollToValue (gifList.getFirst()));
+        addMenuItem(menu, "First MP3", _ -> scrollToValue (mp3List.getFirst()));
         mb.add(menu);
         setJMenuBar(mb);
     }
@@ -197,6 +191,8 @@ public class VideoApp extends JFrame {
                         len = getGifBlobLen(nid);
                     else if (webpList.contains(nid))
                         len = getWEBPBlobLen(nid);
+                    else if (mp3List.contains(nid))
+                        len = getMP3BlobLen(nid);
                     Sam.speak(NumToText.convert(len) + " Bites");
                     String flen = NumberFormat.getNumberInstance(Locale.GERMAN)
                             .format(Double.parseDouble(Objects.requireNonNull(len)));
@@ -271,6 +267,8 @@ public class VideoApp extends JFrame {
         onOK();
     }
 
+    private Mp3Service mp3Server;
+
     private void onOK() {
         SwingUtilities.invokeLater(this::transferAndRun);
     }
@@ -280,6 +278,20 @@ public class VideoApp extends JFrame {
      */
     private void transferAndRun() {
         DBHandler.NameID nid = listControl.getSelectedValue();
+        // play MP3
+        if (mp3List.contains(nid)) {
+            File f = loadMP3 (nid.name(), null);
+            try {
+                if (mp3Server != null)
+                    mp3Server.stop();
+                mp3Server = new Mp3Service();
+                mp3Server.play(f);
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+            return;
+        }
+        // --- play video ---
         if (nid == null) {
             listControl.setSelectedIndex(0);
             nid = listControl.getSelectedValue();
@@ -298,15 +310,9 @@ public class VideoApp extends JFrame {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-        else if (mp3List.contains(nid)) {
-            File f = loadMP3 (nid.name(), null);
-            try {
-                MyMp3Player.play(f);
-            } catch (Exception e) {
-                throw new RuntimeException(e);
-            }
+        else {
+            playerBox = new MP4PlayerBox(this, nid, checkBoxAC.isSelected());
         }
-        else playerBox = new MP4PlayerBox(this, nid, checkBoxAC.isSelected());
         playerBox.start();
     }
 
@@ -326,6 +332,11 @@ public class VideoApp extends JFrame {
     }
 
     private void onCancel() {
+        if (mp3Server != null) {
+            mp3Server.stop();
+            mp3Server = null;
+            return;
+        }
         if (playerBox == null)
             return;
         //DBHandler.cancelFileTransfer();
@@ -436,7 +447,7 @@ public class VideoApp extends JFrame {
             } else if (m_va.webpList.contains(value)) {
                 setForeground(Color.BLUE);
             } else if (m_va.mp3List.contains(value)) {
-                setForeground(Color.GREEN);
+                setForeground(new Color(0,153, 0));
             }
             else {
                 setForeground(Color.BLACK);

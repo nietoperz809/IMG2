@@ -167,6 +167,10 @@ public class VideoFunctions extends DBHandler {
         return queryBlobLen(nid, "WEBP", "WEBPDATA");
     }
 
+    public static String getMP3BlobLen(NameID nid) {
+        return queryBlobLen(nid, "MP3", "WEBPDATA");
+    }
+
     public static void changeVideoName(String name, int rowid) {
         changeName("VIDEOS", name, rowid);
     }
