@@ -1,6 +1,7 @@
 package database;
 
 import org.javatuples.Pair;
+import org.jetbrains.annotations.NotNull;
 
 import java.io.BufferedInputStream;
 import java.io.File;
@@ -101,7 +102,7 @@ public class VideoFunctions extends DBHandler {
         }
     }
 
-    public static void addMP3(File file) {
+    public static void addMP3toDatabase (File file) {
         try {
             byte[] fileContent = Files.readAllBytes(file.toPath());
             insertMp3Record(fileContent, file.getName());
@@ -110,9 +111,15 @@ public class VideoFunctions extends DBHandler {
         }
     }
 
-    public static File loadMP3 (String name,  String outfile) {
+    /**
+     * load MP3 as File
+     * @param name Name of MP3
+     * @param outfile Target path or NULL
+     * @return a File which is the MP3
+     */
+    public static File getMP3FromDatabase(String name, String outfile) {
         if (outfile == null)
-            outfile = getOutfile();
+            outfile = getDefaultOutfile();
         try (PreparedStatement ps = connection.prepareStatement(
                 "SELECT SONG FROM MP3 WHERE NAME ='" + name + "'")) {
             try (ResultSet rs = ps.executeQuery()) {
@@ -130,14 +137,27 @@ public class VideoFunctions extends DBHandler {
         return null;
     }
 
-    private static String _outfile = getProperty("java.io.tmpdir") + File.separator + "tempfile-" + "myra.dat";
-    public static String getOutfile() {
-        return _outfile;
+/*  EXPERIMENTAL
+    public static InputStream loadMP3 (String name) {
+        try {
+            PreparedStatement ps = connection.prepareStatement("SELECT SONG FROM MP3 WHERE NAME ='" + name + "'");
+            ResultSet rs = ps.executeQuery();
+            if (rs.next())
+                return rs.getBinaryStream(1);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        return null;
+    }
+*/
+
+    public static @NotNull String getDefaultOutfile() {
+        return getProperty("java.io.tmpdir") + File.separator + "tempfile-" + "myra.dat";
     }
 
     public static File getVideoAsFile(NameID nid, Pair videoType, String outfile) {
         if (outfile == null)
-            outfile = getOutfile();
+            outfile = getDefaultOutfile();
         try (PreparedStatement ps = connection.prepareStatement(
                 "SELECT "+videoType.getValue1()+" FROM "+videoType.getValue0()+" WHERE _ROWID_='" + nid.rowid() + "'")) {
             try (ResultSet rs = ps.executeQuery()) {

@@ -6,15 +6,17 @@ import java.io.File;
 import java.io.FileInputStream;
 
 public class Mp3Service {
-
-    private Thread playThread;
     private Player player;
 
+    /**
+     * Play MP3
+     * @param file the file
+     */
     public void play(File file) {
-        playThread = new Thread(() -> {
+        Thread playThread = new Thread(() -> {
             try (FileInputStream fis = new FileInputStream(file)) {
                 player = new Player(fis);
-                player.play(); // blockiert
+                player.play();
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -22,9 +24,13 @@ public class Mp3Service {
         playThread.start();
     }
 
+    /**
+     * Stop playing
+     */
     public void stop() {
         if (player != null) {
-            player.close(); // DAS ist der entscheidende Call
+            player.close();
+            player = null;
         }
     }
 }

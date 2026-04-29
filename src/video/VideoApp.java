@@ -29,6 +29,7 @@ import static database.VideoFunctions.*;
 import static video.VideoType.*;
 
 public class VideoApp extends JFrame {
+    private Mp3Service mp3Server;
     private final List<DBHandler.NameID> entireList = new ArrayList<>();
     public String snapDir = "C:\\Users\\Administrator\\Desktop\\snaps";
     public List<DBHandler.NameID> mp3List;
@@ -127,7 +128,12 @@ public class VideoApp extends JFrame {
         exportButton.addActionListener(_ -> {
             final List<DBHandler.NameID> selectedValuesList = listControl.getSelectedValuesList();
             if (selectedValuesList.size() == 1) {
-                saveSingle (selectedValuesList.getFirst());
+                DBHandler.NameID nid = selectedValuesList.getFirst();
+//                if (mp3List.contains(nid)) {
+//                    File f = getMP3FromDatabase(nid.name(), null);
+//                    return;
+//                }
+                saveSingle (nid);
             }
             else {
                 // todo: fix this
@@ -225,6 +231,8 @@ public class VideoApp extends JFrame {
                     type = pGif;
                 } else if (webpList.contains(nameid)) {
                     type = pWebp;
+                } else if (mp3List.contains(nameid)) {
+                    type = pMP3;
                 }
                 getVideoAsFile(nameid, type, f.getAbsolutePath());
             }
@@ -267,8 +275,6 @@ public class VideoApp extends JFrame {
         onOK();
     }
 
-    private Mp3Service mp3Server;
-
     private void onOK() {
         SwingUtilities.invokeLater(this::transferAndRun);
     }
@@ -280,7 +286,7 @@ public class VideoApp extends JFrame {
         DBHandler.NameID nid = listControl.getSelectedValue();
         // play MP3
         if (mp3List.contains(nid)) {
-            File f = loadMP3 (nid.name(), null);
+            File f = getMP3FromDatabase(nid.name(), null);
             try {
                 if (mp3Server != null)
                     mp3Server.stop();
@@ -401,7 +407,7 @@ public class VideoApp extends JFrame {
                                     VideoFunctions.addGifFile(f);
                                     speak("GIF file added");
                                 } else if (Tools.isMp3 (f.getPath())) {
-                                    VideoFunctions.addMP3(f);
+                                    VideoFunctions.addMP3toDatabase(f);
                                     speak("MP3 file added");
                                 } else if (Tools.isWEBP(f.getPath())) {
                                     VideoFunctions.addWebPFile(f);

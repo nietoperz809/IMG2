@@ -9,4 +9,5 @@ public class VideoType {
     public static Pair pVideo = new Pair("videos", "vid");
     public static Pair pGif = new Pair("gifs","gifdata");
     public static Pair pWebp = new Pair("webp","webpdata");
+    public static Pair pMP3 = new Pair("mp3","song");
 }
