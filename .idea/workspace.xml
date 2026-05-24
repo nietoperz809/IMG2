@@ -15,12 +15,19 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ddb69741-e020-4d21-a32f-f00e79c6818a" name="Changes" comment="save">
+    <list default="true" id="ddb69741-e020-4d21-a32f-f00e79c6818a" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/dialogs/PersScroller.form" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/dialogs/PersScroller.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/jfxapps/JfxImageView.form" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/jfxapps/JfxImageView.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Music/Mp3Service.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Music/Mp3Service.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IMG24.iml" beforeDir="false" afterPath="$PROJECT_DIR$/IMG24.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resource/manual.html" beforeDir="false" afterPath="$PROJECT_DIR$/resource/manual.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/common/Tools.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/common/Tools.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/database/VideoFunctions.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/database/VideoFunctions.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dialogs/Copier.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/dialogs/Copier.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/thegrid/ImgViewKeyHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/thegrid/ImgViewKeyHandler.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/video/VideoApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/video/VideoApp.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/video/VideoType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/video/VideoType.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -356,7 +363,8 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-jdk-30f59d01ecdd-2fc7cc6b9a17-intellij.indexing.shared.core-IU-253.32098.37" />
+        <option value="bundled-jdk-30f59d01ecdd-37e91769500f-intellij.indexing.shared.core-IU-261.24374.151" />
+        <option value="bundled-js-predefined-d6986cc7102b-31caf2ab9e3c-JavaScript-IU-261.24374.151" />
       </set>
     </attachedChunks>
   </component>
@@ -718,7 +726,7 @@
       <option name="project" value="LOCAL" />
       <updated>1683976691765</updated>
     </task>
-    <option name="localTasksCounter" value="459" />
+    <option name="localTasksCounter" value="460" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -740,6 +748,8 @@
       <map>
         <entry key="044a3ef1-cb6f-4acc-83b9-e9480b84b9bc" value="TOOL_WINDOW" />
         <entry key="1f429571-a11a-4322-b147-b4adb683cf89" value="TOOL_WINDOW" />
+        <entry key="5a7025c0-412a-4b5f-9840-990c38018361" value="TOOL_WINDOW" />
+        <entry key="6daa8ae5-9924-42b2-b06c-1ffb7463dc35" value="TOOL_WINDOW" />
       </map>
     </option>
     <option name="TAB_STATES">
@@ -774,6 +784,56 @@
             <State />
           </value>
         </entry>
+        <entry key="5a7025c0-412a-4b5f-9840-990c38018361">
+          <value>
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="HEAD" />
+                      </list>
+                    </value>
+                  </entry>
+                  <entry key="structure">
+                    <value>
+                      <list>
+                        <option value="dir:C:/peter.home/Coding/IMG4/src" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+              <option name="SHOW_ONLY_AFFECTED_CHANGES" value="true" />
+            </State>
+          </value>
+        </entry>
+        <entry key="6daa8ae5-9924-42b2-b06c-1ffb7463dc35">
+          <value>
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="HEAD" />
+                      </list>
+                    </value>
+                  </entry>
+                  <entry key="structure">
+                    <value>
+                      <list>
+                        <option value="dir:C:/peter.home/Coding/IMG4/src/dialogs" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+              <option name="SHOW_ONLY_AFFECTED_CHANGES" value="true" />
+            </State>
+          </value>
+        </entry>
         <entry key="MAIN">
           <value>
             <State />
@@ -786,7 +846,6 @@
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_NEW_TODO" value="false" />
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="added table counts to db structure text" />
     <MESSAGE value="some changes" />
     <MESSAGE value="tagselector improved" />
     <MESSAGE value="AnimPlayerBox improved image size" />
@@ -811,7 +870,8 @@
     <MESSAGE value="class unrelatedPair removed" />
     <MESSAGE value="class Pair taken from javatuples" />
     <MESSAGE value="save" />
-    <option name="LAST_COMMIT_MESSAGE" value="save" />
+    <MESSAGE value="working mp3 export" />
+    <option name="LAST_COMMIT_MESSAGE" value="working mp3 export" />
     <option name="NON_MODAL_COMMIT_POSTPONE_SLOW_CHECKS" value="false" />
   </component>
   <component name="XDebuggerManager">

@@ -252,11 +252,14 @@ public class Tools {
         }
     }
 
-    public static void createMisssingDirs(Path p) {
+    public static boolean createMissingDirs(Path p) {
         try {
             Files.createDirectories(p.getParent());
+            return true;
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            System.out.println(e);
+            return false;
+            //throw new RuntimeException(e);
         }
     }
 

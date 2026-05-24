@@ -129,10 +129,6 @@ public class VideoApp extends JFrame {
             final List<DBHandler.NameID> selectedValuesList = listControl.getSelectedValuesList();
             if (selectedValuesList.size() == 1) {
                 DBHandler.NameID nid = selectedValuesList.getFirst();
-//                if (mp3List.contains(nid)) {
-//                    File f = getMP3FromDatabase(nid.name(), null);
-//                    return;
-//                }
                 saveSingle (nid);
             }
             else {

@@ -14,6 +14,7 @@ import dev.brachtendorf.jimagehash.hash.Hash;
 import dev.brachtendorf.jimagehash.hashAlgorithms.HashingAlgorithm;
 import dev.brachtendorf.jimagehash.hashAlgorithms.PerceptiveHash;
 import dialogs.*;
+import jfxapps.JfxImageView;
 //import jfxapps.JfxImageView;
 
 import java.awt.*;
@@ -57,9 +58,9 @@ public class ImgViewKeyHandler extends KeyAdapter {
 
     private void doForKey (KeyEvent e) {
         switch (e.getKeyCode()) {
-//            case VK_ENTER -> {
-//                JfxImageView jiv = JfxImageView.create(imageFrame.imgPanel);
-//            }
+            case VK_ENTER -> {
+                JfxImageView jiv = JfxImageView.create(imageFrame.imgPanel);
+            }
             case VK_UP -> {
                 imageFrame.imgPanel.scrollDown(imageFrame.imgPanel);
                 anyReleased = true;

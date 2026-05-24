@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="jfxapps.JfxImageView">
+  <grid id="27dc6" binding="panel1" default-binding="true" layout-manager="BorderLayout" hgap="0" vgap="0">
+    <constraints>
+      <xy x="20" y="20" width="816" height="400"/>
+    </constraints>
+    <properties/>
+    <border type="none"/>
+    <children>
+      <grid id="436ca" layout-manager="FormLayout">
+        <rowspec value="center:26px:noGrow"/>
+        <rowspec value="top:4dlu:noGrow"/>
+        <rowspec value="center:max(d;4px):noGrow"/>
+        <colspec value="fill:max(d;4px):noGrow"/>
+        <colspec value="fill:148px:grow"/>
+        <colspec value="fill:max(d;4px):noGrow"/>
+        <colspec value="fill:152px:grow"/>
+        <colspec value="fill:38px:noGrow"/>
+        <colspec value="fill:d:grow"/>
+        <colspec value="fill:max(d;4px):noGrow"/>
+        <colspec value="fill:180px:grow"/>
+        <colspec value="left:4dlu:noGrow"/>
+        <colspec value="fill:max(d;4px):noGrow"/>
+        <colspec value="fill:max(d;4px):noGrow"/>
+        <constraints border-constraint="North"/>
+        <properties>
+          <alignmentX value="0.1"/>
+          <alignmentY value="0.1"/>
+          <foreground color="-16711930"/>
+          <minimumSize width="520" height="70"/>
+          <preferredSize width="30" height="70"/>
+        </properties>
+        <border type="none"/>
+        <children>
+          <component id="1313f" class="javax.swing.JSlider" binding="sliderRotate" default-binding="true">
+            <constraints>
+              <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                <preferred-size width="409" height="30"/>
+              </grid>
+              <forms defaultalign-horz="false"/>
+            </constraints>
+            <properties>
+              <background color="-16777216"/>
+              <foreground color="-1"/>
+              <inverted value="false"/>
+              <maximum value="360"/>
+              <paintLabels value="false"/>
+              <paintTicks value="false"/>
+              <paintTrack value="true"/>
+              <value value="0"/>
+            </properties>
+            <clientProperties>
+              <JSlider.isFilled class="java.lang.Boolean" value="false"/>
+            </clientProperties>
+          </component>
+          <component id="99cb1" class="javax.swing.JSlider" binding="sliderSize" default-binding="true">
+            <constraints>
+              <grid row="0" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
+              <forms defaultalign-horz="false"/>
+            </constraints>
+            <properties>
+              <background color="-16777216"/>
+              <foreground color="-1"/>
+              <maximum value="1000"/>
+              <minimum value="10"/>
+              <requestFocusEnabled value="false"/>
+              <snapToTicks value="false"/>
+              <value value="10"/>
+            </properties>
+          </component>
+          <component id="950e9" class="javax.swing.JSlider" binding="sliderSaturation" default-binding="true">
+            <constraints>
+              <grid row="2" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
+              <forms defaultalign-horz="false"/>
+            </constraints>
+            <properties>
+              <value value="50"/>
+            </properties>
+          </component>
+          <component id="e9bd0" class="javax.swing.JSlider" binding="sliderContrast" default-binding="true">
+            <constraints>
+              <grid row="2" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
+              <forms defaultalign-horz="false"/>
+            </constraints>
+            <properties>
+              <value value="50"/>
+            </properties>
+          </component>
+          <component id="1fbf1" class="javax.swing.JSlider" binding="sliderBrightness" default-binding="true">
+            <constraints>
+              <grid row="2" column="5" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
+              <forms defaultalign-horz="false"/>
+            </constraints>
+            <properties>
+              <value value="50"/>
+            </properties>
+          </component>
+          <component id="dfa78" class="javax.swing.JSlider" binding="sliderHue" default-binding="true">
+            <constraints>
+              <grid row="2" column="7" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
+              <forms defaultalign-horz="false"/>
+            </constraints>
+            <properties>
+              <maximumSize width="32767" height="30"/>
+              <value value="50"/>
+            </properties>
+          </component>
+          <component id="36d90" class="javax.swing.JLabel">
+            <constraints>
+              <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+              <forms/>
+            </constraints>
+            <properties>
+              <text value="sat"/>
+            </properties>
+          </component>
+          <component id="b71c9" class="javax.swing.JLabel">
+            <constraints>
+              <grid row="2" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+              <forms/>
+            </constraints>
+            <properties>
+              <text value="con"/>
+            </properties>
+          </component>
+          <component id="fb841" class="javax.swing.JLabel">
+            <constraints>
+              <grid row="2" column="4" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+              <forms/>
+            </constraints>
+            <properties>
+              <text value="bri"/>
+            </properties>
+          </component>
+          <component id="c664d" class="javax.swing.JLabel">
+            <constraints>
+              <grid row="2" column="6" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+              <forms/>
+            </constraints>
+            <properties>
+              <text value="hue"/>
+            </properties>
+          </component>
+          <component id="76d7e" class="javax.swing.JCheckBox" binding="checkBox">
+            <constraints>
+              <grid row="0" column="5" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+              <forms/>
+            </constraints>
+            <properties>
+              <text value="w/h"/>
+            </properties>
+          </component>
+          <component id="2f1cb" class="javax.swing.JCheckBox" binding="checkBox_preserve">
+            <constraints>
+              <grid row="0" column="7" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+              <forms/>
+            </constraints>
+            <properties>
+              <text value="w=h"/>
+            </properties>
+          </component>
+          <component id="39894" class="javax.swing.JLabel">
+            <constraints>
+              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+              <forms/>
+            </constraints>
+            <properties>
+              <text value="rot"/>
+            </properties>
+          </component>
+          <component id="9fdba" class="javax.swing.JLabel">
+            <constraints>
+              <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+              <forms/>
+            </constraints>
+            <properties>
+              <text value="size"/>
+            </properties>
+          </component>
+          <component id="593f7" class="javax.swing.JButton" binding="resButton" default-binding="true">
+            <constraints>
+              <grid row="2" column="9" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="9" fill="0" indent="0" use-parent-layout="false"/>
+              <forms defaultalign-horz="false" defaultalign-vert="false"/>
+            </constraints>
+            <properties>
+              <horizontalAlignment value="2"/>
+              <horizontalTextPosition value="2"/>
+              <minimumSize width="40" height="30"/>
+              <preferredSize width="40" height="30"/>
+              <text value="res"/>
+              <verticalAlignment value="1"/>
+              <verticalTextPosition value="1"/>
+            </properties>
+          </component>
+          <component id="e369c" class="javax.swing.JButton" binding="bpPerspective">
+            <constraints>
+              <grid row="0" column="9" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+              <forms/>
+            </constraints>
+            <properties>
+              <enabled value="true"/>
+              <label value="p"/>
+              <maximumSize width="30" height="38"/>
+              <minimumSize width="30" height="38"/>
+              <preferredSize width="30" height="38"/>
+              <text value="p"/>
+              <toolTipText value="Perspective"/>
+            </properties>
+          </component>
+        </children>
+      </grid>
+      <scrollpane id="9d021">
+        <constraints border-constraint="Center"/>
+        <properties/>
+        <border type="none"/>
+        <children>
+          <grid id="2e162" layout-manager="BorderLayout" hgap="0" vgap="0">
+            <constraints/>
+            <properties/>
+            <border type="none"/>
+            <children>
+              <grid id="37f4e" class="javafx.embed.swing.JFXPanel" binding="jfx" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="1">
+                <constraints border-constraint="Center"/>
+                <properties>
+                  <toolTipText value="close window to keep changes"/>
+                </properties>
+                <border type="none"/>
+                <children/>
+              </grid>
+            </children>
+          </grid>
+        </children>
+      </scrollpane>
+    </children>
+  </grid>
+</form>

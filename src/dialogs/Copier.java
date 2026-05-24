@@ -102,6 +102,7 @@ public class Copier extends JDialog {
 
     private void onOK() {
         Tools.runTask(() -> {
+            System.out.println("run copy task");
             try {
                 long chunksize = switch (chunkList.getSelectedIndex()) {
                     case 1 -> MB50;
@@ -112,7 +113,9 @@ public class Copier extends JDialog {
                 Instant startTime = Instant.now();
                 Path destP = Paths.get(toText.getText() +
                         File.separatorChar + DBHandler.DB_FILE+DBHandler.DB_EXT);
-                createMisssingDirs(destP);
+                if (!createMissingDirs(destP))
+                    return;
+                System.out.println("start: "+fromText.getText()+"-->"+toText.getText()+"@"+chunksize);
                 Channelcopy.performCopy(Paths.get(fromText.getText()),
                         destP,
                         chunksize,
@@ -121,6 +124,7 @@ public class Copier extends JDialog {
                             long x = transferred / chunksize;
                             progressText.setText(x + " from " + max + " blocks in "+elapsed(startTime));
                             progressText.paintImmediately(0, 0, progressText.getWidth(), progressText.getHeight());
+                            System.out.println(progressText.getText());
                             contentPane.repaint();
                             return false; // true will stop the copy
                         });

@@ -3,10 +3,7 @@ package database;
 import org.javatuples.Pair;
 import org.jetbrains.annotations.NotNull;
 
-import java.io.BufferedInputStream;
-import java.io.File;
-import java.io.InputStream;
-import java.io.OutputStream;
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.sql.PreparedStatement;
@@ -155,6 +152,15 @@ public class VideoFunctions extends DBHandler {
         return getProperty("java.io.tmpdir") + File.separator + "tempfile-" + "myra.dat";
     }
 
+    public static void mycopy (InputStream in, OutputStream out) throws IOException {
+        byte[] buffer = new byte[1024];
+        int len = in.read(buffer);
+        while (len != -1) {
+            out.write(buffer, 0, len);
+            len = in.read(buffer);
+        }
+    }
+
     public static File getVideoAsFile(NameID nid, Pair videoType, String outfile) {
         if (outfile == null)
             outfile = getDefaultOutfile();
@@ -165,6 +171,7 @@ public class VideoFunctions extends DBHandler {
                     try (InputStream in = rs.getBinaryStream(1);
                          OutputStream out = Files.newOutputStream(Path.of(outfile))) {
                         in.transferTo(out);
+                        //mycopy (in, out);
                         return new File(outfile);
                     }
                 }
