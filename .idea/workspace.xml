@@ -15,19 +15,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ddb69741-e020-4d21-a32f-f00e79c6818a" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/dialogs/PersScroller.form" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/dialogs/PersScroller.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/jfxapps/JfxImageView.form" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/jfxapps/JfxImageView.java" afterDir="false" />
+    <list default="true" id="ddb69741-e020-4d21-a32f-f00e79c6818a" name="Changes" comment="catch exception if dest does not exist in Copier.java">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/IMG24.iml" beforeDir="false" afterPath="$PROJECT_DIR$/IMG24.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resource/manual.html" beforeDir="false" afterPath="$PROJECT_DIR$/resource/manual.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/common/Tools.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/common/Tools.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/database/VideoFunctions.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/database/VideoFunctions.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/dialogs/Copier.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/dialogs/Copier.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/thegrid/ImgViewKeyHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/thegrid/ImgViewKeyHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/video/VideoApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/video/VideoApp.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -95,125 +84,125 @@
     <option name="showScratchesAndConsoles" value="false" />
     <option name="showVisibilityIcons" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ASKED_ADD_EXTERNAL_FILES": "true",
-    "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "Application.App.executor": "Run",
-    "Application.BezierPlotter.executor": "Run",
-    "Application.ConBright.executor": "Run",
-    "Application.Console (1).executor": "Run",
-    "Application.Console (2).executor": "Run",
-    "Application.Console.executor": "Run",
-    "Application.Copier.executor": "Run",
-    "Application.DBHandler.executor": "Debug",
-    "Application.GUIConsole (1).executor": "Run",
-    "Application.GUIConsole (2).executor": "Run",
-    "Application.GUIConsole.executor": "Run",
-    "Application.ImageReaderBase.executor": "Run",
-    "Application.ImageViewer.executor": "Run",
-    "Application.Input.executor": "Run",
-    "Application.JfxApp.executor": "Run",
-    "Application.JfxImageView.executor": "Run",
-    "Application.LineInput.executor": "Run",
-    "Application.Main (1).executor": "Run",
-    "Application.Main (2).executor": "Run",
-    "Application.Main.executor": "Run",
-    "Application.MainC (1).executor": "Run",
-    "Application.MainC.executor": "Run",
-    "Application.MainCprofiled.executor": "JProfiler",
-    "Application.MainE.executor": "Run",
-    "Application.MonitorFrame.executor": "Run",
-    "Application.MultiSlider.executor": "Run",
-    "Application.MyShell.executor": "Debug",
-    "Application.MyTextViewer.executor": "Run",
-    "Application.PersScroller.executor": "Run",
-    "Application.PersValues.executor": "Run",
-    "Application.RGBScroll.executor": "Run",
-    "Application.RandomWord.executor": "Run",
-    "Application.Shell (1).executor": "Run",
-    "Application.Shell.executor": "Run",
-    "Application.SliderBox.executor": "Run",
-    "Application.SqlList.executor": "Run",
-    "Application.Stepper.executor": "Run",
-    "Application.TimedMsg2.executor": "Run",
-    "Application.UnlockDialog.executor": "Run",
-    "Application.WebPDecoder.executor": "Run",
-    "Application.imgeditor.executor": "Run",
-    "Application.main.executor": "Run",
-    "Application.web.executor": "Run",
-    "DefaultHtmlFileTemplate": "HTML File",
-    "Downloaded.Files.Path.Enabled": "true",
-    "GenerateAntBuildDialog.backupFiles": "true",
-    "GenerateAntBuildDialog.enableUiFormCompile": "true",
-    "GenerateAntBuildDialog.forceTargetJdk": "true",
-    "GenerateAntBuildDialog.outputFileNameProperty": "img2.iml",
-    "Git.Working.Tree.Tab.closed.by.user": "opened",
-    "JAR Application.IMG2.jar.executor": "Run",
-    "JAR Application.javafx-fatjar-demo-1.0.0.jar.executor": "Run",
-    "JAR Application.javafx-fatjar-demo-1.0.jar.executor": "Run",
-    "JAR Application.javafx-graphics-11.0.2-javadoc.jar.executor": "Run",
-    "JAR Application.jna-5.6.0.jar.executor": "Run",
-    "JAR Application.jna-platform-5.6.0.jar.executor": "Run",
-    "JAR Application.minimal-javafx-1.0-SNAPSHOT.jar.executor": "Run",
-    "JAR Application.original-javafx-fatjar-demo-1.0.0.jar.executor": "Run",
-    "JAR Application.original-javafx-fatjar-demo-1.0.jar.executor": "Run",
-    "JUnit.All in IMG2.executor": "Run",
-    "JUnit.TestBase.askForDel.executor": "Run",
-    "Java Scratch.Scratch.executor": "Run",
-    "Maven.demo1 [clean].executor": "Run",
-    "Maven.demo1 [compile].executor": "Run",
-    "Maven.demo1 [install].executor": "Run",
-    "Maven.javafx-fatjar-demo [clean].executor": "Run",
-    "Maven.javafx-fatjar-demo [compile].executor": "Run",
-    "Maven.javafx-fatjar-demo [install].executor": "Run",
-    "Maven.javafx-fatjar-demo [package].executor": "Run",
-    "Maven.minimal-javafx [clean].executor": "Run",
-    "Maven.minimal-javafx [compile].executor": "Run",
-    "Maven.minimal-javafx [install].executor": "Run",
-    "Maven.minimal-javafx [test].executor": "Run",
-    "Repository.Attach.Annotations": "false",
-    "Repository.Attach.JavaDocs": "true",
-    "Repository.Attach.Sources": "false",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "ToolWindow.Pull Requests.ShowToolbar": "false",
-    "UI_DESIGNER_EDITOR_MODE.PaletteManager.SHOW": "true",
-    "UI_DESIGNER_EDITOR_MODE.PaletteManager.WIDTH": "205",
-    "UI_DESIGNER_EDITOR_MODE.UIDesignerToolWindowManager.SHOW": "true",
-    "UI_DESIGNER_EDITOR_MODE.UIDesignerToolWindowManager.WIDTH": "446",
-    "codeWithMe.voiceChat.enabledByDefault": "false",
-    "com.intellij.ide.FileNotInSourceRootChecker.no.check": "true",
-    "full.screen.before.presentation.mode": "true",
-    "git-widget-placeholder": "withQueue",
-    "ignore.preview.features.used": "true",
-    "kotlin-language-version-configured": "true",
-    "last_directory_selection": "C:/peter.home/java/IMG3/src/database",
-    "last_opened_file_path": "C:/peter.home/Coding/IMG4/lib",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Libraries",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.2984206",
-    "run.code.analysis.last.selected.profile": "pProject Default",
-    "settings.editor.selected.configurable": "reference.settings.project.maven.runner",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
+    &quot;ASKED_SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;Application.App.executor&quot;: &quot;Run&quot;,
+    &quot;Application.BezierPlotter.executor&quot;: &quot;Run&quot;,
+    &quot;Application.ConBright.executor&quot;: &quot;Run&quot;,
+    &quot;Application.Console (1).executor&quot;: &quot;Run&quot;,
+    &quot;Application.Console (2).executor&quot;: &quot;Run&quot;,
+    &quot;Application.Console.executor&quot;: &quot;Run&quot;,
+    &quot;Application.Copier.executor&quot;: &quot;Run&quot;,
+    &quot;Application.DBHandler.executor&quot;: &quot;Debug&quot;,
+    &quot;Application.GUIConsole (1).executor&quot;: &quot;Run&quot;,
+    &quot;Application.GUIConsole (2).executor&quot;: &quot;Run&quot;,
+    &quot;Application.GUIConsole.executor&quot;: &quot;Run&quot;,
+    &quot;Application.ImageReaderBase.executor&quot;: &quot;Run&quot;,
+    &quot;Application.ImageViewer.executor&quot;: &quot;Run&quot;,
+    &quot;Application.Input.executor&quot;: &quot;Run&quot;,
+    &quot;Application.JfxApp.executor&quot;: &quot;Run&quot;,
+    &quot;Application.JfxImageView.executor&quot;: &quot;Run&quot;,
+    &quot;Application.LineInput.executor&quot;: &quot;Run&quot;,
+    &quot;Application.Main (1).executor&quot;: &quot;Run&quot;,
+    &quot;Application.Main (2).executor&quot;: &quot;Run&quot;,
+    &quot;Application.Main.executor&quot;: &quot;Run&quot;,
+    &quot;Application.MainC (1).executor&quot;: &quot;Run&quot;,
+    &quot;Application.MainC.executor&quot;: &quot;Run&quot;,
+    &quot;Application.MainCprofiled.executor&quot;: &quot;JProfiler&quot;,
+    &quot;Application.MainE.executor&quot;: &quot;Run&quot;,
+    &quot;Application.MonitorFrame.executor&quot;: &quot;Run&quot;,
+    &quot;Application.MultiSlider.executor&quot;: &quot;Run&quot;,
+    &quot;Application.MyShell.executor&quot;: &quot;Debug&quot;,
+    &quot;Application.MyTextViewer.executor&quot;: &quot;Run&quot;,
+    &quot;Application.PersScroller.executor&quot;: &quot;Run&quot;,
+    &quot;Application.PersValues.executor&quot;: &quot;Run&quot;,
+    &quot;Application.RGBScroll.executor&quot;: &quot;Run&quot;,
+    &quot;Application.RandomWord.executor&quot;: &quot;Run&quot;,
+    &quot;Application.Shell (1).executor&quot;: &quot;Run&quot;,
+    &quot;Application.Shell.executor&quot;: &quot;Run&quot;,
+    &quot;Application.SliderBox.executor&quot;: &quot;Run&quot;,
+    &quot;Application.SqlList.executor&quot;: &quot;Run&quot;,
+    &quot;Application.Stepper.executor&quot;: &quot;Run&quot;,
+    &quot;Application.TimedMsg2.executor&quot;: &quot;Run&quot;,
+    &quot;Application.UnlockDialog.executor&quot;: &quot;Run&quot;,
+    &quot;Application.WebPDecoder.executor&quot;: &quot;Run&quot;,
+    &quot;Application.imgeditor.executor&quot;: &quot;Run&quot;,
+    &quot;Application.main.executor&quot;: &quot;Run&quot;,
+    &quot;Application.web.executor&quot;: &quot;Run&quot;,
+    &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
+    &quot;Downloaded.Files.Path.Enabled&quot;: &quot;true&quot;,
+    &quot;GenerateAntBuildDialog.backupFiles&quot;: &quot;true&quot;,
+    &quot;GenerateAntBuildDialog.enableUiFormCompile&quot;: &quot;true&quot;,
+    &quot;GenerateAntBuildDialog.forceTargetJdk&quot;: &quot;true&quot;,
+    &quot;GenerateAntBuildDialog.outputFileNameProperty&quot;: &quot;img2.iml&quot;,
+    &quot;Git.Working.Tree.Tab.closed.by.user&quot;: &quot;opened&quot;,
+    &quot;JAR Application.IMG2.jar.executor&quot;: &quot;Run&quot;,
+    &quot;JAR Application.javafx-fatjar-demo-1.0.0.jar.executor&quot;: &quot;Run&quot;,
+    &quot;JAR Application.javafx-fatjar-demo-1.0.jar.executor&quot;: &quot;Run&quot;,
+    &quot;JAR Application.javafx-graphics-11.0.2-javadoc.jar.executor&quot;: &quot;Run&quot;,
+    &quot;JAR Application.jna-5.6.0.jar.executor&quot;: &quot;Run&quot;,
+    &quot;JAR Application.jna-platform-5.6.0.jar.executor&quot;: &quot;Run&quot;,
+    &quot;JAR Application.minimal-javafx-1.0-SNAPSHOT.jar.executor&quot;: &quot;Run&quot;,
+    &quot;JAR Application.original-javafx-fatjar-demo-1.0.0.jar.executor&quot;: &quot;Run&quot;,
+    &quot;JAR Application.original-javafx-fatjar-demo-1.0.jar.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.All in IMG2.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.TestBase.askForDel.executor&quot;: &quot;Run&quot;,
+    &quot;Java Scratch.Scratch.executor&quot;: &quot;Run&quot;,
+    &quot;Maven.demo1 [clean].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.demo1 [compile].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.demo1 [install].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.javafx-fatjar-demo [clean].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.javafx-fatjar-demo [compile].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.javafx-fatjar-demo [install].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.javafx-fatjar-demo [package].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.minimal-javafx [clean].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.minimal-javafx [compile].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.minimal-javafx [install].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.minimal-javafx [test].executor&quot;: &quot;Run&quot;,
+    &quot;Repository.Attach.Annotations&quot;: &quot;false&quot;,
+    &quot;Repository.Attach.JavaDocs&quot;: &quot;true&quot;,
+    &quot;Repository.Attach.Sources&quot;: &quot;false&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;ToolWindow.Pull Requests.ShowToolbar&quot;: &quot;false&quot;,
+    &quot;UI_DESIGNER_EDITOR_MODE.PaletteManager.SHOW&quot;: &quot;true&quot;,
+    &quot;UI_DESIGNER_EDITOR_MODE.PaletteManager.WIDTH&quot;: &quot;205&quot;,
+    &quot;UI_DESIGNER_EDITOR_MODE.UIDesignerToolWindowManager.SHOW&quot;: &quot;true&quot;,
+    &quot;UI_DESIGNER_EDITOR_MODE.UIDesignerToolWindowManager.WIDTH&quot;: &quot;446&quot;,
+    &quot;codeWithMe.voiceChat.enabledByDefault&quot;: &quot;false&quot;,
+    &quot;com.intellij.ide.FileNotInSourceRootChecker.no.check&quot;: &quot;true&quot;,
+    &quot;full.screen.before.presentation.mode&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;withQueue&quot;,
+    &quot;ignore.preview.features.used&quot;: &quot;true&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_directory_selection&quot;: &quot;C:/peter.home/java/IMG3/src/database&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/peter.home/Coding/IMG4/lib&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Libraries&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2984206&quot;,
+    &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settings.project.maven.runner&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
-  "keyToStringList": {
-    "DatabaseDriversLRU": [
-      "h2"
+  &quot;keyToStringList&quot;: {
+    &quot;DatabaseDriversLRU&quot;: [
+      &quot;h2&quot;
     ],
-    "com.intellij.ide.scratch.ScratchImplUtil$2/New Scratch File": [
-      "JAVA"
+    &quot;com.intellij.ide.scratch.ScratchImplUtil$2/New Scratch File&quot;: [
+      &quot;JAVA&quot;
     ]
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\peter.home\Coding\IMG4\lib" />
@@ -726,7 +715,7 @@
       <option name="project" value="LOCAL" />
       <updated>1683976691765</updated>
     </task>
-    <option name="localTasksCounter" value="460" />
+    <option name="localTasksCounter" value="461" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -846,7 +835,6 @@
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_NEW_TODO" value="false" />
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="some changes" />
     <MESSAGE value="tagselector improved" />
     <MESSAGE value="AnimPlayerBox improved image size" />
     <MESSAGE value="some improvements" />
@@ -871,7 +859,8 @@
     <MESSAGE value="class Pair taken from javatuples" />
     <MESSAGE value="save" />
     <MESSAGE value="working mp3 export" />
-    <option name="LAST_COMMIT_MESSAGE" value="working mp3 export" />
+    <MESSAGE value="catch exception if dest does not exist in Copier.java" />
+    <option name="LAST_COMMIT_MESSAGE" value="catch exception if dest does not exist in Copier.java" />
     <option name="NON_MODAL_COMMIT_POSTPONE_SLOW_CHECKS" value="false" />
   </component>
   <component name="XDebuggerManager">
