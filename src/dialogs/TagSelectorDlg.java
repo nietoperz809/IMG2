@@ -40,6 +40,7 @@ public class TagSelectorDlg extends JDialog {
         cancelButton.addActionListener(_ -> onCancel());
         radioAND.addActionListener(_ -> andMode = true);
         radioOR.addActionListener(_ -> andMode = false);
+        searchField.setToolTipText("type (partial) tag name then select found tags to construct SQL, finally hit 'submit'");
         searchField.addKeyListener(new KeyAdapter() {
             @Override
             public void keyReleased(KeyEvent e) {

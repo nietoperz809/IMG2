@@ -131,7 +131,6 @@ public class Copier extends JDialog {
                 buttonOK.setEnabled(true);
                 AsyncInfo("DB backup took: " + elapsed(startTime));
             } catch (IOException e) {
-                // ignore IOException on block 332
                 System.err.println("Copier exc. on block:");
                 MsgBox.Error (e.toString());
                 buttonOK.setVisible(true);
