@@ -139,7 +139,9 @@ public class ImgViewKeyHandler extends KeyAdapter {
             case VK_O -> { // Image Info
                 int id = imageFrame.grid.imageL.get(imageFrame.indexRing.get()).rowid();
                 String newInfo = Input.getText("Image info", getImageInfo(id));
-                setImageInfo (id, newInfo);
+                String tags = "("+DBHandler.getTags(id)+")";
+                newInfo = newInfo.replace(tags,"");
+                setImageInfo (id, newInfo+tags);
             }
 
             case VK_S -> { // Put copy into DB on CTRL-S

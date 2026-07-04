@@ -214,7 +214,8 @@ public class TheGrid extends MyFrame {
 
     public void stopThumbViewFill(String info) {
         stopFill = true;
-        progress.dispose();
+        if (progress != null)
+            progress.dispose();
         rootPane.doLayout();
         scrollPane.getViewport().setView(rootPane);
         setVisible(true);

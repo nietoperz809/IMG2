@@ -114,6 +114,5 @@ public class Tagger extends JDialog {
         TreeSet<String> tags = DBHandler.getImageTagList();
         list1 = new JList<>(tags.toArray(new String[0]));
         list1.setCellRenderer(new TagListCellRenderer());
-        //this_ml = (MyListCellRenderer)list1.getCellRenderer();
     }
 }

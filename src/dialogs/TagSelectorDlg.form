@@ -90,7 +90,7 @@
         <properties/>
         <border type="none"/>
         <children>
-          <component id="f719e" class="javax.swing.JList" binding="list1" custom-create="true" default-binding="true">
+          <component id="f719e" class="javax.swing.JList" binding="tagList" custom-create="true" default-binding="true">
             <constraints border-constraint="Center"/>
             <properties>
               <layoutOrientation value="2"/>

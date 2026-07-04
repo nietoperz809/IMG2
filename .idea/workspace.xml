@@ -15,10 +15,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ddb69741-e020-4d21-a32f-f00e79c6818a" name="Changes" comment="catch exception if &quot;dest&quot; does not exist in Copier.java">
+    <list default="true" id="ddb69741-e020-4d21-a32f-f00e79c6818a" name="Changes" comment="some little improvements">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/dialogs/Copier.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/dialogs/Copier.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dialogs/TagSelectorDlg.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/dialogs/TagSelectorDlg.form" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/dialogs/TagSelectorDlg.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/dialogs/TagSelectorDlg.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/dialogs/Tagger.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/dialogs/Tagger.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/thegrid/ImgViewKeyHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/thegrid/ImgViewKeyHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/thegrid/TheGrid.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/thegrid/TheGrid.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -110,7 +113,7 @@
     "Application.Main (1).executor": "Run",
     "Application.Main (2).executor": "Run",
     "Application.Main.executor": "Run",
-    "Application.MainC (1).executor": "Run",
+    "Application.MainC (1).executor": "Debug",
     "Application.MainC.executor": "Run",
     "Application.MainCprofiled.executor": "JProfiler",
     "Application.MainE.executor": "Run",
@@ -255,7 +258,7 @@
       <command value="ant" />
     </option>
   </component>
-  <component name="RunManager" selected="Application.MainC">
+  <component name="RunManager" selected="Application.MainC (1)">
     <configuration name="Input" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="dialogs.Input" />
       <module name="IMG24" />
@@ -354,8 +357,8 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-jdk-30f59d01ecdd-37e91769500f-intellij.indexing.shared.core-IU-261.24374.151" />
-        <option value="bundled-js-predefined-d6986cc7102b-31caf2ab9e3c-JavaScript-IU-261.24374.151" />
+        <option value="bundled-jdk-30f59d01ecdd-37e91769500f-intellij.indexing.shared.core-IU-261.25134.95" />
+        <option value="bundled-js-predefined-d6986cc7102b-31caf2ab9e3c-JavaScript-IU-261.25134.95" />
       </set>
     </attachedChunks>
   </component>
@@ -717,7 +720,7 @@
       <option name="project" value="LOCAL" />
       <updated>1683976691765</updated>
     </task>
-    <option name="localTasksCounter" value="462" />
+    <option name="localTasksCounter" value="463" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -837,7 +840,6 @@
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_NEW_TODO" value="false" />
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="AnimPlayerBox improved image size" />
     <MESSAGE value="some improvements" />
     <MESSAGE value="added exifwrter" />
     <MESSAGE value="bugfix" />
@@ -862,7 +864,8 @@
     <MESSAGE value="working mp3 export" />
     <MESSAGE value="catch exception if dest does not exist in Copier.java" />
     <MESSAGE value="catch exception if &quot;dest&quot; does not exist in Copier.java" />
-    <option name="LAST_COMMIT_MESSAGE" value="catch exception if &quot;dest&quot; does not exist in Copier.java" />
+    <MESSAGE value="some little improvements" />
+    <option name="LAST_COMMIT_MESSAGE" value="some little improvements" />
     <option name="NON_MODAL_COMMIT_POSTPONE_SLOW_CHECKS" value="false" />
   </component>
   <component name="XDebuggerManager">

@@ -1,5 +1,6 @@
 package dialogs;
 
+import common.MsgBox;
 import common.Tools;
 import database.DBHandler;
 import thegrid.TheGrid;
@@ -14,14 +15,13 @@ import java.util.TreeSet;
 public class TagSelectorDlg extends JDialog {
     private JPanel contentPane;
     private JButton buttonOK;
-    private JList<String> list1;
+    private JList<String> tagList;
     private JRadioButton radioAND;
     private JRadioButton radioOR;
     private JButton cancelButton;
     private JTextField searchField;
     private boolean cancelled = false;
-    private boolean andMode = true;
-    //private MyListCellRenderer this_ml;
+    private boolean logic = true;
 
     public TagSelectorDlg() {
         setContentPane(contentPane);
@@ -38,14 +38,14 @@ public class TagSelectorDlg extends JDialog {
 
         buttonOK.addActionListener(_ -> onOK());
         cancelButton.addActionListener(_ -> onCancel());
-        radioAND.addActionListener(_ -> andMode = true);
-        radioOR.addActionListener(_ -> andMode = false);
+        radioAND.addActionListener(_ -> logic = true);
+        radioOR.addActionListener(_ -> logic = false);
         searchField.setToolTipText("type (partial) tag name then select found tags to construct SQL, finally hit 'submit'");
         searchField.addKeyListener(new KeyAdapter() {
             @Override
             public void keyReleased(KeyEvent e) {
                 super.keyReleased(e);
-                Tools.implementSearchboxAction(searchField, list1);
+                Tools.implementSearchboxAction(searchField, tagList);
             }
         });
         pack();
@@ -59,8 +59,8 @@ public class TagSelectorDlg extends JDialog {
         dialog.setVisible(true);
         if (dialog.cancelled)
             return null;
-        dialog.list1.setOpaque(dialog.andMode);
-        return dialog.list1;
+        dialog.tagList.setOpaque(dialog.logic);
+        return dialog.tagList;
     }
 
     private void onOK() {
@@ -74,11 +74,11 @@ public class TagSelectorDlg extends JDialog {
 
     private void createUIComponents() {
         TreeSet<String> tags = DBHandler.getImageTagList();
-        list1 = new JList<>(tags.toArray(new String[0]));
-        list1.setCellRenderer (new TagListCellRenderer());
+        tagList = new JList<>(tags.toArray(new String[0]));
+        tagList.setCellRenderer (new TagListCellRenderer());
         //this_ml = (MyListCellRenderer)list1.getCellRenderer();
-        list1.setVisibleRowCount(20);
-        list1.setLayoutOrientation(JList.HORIZONTAL_WRAP);
+        tagList.setVisibleRowCount(20);
+        tagList.setLayoutOrientation(JList.HORIZONTAL_WRAP);
     }
 
     public static void worker_for_tagList() {
@@ -95,6 +95,7 @@ public class TagSelectorDlg extends JDialog {
                 sql.append(" tag like " + "'%").append(list.get(s)).append("%'");
             }
             System.out.println(sql);
+            MsgBox.AsyncInfo(sql.toString());
             new TheGrid(sql.toString(), "WORKER");
         })).start();
     }
