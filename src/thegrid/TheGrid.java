@@ -131,25 +131,6 @@ public class TheGrid extends MyFrame {
         });
     }
 
-//    public void fillThumbs (int limit) {
-//        final int lim = limit == -1 ? imageL.size() : limit;
-//        Tools.runTask(() -> {
-//            imageCount = 0;
-//            startTime = Instant.now();
-//            progress = new ProgressBox(TheGrid.this, lim);
-//            imageL.load();
-//            rootPane.removeAll();
-//            stopFill = false;
-//            for (int s = 0; s < lim ; s++) {
-//                if (stopFill)
-//                    break;
-//                addThumbnail(s);
-//            }
-//            pack();
-//            progress.dispose();
-//        });
-//    }
-
     public static void main(String... input) throws Exception {
 //        Thread hook = new Thread(() ->
 //                DBHandler.log("SHUTDOWN"));
@@ -210,6 +191,7 @@ public class TheGrid extends MyFrame {
         });
         rootPane.doLayout();
         Sam.speak(convertLessThanOneThousand(numadd) + " new files added");
+        fillThumbs();
     }
 
     public void stopThumbViewFill(String info) {
