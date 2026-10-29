@@ -48,7 +48,6 @@ public class TheGrid extends MyFrame {
     }
 
     public void setHistoryPath(String historyPath) {
-        System.out.println("histPath: " + historyPath);
         this.historyPath = historyPath;
     }
 
@@ -147,15 +146,15 @@ public class TheGrid extends MyFrame {
 
         Thread.setDefaultUncaughtExceptionHandler((_, e) -> {
             try {
-                StringBuilder builder = new StringBuilder ();
+                StringBuilder builder = new StringBuilder();
                 builder.append("--- ").append(e).append(" ---\n");
                 for (StackTraceElement stackTraceElement : e.getStackTrace()) {
                     builder.append(stackTraceElement.toString());
                     builder.append("\n");
                 }
-                MsgBox.Error (builder.toString());
+                MsgBox.Error(builder.toString());
             } catch (Exception ex) {
-                MsgBox.Error ("Exception in DefaultUncaughtExceptionHandler!!!");
+                MsgBox.Error("Exception in DefaultUncaughtExceptionHandler!!!");
             }
         });
 
@@ -177,10 +176,9 @@ public class TheGrid extends MyFrame {
 
         DBHandler.log("+++ TheGrid started");
         new TheGrid(ImageList.mainSQL, dbRoot);
-        System.out.println("end main");
         delay(1000);
         Win32.hideConsoleWindow(true);
-   }
+    }
 
     public void addImageFilesToDatabase(File[] files) throws Exception {
         int numadd = DBHandler.MoveImageFilesToDB(files, (img) -> {

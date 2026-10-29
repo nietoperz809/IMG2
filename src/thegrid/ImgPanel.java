@@ -103,7 +103,14 @@ public class ImgPanel extends JPanel implements Positioner {
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
+        g.setColor(Color.BLACK); // backgroumd black
+        g.fillRect(0,0, getWidth(), getHeight());
         g.drawImage(image, (int)offset.x, (int)offset.y, this);
+    }
+
+    @Override
+    public void update(Graphics g) {
+        //super.update(g);
     }
 
     public void setWatermark(Watermark watermark) {

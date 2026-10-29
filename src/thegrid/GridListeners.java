@@ -78,10 +78,10 @@ public class GridListeners implements KeyListener {
         if (kc == KeyEvent.VK_ESCAPE) {
             dispose(false);
         }
-        // ctrl-v, make image tags
-        else if (kc == KeyEvent.VK_V && e.isControlDown()) {
-            completeImagelinks("image");
-        }
+//        // ctrl-v, make image tags
+//        else if (kc == KeyEvent.VK_V && e.isControlDown()) {
+//            completeImagelinks("image");
+//        }
         // n
         else if (kc == KeyEvent.VK_N) {
             TheGrid tg = TheGrid.getMainGrid();
